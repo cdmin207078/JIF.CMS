@@ -15,9 +15,11 @@ namespace JIF.CMS.Management.Controllers
         {
             _articleService = articleService;
         }
+
         public ActionResult Index()
         {
-            return Content(_articleService.Sayhello());
+            ViewBag.Message = _articleService.Sayhello();
+            return View();
         }
     }
 }
