@@ -45,6 +45,9 @@
     <Compile Include="BaseService.cs" />
     <Compile Include="IBaseService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SysManager\Dtos\SysAdminUpdateBasicInfo.cs" />
+    <Compile Include="SysManager\ISysManagerService.cs" />
+    <Compile Include="SysManager\SysManagerService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\JIF.CMS.Core\JIF.CMS.Core.csproj">
