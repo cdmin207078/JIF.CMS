@@ -165,7 +165,6 @@
     <Content Include="Content\AdminLTE\dist\js\app.min.js" />
     <Content Include="Content\AdminLTE\dist\js\demo.js" />
     <Content Include="Content\AdminLTE\font-awesome.min.css" />
-    <Content Include="Content\AdminLTE\ionicons.min.css" />
     <Content Include="Content\AdminLTE\plugins\bootstrap-slider\bootstrap-slider.js" />
     <Content Include="Content\AdminLTE\plugins\bootstrap-slider\slider.css" />
     <Content Include="Content\AdminLTE\plugins\chartjs\Chart.js" />
@@ -435,19 +434,31 @@
     <Content Include="Content\AdminLTE\plugins\timepicker\bootstrap-timepicker.min.js" />
     <Content Include="Content\css\animate.css" />
     <Content Include="Content\fonts\fontawesome-webfont.svg" />
-    <Content Include="fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Content\ios-switch\switch.css" />
+    <Content Include="Content\ios-switch\switch.js" />
+    <Content Include="Content\jquery-confirm\jquery-confirm.min.css" />
+    <Content Include="Content\jquery-confirm\jquery-confirm.min.js" />
+    <Content Include="Content\simditor\images\image.png" />
+    <Content Include="Content\simditor\scripts\hotkeys.js" />
+    <Content Include="Content\simditor\scripts\hotkeys.min.js" />
+    <Content Include="Content\simditor\scripts\jquery.min.js" />
+    <Content Include="Content\simditor\scripts\module.js" />
+    <Content Include="Content\simditor\scripts\module.min.js" />
+    <Content Include="Content\simditor\scripts\simditor.js" />
+    <Content Include="Content\simditor\scripts\simditor.min.js" />
+    <Content Include="Content\simditor\scripts\uploader.js" />
+    <Content Include="Content\simditor\scripts\uploader.min.js" />
+    <Content Include="Content\simditor\styles\simditor.css" />
     <Content Include="Global.asax" />
-    <Content Include="Scripts\bootstrap.js" />
-    <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Content\fonts\fontawesome-webfont.eot" />
     <Content Include="Content\fonts\fontawesome-webfont.ttf" />
     <Content Include="Content\fonts\fontawesome-webfont.woff" />
     <Content Include="Content\fonts\fontawesome-webfont.woff2" />
     <Content Include="Content\fonts\FontAwesome.otf" />
-    <None Include="Scripts\jquery-1.10.2.intellisense.js" />
-    <Content Include="Scripts\jquery-1.10.2.js" />
-    <Content Include="Scripts\jquery-1.10.2.min.js" />
-    <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="Content\simditor\styles\editor.scss" />
+    <Content Include="Content\simditor\styles\fonticon.scss" />
+    <Content Include="Content\simditor\styles\simditor.scss" />
+    <Content Include="Scripts\Layout.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -456,6 +467,7 @@
     <Compile Include="App_Start\DependencyRegistrar.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\SysManagerController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -464,8 +476,6 @@
   <ItemGroup>
     <Content Include="Views\web.config" />
     <Content Include="packages.config" />
-    <Content Include="Content\AdminLTE\bootstrap\css\bootstrap.css.map" />
-    <Content Include="Content\AdminLTE\bootstrap\css\bootstrap.min.css.map" />
     <Content Include="Content\AdminLTE\bootstrap\fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Content\AdminLTE\bootstrap\fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="Content\AdminLTE\bootstrap\fonts\glyphicons-halflings-regular.woff" />
@@ -475,10 +485,7 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="fonts\glyphicons-halflings-regular.woff" />
-    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
-    <Content Include="fonts\glyphicons-halflings-regular.eot" />
-    <Content Include="Scripts\jquery-1.10.2.min.map" />
+    <Content Include="Views\SysManager\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -489,9 +496,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Content\AdminLTE\plugins\bootstrap-wysihtml5\" />
-    <Folder Include="Content\ios-switch\" />
-    <Folder Include="Content\jquery-confirm\" />
-    <Folder Include="Content\simditor\" />
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>

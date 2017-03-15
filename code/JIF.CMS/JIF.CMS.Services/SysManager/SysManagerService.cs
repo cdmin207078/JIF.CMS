@@ -9,10 +9,11 @@ using JIF.CMS.Core.Data;
 using JIF.CMS.Core.Security;
 using System.Security.Cryptography;
 using JIF.CMS.Services.SysManager.Dtos;
+using System.Linq.Expressions;
 
 namespace JIF.CMS.Services.SysManager
 {
-    public class SysManagerService : ISysManagerService
+    public class SysManagerService : BaseService, ISysManagerService
     {
         private readonly IRepository<SysAdmin> _sysAdminRepository;
 
@@ -34,7 +35,7 @@ namespace JIF.CMS.Services.SysManager
                 throw new JIFException("信息不完整");
             }
 
-            var exists = _sysAdminRepository.Table.Any(d => model.Email.ToLower().Trim() == d.Email.ToLower().Trim());
+            var exists = _sysAdminRepository.Table.Any(d => model.Account.ToLower().Trim() == d.Account.ToLower().Trim());
             if (exists)
             {
                 throw new JIFException("帐号: " + model.Email + ", 已存在");
@@ -44,6 +45,7 @@ namespace JIF.CMS.Services.SysManager
 
             var entity = new SysAdmin
             {
+                Account = model.Account,
                 Email = model.Email,
                 CellPhone = model.CellPhone,
                 Password = EncyptHelper.Encrypt(MD5.Create(), string.Format("{0}-{1}", model.Password, now.ToString(JIFConsts.DATETIME_NORMAL))),
@@ -79,6 +81,26 @@ namespace JIF.CMS.Services.SysManager
 
             _sysAdminRepository.Update(entity);
 
+        }
+
+        public IPagedList<SysAdmin> Load(Expression<Func<SysAdmin, bool>> whereLambda = null, int pageIndex = 1, int pageSize = int.MaxValue)
+        {
+            var source = new List<SysAdmin>();
+
+            for (int i = 0; i < 10000; i++)
+            {
+                source.Add(new SysAdmin
+                {
+                    Id = i,
+                    Account = "User" + i,
+                    Email = "cdmin207078@foxmail.com",
+                    CellPhone = "15618147550",
+                    CreateTime = DateTime.Now,
+                    Enable = new Random(1).Next(2) / 2 == 0,
+                });
+            }
+
+            return new PagedList<SysAdmin>(source.OrderByDescending(d => d.Id).ToList(), pageIndex, pageSize);
         }
     }
 }

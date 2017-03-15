@@ -6,6 +6,7 @@ using JIF.CMS.Core.Infrastructure;
 using JIF.CMS.Core.Infrastructure.DependencyManagement;
 using JIF.CMS.Data.EntityFramework;
 using JIF.CMS.Services.Articles;
+using JIF.CMS.Services.SysManager;
 using System.Data.Entity;
 using System.Web;
 
@@ -62,6 +63,8 @@ namespace JIF.CMS.Management
 
             // Services
             builder.RegisterType<ArticleService>().As<IArticleService>().InstancePerLifetimeScope();
+            builder.RegisterType<SysManagerService>().As<ISysManagerService>().InstancePerLifetimeScope();
+
         }
 
         public int Order { get { return 0; } }

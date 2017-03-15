@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace JIF.CMS.Services.Articles
 {
-    public interface IArticleService
+    public interface IArticleService : IBaseService
     {
         string Sayhello();
     }

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace JIF.CMS.Core
 {
     [Serializable]
-    public class PagedList<T> : List<T>, IPagedList<T>
+    public class PagedList<T> : List<T>, IPagedList<T> where T : Domain.BaseEntity
     {
         public PagedList(IQueryable<T> source, int pageIndex, int pageSize)
         {
@@ -33,21 +33,8 @@ namespace JIF.CMS.Core
                 TotalPages++;
 
             this.PageSize = pageSize;
-            this.PageIndex = pageIndex;
-            this.AddRange(source.Skip(pageIndex * pageSize).Take(pageSize).ToList());
-        }
-
-        public PagedList(IEnumerable<T> source, int pageIndex, int pageSize, int totalCount)
-        {
-            TotalCount = totalCount;
-            TotalPages = TotalCount / pageSize;
-
-            if (TotalCount % pageSize > 0)
-                TotalPages++;
-
-            this.PageSize = pageSize;
-            this.PageIndex = pageIndex;
-            this.AddRange(source);
+            this.PageIndex = pageIndex < 1 ? 1 : pageIndex;
+            this.AddRange(source.Skip((PageIndex - 1) * pageSize).Take(pageSize).ToList());
         }
 
         public int PageIndex { get; private set; }
