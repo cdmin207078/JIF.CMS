@@ -18,6 +18,13 @@ namespace JIF.CMS.Services.SysManager
 
         void Delete(int id);
 
-        IPagedList<SysAdmin> Load(Expression<Func<SysAdmin, bool>> whereLambda = null, int pageIndex = 1, int pageSize = int.MaxValue);
+        /// <summary>
+        /// 用户列表搜索
+        /// </summary>
+        /// <param name="s">搜索关键字 {账号 / Email / 电话}</param>
+        /// <param name="pageIndex">页码</param>
+        /// <param name="pageSize">页大小</param>
+        /// <returns></returns>
+        IPagedList<SysAdmin> Load(string s, int pageIndex = 1, int pageSize = int.MaxValue);
     }
 }

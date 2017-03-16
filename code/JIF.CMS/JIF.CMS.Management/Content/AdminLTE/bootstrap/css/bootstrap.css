@@ -2288,7 +2288,8 @@ th {
 .table > colgroup + thead > tr:first-child > td,
 .table > thead:first-child > tr:first-child > td {
     /*background-color:#ddd;*/
-    background-color:rgb(234, 237, 239);
+    /*background-color:rgb(234, 237, 239);*/
+    background: linear-gradient(to bottom, #f9f9f9 , #f1f1f1);
 }
 .table > tbody + tbody {
   border-top: 2px solid #ddd;

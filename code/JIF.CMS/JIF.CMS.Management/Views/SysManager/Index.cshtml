@@ -1,26 +1,28 @@
-﻿
-@{
+﻿@{
+    ViewBag.Title = "系统用户管理";
+
     var managers = ViewBag.Managers as IList<JIF.CMS.Core.Domain.SysAdmin>;
-
 }
-
 
 <div class="row">
     <div class="col-md-12">
 
-
-
         <div class="box box-primary">
             <div class="box-header with-border">
-                <h3 class="box-title">系统用户管理</h3>
+                <form action="/SysManager/" method="get" class="form-horizontal">
+                    <div class="input-group col-md-3">
+                        <input type="text" class="form-control" name="s" placeholder="账号 / Email / 电话" value="@ViewBag.SearchKey">
+                        <span class="input-group-btn">
+                            <button type="submit" class="btn btn-info">搜 索</button>
+                        </span>
+                    </div>
+                </form>
             </div>
 
-            <!-- /.box-header -->
             <div class="box-body">
                 <table class="table table-bordered table-hover table-condensed table-striped">
                     <thead>
                         <tr>
-                            <th style="width: 30px;">#</th>
                             <th style="width: 50px;">编号</th>
                             <th>账号</th>
                             <th>邮箱</th>
@@ -34,9 +36,6 @@
                         @foreach (var manager in managers)
                         {
                             <tr class="no-padding">
-                                <td>
-                                    <input type="checkbox" />
-                                </td>
                                 <td>@manager.Id</td>
                                 <td>@manager.Account</td>
                                 <td>@manager.Email</td>
@@ -49,9 +48,16 @@
                             </tr>
                         }
                     </tbody>
+
+                    <tfoot>
+                        <tr>
+                            <td colspan="7">
+                                @Html.Partial("_Pager", managers)
+                            </td>
+                        </tr>
+                    </tfoot>
                 </table>
             </div>
-            <!-- /.box-body -->
         </div>
 
 

@@ -83,16 +83,20 @@ namespace JIF.CMS.Services.SysManager
 
         }
 
-        public IPagedList<SysAdmin> Load(Expression<Func<SysAdmin, bool>> whereLambda = null, int pageIndex = 1, int pageSize = int.MaxValue)
+        public IPagedList<SysAdmin> Load(string s, int pageIndex = 1, int pageSize = int.MaxValue)
         {
             var source = new List<SysAdmin>();
 
-            for (int i = 0; i < 10000; i++)
+            var total = 993847;
+            var ranAccount = RandomHelper.Gen(RandomHelper.Format.NumChar, 6, total);
+
+
+            for (int i = 0; i < total; i++)
             {
                 source.Add(new SysAdmin
                 {
                     Id = i,
-                    Account = "User" + i,
+                    Account = ranAccount[i],
                     Email = "cdmin207078@foxmail.com",
                     CellPhone = "15618147550",
                     CreateTime = DateTime.Now,
@@ -100,7 +104,12 @@ namespace JIF.CMS.Services.SysManager
                 });
             }
 
-            return new PagedList<SysAdmin>(source.OrderByDescending(d => d.Id).ToList(), pageIndex, pageSize);
+            var query = source.Where(d => d.Account.Contains(s)
+                                       || d.Email.Contains(s)
+                                       || d.CellPhone.Contains(s));
+
+
+            return new PagedList<SysAdmin>(query.OrderByDescending(d => d.Id).ToList(), pageIndex, pageSize);
         }
     }
 }

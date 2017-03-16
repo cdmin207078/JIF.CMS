@@ -1,4 +1,5 @@
-﻿using JIF.CMS.Core.Domain;
+﻿using JIF.CMS.Core;
+using JIF.CMS.Core.Domain;
 using JIF.CMS.Services.SysManager;
 using System;
 using System.Collections.Generic;
@@ -17,9 +18,12 @@ namespace JIF.CMS.Management.Controllers
             _sysManagerService = sysManagerService;
         }
 
-        public ActionResult Index()
+        public ActionResult Index(string s = "", int pageIndex = JIFConsts.SYS_PAGE_INDEX,
+            int pageSize = JIFConsts.SYS_PAGE_SIZE)
         {
-            ViewBag.Managers = _sysManagerService.Load(pageIndex: 1, pageSize: 100);
+            ViewBag.Managers = _sysManagerService.Load(s, pageIndex, pageSize);
+
+            ViewBag.SearchKey = s;
 
             return View();
         }
