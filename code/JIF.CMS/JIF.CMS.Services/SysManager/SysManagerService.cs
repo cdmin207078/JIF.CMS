@@ -87,7 +87,7 @@ namespace JIF.CMS.Services.SysManager
         {
             var source = new List<SysAdmin>();
 
-            var total = 993847;
+            var total = 35;
             var ranAccount = RandomHelper.Gen(RandomHelper.Format.NumChar, 6, total);
 
 
