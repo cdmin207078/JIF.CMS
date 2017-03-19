@@ -63,6 +63,14 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="MySql.Data, Version=6.9.9.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
+      <HintPath>..\packages\MySql.Data.6.9.9\lib\net45\MySql.Data.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="MySql.Data.Entity.EF6, Version=6.9.9.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
+      <HintPath>..\packages\MySql.Data.Entity.6.9.9\lib\net45\MySql.Data.Entity.EF6.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.5.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
@@ -116,40 +124,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\AdminLTE\bootstrap\css\bootstrap.css" />
-    <Content Include="Content\AdminLTE\bootstrap\css\bootstrap.min.css" />
-    <Content Include="Content\AdminLTE\bootstrap\fonts\glyphicons-halflings-regular.svg" />
-    <Content Include="Content\AdminLTE\bootstrap\js\bootstrap.js" />
-    <Content Include="Content\AdminLTE\bootstrap\js\bootstrap.min.js" />
-    <Content Include="Content\AdminLTE\bootstrap\js\npm.js" />
+    <Content Include="Content\AdminLTE\bootstrap\bootstrap.css" />
+    <Content Include="Content\AdminLTE\bootstrap\bootstrap.js" />
     <Content Include="Content\AdminLTE\dist\css\AdminLTE.css" />
-    <Content Include="Content\AdminLTE\dist\css\AdminLTE.min.css" />
-    <Content Include="Content\AdminLTE\dist\css\skins\skin-black-light.css" />
-    <Content Include="Content\AdminLTE\dist\css\skins\skin-black-light.min.css" />
-    <Content Include="Content\AdminLTE\dist\css\skins\skin-black.css" />
-    <Content Include="Content\AdminLTE\dist\css\skins\skin-black.min.css" />
-    <Content Include="Content\AdminLTE\dist\css\skins\skin-blue-light.css" />
-    <Content Include="Content\AdminLTE\dist\css\skins\skin-blue-light.min.css" />
-    <Content Include="Content\AdminLTE\dist\css\skins\skin-blue.css" />
-    <Content Include="Content\AdminLTE\dist\css\skins\skin-blue.min.css" />
-    <Content Include="Content\AdminLTE\dist\css\skins\skin-green-light.css" />
-    <Content Include="Content\AdminLTE\dist\css\skins\skin-green-light.min.css" />
-    <Content Include="Content\AdminLTE\dist\css\skins\skin-green.css" />
-    <Content Include="Content\AdminLTE\dist\css\skins\skin-green.min.css" />
-    <Content Include="Content\AdminLTE\dist\css\skins\skin-purple-light.css" />
-    <Content Include="Content\AdminLTE\dist\css\skins\skin-purple-light.min.css" />
-    <Content Include="Content\AdminLTE\dist\css\skins\skin-purple.css" />
-    <Content Include="Content\AdminLTE\dist\css\skins\skin-purple.min.css" />
-    <Content Include="Content\AdminLTE\dist\css\skins\skin-red-light.css" />
-    <Content Include="Content\AdminLTE\dist\css\skins\skin-red-light.min.css" />
-    <Content Include="Content\AdminLTE\dist\css\skins\skin-red.css" />
-    <Content Include="Content\AdminLTE\dist\css\skins\skin-red.min.css" />
-    <Content Include="Content\AdminLTE\dist\css\skins\skin-yellow-light.css" />
-    <Content Include="Content\AdminLTE\dist\css\skins\skin-yellow-light.min.css" />
-    <Content Include="Content\AdminLTE\dist\css\skins\skin-yellow.css" />
-    <Content Include="Content\AdminLTE\dist\css\skins\skin-yellow.min.css" />
     <Content Include="Content\AdminLTE\dist\css\skins\_all-skins.css" />
-    <Content Include="Content\AdminLTE\dist\css\skins\_all-skins.min.css" />
     <Content Include="Content\AdminLTE\dist\img\avatar.png" />
     <Content Include="Content\AdminLTE\dist\img\avatar04.png" />
     <Content Include="Content\AdminLTE\dist\img\avatar2.png" />
@@ -179,77 +157,12 @@
     <Content Include="Content\AdminLTE\dist\img\user7-128x128.jpg" />
     <Content Include="Content\AdminLTE\dist\img\user8-128x128.jpg" />
     <Content Include="Content\AdminLTE\dist\js\app.js" />
-    <Content Include="Content\AdminLTE\dist\js\app.min.js" />
     <Content Include="Content\AdminLTE\dist\js\demo.js" />
     <Content Include="Content\AdminLTE\font-awesome.min.css" />
     <Content Include="Content\AdminLTE\plugins\bootstrap-slider\bootstrap-slider.js" />
     <Content Include="Content\AdminLTE\plugins\bootstrap-slider\slider.css" />
-    <Content Include="Content\AdminLTE\plugins\chartjs\Chart.js" />
-    <Content Include="Content\AdminLTE\plugins\chartjs\Chart.min.js" />
-    <Content Include="Content\AdminLTE\plugins\datepicker\bootstrap-datepicker.js" />
-    <Content Include="Content\AdminLTE\plugins\datepicker\datepicker3.css" />
-    <Content Include="Content\AdminLTE\plugins\datepicker\locales\bootstrap-datepicker.ar.js" />
-    <Content Include="Content\AdminLTE\plugins\datepicker\locales\bootstrap-datepicker.az.js" />
-    <Content Include="Content\AdminLTE\plugins\datepicker\locales\bootstrap-datepicker.bg.js" />
-    <Content Include="Content\AdminLTE\plugins\datepicker\locales\bootstrap-datepicker.ca.js" />
-    <Content Include="Content\AdminLTE\plugins\datepicker\locales\bootstrap-datepicker.cs.js" />
-    <Content Include="Content\AdminLTE\plugins\datepicker\locales\bootstrap-datepicker.cy.js" />
-    <Content Include="Content\AdminLTE\plugins\datepicker\locales\bootstrap-datepicker.da.js" />
-    <Content Include="Content\AdminLTE\plugins\datepicker\locales\bootstrap-datepicker.de.js" />
-    <Content Include="Content\AdminLTE\plugins\datepicker\locales\bootstrap-datepicker.el.js" />
-    <Content Include="Content\AdminLTE\plugins\datepicker\locales\bootstrap-datepicker.es.js" />
-    <Content Include="Content\AdminLTE\plugins\datepicker\locales\bootstrap-datepicker.et.js" />
-    <Content Include="Content\AdminLTE\plugins\datepicker\locales\bootstrap-datepicker.fa.js" />
-    <Content Include="Content\AdminLTE\plugins\datepicker\locales\bootstrap-datepicker.fi.js" />
-    <Content Include="Content\AdminLTE\plugins\datepicker\locales\bootstrap-datepicker.fr.js" />
-    <Content Include="Content\AdminLTE\plugins\datepicker\locales\bootstrap-datepicker.gl.js" />
-    <Content Include="Content\AdminLTE\plugins\datepicker\locales\bootstrap-datepicker.he.js" />
-    <Content Include="Content\AdminLTE\plugins\datepicker\locales\bootstrap-datepicker.hr.js" />
-    <Content Include="Content\AdminLTE\plugins\datepicker\locales\bootstrap-datepicker.hu.js" />
-    <Content Include="Content\AdminLTE\plugins\datepicker\locales\bootstrap-datepicker.id.js" />
-    <Content Include="Content\AdminLTE\plugins\datepicker\locales\bootstrap-datepicker.is.js" />
-    <Content Include="Content\AdminLTE\plugins\datepicker\locales\bootstrap-datepicker.it.js" />
-    <Content Include="Content\AdminLTE\plugins\datepicker\locales\bootstrap-datepicker.ja.js" />
-    <Content Include="Content\AdminLTE\plugins\datepicker\locales\bootstrap-datepicker.ka.js" />
-    <Content Include="Content\AdminLTE\plugins\datepicker\locales\bootstrap-datepicker.kk.js" />
-    <Content Include="Content\AdminLTE\plugins\datepicker\locales\bootstrap-datepicker.kr.js" />
-    <Content Include="Content\AdminLTE\plugins\datepicker\locales\bootstrap-datepicker.lt.js" />
-    <Content Include="Content\AdminLTE\plugins\datepicker\locales\bootstrap-datepicker.lv.js" />
-    <Content Include="Content\AdminLTE\plugins\datepicker\locales\bootstrap-datepicker.mk.js" />
-    <Content Include="Content\AdminLTE\plugins\datepicker\locales\bootstrap-datepicker.ms.js" />
-    <Content Include="Content\AdminLTE\plugins\datepicker\locales\bootstrap-datepicker.nb.js" />
-    <Content Include="Content\AdminLTE\plugins\datepicker\locales\bootstrap-datepicker.nl-BE.js" />
-    <Content Include="Content\AdminLTE\plugins\datepicker\locales\bootstrap-datepicker.nl.js" />
-    <Content Include="Content\AdminLTE\plugins\datepicker\locales\bootstrap-datepicker.no.js" />
-    <Content Include="Content\AdminLTE\plugins\datepicker\locales\bootstrap-datepicker.pl.js" />
-    <Content Include="Content\AdminLTE\plugins\datepicker\locales\bootstrap-datepicker.pt-BR.js" />
-    <Content Include="Content\AdminLTE\plugins\datepicker\locales\bootstrap-datepicker.pt.js" />
-    <Content Include="Content\AdminLTE\plugins\datepicker\locales\bootstrap-datepicker.ro.js" />
-    <Content Include="Content\AdminLTE\plugins\datepicker\locales\bootstrap-datepicker.rs-latin.js" />
-    <Content Include="Content\AdminLTE\plugins\datepicker\locales\bootstrap-datepicker.rs.js" />
-    <Content Include="Content\AdminLTE\plugins\datepicker\locales\bootstrap-datepicker.ru.js" />
-    <Content Include="Content\AdminLTE\plugins\datepicker\locales\bootstrap-datepicker.sk.js" />
-    <Content Include="Content\AdminLTE\plugins\datepicker\locales\bootstrap-datepicker.sl.js" />
-    <Content Include="Content\AdminLTE\plugins\datepicker\locales\bootstrap-datepicker.sq.js" />
-    <Content Include="Content\AdminLTE\plugins\datepicker\locales\bootstrap-datepicker.sv.js" />
-    <Content Include="Content\AdminLTE\plugins\datepicker\locales\bootstrap-datepicker.sw.js" />
-    <Content Include="Content\AdminLTE\plugins\datepicker\locales\bootstrap-datepicker.th.js" />
-    <Content Include="Content\AdminLTE\plugins\datepicker\locales\bootstrap-datepicker.tr.js" />
-    <Content Include="Content\AdminLTE\plugins\datepicker\locales\bootstrap-datepicker.ua.js" />
-    <Content Include="Content\AdminLTE\plugins\datepicker\locales\bootstrap-datepicker.vi.js" />
-    <Content Include="Content\AdminLTE\plugins\datepicker\locales\bootstrap-datepicker.zh-CN.js" />
-    <Content Include="Content\AdminLTE\plugins\datepicker\locales\bootstrap-datepicker.zh-TW.js" />
-    <Content Include="Content\AdminLTE\plugins\daterangepicker\daterangepicker.css" />
-    <Content Include="Content\AdminLTE\plugins\daterangepicker\daterangepicker.js" />
-    <Content Include="Content\AdminLTE\plugins\daterangepicker\moment.js" />
-    <Content Include="Content\AdminLTE\plugins\daterangepicker\moment.min.js" />
     <Content Include="Content\AdminLTE\plugins\fastclick\fastclick.js" />
     <Content Include="Content\AdminLTE\plugins\fastclick\fastclick.min.js" />
-    <Content Include="Content\AdminLTE\plugins\fullcalendar\fullcalendar.css" />
-    <Content Include="Content\AdminLTE\plugins\fullcalendar\fullcalendar.js" />
-    <Content Include="Content\AdminLTE\plugins\fullcalendar\fullcalendar.min.css" />
-    <Content Include="Content\AdminLTE\plugins\fullcalendar\fullcalendar.min.js" />
-    <Content Include="Content\AdminLTE\plugins\fullcalendar\fullcalendar.print.css" />
     <Content Include="Content\AdminLTE\plugins\iCheck\all.css" />
     <Content Include="Content\AdminLTE\plugins\iCheck\flat\aero%402x.png" />
     <Content Include="Content\AdminLTE\plugins\iCheck\flat\aero.css" />
@@ -381,9 +294,6 @@
     <Content Include="Content\AdminLTE\plugins\jQueryUI\jquery-ui.js" />
     <Content Include="Content\AdminLTE\plugins\jQueryUI\jquery-ui.min.js" />
     <Content Include="Content\AdminLTE\plugins\jQuery\jquery-2.2.3.min.js" />
-    <Content Include="Content\AdminLTE\plugins\morris\morris.css" />
-    <Content Include="Content\AdminLTE\plugins\morris\morris.js" />
-    <Content Include="Content\AdminLTE\plugins\morris\morris.min.js" />
     <Content Include="Content\AdminLTE\plugins\pace\pace.css" />
     <Content Include="Content\AdminLTE\plugins\pace\pace.js" />
     <Content Include="Content\AdminLTE\plugins\pace\pace.min.css" />
@@ -443,12 +353,6 @@
     <Content Include="Content\AdminLTE\plugins\select2\select2.min.js" />
     <Content Include="Content\AdminLTE\plugins\slimScroll\jquery.slimscroll.js" />
     <Content Include="Content\AdminLTE\plugins\slimScroll\jquery.slimscroll.min.js" />
-    <Content Include="Content\AdminLTE\plugins\sparkline\jquery.sparkline.js" />
-    <Content Include="Content\AdminLTE\plugins\sparkline\jquery.sparkline.min.js" />
-    <Content Include="Content\AdminLTE\plugins\timepicker\bootstrap-timepicker.css" />
-    <Content Include="Content\AdminLTE\plugins\timepicker\bootstrap-timepicker.js" />
-    <Content Include="Content\AdminLTE\plugins\timepicker\bootstrap-timepicker.min.css" />
-    <Content Include="Content\AdminLTE\plugins\timepicker\bootstrap-timepicker.min.js" />
     <Content Include="Content\css\animate.css" />
     <Content Include="Content\fonts\fontawesome-webfont.svg" />
     <Content Include="Content\ios-switch\switch.css" />
@@ -483,6 +387,7 @@
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\DependencyRegistrar.cs" />
+    <Compile Include="App_Start\JIFExceptionAttribute.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\SysManagerController.cs" />
@@ -494,10 +399,6 @@
   <ItemGroup>
     <Content Include="Views\web.config" />
     <Content Include="packages.config" />
-    <Content Include="Content\AdminLTE\bootstrap\fonts\glyphicons-halflings-regular.eot" />
-    <Content Include="Content\AdminLTE\bootstrap\fonts\glyphicons-halflings-regular.ttf" />
-    <Content Include="Content\AdminLTE\bootstrap\fonts\glyphicons-halflings-regular.woff" />
-    <Content Include="Content\AdminLTE\bootstrap\fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="Content\AdminLTE\plugins\input-mask\phone-codes\phone-be.json" />
     <Content Include="Content\AdminLTE\plugins\input-mask\phone-codes\phone-codes.json" />
     <Content Include="Views\_ViewStart.cshtml" />
@@ -505,6 +406,9 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\SysManager\Index.cshtml" />
     <Content Include="Views\Shared\_Pager.cshtml" />
+    <None Include="Properties\PublishProfiles\cn-pc.pubxml" />
+    <Content Include="Views\SysManager\Add.cshtml" />
+    <Content Include="Views\SysManager\Detail.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -514,7 +418,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Content\AdminLTE\plugins\bootstrap-wysihtml5\" />
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>

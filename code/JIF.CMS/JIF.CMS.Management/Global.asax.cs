@@ -16,6 +16,8 @@ namespace JIF.CMS.Management
             AreaRegistration.RegisterAllAreas();
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+            GlobalFilters.Filters.Add(new JIFExceptionAttribute());
+
 
             // initialize engine context
             EngineContext.Initialize(false);

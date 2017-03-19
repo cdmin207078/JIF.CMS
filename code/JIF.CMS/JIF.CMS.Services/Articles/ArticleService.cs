@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace JIF.CMS.Services.Articles
 {
-    public class ArticleService : BaseService, IArticleService
+    public class ArticleService : IArticleService
     {
         private readonly IRepository<Article> _articleRepository;
 

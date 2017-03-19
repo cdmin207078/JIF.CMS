@@ -10,21 +10,43 @@ using System.Threading.Tasks;
 
 namespace JIF.CMS.Services.SysManager
 {
-    public interface ISysManagerService : IBaseService
+    public interface ISysManagerService
     {
-        void Add(SysAdmin model);
+        SysAdmin Get(int id);
 
-        void Update(int id, SysAdminUpdateBasicInfo model);
+        /// <summary>
+        /// 新增 管理员信息
+        /// </summary>
+        /// <param name="model"></param>
+        void Add(SysAdminInertBasicInfo model);
 
+        /// <summary>
+        /// 修改 管理员基本信息
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="model"></param>
+        void UpdateBasicInfo(int id, SysAdminUpdateBasicInfo model);
+
+        /// <summary>
+        /// 修改 管理员登录密码
+        /// </summary>
+        /// <param name="originalPwd"></param>
+        /// <param name="newPwd"></param>
+        void UpdatePwd(string originalPwd, string newPwd);
+
+        /// <summary>
+        /// 删除 管理员
+        /// </summary>
+        /// <param name="id"></param>
         void Delete(int id);
 
         /// <summary>
-        /// 用户列表搜索
+        /// 管理员列表
         /// </summary>
         /// <param name="s">搜索关键字 {账号 / Email / 电话}</param>
         /// <param name="pageIndex">页码</param>
         /// <param name="pageSize">页大小</param>
         /// <returns></returns>
-        IPagedList<SysAdmin> Load(string s, int pageIndex = 1, int pageSize = int.MaxValue);
+        IPagedList<SysAdmin> Load(string q, int pageIndex = 1, int pageSize = int.MaxValue);
     }
 }

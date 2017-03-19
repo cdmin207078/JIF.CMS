@@ -45,6 +45,7 @@
     <Compile Include="BaseService.cs" />
     <Compile Include="IBaseService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SysManager\Dtos\SysAdminInertBasicInfo.cs" />
     <Compile Include="SysManager\Dtos\SysAdminUpdateBasicInfo.cs" />
     <Compile Include="SysManager\ISysManagerService.cs" />
     <Compile Include="SysManager\SysManagerService.cs" />
@@ -54,6 +55,9 @@
       <Project>{C3EF00B2-7752-48EF-AAB3-B7BC11E08FA6}</Project>
       <Name>JIF.CMS.Core</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

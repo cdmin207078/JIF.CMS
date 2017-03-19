@@ -13,23 +13,29 @@ using System.Linq.Expressions;
 
 namespace JIF.CMS.Services.SysManager
 {
-    public class SysManagerService : BaseService, ISysManagerService
+    public class SysManagerService : ISysManagerService
     {
         private readonly IRepository<SysAdmin> _sysAdminRepository;
+
+        public SysAdmin Get(int id)
+        {
+            return _sysAdminRepository.Get(id);
+        }
 
         public SysManagerService(IRepository<SysAdmin> sysAdminRepository)
         {
             _sysAdminRepository = sysAdminRepository;
         }
 
-        public void Add(SysAdmin model)
+        public void Add(SysAdminInertBasicInfo model)
         {
             if (model == null)
             {
                 throw new JIFException("信息不能为空");
             }
 
-            if (string.IsNullOrWhiteSpace(model.Password)
+            if (string.IsNullOrWhiteSpace(model.Account)
+                || string.IsNullOrWhiteSpace(model.Password)
                 || string.IsNullOrWhiteSpace(model.Email))
             {
                 throw new JIFException("信息不完整");
@@ -38,7 +44,7 @@ namespace JIF.CMS.Services.SysManager
             var exists = _sysAdminRepository.Table.Any(d => model.Account.ToLower().Trim() == d.Account.ToLower().Trim());
             if (exists)
             {
-                throw new JIFException("帐号: " + model.Email + ", 已存在");
+                throw new JIFException("帐号: " + model.Account + ", 已存在");
             }
 
             var now = DateTime.Now;
@@ -62,7 +68,7 @@ namespace JIF.CMS.Services.SysManager
             throw new NotImplementedException();
         }
 
-        public void Update(int id, SysAdminUpdateBasicInfo model)
+        public void UpdateBasicInfo(int id, SysAdminUpdateBasicInfo model)
         {
             if (model == null)
             {
@@ -83,33 +89,20 @@ namespace JIF.CMS.Services.SysManager
 
         }
 
-        public IPagedList<SysAdmin> Load(string s, int pageIndex = 1, int pageSize = int.MaxValue)
+        public void UpdatePwd(string originalPwd, string newPwd)
         {
-            var source = new List<SysAdmin>();
+            throw new NotImplementedException();
+        }
 
-            var total = 35;
-            var ranAccount = RandomHelper.Gen(RandomHelper.Format.NumChar, 6, total);
-
-
-            for (int i = 0; i < total; i++)
-            {
-                source.Add(new SysAdmin
-                {
-                    Id = i,
-                    Account = ranAccount[i],
-                    Email = "cdmin207078@foxmail.com",
-                    CellPhone = "15618147550",
-                    CreateTime = DateTime.Now,
-                    Enable = new Random(1).Next(2) / 2 == 0,
-                });
-            }
-
-            var query = source.Where(d => d.Account.Contains(s)
-                                       || d.Email.Contains(s)
-                                       || d.CellPhone.Contains(s));
-
+        public IPagedList<SysAdmin> Load(string q, int pageIndex = 1, int pageSize = int.MaxValue)
+        {
+            var query = _sysAdminRepository.Table.Where(d => d.Account.Contains(q)
+                                       || d.Email.Contains(q)
+                                       || d.CellPhone.Contains(q));
 
             return new PagedList<SysAdmin>(query.OrderByDescending(d => d.Id).ToList(), pageIndex, pageSize);
         }
+
+
     }
 }
