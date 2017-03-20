@@ -13,7 +13,7 @@ using System.Linq.Expressions;
 
 namespace JIF.CMS.Services.SysManager
 {
-    public class SysManagerService : ISysManagerService
+    public class SysManagerService : BaseService, ISysManagerService
     {
         private readonly IRepository<SysAdmin> _sysAdminRepository;
 
@@ -31,20 +31,20 @@ namespace JIF.CMS.Services.SysManager
         {
             if (model == null)
             {
-                throw new JIFException("信息不能为空");
+                throwJIFException("信息不能为空");
             }
 
             if (string.IsNullOrWhiteSpace(model.Account)
                 || string.IsNullOrWhiteSpace(model.Password)
                 || string.IsNullOrWhiteSpace(model.Email))
             {
-                throw new JIFException("信息不完整");
+                throwJIFException("信息不完整");
             }
 
             var exists = _sysAdminRepository.Table.Any(d => model.Account.ToLower().Trim() == d.Account.ToLower().Trim());
             if (exists)
             {
-                throw new JIFException("帐号: " + model.Account + ", 已存在");
+                throwJIFException("帐号: " + model.Account + ", 已存在");
             }
 
             var now = DateTime.Now;
@@ -72,13 +72,13 @@ namespace JIF.CMS.Services.SysManager
         {
             if (model == null)
             {
-                throw new JIFException("信息不能为空");
+                throwJIFException("信息不能为空");
             }
 
             var entity = _sysAdminRepository.Get(id);
             if (entity == null)
             {
-                throw new JIFException("用户不存在");
+                throwJIFException("用户不存在");
             }
 
             entity.Email = model.Email;
@@ -89,9 +89,22 @@ namespace JIF.CMS.Services.SysManager
 
         }
 
-        public void UpdatePwd(string originalPwd, string newPwd)
+        public void UpdatePwd(int id, string newPwd)
         {
-            throw new NotImplementedException();
+            if (string.IsNullOrWhiteSpace(newPwd))
+            {
+                throwJIFException("密码不能为空");
+            }
+
+            var entity = _sysAdminRepository.Get(id);
+            if (entity == null)
+            {
+                throwJIFException("用户不存在");
+            }
+
+            entity.Password = EncyptHelper.Encrypt(MD5.Create(), string.Format("{0}-{1}", newPwd, entity.CreateTime.ToString(JIFConsts.DATETIME_NORMAL)));
+
+            _sysAdminRepository.Update(entity);
         }
 
         public IPagedList<SysAdmin> Load(string q, int pageIndex = 1, int pageSize = int.MaxValue)
@@ -103,6 +116,33 @@ namespace JIF.CMS.Services.SysManager
             return new PagedList<SysAdmin>(query.OrderByDescending(d => d.Id).ToList(), pageIndex, pageSize);
         }
 
+        public LoginOutputDto Login(string account, string password)
+        {
+            if (string.IsNullOrWhiteSpace(account)
+                || string.IsNullOrWhiteSpace(password))
+            {
+                throw new JIFException("账号 / 密码 不能为空");
+            }
 
+            var entity = _sysAdminRepository.Table.FirstOrDefault(d => d.Account.ToLower().Trim() == account.ToLower().Trim());
+
+            if (entity == null)
+                throw new JIFException("账号不存在");
+
+            if (!EncyptHelper.IsHashMatch(MD5.Create(), entity.Password, string.Format("{0}-{1}", password, entity.CreateTime.ToString(JIFConsts.DATETIME_NORMAL))))
+            {
+                throw new JIFException("密码不正确");
+            }
+
+            //entity.LastLoginTime = DateTime.Now;
+            //entity.LastLoginIP = _webHelper.GetCurrentIpAddress();
+
+            //_userRepository.Update(entity);
+
+            return new LoginOutputDto
+            {
+                UserId = entity.Id
+            };
+        }
     }
 }

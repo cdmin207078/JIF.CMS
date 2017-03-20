@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace JIF.CMS.Core
+namespace JIF.CMS.Core.Common
 {
     public static class RandomHelper
     {

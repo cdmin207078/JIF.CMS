@@ -2,6 +2,7 @@
 using JIF.CMS.Core.Domain;
 using JIF.CMS.Services.SysManager;
 using JIF.CMS.Services.SysManager.Dtos;
+using JIF.CMS.Web.Framework.Controllers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +11,7 @@ using System.Web.Mvc;
 
 namespace JIF.CMS.Management.Controllers
 {
-    public class SysManagerController : Controller
+    public class SysManagerController : AdminControllerBase
     {
         private readonly ISysManagerService _sysManagerService;
 
@@ -38,6 +39,11 @@ namespace JIF.CMS.Management.Controllers
         [HttpPost]
         public ActionResult Add(SysAdminInertBasicInfo model)
         {
+            if (Request["Enable"] != null && Request["Enable"].ToString() == "on")
+            {
+                model.Enable = true;
+            }
+
             _sysManagerService.Add(model);
 
             return RedirectToAction("Index");
@@ -72,11 +78,11 @@ namespace JIF.CMS.Management.Controllers
         }
 
         [HttpPost]
-        public ActionResult UpdatePwd(int id, string originalPwd, string newPwd)
+        public ActionResult UpdatePwd(int id, string newPwd)
         {
-            _sysManagerService.UpdatePwd(originalPwd, newPwd);
+            _sysManagerService.UpdatePwd(id, newPwd);
 
-            return RedirectToAction("update", new { id = id });
+            return RedirectToAction("Detail", new { id = id });
         }
 
         [HttpPost]

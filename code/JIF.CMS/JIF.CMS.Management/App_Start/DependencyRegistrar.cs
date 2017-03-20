@@ -1,12 +1,15 @@
 ﻿using Autofac;
 using Autofac.Integration.Mvc;
+using JIF.CMS.Core;
 using JIF.CMS.Core.Configuration;
 using JIF.CMS.Core.Data;
 using JIF.CMS.Core.Infrastructure;
 using JIF.CMS.Core.Infrastructure.DependencyManagement;
 using JIF.CMS.Data.EntityFramework;
 using JIF.CMS.Services.Articles;
+using JIF.CMS.Services.Authentication;
 using JIF.CMS.Services.SysManager;
+using JIF.CMS.Web.Framework;
 using System.Data.Entity;
 using System.Web;
 
@@ -30,9 +33,9 @@ namespace JIF.CMS.Management
             builder.Register(c => c.Resolve<HttpContextBase>().Server)
                 .As<HttpServerUtilityBase>()
                 .InstancePerLifetimeScope();
-            builder.Register(c => c.Resolve<HttpContextBase>().Session)
-                .As<HttpSessionStateBase>()
-                .InstancePerLifetimeScope();
+            //builder.Register(c => c.Resolve<HttpContextBase>().Session)
+            //    .As<HttpSessionStateBase>()
+            //    .InstancePerLifetimeScope();
 
             // register your MVC controllers. (MvcApplication is the name of
             // the class in Global.asax.)
@@ -57,9 +60,14 @@ namespace JIF.CMS.Management
             // OPTIONAL: repositores
             builder.RegisterGeneric(typeof(EfRepository<>)).As(typeof(IRepository<>)).InstancePerLifetimeScope();
 
-
-            //// Core Implements Dependency
+            // OPTIONAL: register log
             //builder.RegisterInstance(new NLogLoggerFactoryAdapter(new NameValueCollection()).GetLogger("")).As<ILog>().SingleInstance();
+
+            // OPTIONAL: work context
+            builder.RegisterType<WebWorkContext>().As<IWorkContext>().InstancePerLifetimeScope().PropertiesAutowired(PropertyWiringOptions.AllowCircularDependencies);
+
+            // OPTIONAL: AuthenticationService
+            builder.RegisterType<FormsAuthenticationService>().As<IAuthenticationService>().InstancePerLifetimeScope();
 
             // Services
             builder.RegisterType<ArticleService>().As<IArticleService>().InstancePerLifetimeScope();

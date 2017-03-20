@@ -391,6 +391,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\SysManagerController.cs" />
+    <Compile Include="Controllers\WelcomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -409,6 +410,8 @@
     <None Include="Properties\PublishProfiles\cn-pc.pubxml" />
     <Content Include="Views\SysManager\Add.cshtml" />
     <Content Include="Views\SysManager\Detail.cshtml" />
+    <Content Include="Views\Welcome\Index.cshtml" />
+    <Content Include="Views\Shared\_CurrentUserInfo.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -432,6 +435,10 @@
     <ProjectReference Include="..\JIF.CMS.Services\JIF.CMS.Services.csproj">
       <Project>{9532BCAC-0342-4297-A8B6-6028326C01B1}</Project>
       <Name>JIF.CMS.Services</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\JIF.CMS.Web.Framework\JIF.CMS.Web.Framework.csproj">
+      <Project>{32fc4c79-089e-4d2a-82b9-7cc39101c0c8}</Project>
+      <Name>JIF.CMS.Web.Framework</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

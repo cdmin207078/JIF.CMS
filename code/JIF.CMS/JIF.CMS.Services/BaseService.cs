@@ -12,36 +12,46 @@ using System.Threading.Tasks;
 
 namespace JIF.CMS.Services
 {
-    public abstract class BaseService<T> : IBaseService<T> where T : BaseEntity
+    public abstract class BaseService : IBaseService
     {
-        private IRepository<T> _repository;
+        //private IRepository<T> _repository;
 
-        public BaseService(IRepository<T> repository)
+        //public BaseService(IRepository<T> repository)
+        //{
+        //    _repository = repository;
+        //}
+
+        //public IQueryable<T> Tables
+        //{
+        //    get
+        //    {
+        //        return _repository.Table;
+        //    }
+        //}
+
+        //public T Get(object id)
+        //{
+        //    return _repository.Get(id);
+        //}
+
+        //public virtual IPagedList<T> Search(Expression<Func<T, bool>> whereLambda = null, int pageIndex = 1, int pageSize = int.MaxValue)
+        //{
+        //    var query = _repository.Table;
+
+        //    if (whereLambda != null)
+        //        query = query.Where(whereLambda);
+
+        //    return new PagedList<T>(query.OrderByDescending(d => d.Id), pageIndex, pageSize);
+        //}
+
+        public void throwJIFException(string message)
         {
-            _repository = repository;
+            throw new JIFException(message);
         }
 
-        public IQueryable<T> Tables
+        public void throwJIFException(string message, Exception innerException)
         {
-            get
-            {
-                return _repository.Table;
-            }
-        }
-
-        public T Get(object id)
-        {
-            return _repository.Get(id);
-        }
-
-        public virtual IPagedList<T> Search(Expression<Func<T, bool>> whereLambda = null, int pageIndex = 1, int pageSize = int.MaxValue)
-        {
-            var query = _repository.Table;
-
-            if (whereLambda != null)
-                query = query.Where(whereLambda);
-
-            return new PagedList<T>(query.OrderByDescending(d => d.Id), pageIndex, pageSize);
+            throw new JIFException(message, innerException);
         }
     }
 }

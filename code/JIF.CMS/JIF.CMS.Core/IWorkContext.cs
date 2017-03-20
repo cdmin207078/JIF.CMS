@@ -1,6 +1,8 @@
 ﻿
 
 
+using JIF.CMS.Core.Domain;
+
 namespace JIF.CMS.Core
 {
     /// <summary>
@@ -8,14 +10,14 @@ namespace JIF.CMS.Core
     /// </summary>
     public interface IWorkContext
     {
-        ///// <summary>
-        ///// Gets or sets the current user
-        ///// </summary>
-        //User CurrentUser { get; }
+        /// <summary>
+        /// 当前用户
+        /// </summary>
+        IUser CurrentUser { get; }
 
-        ///// <summary>
-        ///// Get or set value indicating whether we're in admin area
-        ///// </summary>
-        //bool IsAdmin { get; set; }
+        /// <summary>
+        /// 是否是系统管理员
+        /// </summary>
+        bool IsAdmin { get; set; }
     }
 }

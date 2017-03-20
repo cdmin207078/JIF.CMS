@@ -1,4 +1,7 @@
-﻿using JIF.CMS.Services.Articles;
+﻿using JIF.CMS.Core;
+using JIF.CMS.Services.Articles;
+using JIF.CMS.Services.Authentication;
+using JIF.CMS.Web.Framework.Controllers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,19 +10,32 @@ using System.Web.Mvc;
 
 namespace JIF.CMS.Management.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : AdminControllerBase
     {
-        private readonly IArticleService _articleService;
-
-        public HomeController(IArticleService articleService)
+        public readonly IWorkContext _workContext;
+        private readonly IAuthenticationService _authenticationService;
+        public HomeController(IWorkContext workContext,
+          IAuthenticationService authenticationService)
         {
-            _articleService = articleService;
+            _workContext = workContext;
+            _authenticationService = authenticationService;
         }
 
         public ActionResult Index()
         {
-            ViewBag.Message = _articleService.Sayhello();
             return View();
+        }
+
+        // GET: Layout
+        public ActionResult CurrentUserInfo(string viewpath)
+        {
+            return View(viewpath, _workContext.CurrentUser);
+        }
+
+        public ActionResult LogOut()
+        {
+            _authenticationService.SignOut();
+            return RedirectToAction("index", "welcome");
         }
     }
 }

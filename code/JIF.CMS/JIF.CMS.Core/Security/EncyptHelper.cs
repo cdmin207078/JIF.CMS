@@ -52,16 +52,5 @@ namespace JIF.CMS.Core.Security
             string hashedTextToCompare = Encrypt(hashAlgorithm, unhashedText);
             return (string.Compare(hashedText, hashedTextToCompare, false) == 0);
         }
-
-
-        /// <summary>
-        /// 使用 MD5算法 加密字符串
-        /// </summary>
-        /// <param name="dataToHash"></param>
-        /// <returns></returns>
-        public static string Encrypt_MD5(string dataToHash)
-        {
-            return Encrypt(MD5.Create(), dataToHash);
-        }
     }
 }

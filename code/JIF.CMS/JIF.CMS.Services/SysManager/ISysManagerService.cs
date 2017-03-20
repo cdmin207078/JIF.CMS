@@ -32,7 +32,7 @@ namespace JIF.CMS.Services.SysManager
         /// </summary>
         /// <param name="originalPwd"></param>
         /// <param name="newPwd"></param>
-        void UpdatePwd(string originalPwd, string newPwd);
+        void UpdatePwd(int id, string newPwd);
 
         /// <summary>
         /// 删除 管理员
@@ -48,5 +48,13 @@ namespace JIF.CMS.Services.SysManager
         /// <param name="pageSize">页大小</param>
         /// <returns></returns>
         IPagedList<SysAdmin> Load(string q, int pageIndex = 1, int pageSize = int.MaxValue);
+
+        /// <summary>
+        /// 管理员登陆
+        /// </summary>
+        /// <param name="account"></param>
+        /// <param name="password"></param>
+        /// <returns></returns>
+        LoginOutputDto Login(string account, string password);
     }
 }
