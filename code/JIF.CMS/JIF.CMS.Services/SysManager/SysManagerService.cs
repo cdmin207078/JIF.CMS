@@ -10,21 +10,42 @@ using JIF.CMS.Core.Security;
 using System.Security.Cryptography;
 using JIF.CMS.Services.SysManager.Dtos;
 using System.Linq.Expressions;
+using JIF.CMS.Core.Infrastructure;
 
 namespace JIF.CMS.Services.SysManager
 {
     public class SysManagerService : BaseService, ISysManagerService
     {
         private readonly IRepository<SysAdmin> _sysAdminRepository;
-
-        public SysAdmin Get(int id)
-        {
-            return _sysAdminRepository.Get(id);
-        }
+        private readonly IWorkContext _workContext;
 
         public SysManagerService(IRepository<SysAdmin> sysAdminRepository)
         {
             _sysAdminRepository = sysAdminRepository;
+            _workContext = EngineContext.Current.Resolve<IWorkContext>();
+        }
+
+        #region private methods
+
+        /// <summary>
+        /// 用户密码加密
+        /// </summary>
+        /// <param name="pwd">密码明文</param>
+        /// <param name="createtime">用户创建时间</param>
+        /// <returns></returns>
+        private string EncyptPwd(string pwd, DateTime createtime)
+        {
+            var algo = EncyptHelper.CreateHashAlgoMd5();
+            var plain = string.Format("{0}-{1}", pwd, createtime.ToString(JIFConsts.DATETIME_NORMAL));
+
+            return EncyptHelper.Encrypt(algo, plain);
+        }
+
+        #endregion
+
+        public SysAdmin Get(int id)
+        {
+            return _sysAdminRepository.Get(id);
         }
 
         public void Add(SysAdminInertBasicInfo model)
@@ -54,10 +75,10 @@ namespace JIF.CMS.Services.SysManager
                 Account = model.Account,
                 Email = model.Email,
                 CellPhone = model.CellPhone,
-                Password = EncyptHelper.Encrypt(MD5.Create(), string.Format("{0}-{1}", model.Password, now.ToString(JIFConsts.DATETIME_NORMAL))),
+                Password = EncyptPwd(model.Password, now),
                 Enable = model.Enable,
                 CreateTime = now,
-                CreateUserId = JIFConsts.SYS_DEFAULTUID
+                CreateUserId = _workContext.CurrentUser.Id
             };
 
             _sysAdminRepository.Insert(entity);
@@ -102,26 +123,36 @@ namespace JIF.CMS.Services.SysManager
                 throwJIFException("用户不存在");
             }
 
-            entity.Password = EncyptHelper.Encrypt(MD5.Create(), string.Format("{0}-{1}", newPwd, entity.CreateTime.ToString(JIFConsts.DATETIME_NORMAL)));
+            entity.Password = EncyptPwd(newPwd, entity.CreateTime);
 
             _sysAdminRepository.Update(entity);
         }
 
-        public IPagedList<SysAdmin> Load(string q, int pageIndex = 1, int pageSize = int.MaxValue)
+        public IPagedList<SysAdminSearchListOutDto> Load(string q, int pageIndex = 1, int pageSize = int.MaxValue)
         {
-            var query = _sysAdminRepository.Table.Where(d => d.Account.Contains(q)
-                                       || d.Email.Contains(q)
-                                       || d.CellPhone.Contains(q));
+            var query = (from a in _sysAdminRepository.Table
+                         join b in _sysAdminRepository.Table
+                         on a.CreateUserId equals b.Id
+                         where a.Account.Contains(q) || a.Email.Contains(q) || a.CellPhone.Contains(q)
+                         select new SysAdminSearchListOutDto
+                         {
+                             Id = a.Id,
+                             Account = a.Account,
+                             Email = a.Email,
+                             CellPhone = a.CellPhone,
+                             CreateTime = a.CreateTime,
+                             CreateUserName = b.Account,
+                             Enable = a.Enable
+                         }).OrderByDescending(d => d.Id);
 
-            return new PagedList<SysAdmin>(query.OrderByDescending(d => d.Id).ToList(), pageIndex, pageSize);
+            return new PagedList<SysAdminSearchListOutDto>(query, pageIndex, pageSize);
         }
 
         public LoginOutputDto Login(string account, string password)
         {
-            if (string.IsNullOrWhiteSpace(account)
-                || string.IsNullOrWhiteSpace(password))
+            if (string.IsNullOrWhiteSpace(account) || string.IsNullOrWhiteSpace(password))
             {
-                throw new JIFException("账号 / 密码 不能为空");
+                throwJIFException("账号 / 密码 不能为空");
             }
 
             var entity = _sysAdminRepository.Table.FirstOrDefault(d => d.Account.ToLower().Trim() == account.ToLower().Trim());
@@ -129,9 +160,11 @@ namespace JIF.CMS.Services.SysManager
             if (entity == null)
                 throw new JIFException("账号不存在");
 
-            if (!EncyptHelper.IsHashMatch(MD5.Create(), entity.Password, string.Format("{0}-{1}", password, entity.CreateTime.ToString(JIFConsts.DATETIME_NORMAL))))
+            var cipherText = EncyptPwd(password, entity.CreateTime);
+
+            if (cipherText != entity.Password)
             {
-                throw new JIFException("密码不正确");
+                throwJIFException("密码不正确");
             }
 
             //entity.LastLoginTime = DateTime.Now;

@@ -47,7 +47,7 @@ namespace JIF.CMS.Services.SysManager
         /// <param name="pageIndex">页码</param>
         /// <param name="pageSize">页大小</param>
         /// <returns></returns>
-        IPagedList<SysAdmin> Load(string q, int pageIndex = 1, int pageSize = int.MaxValue);
+        IPagedList<SysAdminSearchListOutDto> Load(string q, int pageIndex = 1, int pageSize = int.MaxValue);
 
         /// <summary>
         /// 管理员登陆

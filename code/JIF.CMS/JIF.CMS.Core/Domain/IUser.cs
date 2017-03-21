@@ -16,7 +16,6 @@ namespace JIF.CMS.Core.Domain
         /// </summary>
         int Id { get; set; }
 
-
         /// <summary>
         /// 用户账号
         /// </summary>

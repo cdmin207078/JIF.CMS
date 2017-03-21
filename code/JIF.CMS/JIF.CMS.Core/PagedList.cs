@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace JIF.CMS.Core
 {
     [Serializable]
-    public class PagedList<T> : List<T>, IPagedList<T> where T : Domain.BaseEntity
+    public class PagedList<T> : List<T>, IPagedList<T>
     {
         public PagedList(IQueryable<T> source, int pageIndex, int pageSize)
         {

@@ -1,7 +1,7 @@
 ﻿@{
     ViewBag.Title = "系统用户管理";
 
-    var managers = ViewBag.Managers as IList<JIF.CMS.Core.Domain.SysAdmin>;
+    var managers = ViewBag.Managers as IList<JIF.CMS.Services.SysManager.Dtos.SysAdminSearchListOutDto>;
 }
 
 <div class="row">
@@ -14,7 +14,7 @@
                 <div class="pull-right">
                     <form action="/SysManager/" method="get" class="form-horizontal" style="max-width: 300px;">
                         <div class="input-group">
-                            <input type="text" class="form-control" name="s" placeholder="账号 / Email / 电话" value="@ViewBag.SearchKey">
+                            <input type="text" class="form-control" name="s" placeholder="账号 / Email / 电话" value="@ViewBag.SearchWords">
                             <span class="input-group-btn">
                                 <button type="submit" class="btn btn-info btn-flat">搜 索</button>
                             </span>
@@ -24,47 +24,51 @@
             </div>
 
             <div class="box-body">
-                <table class="table table-bordered table-hover table-condensed table-striped">
-                    <thead>
-                        <tr>
-                            <th>账号</th>
-                            <th>邮箱</th>
-                            <th>电话</th>
-                            <th>启用</th>
-                            <th>创建者</th>
-                            <th>创建时间</th>
-                            <th>操作</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var manager in managers)
-                        {
-                            <tr class="no-padding">
-                                <td>@manager.Account</td>
-                                <td>@manager.Email</td>
-                                <td>@manager.CellPhone</td>
-                                <td><span class="label @(manager.Enable ? "label-success" :"label-danger")">@(manager.Enable ? "启用" : "停用")</span></td>
-                                <td>chenning</td>
-                                <td>@manager.CreateTime.ToString(JIF.CMS.Core.JIFConsts.DATETIME_NORMAL)</td>
-                                <td>
-                                    <a href="/sysmanager/detail/@manager.Id" class="btn btn-xs btn-primary no-margin">详情</a>
+                @if (managers != null && managers.Any())
+                {
+                    <table class="table table-bordered table-hover table-condensed table-striped">
+                        <thead>
+                            <tr>
+                                <th>账号</th>
+                                <th>邮箱</th>
+                                <th>电话</th>
+                                <th>启用</th>
+                                <th>创建者</th>
+                                <th>创建时间</th>
+                                <th>操作</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var manager in managers)
+                            {
+                                <tr class="no-padding">
+                                    <td>@manager.Account</td>
+                                    <td>@manager.Email</td>
+                                    <td>@manager.CellPhone</td>
+                                    <td><span class="label @(manager.Enable ? "label-success" : "label-danger")">@(manager.Enable ? "启用" : "停用")</span></td>
+                                    <td>@manager.CreateUserName</td>
+                                    <td>@manager.CreateTime.ToString(JIF.CMS.Core.JIFConsts.DATETIME_NORMAL)</td>
+                                    <td>
+                                        <a href="/sysmanager/detail/@manager.Id" class="btn btn-xs btn-primary no-margin">详情</a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+
+                        <tfoot>
+                            <tr>
+                                <td colspan="7">
+                                    @Html.Partial("_Pager", managers)
                                 </td>
                             </tr>
-                        }
-                    </tbody>
-
-                    <tfoot>
-                        <tr>
-                            <td colspan="7">
-                                @Html.Partial("_Pager", managers)
-                            </td>
-                        </tr>
-                    </tfoot>
-                </table>
+                        </tfoot>
+                    </table>
+                }
+                else
+                {
+                    @Html.Partial("_NoData");
+                }
             </div>
         </div>
-
-
-
     </div>
 </div>

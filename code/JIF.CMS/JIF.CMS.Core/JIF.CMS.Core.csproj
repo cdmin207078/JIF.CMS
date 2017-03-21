@@ -86,7 +86,7 @@
     <Compile Include="Domain\BaseEntity.cs" />
     <Compile Include="Domain\SysAdmin.cs" />
     <Compile Include="Domain\SysLog.cs" />
-    <Compile Include="Domain\User.cs" />
+    <Compile Include="Domain\IUser.cs" />
     <Compile Include="Infrastructure\AppDomainTypeFinder.cs" />
     <Compile Include="Infrastructure\DependencyManagement\ContainerManager.cs" />
     <Compile Include="Infrastructure\DependencyManagement\IDependencyRegistrar.cs" />

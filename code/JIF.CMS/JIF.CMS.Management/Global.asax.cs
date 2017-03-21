@@ -1,4 +1,6 @@
 ﻿using JIF.CMS.Core.Infrastructure;
+using StackExchange.Profiling;
+using StackExchange.Profiling.EntityFramework6;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,6 +23,18 @@ namespace JIF.CMS.Management
 
             // initialize engine context
             EngineContext.Initialize(false);
+
+            //初始化EF6的性能监控
+            MiniProfilerEF6.Initialize();
+        }
+
+        protected void Application_BeginRequest()
+        {
+            MiniProfiler.Start();
+        }
+        protected void Application_EndRequest()
+        {
+            MiniProfiler.Stop();
         }
     }
 }

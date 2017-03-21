@@ -4,19 +4,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace JIF.CMS.Core.Domain
+namespace JIF.CMS.Services.SysManager.Dtos
 {
-    public class SysAdmin : BaseEntity, IUser
+    public class SysAdminSearchListOutDto
     {
+        /// <summary>
+        /// 主键自增
+        /// </summary>
+        public int Id { get; set; }
+
         /// <summary>
         /// 账户
         /// </summary>
         public string Account { get; set; }
-
-        /// <summary>
-        /// 密码
-        /// </summary>
-        public string Password { get; set; }
 
         /// <summary>
         /// 电子邮箱
@@ -39,8 +39,8 @@ namespace JIF.CMS.Core.Domain
         public DateTime CreateTime { get; set; }
 
         /// <summary>
-        /// 创建者系统编号
+        /// 创建者名称
         /// </summary>
-        public int CreateUserId { get; set; }
+        public string CreateUserName { get; set; }
     }
 }
