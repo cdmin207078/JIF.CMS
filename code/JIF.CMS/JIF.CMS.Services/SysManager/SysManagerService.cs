@@ -19,10 +19,11 @@ namespace JIF.CMS.Services.SysManager
         private readonly IRepository<SysAdmin> _sysAdminRepository;
         private readonly IWorkContext _workContext;
 
-        public SysManagerService(IRepository<SysAdmin> sysAdminRepository)
+        public SysManagerService(IRepository<SysAdmin> sysAdminRepository,
+            IWorkContext workContext)
         {
             _sysAdminRepository = sysAdminRepository;
-            _workContext = EngineContext.Current.Resolve<IWorkContext>();
+            _workContext = workContext;
         }
 
         #region private methods

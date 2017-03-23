@@ -64,10 +64,10 @@ namespace JIF.CMS.Management
             //builder.RegisterInstance(new NLogLoggerFactoryAdapter(new NameValueCollection()).GetLogger("")).As<ILog>().SingleInstance();
 
             // OPTIONAL: work context
-            builder.RegisterType<WebWorkContext>().As<IWorkContext>().InstancePerLifetimeScope().PropertiesAutowired(PropertyWiringOptions.AllowCircularDependencies);
+            builder.RegisterType<WebWorkContext>().As<IWorkContext>().InstancePerLifetimeScope();
 
             // OPTIONAL: AuthenticationService
-            builder.RegisterType<FormsAuthenticationService>().As<IAuthenticationService>().InstancePerLifetimeScope();
+            builder.RegisterType<FormsAuthenticationService>().As<IAuthenticationService>().InstancePerLifetimeScope().PropertiesAutowired(PropertyWiringOptions.AllowCircularDependencies);
 
             // Services
             builder.RegisterType<ArticleService>().As<IArticleService>().InstancePerLifetimeScope();
