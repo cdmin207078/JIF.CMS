@@ -12,17 +12,16 @@ namespace JIF.CMS.Services.Authentication
 {
     public class FormsAuthenticationService : IAuthenticationService
     {
-        private readonly HttpContextBase _httpContext;
-        private readonly ISysManagerService _sysManagerService;
-        private readonly TimeSpan _expirationTimeSpan;
-
         private IUser _cachedUser;
 
-        public FormsAuthenticationService(HttpContextBase httpContext,
-            ISysManagerService sysManagerService)
+        private readonly HttpContextBase _httpContext;
+        private readonly TimeSpan _expirationTimeSpan;
+
+        public ISysManagerService _sysManagerService { get; set; }
+
+        public FormsAuthenticationService(HttpContextBase httpContext)
         {
             this._httpContext = httpContext;
-            this._sysManagerService = sysManagerService;
             this._expirationTimeSpan = FormsAuthentication.Timeout;
         }
 
