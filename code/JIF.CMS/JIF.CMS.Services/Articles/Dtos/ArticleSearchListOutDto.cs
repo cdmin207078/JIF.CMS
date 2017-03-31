@@ -4,24 +4,21 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace JIF.CMS.Core.Domain
+namespace JIF.CMS.Services.Articles.Dtos
 {
-    public class Article : BaseEntity
+    public class ArticleSearchListOutDto
     {
+        public int Id { get; set; }
+
         /// <summary>
         /// 标题
         /// </summary>
         public string Title { get; set; }
 
         /// <summary>
-        /// 内容
-        /// </summary>
-        public string Content { get; set; }
-
-        /// <summary>
         /// 所属分类
         /// </summary>
-        public int CategoryId { get; set; }
+        public string Category { get; set; }
 
         /// <summary>
         /// 创建时间
@@ -29,9 +26,8 @@ namespace JIF.CMS.Core.Domain
         public DateTime CreateTime { get; set; }
 
         /// <summary>
-        /// 创建者系统编号
+        /// 创建者名称
         /// </summary>
-        public int CreateUserId { get; set; }
-
+        public string Author { get; set; }
     }
 }

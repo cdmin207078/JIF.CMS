@@ -398,7 +398,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
-    <Compile Include="App_Start\DependencyRegistrar.cs" />
+    <None Include="App_Start\DependencyRegistrar.cs.bak" />
     <Compile Include="App_Start\JIFExceptionAttribute.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />

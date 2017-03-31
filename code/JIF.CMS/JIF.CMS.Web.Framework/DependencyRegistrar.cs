@@ -1,5 +1,6 @@
 ﻿using Autofac;
 using Autofac.Integration.Mvc;
+using Autofac.Integration.WebApi;
 using JIF.CMS.Core;
 using JIF.CMS.Core.Configuration;
 using JIF.CMS.Core.Data;
@@ -9,11 +10,15 @@ using JIF.CMS.Data.EntityFramework;
 using JIF.CMS.Services.Articles;
 using JIF.CMS.Services.Authentication;
 using JIF.CMS.Services.SysManager;
-using JIF.CMS.Web.Framework;
+using System;
+using System.Collections.Generic;
 using System.Data.Entity;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using System.Web;
 
-namespace JIF.CMS.Management
+namespace JIF.CMS.Web.Framework
 {
     public class DependencyRegistrar : IDependencyRegistrar
     {
@@ -37,13 +42,16 @@ namespace JIF.CMS.Management
             //    .As<HttpSessionStateBase>()
             //    .InstancePerLifetimeScope();
 
-            // register your MVC controllers. (MvcApplication is the name of
-            // the class in Global.asax.)
-            builder.RegisterControllers(typeof(MvcApplication).Assembly);
+            // OPTIONAL: Register controllers
+            builder.RegisterControllers(typeFinder.GetAssemblies().ToArray());
 
             // OPTIONAL: Register model binders that require DI.
-            builder.RegisterModelBinders(typeof(MvcApplication).Assembly);
+            builder.RegisterModelBinders(typeFinder.GetAssemblies().ToArray());
             builder.RegisterModelBinderProvider();
+
+            //// OPTIONAL: register web api controllers
+            //builder.RegisterApiControllers(typeFinder.GetAssemblies().ToArray());
+
 
             // OPTIONAL: Register web abstractions like HttpContextBase.
             builder.RegisterModule<AutofacWebTypesModule>();

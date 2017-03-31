@@ -42,6 +42,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Articles\ArticleService.cs" />
+    <Compile Include="Articles\Dtos\ArticleInertDto.cs" />
+    <Compile Include="Articles\Dtos\ArticleSearchListOutDto.cs" />
     <Compile Include="Articles\IArticleService.cs" />
     <Compile Include="Authentication\FormsAuthenticationService.cs" />
     <Compile Include="Authentication\IAuthenticationService.cs" />
