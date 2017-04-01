@@ -8,6 +8,7 @@ using JIF.CMS.Core.Configuration;
 using JIF.CMS.Core.Infrastructure;
 using System.Reflection;
 using Autofac.Integration.WebApi;
+using System.Web.Http;
 
 namespace JIF.CMS.Management.API
 {
@@ -23,12 +24,14 @@ namespace JIF.CMS.Management.API
 
         public void Register(ContainerBuilder builder, ITypeFinder typeFinder, JIFConfig config)
         {
+            // Get your HttpConfiguration.
+            var configuration = GlobalConfiguration.Configuration;
 
-            // register web api controllers
+            // Register your Web API controllers.
             builder.RegisterApiControllers(Assembly.GetExecutingAssembly());
 
-            //builder.RegisterWebApiFilterProvider();
-
+            // OPTIONAL: Register the Autofac filter provider.
+            builder.RegisterWebApiFilterProvider(configuration);
         }
     }
 }

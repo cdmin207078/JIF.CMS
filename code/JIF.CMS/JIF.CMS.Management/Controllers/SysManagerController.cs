@@ -92,5 +92,34 @@ namespace JIF.CMS.Management.Controllers
         {
             throw new NotImplementedException();
         }
+
+
+
+
+
+
+        [HttpPost]
+        public ActionResult DDD(List<DDDC> model)
+        {
+            return Json(model);
+        }
+    }
+
+
+
+
+    public class DDDC
+    {
+        public int Id { get; set; }
+
+        public List<DDDKV> KV { get; set; }
+    }
+
+
+    public class DDDKV
+    {
+        public string k { get; set; }
+
+        public string v { get; set; }
     }
 }

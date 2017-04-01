@@ -40,11 +40,17 @@ namespace JIF.CMS.Services.Articles
                 articles.Add(new ArticleSearchListOutDto { Id = 3, Title = "autofac 循环依赖处理", Author = "admin", Category = "程序开发", CreateTime = DateTime.Now });
                 articles.Add(new ArticleSearchListOutDto { Id = 4, Title = "C# Enum - String - int 互相转换", Author = "admin", Category = "程序开发", CreateTime = DateTime.Now });
                 articles.Add(new ArticleSearchListOutDto { Id = 5, Title = "typecho 安装访问端口设置", Author = "admin", Category = "程序开发", CreateTime = DateTime.Now });
+                articles.Add(new ArticleSearchListOutDto { Id = 6, Title = "WebAPI 跨域访问", Author = "代号极光", Category = "程序开发", CreateTime = DateTime.Now });
+                articles.Add(new ArticleSearchListOutDto { Id = 7, Title = "深入浅出数据库索引原理", Author = "天雨流芳", Category = "数据库", CreateTime = DateTime.Now });
+
             }
 
-            q = q.Trim();
+            if (!string.IsNullOrWhiteSpace(q))
+            {
+                articles = articles.Where(d => d.Title.ToLower().Contains(q.ToLower())).ToList();
+            }
 
-            return new PagedList<ArticleSearchListOutDto>(articles.Where(d => d.Title.Contains(q)).ToList(), pageIndex, pageSize);
+            return new PagedList<ArticleSearchListOutDto>(articles, pageIndex, pageSize);
         }
     }
 }

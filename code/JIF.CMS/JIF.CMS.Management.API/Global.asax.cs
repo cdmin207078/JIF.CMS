@@ -1,4 +1,5 @@
-﻿using JIF.CMS.Core.Infrastructure;
+﻿using Autofac.Integration.WebApi;
+using JIF.CMS.Core.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,12 +15,11 @@ namespace JIF.CMS.Management.API
         {
             GlobalConfiguration.Configure(WebApiConfig.Register);
 
-            var config = GlobalConfiguration.Configuration;
+            EngineContext.Initialize(false);
 
-            // autofac register
-            //DependencyRegistrar.RegisterDependencies(config);
+            // 将新的解析器附加到您的HttpConfiguration.DependencyResolver以让Web API知道它应该使用AutofacWebApiDependencyResolver查找服务
+            GlobalConfiguration.Configuration.DependencyResolver = new AutofacWebApiDependencyResolver(EngineContext.Current.ContainerManager.Container);
 
-            EngineContext.Initialize(true);
         }
     }
 }

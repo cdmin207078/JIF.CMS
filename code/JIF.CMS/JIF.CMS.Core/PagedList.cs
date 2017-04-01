@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace JIF.CMS.Core
 {
-    [Serializable]
+    //[Serializable]
+    [DataContract]
     public class PagedList<T> : List<T>, IPagedList<T>
     {
         public PagedList(IQueryable<T> source, int pageIndex, int pageSize)
@@ -37,16 +39,26 @@ namespace JIF.CMS.Core
             this.AddRange(source.Skip((PageIndex - 1) * pageSize).Take(pageSize).ToList());
         }
 
-        public int PageIndex { get; private set; }
-        public int PageSize { get; private set; }
-        //public int IndividualPagesDisplayedCount { get; private set; }
-        public int TotalCount { get; private set; }
-        public int TotalPages { get; private set; }
+        [DataMember]
+        public int PageIndex { get; set; }
 
+        [DataMember]
+        public int PageSize { get; set; }
+        //public int IndividualPagesDisplayedCount { get; private set; }
+
+        [DataMember]
+        public int TotalCount { get; set; }
+
+        [DataMember]
+        public int TotalPages { get; set; }
+
+        [DataMember]
         public bool HasPreviousPage
         {
             get { return (PageIndex > 1); }
         }
+
+        [DataMember]
         public bool HasNextPage
         {
             get { return (PageIndex + 1 < TotalPages); }
@@ -90,13 +102,5 @@ namespace JIF.CMS.Core
         //        return (this.PageIndex + num);
         //    }
         //}
-    }
-
-    public static class PagedListExtends
-    {
-        public static PagedData<T> ToPagedData<T>(this IPagedList<T> source)
-        {
-            return new PagedData<T>(source);
-        }
     }
 }

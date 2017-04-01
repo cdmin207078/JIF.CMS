@@ -1,4 +1,5 @@
-﻿using JIF.CMS.Services.Authentication;
+﻿using JIF.CMS.Core;
+using JIF.CMS.Services.Authentication;
 using JIF.CMS.Services.SysManager;
 using JIF.CMS.Web.Framework.Controllers;
 using System;

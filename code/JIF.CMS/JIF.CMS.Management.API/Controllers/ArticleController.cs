@@ -1,5 +1,6 @@
 ﻿using JIF.CMS.Core;
 using JIF.CMS.Services.Articles;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,7 +25,7 @@ namespace JIF.CMS.Management.API.Controllers
         [HttpGet]
         public IHttpActionResult Index(string q = "", int pageIndex = JIFConsts.SYS_PAGE_INDEX, int pageSize = JIFConsts.SYS_PAGE_SIZE)
         {
-            return Ok(_articleService.Load(q, pageIndex, pageSize));
+            return Ok(_articleService.Load(q, pageIndex, pageSize).ToPagedData());
         }
     }
 }

@@ -7,26 +7,16 @@ using System.Threading.Tasks;
 
 namespace JIF.CMS.Core
 {
-    public interface IPaged
+    /// <summary>
+    /// Paged list interface
+    /// </summary>
+    public interface IPagedList<T> : IList<T>
     {
         int PageIndex { get; }
         int PageSize { get; }
-        //int IndividualPagesDisplayedCount { get; }
         int TotalCount { get; }
         int TotalPages { get; }
         bool HasPreviousPage { get; }
         bool HasNextPage { get; }
-
-        //int FirstIndividualPageIndex { get; }
-        //int LastIndividualPageIndex { get; }
-    }
-
-
-    /// <summary>
-    /// Paged list interface
-    /// </summary>
-    public interface IPagedList<T> : IPaged, IList<T>
-    {
-
     }
 }

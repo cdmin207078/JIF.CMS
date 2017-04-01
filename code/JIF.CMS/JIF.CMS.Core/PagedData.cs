@@ -64,4 +64,12 @@ namespace JIF.CMS.Core
 
         public IEnumerable<T> Items { get; set; }
     }
+
+    public static class PagedListExtends
+    {
+        public static PagedData<T> ToPagedData<T>(this IPagedList<T> source)
+        {
+            return new PagedData<T>(source);
+        }
+    }
 }
