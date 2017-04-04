@@ -25,7 +25,19 @@ namespace JIF.CMS.Management.API.Controllers
         [HttpGet]
         public IHttpActionResult Index(string q = "", int pageIndex = JIFConsts.SYS_PAGE_INDEX, int pageSize = JIFConsts.SYS_PAGE_SIZE)
         {
-            return Ok(_articleService.Load(q, pageIndex, pageSize).ToPagedData());
+            return Ok(_articleService.GetArticles(q, pageIndex, pageSize).ToPagedData());
+        }
+
+        [HttpGet]
+        public IHttpActionResult GetCategories()
+        {
+            return Ok(_articleService.GetCategories());
+        }
+
+        [HttpGet]
+        public IHttpActionResult GetArticle(int id)
+        {
+            return Ok(_articleService.GetArticle(id));
         }
     }
 }

@@ -129,7 +129,7 @@ namespace JIF.CMS.Services.SysManager
             _sysAdminRepository.Update(entity);
         }
 
-        public IPagedList<SysAdminSearchListOutDto> Load(string q, int pageIndex = 1, int pageSize = int.MaxValue)
+        public IPagedList<SysAdminSearchListOutDto> Get(string q, int pageIndex = 1, int pageSize = int.MaxValue)
         {
             var query = (from a in _sysAdminRepository.Table
                          join b in _sysAdminRepository.Table

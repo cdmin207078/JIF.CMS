@@ -25,7 +25,7 @@ namespace JIF.CMS.Management.Controllers
         {
             s = s.Trim();
 
-            ViewBag.Managers = _sysManagerService.Load(s, pageIndex, pageSize);
+            ViewBag.Managers = _sysManagerService.Get(s, pageIndex, pageSize);
 
             ViewBag.SearchWords = s;
 

@@ -19,7 +19,8 @@ namespace JIF.CMS.Data.EntityFramework
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Entity<SysAdmin>().ToTable("sys_admin").HasKey(d => d.Id);
-            modelBuilder.Entity<Article>().ToTable("Article").HasKey(d => d.Id);
+            modelBuilder.Entity<Article>().ToTable("article").HasKey(d => d.Id);
+            modelBuilder.Entity<ArticleCategory>().ToTable("article_category").HasKey(d => d.Id);
 
             base.OnModelCreating(modelBuilder);
         }

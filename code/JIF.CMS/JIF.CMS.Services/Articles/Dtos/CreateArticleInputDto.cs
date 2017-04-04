@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace JIF.CMS.Core.Domain
+namespace JIF.CMS.Services.Articles.Dtos
 {
-    public class Article : BaseEntity
+    public class CreateArticleInputDto
     {
         /// <summary>
         /// 文章标题
@@ -19,11 +19,6 @@ namespace JIF.CMS.Core.Domain
         public string Content { get; set; }
 
         /// <summary>
-        /// Markdown 格式内容
-        /// </summary>
-        public string MarkdownContent { get; set; }
-
-        /// <summary>
         /// 是否允许评论
         /// </summary>
         public bool AllowComments { get; set; }
@@ -34,21 +29,8 @@ namespace JIF.CMS.Core.Domain
         public bool Published { get; set; }
 
         /// <summary>
-        /// 是否已删除
-        /// </summary>
-        public bool IsDeleted { get; set; }
-
-        /// <summary>
         /// 所属分类编号
         /// </summary>
         public int CategoryId { get; set; }
-
-        public DateTime CreateTime { get; set; }
-
-        public int CreateUserId { get; set; }
-
-        public DateTime? UpdateTime { get; set; }
-
-        public int? UpdateUserId { get; set; }
     }
 }

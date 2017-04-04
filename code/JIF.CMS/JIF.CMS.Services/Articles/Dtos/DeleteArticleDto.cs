@@ -6,7 +6,11 @@ using System.Threading.Tasks;
 
 namespace JIF.CMS.Services.Articles.Dtos
 {
-    public class ArticleInertDto
+    public class DeleteArticleDto
     {
+        /// <summary>
+        /// 文章编号
+        /// </summary>
+        public int Id { get; set; }
     }
 }
