@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace JIF.CMS.Services.Articles.Dtos
 {
-    public class CreateArticleInputDto
+    public class ArticleDto
     {
         /// <summary>
         /// 文章标题
@@ -16,7 +16,12 @@ namespace JIF.CMS.Services.Articles.Dtos
         /// <summary>
         /// 正文内容
         /// </summary>
-        public string Content { get; set; }
+        //public string Content { get; set; }
+
+        /// <summary>
+        /// Markdown格式 正文内容
+        /// </summary>
+        public string MarkdownContent { get; set; }
 
         /// <summary>
         /// 是否允许评论
@@ -32,5 +37,10 @@ namespace JIF.CMS.Services.Articles.Dtos
         /// 所属分类编号
         /// </summary>
         public int CategoryId { get; set; }
+
+        /// <summary>
+        /// 是否已删除
+        /// </summary>
+        public bool IsDeleted { get; set; }
     }
 }

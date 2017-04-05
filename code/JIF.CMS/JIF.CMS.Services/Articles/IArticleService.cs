@@ -11,12 +11,14 @@ namespace JIF.CMS.Services.Articles
 {
     public interface IArticleService
     {
+        #region Artilce
+
         /// <summary>
         /// 新增文章
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        void Insert(CreateArticleInputDto model);
+        void Insert(ArticleDto model);
 
         /// <summary>
         /// 删除文章
@@ -24,13 +26,12 @@ namespace JIF.CMS.Services.Articles
         /// <param name="id"></param>
         void Delete(DeleteArticleDto model);
 
-
         /// <summary>
         /// 修改文章
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        void Update(UpdateArticleInputDto model);
+        void Update(int id, ArticleDto model);
 
         Article GetArticle(int id);
 
@@ -42,6 +43,10 @@ namespace JIF.CMS.Services.Articles
         /// <param name="pageSize">页大小</param>
         /// <returns></returns>
         IPagedList<ArticleSearchListOutDto> GetArticles(string q, int pageIndex = 1, int pageSize = int.MaxValue);
+
+        #endregion
+
+        #region ArticleCategory
 
         void Insert(ArticleCategory model);
 
@@ -61,5 +66,7 @@ namespace JIF.CMS.Services.Articles
         ArticleCategory GetCategory(int id);
 
         IEnumerable<ArticleCategory> GetCategories();
+
+        #endregion
     }
 }

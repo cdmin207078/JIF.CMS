@@ -29,14 +29,60 @@ namespace JIF.CMS.Services.Articles
             _workContext = workContext;
         }
 
-        public void Delete(DeleteArticleCategoryDto model)
+        public void Insert(ArticleDto model)
         {
-            throw new NotImplementedException();
+            if (string.IsNullOrWhiteSpace(model.Title)
+                || string.IsNullOrWhiteSpace(model.MarkdownContent))
+            {
+                throw new JIFException("文章 标题 / 内容 不能为空");
+            }
+
+            var entity = new Article
+            {
+                Title = model.Title,
+                MarkdownContent = model.MarkdownContent,
+                CategoryId = model.CategoryId,
+                AllowComments = model.AllowComments,
+                Published = model.Published,
+                CreateTime = DateTime.Now,
+                CreateUserId = _workContext.CurrentUser.Id
+            };
+
+            _articleRepository.Insert(entity);
+
         }
 
         public void Delete(DeleteArticleDto model)
         {
             throw new NotImplementedException();
+        }
+
+        public void Update(int id, ArticleDto model)
+        {
+            if (string.IsNullOrWhiteSpace(model.Title)
+                || string.IsNullOrWhiteSpace(model.MarkdownContent))
+            {
+                throw new JIFException("article title / content must not null");
+            }
+
+            var entity = GetArticle(id);
+
+            if (entity == null)
+            {
+                throw new JIFException("article is not exists.");
+            }
+
+            entity.Title = model.Title;
+            //entity.Content = model.Content;
+            entity.MarkdownContent = model.MarkdownContent;
+            entity.CategoryId = model.CategoryId;
+            entity.AllowComments = model.AllowComments;
+            entity.Published = model.Published;
+            entity.IsDeleted = model.IsDeleted;
+            entity.UpdateTime = DateTime.Now;
+            entity.UpdateUserId = _workContext.CurrentUser.Id;
+
+            _articleRepository.Update(entity);
         }
 
         public Article GetArticle(int id)
@@ -66,10 +112,7 @@ namespace JIF.CMS.Services.Articles
             return new PagedList<ArticleSearchListOutDto>(query.OrderByDescending(d => d.Id), pageIndex, pageSize);
         }
 
-        public ArticleCategory GetCategory(int id)
-        {
-            return _articleCategoryRepository.Get(id);
-        }
+
 
         public void Insert(ArticleCategory model)
         {
@@ -86,27 +129,9 @@ namespace JIF.CMS.Services.Articles
             _articleCategoryRepository.Insert(model);
         }
 
-        public void Insert(CreateArticleInputDto model)
+        public void Delete(DeleteArticleCategoryDto model)
         {
-            if (string.IsNullOrWhiteSpace(model.Title)
-                || string.IsNullOrWhiteSpace(model.Content))
-            {
-                throw new JIFException("文章 标题 / 内容 不能为空");
-            }
-
-            var entity = new Article
-            {
-                Title = model.Title,
-                Content = model.Content,
-                CategoryId = model.CategoryId,
-                AllowComments = model.AllowComments,
-                Published = model.Published,
-                CreateTime = DateTime.Now,
-                CreateUserId = _workContext.CurrentUser.Id
-            };
-
-            _articleRepository.Insert(entity);
-
+            throw new NotImplementedException();
         }
 
         public void Update(ArticleCategory model)
@@ -114,31 +139,9 @@ namespace JIF.CMS.Services.Articles
             throw new NotImplementedException();
         }
 
-        public void Update(UpdateArticleInputDto model)
+        public ArticleCategory GetCategory(int id)
         {
-            if (string.IsNullOrWhiteSpace(model.Title)
-                || string.IsNullOrWhiteSpace(model.Content))
-            {
-                throw new JIFException("article title / content must not null");
-            }
-
-            var entity = GetArticle(model.Id);
-
-            if (entity == null)
-            {
-                throw new JIFException("article is not exists.");
-            }
-
-            entity.Title = model.Title;
-            entity.Content = model.Content;
-            entity.CategoryId = model.CategoryId;
-            entity.AllowComments = model.AllowComments;
-            entity.Published = model.Published;
-            entity.IsDeleted = model.IsDeleted;
-            entity.UpdateTime = DateTime.Now;
-            entity.UpdateUserId = _workContext.CurrentUser.Id;
-
-            _articleRepository.Update(entity);
+            return _articleCategoryRepository.Get(id);
         }
 
         public IEnumerable<ArticleCategory> GetCategories()

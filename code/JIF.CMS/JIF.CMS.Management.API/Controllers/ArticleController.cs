@@ -1,19 +1,12 @@
 ﻿using JIF.CMS.Core;
+using JIF.CMS.Core.Domain;
 using JIF.CMS.Services.Articles;
-using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Threading;
+using JIF.CMS.Services.Articles.Dtos;
 using System.Web.Http;
-using System.Web.Http.Cors;
 
 namespace JIF.CMS.Management.API.Controllers
 {
-    [EnableCors("http://localhost:8889", "*", "*")]
-    public class ArticleController : ApiController
+    public class ArticleController : BaseController
     {
         private readonly IArticleService _articleService;
 
@@ -23,21 +16,41 @@ namespace JIF.CMS.Management.API.Controllers
         }
 
         [HttpGet]
-        public IHttpActionResult Index(string q = "", int pageIndex = JIFConsts.SYS_PAGE_INDEX, int pageSize = JIFConsts.SYS_PAGE_SIZE)
+        public IHttpActionResult GetArticles(string q = "", int pageIndex = JIFConsts.SYS_PAGE_INDEX, int pageSize = JIFConsts.SYS_PAGE_SIZE)
         {
-            return Ok(_articleService.GetArticles(q, pageIndex, pageSize).ToPagedData());
+            return AjaxOk(_articleService.GetArticles(q, pageIndex, pageSize).ToPagedData());
         }
 
         [HttpGet]
         public IHttpActionResult GetCategories()
         {
-            return Ok(_articleService.GetCategories());
+            return AjaxOk(_articleService.GetCategories());
         }
 
         [HttpGet]
         public IHttpActionResult GetArticle(int id)
         {
-            return Ok(_articleService.GetArticle(id));
+            return AjaxOk(_articleService.GetArticle(id));
+        }
+
+        [HttpPost]
+        public IHttpActionResult AddArticle(ArticleDto model)
+        {
+            _articleService.Insert(model);
+            return AjaxOk("文章添加成功");
+        }
+
+        [HttpPost]
+        public IHttpActionResult UpdateArticle(int id, ArticleDto model)
+        {
+            _articleService.Update(id, model);
+            return AjaxOk("文章修改成功");
+        }
+
+        [HttpPost]
+        public IHttpActionResult AddCategory(ArticleCategory model)
+        {
+            return AjaxOk("文章分类添加成功");
         }
     }
 }
