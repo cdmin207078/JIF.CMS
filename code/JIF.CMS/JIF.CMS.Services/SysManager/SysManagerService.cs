@@ -161,6 +161,11 @@ namespace JIF.CMS.Services.SysManager
             if (entity == null)
                 throw new JIFException("账号不存在");
 
+            if (!entity.Enable)
+            {
+                throw new JIFException("账号已被停用");
+            }
+
             var cipherText = EncyptPwd(password, entity.CreateTime);
 
             if (cipherText != entity.Password)

@@ -398,7 +398,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
-    <None Include="App_Start\DependencyRegistrar.cs.bak" />
     <Compile Include="App_Start\JIFExceptionAttribute.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -410,7 +409,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\web.config" />
+    <Content Include="Views\web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="packages.config" />
     <Content Include="Content\AdminLTE\plugins\input-mask\phone-codes\phone-be.json" />
     <Content Include="Content\AdminLTE\plugins\input-mask\phone-codes\phone-codes.json" />

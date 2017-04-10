@@ -40,6 +40,7 @@ namespace JIF.CMS.Management.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Add(SysAdminInertBasicInfo model)
         {
             if (Request["Enable"] != null && Request["Enable"].ToString() == "on")
@@ -68,6 +69,7 @@ namespace JIF.CMS.Management.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult UpdateBasicInfo(int id, SysAdminUpdateBasicInfo model)
         {
             if (Request["Enable"] != null && Request["Enable"].ToString() == "on")
@@ -81,6 +83,7 @@ namespace JIF.CMS.Management.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult UpdatePwd(int id, string newPwd)
         {
             _sysManagerService.UpdatePwd(id, newPwd);
@@ -89,6 +92,7 @@ namespace JIF.CMS.Management.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult UpdateAvatar()
         {
             throw new NotImplementedException();

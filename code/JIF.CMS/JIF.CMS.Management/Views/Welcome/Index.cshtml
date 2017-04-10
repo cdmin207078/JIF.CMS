@@ -32,6 +32,7 @@
         <!-- /.login-logo -->
         <div class="login-box-body">
             <form method="post">
+                @Html.AntiForgeryToken()
                 <div class="form-group has-feedback">
                     <input type="text" class="form-control" placeholder="帐号" name="Account" required>
                     <span class="fa fa-user form-control-feedback"></span>

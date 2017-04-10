@@ -2346,9 +2346,10 @@ a:focus {
  * ------------------
  */
 .callout {
+  font-size:12px;
   border-radius: 3px;
   margin: 0 0 20px 0;
-  padding: 15px 30px 15px 15px;
+  padding: 10px 30px 10px 15px;
   border-left: 5px solid #eee;
 }
 .callout a {

@@ -66,6 +66,7 @@ namespace JIF.CMS.Web.Framework.Filters
 
         public virtual bool HasAdminAccess(AuthorizationContext filterContext)
         {
+            //授权权限判断
             //var permissionService = EngineContext.Current.Resolve<IPermissionService>();
             //bool result = permissionService.Authorize(StandardPermissionProvider.AccessAdminPanel);
             //return result;

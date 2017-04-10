@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Helpers;
 using System.Web.Mvc;
 
 namespace JIF.CMS.Management.Controllers
@@ -30,6 +31,8 @@ namespace JIF.CMS.Management.Controllers
         [HttpPost]
         public ActionResult Index(string account, string password, string returnUrl)
         {
+            AntiForgery.Validate();
+
             var userInfo = _sysManagerService.Login(account, password);
 
             if (userInfo != null)

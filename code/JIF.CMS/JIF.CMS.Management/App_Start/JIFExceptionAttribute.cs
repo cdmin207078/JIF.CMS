@@ -34,7 +34,8 @@ namespace JIF.CMS.Management
                     // http://www.cnblogs.com/tristanguo/archive/2009/04/06/1430062.html - Asp.Net Mvc: 浅析TempData机制
                     //context.Controller.ViewBag._JIFExceptionMessage = context.Exception.Message;  -- Viewbag无效
                     context.Controller.TempData["JIFExceptionMessage"] = context.Exception.Message;
-                    context.Result = new RedirectResult(context.RequestContext.HttpContext.Request.UrlReferrer.OriginalString);
+                    //context.Result = new RedirectResult(context.RequestContext.HttpContext.Request.UrlReferrer.OriginalString);
+                    context.Result = new RedirectResult(context.RequestContext.HttpContext.Request.Url.OriginalString);
                 }
 
                 context.ExceptionHandled = true;

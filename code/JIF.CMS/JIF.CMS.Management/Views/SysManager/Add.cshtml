@@ -7,6 +7,7 @@
     <div class="col-lg-5 col-md-8">
 
         <form class="form-horizontal" method="post" action="/sysmanager/add">
+            @Html.AntiForgeryToken()
             <div class="box box-primary">
                 <div class="box-header with-border">
                     <h3 class="box-title">
@@ -73,50 +74,6 @@
                     <a href="/sysmanager" class="btn btn-default pull-right">取 消</a>
                 </div>
             </div>
-        </form>
-
-
-        <form action="/sysmanager/ddd" method="post">
-
-            <div>
-                <input type="text" name="[0].Id" value="11" />
-
-
-                <div>
-                    <input type="text" name="[0].KV[0].k" />
-                    <input type="text" name="[0].KV[0].v" />
-                </div>
-
-                <div>
-                    <input type="text" name="[0].KV[1].k" />
-                    <input type="text" name="[0].KV[1].v" />
-                </div>
-                <div>
-                    <input type="text" name="[0].KV[2].k" />
-                    <input type="text" name="[0].KV[2].v" />
-                </div>
-            </div>
-            <div>
-                <input type="text" name="[1].Id" value="11" />
-
-
-                <div>
-                    <input type="text" name="[1].KV[0].k" />
-                    <input type="text" name="[1].KV[0].v" />
-                </div>
-
-                <div>
-                    <input type="text" name="[1].KV[1].k" />
-                    <input type="text" name="[1].KV[1].v" />
-                </div>
-                <div>
-                    <input type="text" name="[1].KV[2].k" />
-                    <input type="text" name="[1].KV[2].v" />
-                </div>
-            </div>
-
-            <input type="submit" name="name" value="提交" />
-
         </form>
     </div>
 </div>

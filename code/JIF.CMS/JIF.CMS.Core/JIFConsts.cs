@@ -60,6 +60,12 @@ namespace JIF.CMS.Core
         /// </summary>
         public const string DATETIME_NORMAL = "yyyy-MM-dd HH:mm:ss";
 
+        /// <summary>
+        /// 默认日期格式化
+        /// </summary>
+        public const string DATETIME_DATE = "yyyy-MM-dd";
+
+
         #endregion
     }
 }
