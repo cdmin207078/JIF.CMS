@@ -75,7 +75,7 @@ namespace JIF.CMS.Web.Framework
             builder.RegisterType<WebWorkContext>().As<IWorkContext>().InstancePerLifetimeScope();
 
             // OPTIONAL: AuthenticationService
-            builder.RegisterType<FormsAuthenticationService>().As<IAuthenticationService>().InstancePerLifetimeScope().PropertiesAutowired(PropertyWiringOptions.AllowCircularDependencies);
+            builder.RegisterType<FormsCookiesAuthenticationService>().As<IAuthenticationService>().InstancePerLifetimeScope().PropertiesAutowired(PropertyWiringOptions.AllowCircularDependencies);
 
             // Services
             builder.RegisterType<ArticleService>().As<IArticleService>().InstancePerLifetimeScope();

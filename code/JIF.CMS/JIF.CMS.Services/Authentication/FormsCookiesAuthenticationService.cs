@@ -10,7 +10,7 @@ using System.Web.Security;
 
 namespace JIF.CMS.Services.Authentication
 {
-    public class FormsAuthenticationService : IAuthenticationService
+    public class FormsCookiesAuthenticationService : IAuthenticationService
     {
         private IUser _cachedUser;
 
@@ -19,7 +19,7 @@ namespace JIF.CMS.Services.Authentication
 
         public ISysManagerService _sysManagerService { get; set; }
 
-        public FormsAuthenticationService(HttpContextBase httpContext)
+        public FormsCookiesAuthenticationService(HttpContextBase httpContext)
         {
             this._httpContext = httpContext;
             this._expirationTimeSpan = FormsAuthentication.Timeout;

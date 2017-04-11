@@ -18,7 +18,7 @@
 
                 <div class="active tab-pane" id="basicinfo">
                     <form class="form-horizontal" action="/sysmanager/updatebasicinfo/@manager.Id" method="post">
-
+                        @Html.AntiForgeryToken()
                         <div class="box-body">
 
                             <div class="form-group">
@@ -66,6 +66,7 @@
 
                 <div id="pwd" class="tab-pane">
                     <form class="form-horizontal" action="/sysmanager/updatepwd/@manager.Id" method="post">
+                        @Html.AntiForgeryToken()
                         <div class="box-body">
                             <div class="form-group">
                                 <label for="inputnewPwd" class="col-sm-2 control-label">新密码</label>

@@ -3,9 +3,11 @@ using JIF.CMS.Core.Domain;
 using JIF.CMS.Services.Articles;
 using JIF.CMS.Services.Articles.Dtos;
 using System.Web.Http;
+using System.Web.Http.Cors;
 
 namespace JIF.CMS.Management.API.Controllers
 {
+    [EnableCors("http://localhost:8888", "*", "*", SupportsCredentials = true)]
     public class ArticleController : BaseController
     {
         private readonly IArticleService _articleService;

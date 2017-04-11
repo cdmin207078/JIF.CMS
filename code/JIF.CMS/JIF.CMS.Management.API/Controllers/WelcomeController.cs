@@ -6,8 +6,8 @@ using System.Web.Http.Cors;
 
 namespace JIF.CMS.Management.API.Controllers
 {
-    [EnableCors("http://localhost:8888", "*", "*")]
-    public class WelcomeController : ApiController
+    [EnableCors("*", "*", "*", SupportsCredentials = true)]
+    public class WelcomeController : BaseController
     {
         private readonly ISysManagerService _sysManagerService;
         private readonly IAuthenticationService _authenticationService;
@@ -30,10 +30,10 @@ namespace JIF.CMS.Management.API.Controllers
 
                 _authenticationService.SignIn(sysAdmin, true);
 
-                return Ok("登陆成功");
+                return AjaxOk("登陆成功");
             }
 
-            return Ok("登陆失败");
+            return AjaxFail("登陆失败");
         }
     }
 }
