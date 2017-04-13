@@ -1,5 +1,6 @@
 ﻿using Autofac.Integration.WebApi;
 using JIF.CMS.Core.Infrastructure;
+using JIF.CMS.Management.API.Filters;
 using JIF.CMS.Web.Framework.Filters;
 using System;
 using System.Collections.Generic;
@@ -21,8 +22,8 @@ namespace JIF.CMS.Management.API
             var config = GlobalConfiguration.Configuration;
 
             // 全局model validate 过滤
-            //config.Filters.Add(new ValidateModelAttribute());
             config.Filters.Add(new WebApiAppExceptionAttribute());
+            //config.Filters.Add(new AdminAuthenticationAttribute());
 
             // 将新的解析器附加到您的HttpConfiguration.DependencyResolver以让Web API知道它应该使用AutofacWebApiDependencyResolver查找服务
             config.DependencyResolver = new AutofacWebApiDependencyResolver(EngineContext.Current.ContainerManager.Container);

@@ -8,7 +8,6 @@ using System.Web.Http.Cors;
 
 namespace JIF.CMS.Management.API.Controllers
 {
-    //[Authorize]
     [EnableCors("http://localhost:8888", "*", "*")]
     public class BaseController : ApiController
     {

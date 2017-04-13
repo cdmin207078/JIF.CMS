@@ -62,14 +62,14 @@ namespace JIF.CMS.Services.Articles
             if (string.IsNullOrWhiteSpace(model.Title)
                 || string.IsNullOrWhiteSpace(model.MarkdownContent))
             {
-                throw new JIFException("article title / content must not null");
+                throw new JIFException("文章 标题 / 内容 不能为空");
             }
 
             var entity = GetArticle(id);
 
             if (entity == null)
             {
-                throw new JIFException("article is not exists.");
+                throw new JIFException("欲修改文章不存在");
             }
 
             entity.Title = model.Title;

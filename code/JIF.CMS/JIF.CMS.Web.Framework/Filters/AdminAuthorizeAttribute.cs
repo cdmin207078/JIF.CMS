@@ -15,7 +15,6 @@ namespace JIF.CMS.Web.Framework.Filters
 
         private readonly bool _dontValidate;
 
-
         public AdminAuthorizeAttribute()
             : this(false)
         {

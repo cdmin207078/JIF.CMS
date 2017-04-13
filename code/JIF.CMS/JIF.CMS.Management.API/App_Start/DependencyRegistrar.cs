@@ -26,7 +26,7 @@ namespace JIF.CMS.Management.API
         public void Register(ContainerBuilder builder, ITypeFinder typeFinder, JIFConfig config)
         {
             // 重新设置 授权服务
-            builder.RegisterType<WebAPITokenAuthenticationService>().As<IAuthenticationService>().InstancePerLifetimeScope().PropertiesAutowired(PropertyWiringOptions.AllowCircularDependencies);
+            //builder.RegisterType<WebAPITokenAuthenticationService>().As<IAuthenticationService>().InstancePerLifetimeScope().PropertiesAutowired(PropertyWiringOptions.AllowCircularDependencies);
 
             // Get your HttpConfiguration.
             var configuration = GlobalConfiguration.Configuration;
