@@ -8,14 +8,13 @@ using System.Web.Http.Cors;
 
 namespace JIF.CMS.Management.API.Controllers
 {
-    [EnableCors("http://localhost:8888", "*", "*")]
+    //[EnableCors("http://localhost:8888", "*", "*")]
     public class BaseController : ApiController
     {
         [NonAction]
         /// <summary>
         /// Ajax请求成功
         /// </summary>
-        /// <typeparam name="T"></typeparam>
         /// <param name="message">附加消息</param>
         /// <returns></returns>
         public IHttpActionResult AjaxOk()
@@ -30,8 +29,6 @@ namespace JIF.CMS.Management.API.Controllers
         /// <summary>
         /// Ajax请求成功
         /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="message">附加消息</param>
         /// <returns></returns>
         public IHttpActionResult AjaxOk(string message)
         {
@@ -46,7 +43,25 @@ namespace JIF.CMS.Management.API.Controllers
         /// <summary>
         /// Ajax请求成功
         /// </summary>
+        /// <param name="code">错误码</param>
+        /// <param name="message">附加消息</param>
+        /// <returns></returns>
+        public IHttpActionResult AjaxOk(int code, string message)
+        {
+            return Ok(new
+            {
+                success = true,
+                code = code,
+                message = message
+            });
+        }
+
+        [NonAction]
+        /// <summary>
+        /// Ajax请求成功
+        /// </summary>
         /// <typeparam name="T"></typeparam>
+        /// <param name="data">返回数据</param>
         /// <returns></returns>
         public IHttpActionResult AjaxOk<T>(T data)
         {
@@ -77,9 +92,28 @@ namespace JIF.CMS.Management.API.Controllers
 
         [NonAction]
         /// <summary>
+        /// Ajax请求成功
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="data">返回数据</param>
+        /// <param name="code">错误码</param>
+        /// <param name="message">附加消息</param>
+        /// <returns></returns>
+        public IHttpActionResult AjaxOk<T>(int code, string message, T data)
+        {
+            return Ok(new
+            {
+                success = true,
+                code = code,
+                message = message,
+                data = data,
+            });
+        }
+
+        [NonAction]
+        /// <summary>
         /// Ajax请求错误
         /// </summary>
-        /// <param name="message">附加消息</param>
         /// <returns></returns>
         public IHttpActionResult AjaxFail()
         {
@@ -100,6 +134,23 @@ namespace JIF.CMS.Management.API.Controllers
             return Ok(new
             {
                 success = false,
+                message = message
+            });
+        }
+
+        [NonAction]
+        /// <summary>
+        /// Ajax请求错误
+        /// </summary>
+        /// <param name="code">错误码</param>
+        /// <param name="message">附加消息</param>
+        /// <returns></returns>
+        public IHttpActionResult AjaxFail(int code, string message)
+        {
+            return Ok(new
+            {
+                success = false,
+                code = code,
                 message = message
             });
         }
@@ -133,6 +184,26 @@ namespace JIF.CMS.Management.API.Controllers
             return Ok(new
             {
                 success = false,
+                message = message,
+                data = data,
+            });
+        }
+
+        [NonAction]
+        /// <summary>
+        /// Ajax请求错误
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="code">错误码</param>
+        /// <param name="data">返回数据</param>
+        /// <param name="message">附加消息</param>
+        /// <returns></returns>
+        public IHttpActionResult AjaxFail<T>(int code, string message, T data)
+        {
+            return Ok(new
+            {
+                success = false,
+                code = code,
                 message = message,
                 data = data,
             });

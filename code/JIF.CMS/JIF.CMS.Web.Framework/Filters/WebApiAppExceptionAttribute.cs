@@ -15,19 +15,23 @@ namespace JIF.CMS.Web.Framework.Filters
     {
         public override void OnException(HttpActionExecutedContext context)
         {
-            if (context.Exception is JIFException)
+            var response = new HttpResponseMessage();
+
+            response.StatusCode = HttpStatusCode.OK;
+            response.Content = new StringContent(JsonConvert.SerializeObject(new
             {
-                var response = new HttpResponseMessage();
+                success = false,
+                message = context.Exception.Message
+            }), Encoding.UTF8, "application/json");
 
-                response.StatusCode = HttpStatusCode.OK;
-                response.Content = new StringContent(JsonConvert.SerializeObject(new
-                {
-                    success = false,
-                    message = context.Exception.Message
-                }), Encoding.UTF8, "application/json");
-
-                context.Response = response;
+            // 系统异常, 记录日志
+            if (!(context.Exception is JIFException))
+            {
+                //..记录日志
             }
+
+
+            context.Response = response;
         }
     }
 }

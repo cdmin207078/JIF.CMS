@@ -6,7 +6,6 @@ using System.Web.Http.Cors;
 
 namespace JIF.CMS.Management.API.Controllers
 {
-    [EnableCors("*", "*", "*", SupportsCredentials = true)]
     public class WelcomeController : BaseController
     {
         private readonly ISysManagerService _sysManagerService;

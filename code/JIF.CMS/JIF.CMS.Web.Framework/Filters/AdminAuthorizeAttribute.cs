@@ -59,7 +59,12 @@ namespace JIF.CMS.Web.Framework.Filters
             if (IsAdminPageRequested(filterContext))
             {
                 if (!this.HasAdminAccess(filterContext))
-                    this.HandleUnauthorizedRequest(filterContext);
+                {
+                    if (filterContext.RequestContext.HttpContext.Request.IsAjaxRequest())
+                    {
+                        this.HandleUnauthorizedRequest(filterContext);
+                    }
+                }
             }
         }
 

@@ -116,6 +116,7 @@
   <ItemGroup>
     <Compile Include="App_Start\DependencyRegistrar.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\AdminBaseController.cs" />
     <Compile Include="Controllers\ArticleController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\WelcomeController.cs" />

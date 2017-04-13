@@ -1,5 +1,6 @@
 ﻿using JIF.CMS.Core;
 using JIF.CMS.Core.Domain;
+using JIF.CMS.Management.API.Filters;
 using JIF.CMS.Services.Articles;
 using JIF.CMS.Services.Articles.Dtos;
 using System.Web.Http;
@@ -7,8 +8,7 @@ using System.Web.Http.Cors;
 
 namespace JIF.CMS.Management.API.Controllers
 {
-    [EnableCors("http://localhost:8888", "*", "*", SupportsCredentials = true)]
-    public class ArticleController : BaseController
+    public class ArticleController : AdminBaseController
     {
         private readonly IArticleService _articleService;
 
@@ -52,7 +52,7 @@ namespace JIF.CMS.Management.API.Controllers
         [HttpPost]
         public IHttpActionResult AddCategory(ArticleCategory model)
         {
-            return AjaxOk("文章分类添加成功");
+            return AjaxFail("文章分类添加 - 未实现");
         }
     }
 }
