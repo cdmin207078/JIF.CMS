@@ -9,7 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web.Http.Filters;
 
-namespace JIF.CMS.Web.Framework.Filters
+namespace JIF.CMS.WebApi.Framework.Filters
 {
     public class WebApiAppExceptionAttribute : ExceptionFilterAttribute
     {

@@ -1,10 +1,9 @@
 ﻿using JIF.CMS.Core;
 using JIF.CMS.Core.Domain;
-using JIF.CMS.Management.API.Filters;
 using JIF.CMS.Services.Articles;
 using JIF.CMS.Services.Articles.Dtos;
+using JIF.CMS.WebApi.Framework.Controllers;
 using System.Web.Http;
-using System.Web.Http.Cors;
 
 namespace JIF.CMS.Management.API.Controllers
 {
@@ -20,6 +19,8 @@ namespace JIF.CMS.Management.API.Controllers
         [HttpGet]
         public IHttpActionResult GetArticles(string q = "", int pageIndex = JIFConsts.SYS_PAGE_INDEX, int pageSize = JIFConsts.SYS_PAGE_SIZE)
         {
+            var httpcontext = System.Web.HttpContext.Current;
+
             return AjaxOk(_articleService.GetArticles(q, pageIndex, pageSize).ToPagedData());
         }
 
@@ -42,6 +43,7 @@ namespace JIF.CMS.Management.API.Controllers
             return AjaxOk("文章添加成功");
         }
 
+        [WebApi.Framework.Filters.AdminAuthorize]
         [HttpPost]
         public IHttpActionResult UpdateArticle(int id, ArticleDto model)
         {

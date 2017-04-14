@@ -41,8 +41,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Autofac, Version=4.4.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
-      <HintPath>..\packages\Autofac.4.4.0\lib\net45\Autofac.dll</HintPath>
+    <Reference Include="Autofac, Version=4.5.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <HintPath>..\packages\Autofac.4.5.0\lib\net45\Autofac.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Autofac.Integration.WebApi, Version=4.0.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
@@ -114,13 +114,9 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="App_Start\DependencyRegistrar.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
-    <Compile Include="Controllers\AdminBaseController.cs" />
     <Compile Include="Controllers\ArticleController.cs" />
-    <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\WelcomeController.cs" />
-    <Compile Include="Filters\AdminAuthenticationAttribute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -154,9 +150,9 @@
       <Project>{9532BCAC-0342-4297-A8B6-6028326C01B1}</Project>
       <Name>JIF.CMS.Services</Name>
     </ProjectReference>
-    <ProjectReference Include="..\JIF.CMS.Web.Framework\JIF.CMS.Web.Framework.csproj">
-      <Project>{32fc4c79-089e-4d2a-82b9-7cc39101c0c8}</Project>
-      <Name>JIF.CMS.Web.Framework</Name>
+    <ProjectReference Include="..\JIF.CMS.WebApi.Framework\JIF.CMS.WebApi.Framework.csproj">
+      <Project>{3CCD9668-63E3-4896-8107-C9737995B079}</Project>
+      <Name>JIF.CMS.WebApi.Framework</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

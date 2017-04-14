@@ -49,7 +49,7 @@
     <Compile Include="Articles\IArticleService.cs" />
     <Compile Include="Authentication\FormsCookiesAuthenticationService.cs" />
     <Compile Include="Authentication\IAuthenticationService.cs" />
-    <Compile Include="Authentication\WebAPITokenAuthenticationService.cs" />
+    <Compile Include="Authentication\WebApiFormsCookiesAuthenticationService.cs" />
     <Compile Include="BaseService.cs" />
     <Compile Include="IBaseService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

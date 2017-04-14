@@ -8,7 +8,7 @@ using JIF.CMS.Core;
 
 namespace JIF.CMS.Services.Authentication
 {
-    public class WebAPITokenAuthenticationService : IAuthenticationService
+    public class WebApiFormsCookiesAuthenticationService : IAuthenticationService
     {
         public IUser GetAuthenticatedUser()
         {

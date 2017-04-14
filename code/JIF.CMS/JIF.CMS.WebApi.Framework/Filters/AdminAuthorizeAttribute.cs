@@ -1,34 +1,27 @@
 ﻿using JIF.CMS.Core;
+using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
-using System.Linq;
+using System.Net;
 using System.Net.Http;
-using System.Web;
+using System.Text;
 using System.Web.Http;
 using System.Web.Http.Controllers;
-using System.Web.Http.Filters;
-using System.Threading;
-using System.Threading.Tasks;
-using System.Net;
-using Newtonsoft.Json;
-using System.Text;
 
-namespace JIF.CMS.Management.API.Filters
+namespace JIF.CMS.WebApi.Framework.Filters
 {
-    [AttributeUsage(AttributeTargets.Method | AttributeTargets.Class, Inherited = true, AllowMultiple = true)]
-    public class AdminAuthenticationAttribute : AuthorizeAttribute
+    public class AdminAuthorizeAttribute : AuthorizeAttribute
     {
         public IWorkContext WorkContext { get; set; }
 
         private readonly bool _dontValidate;
 
-        public AdminAuthenticationAttribute()
+        public AdminAuthorizeAttribute()
             : this(false)
         {
 
         }
 
-        public AdminAuthenticationAttribute(bool dontValidate)
+        public AdminAuthorizeAttribute(bool dontValidate)
         {
             this._dontValidate = dontValidate;
         }

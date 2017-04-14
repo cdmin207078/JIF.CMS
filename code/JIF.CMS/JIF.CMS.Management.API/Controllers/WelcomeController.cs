@@ -1,6 +1,7 @@
 ﻿using JIF.CMS.Management.API.Models;
 using JIF.CMS.Services.Authentication;
 using JIF.CMS.Services.SysManager;
+using JIF.CMS.WebApi.Framework.Controllers;
 using System.Web.Http;
 using System.Web.Http.Cors;
 

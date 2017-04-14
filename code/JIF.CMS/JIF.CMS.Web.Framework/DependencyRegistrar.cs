@@ -1,6 +1,5 @@
 ﻿using Autofac;
 using Autofac.Integration.Mvc;
-using Autofac.Integration.WebApi;
 using JIF.CMS.Core;
 using JIF.CMS.Core.Configuration;
 using JIF.CMS.Core.Data;
@@ -22,22 +21,30 @@ namespace JIF.CMS.Web.Framework
 {
     public class DependencyRegistrar : IDependencyRegistrar
     {
+        public int Order
+        {
+            get
+            {
+                return 0;
+            }
+        }
+
         public void Register(ContainerBuilder builder, ITypeFinder typeFinder, JIFConfig config)
         {
-            // register HTTP context and other related stuff
-            builder.Register(c => new HttpContextWrapper(HttpContext.Current) as HttpContextBase)
-                .As<HttpContextBase>()
-                .InstancePerLifetimeScope();
+            //// register HTTP context and other related stuff
+            //builder.Register(c => new HttpContextWrapper(HttpContext.Current) as HttpContextBase)
+            //    .As<HttpContextBase>()
+            //    .InstancePerLifetimeScope();
 
-            builder.Register(c => c.Resolve<HttpContextBase>().Request)
-                .As<HttpRequestBase>()
-                .InstancePerLifetimeScope();
-            builder.Register(c => c.Resolve<HttpContextBase>().Response)
-                .As<HttpResponseBase>()
-                .InstancePerLifetimeScope();
-            builder.Register(c => c.Resolve<HttpContextBase>().Server)
-                .As<HttpServerUtilityBase>()
-                .InstancePerLifetimeScope();
+            //builder.Register(c => c.Resolve<HttpContextBase>().Request)
+            //    .As<HttpRequestBase>()
+            //    .InstancePerLifetimeScope();
+            //builder.Register(c => c.Resolve<HttpContextBase>().Response)
+            //    .As<HttpResponseBase>()
+            //    .InstancePerLifetimeScope();
+            //builder.Register(c => c.Resolve<HttpContextBase>().Server)
+            //    .As<HttpServerUtilityBase>()
+            //    .InstancePerLifetimeScope();
             //builder.Register(c => c.Resolve<HttpContextBase>().Session)
             //    .As<HttpSessionStateBase>()
             //    .InstancePerLifetimeScope();
@@ -48,10 +55,6 @@ namespace JIF.CMS.Web.Framework
             // OPTIONAL: Register model binders that require DI.
             builder.RegisterModelBinders(typeFinder.GetAssemblies().ToArray());
             builder.RegisterModelBinderProvider();
-
-            //// OPTIONAL: register web api controllers
-            //builder.RegisterApiControllers(typeFinder.GetAssemblies().ToArray());
-
 
             // OPTIONAL: Register web abstractions like HttpContextBase.
             builder.RegisterModule<AutofacWebTypesModule>();
@@ -82,8 +85,5 @@ namespace JIF.CMS.Web.Framework
             builder.RegisterType<SysManagerService>().As<ISysManagerService>().InstancePerLifetimeScope();
 
         }
-
-        public int Order { get { return 0; } }
-
     }
 }
