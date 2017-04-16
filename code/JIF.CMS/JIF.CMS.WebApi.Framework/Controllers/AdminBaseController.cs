@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace JIF.CMS.WebApi.Framework.Controllers
 {
-    //[AdminAuthorize]
+    [AdminAuthorize]
     public class AdminBaseController : BaseController
     {
 

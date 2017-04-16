@@ -1,4 +1,5 @@
 ﻿using JIF.CMS.Core.Domain;
+using JIF.CMS.Core.Infrastructure;
 using JIF.CMS.Services.SysManager;
 using System;
 using System.Collections.Generic;
@@ -16,8 +17,6 @@ namespace JIF.CMS.Services.Authentication
 
         private readonly HttpContextBase _httpContext;
         private readonly TimeSpan _expirationTimeSpan;
-
-        public ISysManagerService _sysManagerService { get; set; }
 
         public FormsCookiesAuthenticationService(HttpContextBase httpContext)
         {
@@ -37,7 +36,7 @@ namespace JIF.CMS.Services.Authentication
                 return null;
             }
 
-            var user = _sysManagerService.Get(int.Parse(uid));
+            var user = EngineContext.Current.Resolve<ISysManagerService>().Get(int.Parse(uid));
             return user;
         }
 
@@ -48,6 +47,10 @@ namespace JIF.CMS.Services.Authentication
         /// <returns></returns>
         public IUser GetAuthenticatedUser()
         {
+
+            var httpcontext = System.Web.HttpContext.Current;
+
+
             if (_cachedUser != null)
                 return _cachedUser;
 

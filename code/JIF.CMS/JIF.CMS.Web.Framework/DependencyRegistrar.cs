@@ -31,24 +31,6 @@ namespace JIF.CMS.Web.Framework
 
         public void Register(ContainerBuilder builder, ITypeFinder typeFinder, JIFConfig config)
         {
-            //// register HTTP context and other related stuff
-            //builder.Register(c => new HttpContextWrapper(HttpContext.Current) as HttpContextBase)
-            //    .As<HttpContextBase>()
-            //    .InstancePerLifetimeScope();
-
-            //builder.Register(c => c.Resolve<HttpContextBase>().Request)
-            //    .As<HttpRequestBase>()
-            //    .InstancePerLifetimeScope();
-            //builder.Register(c => c.Resolve<HttpContextBase>().Response)
-            //    .As<HttpResponseBase>()
-            //    .InstancePerLifetimeScope();
-            //builder.Register(c => c.Resolve<HttpContextBase>().Server)
-            //    .As<HttpServerUtilityBase>()
-            //    .InstancePerLifetimeScope();
-            //builder.Register(c => c.Resolve<HttpContextBase>().Session)
-            //    .As<HttpSessionStateBase>()
-            //    .InstancePerLifetimeScope();
-
             // OPTIONAL: Register controllers
             builder.RegisterControllers(typeFinder.GetAssemblies().ToArray());
 

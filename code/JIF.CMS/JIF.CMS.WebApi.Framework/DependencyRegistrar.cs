@@ -48,7 +48,6 @@ namespace JIF.CMS.WebApi.Framework
                 .As<HttpServerUtilityBase>()
                 .InstancePerLifetimeScope();
 
-
             // Register your Web API controllers.
             builder.RegisterApiControllers(typeFinder.GetAssemblies().ToArray());
 
@@ -64,14 +63,11 @@ namespace JIF.CMS.WebApi.Framework
             // OPTIONAL: repositores
             builder.RegisterGeneric(typeof(EfRepository<>)).As(typeof(IRepository<>)).InstancePerLifetimeScope();
 
-            // OPTIONAL: register log
-            //builder.RegisterInstance(new NLogLoggerFactoryAdapter(new NameValueCollection()).GetLogger("")).As<ILog>().SingleInstance();
-
             // OPTIONAL: work context
             builder.RegisterType<WebWorkContext>().As<IWorkContext>().InstancePerLifetimeScope();
 
             // OPTIONAL: AuthenticationService
-            builder.RegisterType<FormsCookiesAuthenticationService>().As<IAuthenticationService>().InstancePerLifetimeScope().PropertiesAutowired(PropertyWiringOptions.AllowCircularDependencies);
+            builder.RegisterType<FormsCookiesAuthenticationService>().As<IAuthenticationService>().InstancePerLifetimeScope();
 
             // Services
             builder.RegisterType<ArticleService>().As<IArticleService>().InstancePerLifetimeScope();

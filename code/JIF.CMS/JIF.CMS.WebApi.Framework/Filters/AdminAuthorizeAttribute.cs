@@ -1,4 +1,5 @@
 ﻿using JIF.CMS.Core;
+using JIF.CMS.Core.Infrastructure;
 using Newtonsoft.Json;
 using System;
 using System.Net;
@@ -11,8 +12,6 @@ namespace JIF.CMS.WebApi.Framework.Filters
 {
     public class AdminAuthorizeAttribute : AuthorizeAttribute
     {
-        public IWorkContext WorkContext { get; set; }
-
         private readonly bool _dontValidate;
 
         public AdminAuthorizeAttribute()
@@ -31,11 +30,6 @@ namespace JIF.CMS.WebApi.Framework.Filters
             if (_dontValidate)
                 return;
 
-            if (context == null)
-            {
-                throw new ArgumentNullException("Authen Context is Null.");
-            }
-
             if (!this.HasAdminAccess(context))
             {
                 this.HandleUnauthorizedRequest(context);
@@ -46,11 +40,11 @@ namespace JIF.CMS.WebApi.Framework.Filters
         {
             var response = new HttpResponseMessage();
 
-            response.StatusCode = HttpStatusCode.MethodNotAllowed;
+            response.StatusCode = HttpStatusCode.Unauthorized;
             response.Content = new StringContent(JsonConvert.SerializeObject(new
             {
                 success = false,
-                code = 405,
+                code = 401,
                 message = "无权访问"
             }), Encoding.UTF8, "application/json");
 
@@ -64,7 +58,9 @@ namespace JIF.CMS.WebApi.Framework.Filters
             //bool result = permissionService.Authorize(StandardPermissionProvider.AccessAdminPanel);
             //return result;
 
-            if (WorkContext == null || WorkContext.CurrentUser == null)
+            var workContext = EngineContext.Current.Resolve<IWorkContext>();
+
+            if (workContext == null || workContext.CurrentUser == null)
                 return false;
             else
                 return true;

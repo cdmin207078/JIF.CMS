@@ -12,19 +12,14 @@ namespace JIF.CMS.Web.Framework
 {
     public class WebWorkContext : IWorkContext
     {
-        private readonly HttpContextBase _httpContext;
         private readonly IAuthenticationService _authenticationService;
 
         private IUser _cachedUser;
 
-        public WebWorkContext(
-            HttpContextBase httpContext,
-            IAuthenticationService authenticationService)
+        public WebWorkContext(IAuthenticationService authenticationService)
         {
-            _httpContext = httpContext;
             _authenticationService = authenticationService;
         }
-
 
         public IUser CurrentUser
         {
