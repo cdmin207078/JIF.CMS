@@ -14,8 +14,8 @@ namespace JIF.CMS.Management.Controllers
     {
         public readonly IWorkContext _workContext;
         private readonly IAuthenticationService _authenticationService;
-        public HomeController(IWorkContext workContext,
-          IAuthenticationService authenticationService)
+
+        public HomeController(IWorkContext workContext, IAuthenticationService authenticationService)
         {
             _workContext = workContext;
             _authenticationService = authenticationService;

@@ -30,21 +30,6 @@ namespace JIF.CMS.Web.Framework.Filters
             filterContext.Result = new HttpUnauthorizedResult();
         }
 
-        private IEnumerable<AdminAuthorizeAttribute> GetAdminAuthorizeAttributes(ActionDescriptor descriptor)
-        {
-            return descriptor.GetCustomAttributes(typeof(AdminAuthorizeAttribute), true)
-                .Concat(descriptor.ControllerDescriptor.GetCustomAttributes(typeof(AdminAuthorizeAttribute), true))
-                .OfType<AdminAuthorizeAttribute>();
-        }
-
-        private bool IsAdminPageRequested(AuthorizationContext filterContext)
-        {
-            var adminAttributes = GetAdminAuthorizeAttributes(filterContext.ActionDescriptor);
-            if (adminAttributes != null && adminAttributes.Any())
-                return true;
-            return false;
-        }
-
         public void OnAuthorization(AuthorizationContext filterContext)
         {
             if (_dontValidate)
@@ -56,15 +41,9 @@ namespace JIF.CMS.Web.Framework.Filters
             if (OutputCacheAttribute.IsChildActionCacheActive(filterContext))
                 throw new InvalidOperationException("You cannot use [AdminAuthorize] attribute when a child action cache is active");
 
-            if (IsAdminPageRequested(filterContext))
+            if (!this.HasAdminAccess(filterContext))
             {
-                if (!this.HasAdminAccess(filterContext))
-                {
-                    if (filterContext.RequestContext.HttpContext.Request.IsAjaxRequest())
-                    {
-                        this.HandleUnauthorizedRequest(filterContext);
-                    }
-                }
+                this.HandleUnauthorizedRequest(filterContext);
             }
         }
 

@@ -1,5 +1,6 @@
 ﻿using JIF.CMS.Core;
 using JIF.CMS.Core.Domain;
+using JIF.CMS.Core.Infrastructure;
 using JIF.CMS.Services.Authentication;
 using System;
 using System.Collections.Generic;
@@ -12,14 +13,7 @@ namespace JIF.CMS.Web.Framework
 {
     public class WebWorkContext : IWorkContext
     {
-        private readonly IAuthenticationService _authenticationService;
-
         private IUser _cachedUser;
-
-        public WebWorkContext(IAuthenticationService authenticationService)
-        {
-            _authenticationService = authenticationService;
-        }
 
         public IUser CurrentUser
         {
@@ -42,7 +36,7 @@ namespace JIF.CMS.Web.Framework
                 // registered user
                 if (user == null)
                 {
-                    user = _authenticationService.GetAuthenticatedUser();
+                    user = EngineContext.Current.Resolve<IAuthenticationService>().GetAuthenticatedUser();
                 }
 
                 _cachedUser = user;
