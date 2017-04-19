@@ -125,17 +125,15 @@
 
         switch (state) {
             case 'pedding':
-                $placeHolder.removeClass('element-invisible');
-                $queue.hide();
-                $statusBar.addClass('element-invisible');
+                //$queue.hide();
+                //$statusBar.addClass('element-invisible');
                 uploader.refresh();
                 break;
 
             case 'ready':
-                $placeHolder.addClass('element-invisible');
                 $('#filePicker2').removeClass('element-invisible');
-                $queue.show();
-                $statusBar.removeClass('element-invisible');
+                //$queue.show();
+                //$statusBar.removeClass('element-invisible');
                 uploader.refresh();
                 break;
 
@@ -174,6 +172,34 @@
         }
 
         updateStatus();
+    }
+
+    var updateStatus = function () {
+
+        //var text = '', stats;
+
+        //if (state === 'ready') {
+        //    text = '选中' + fileCount + '张图片，共' +
+        //            WebUploader.formatSize(fileSize) + '。';
+        //} else if (state === 'confirm') {
+        //    stats = uploader.getStats();
+        //    if (stats.uploadFailNum) {
+        //        text = '已成功上传' + stats.successNum + '张照片至XX相册，' +
+        //            stats.uploadFailNum + '张照片上传失败，<a class="retry" href="#">重新上传</a>失败图片或<a class="ignore" href="#">忽略</a>'
+        //    }
+
+        //} else {
+        //    stats = uploader.getStats();
+        //    text = '共' + fileCount + '张（' +
+        //            WebUploader.formatSize(fileSize) +
+        //            '），已上传' + stats.successNum + '张';
+
+        //    if (stats.uploadFailNum) {
+        //        text += '，失败' + stats.uploadFailNum + '张';
+        //    }
+        //}
+
+        //$info.html(text);
     }
 
 
@@ -221,11 +247,10 @@
     var initElemEvents = function () {
 
         $upload.on('click', function () {
+
             if ($(this).hasClass('disabled')) {
                 return false;
             }
-
-            console.log('$upload onclick ' + state)
 
             if (state === 'ready') {
                 uploader.upload();
