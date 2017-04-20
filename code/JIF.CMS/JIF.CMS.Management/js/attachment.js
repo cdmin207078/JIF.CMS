@@ -228,20 +228,41 @@
             fileCount++;
             fileSize += file.size;
 
+            console.log(file);
+
+            this.md5File(file, 0, 1 * 1024 * 1024).then(function (ret) {
+                console.info(ret);
+            });
+
+            $('#thelist').append('<div id="' + file.id + '" class="item">' +
+                  '<h4 class="info">' + file.name + '</h4>' +
+                  '<p class="state">等待上传...</p>' +
+                '</div>');
+
             setState('ready');
         }
-        // 当有文件被添加进队列的时候
-        uploader.on('fileQueued', function (file) {
-            $('#thelist').append('<div id="' + file.id + '" class="item">' +
-                '<h4 class="info">' + file.name + '</h4>' +
-                '<p class="state">等待上传...</p>' +
-            '</div>');
-        });
 
-        uploader.on('ready', function () {
+        // 上传成功
+        uploader.onUploadSuccess = function (file) {
+            $('#' + file.id).find('p.state').text('已上传');
+            console.log('file : ' + file.name + " - uploadSuccess")
+        }
+
+        // 上传失败
+        uploader.onUploadError = function (file) {
+            $('#' + file.id).find('p.state').text('上传出错');
+            console.log('file : ' + file.name + " - uploadError")
+        }
+
+        // 上传完成, 此方法在 UploadSuccess / UploadError 之后执行.
+        uploader.onUploadComplete = function (file) {
+            //$('#' + file.id).find('.progress').fadeOut();
+            console.log('file : ' + file.name + " - uploadComplete")
+        }
+
+        uploader.onReady = function () {
             window.uploader = uploader;
-        });
-
+        }
     }
 
     var initElemEvents = function () {

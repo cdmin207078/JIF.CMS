@@ -8,24 +8,61 @@ namespace JIF.CMS.Test.Core
     [TestClass]
     public class URLEncodeTest
     {
+
+        protected string UrlEncodeUpper(string s)
+        {
+            char[] temp = HttpUtility.UrlEncode(s).ToCharArray();
+            for (int i = 0; i < temp.Length - 2; i++)
+            {
+                if (temp[i] == '%')
+                {
+                    temp[i + 1] = char.ToUpper(temp[i + 1]);
+                    temp[i + 2] = char.ToUpper(temp[i + 2]);
+                }
+            }
+            return new string(temp);
+        }
+
+        protected string UrlPathEncodeUpper(string s)
+        {
+            char[] temp = HttpUtility.UrlPathEncode(s).ToCharArray();
+            for (int i = 0; i < temp.Length - 2; i++)
+            {
+                if (temp[i] == '%')
+                {
+                    temp[i + 1] = char.ToUpper(temp[i + 1]);
+                    temp[i + 2] = char.ToUpper(temp[i + 2]);
+                }
+            }
+            return new string(temp);
+        }
+
         [TestMethod]
         public void TestMethod1()
         {
 
-            var a = "腾讯,百度,阿里";
+            var c = "a%BC - 老司机, 杨主簿,";
+            c = "百度,source,a%bC";
+            c = "~!@#$%^&*()_+-={};'\\|:\",.<>/?";
 
-            var b = "%e8%85%be%e8%ae%af,%e7%99%be%e5%ba%a6,%e9%98%bf%e9%87%8c";
+            Console.WriteLine(c);
 
-            Console.WriteLine(HttpUtility.UrlEncode(a));
-            Console.WriteLine(HttpUtility.UrlPathEncode(a));
-            Console.WriteLine(HttpUtility.JavaScriptStringEncode(a));
-
-
-
-            Console.WriteLine(b);
+            Console.WriteLine("------------PathEncode-----------------");
+            Console.WriteLine(HttpUtility.UrlPathEncode(c));
+            Console.WriteLine(UrlPathEncodeUpper(c));
+            Console.WriteLine(HttpUtility.UrlDecode(UrlPathEncodeUpper(c)));
 
 
-            Console.WriteLine(HttpUtility.UrlDecode(b));
+            Console.WriteLine("------------Encode-----------------");
+            Console.WriteLine(HttpUtility.UrlEncode(c));
+            Console.WriteLine(UrlEncodeUpper(c));
+            Console.WriteLine(HttpUtility.UrlDecode(UrlEncodeUpper(c)));
+
+
+            var A = "%E5%BE%AE%E4%BF%A1";
+            var a = "%e5%be%ae%e4%bf%a1";
+            Console.WriteLine(string.Compare(A, a, true));
+
 
         }
     }
