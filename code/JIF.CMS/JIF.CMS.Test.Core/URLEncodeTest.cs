@@ -64,6 +64,11 @@ namespace JIF.CMS.Test.Core
             Console.WriteLine(string.Compare(A, a, true));
 
 
+            var b = "All";
+            Console.WriteLine(b);
+            Console.WriteLine(HttpUtility.UrlDecode(b));
+
+
         }
     }
 }

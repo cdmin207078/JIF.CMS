@@ -368,6 +368,8 @@
     <Content Include="Content\AdminLTE\plugins\slimScroll\jquery.slimscroll.js" />
     <Content Include="Content\AdminLTE\plugins\slimScroll\jquery.slimscroll.min.js" />
     <Content Include="Content\css\animate.css" />
+    <Content Include="Content\doT\doT.js" />
+    <Content Include="Content\doT\doT.min.js" />
     <Content Include="Content\fonts\fontawesome-webfont.svg" />
     <Content Include="Content\ios-switch\switch.css" />
     <Content Include="Content\ios-switch\switch.js" />

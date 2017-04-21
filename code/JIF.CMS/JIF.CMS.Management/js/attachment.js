@@ -234,10 +234,8 @@
                 console.info(ret);
             });
 
-            $('#thelist').append('<div id="' + file.id + '" class="item">' +
-                  '<h4 class="info">' + file.name + '</h4>' +
-                  '<p class="state">等待上传...</p>' +
-                '</div>');
+            var innerText = doT.template($('#dt-upload-item').text());
+            $('#thelist').append(innerText(file));
 
             setState('ready');
         }
