@@ -55,6 +55,7 @@
   <ItemGroup>
     <Compile Include="EncyptHelperTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UnitTest1.cs" />
     <Compile Include="URLEncodeTest.cs" />
   </ItemGroup>
   <ItemGroup>

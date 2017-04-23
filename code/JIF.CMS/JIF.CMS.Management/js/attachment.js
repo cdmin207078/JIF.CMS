@@ -217,14 +217,22 @@
             // 文件接收服务端。
             server: '/Attachment/Upload',
 
+            // 开启文件分片
+            chunked: true,
 
-            // 不压缩image, 默认如果是jpeg，文件上传前会压缩一把再上传！
-            resize: false
+            // 如果要分片，分多大一片. 默认大小为5M.
+            //chunkSize: 5242880,
+            chunkSize: 1048576,
+
+            // 如果某个分片由于网络问题出错，允许自动重传多少次. 默认 2 次
+            chunkRetry: 2,
+
+            // 图片不压缩
+            compress: false
         });
 
-
-
-        uploader.onFileQueued = function (file) {
+        // 文件被添加进队列的时候触发
+        uploader.on('fileQueued', function (file) {
             fileCount++;
             fileSize += file.size;
 
@@ -238,29 +246,45 @@
             $('#thelist').append(innerText(file));
 
             setState('ready');
-        }
+        });
 
-        // 上传成功
-        uploader.onUploadSuccess = function (file) {
+
+        // 文件上传过程中创建进度条实时显示。
+        uploader.on('uploadProgress', function (file, percentage) {
+            var $li = $('#' + file.id),
+                $percent = $li.find('.progress .progress-bar');
+
+            // 避免重复创建
+            if (!$percent.length) {
+                $percent = $('<div class="progress progress-striped active">' +
+                  '<div class="progress-bar" role="progressbar" style="width: 0%">' +
+                  '</div>' +
+                '</div>').appendTo($li).find('.progress-bar');
+            }
+
+            $li.find('p.state').text('上传中');
+
+            $percent.css('width', percentage * 100 + '%');
+        });
+
+
+        // 文件上传成功时触发
+        uploader.on('uploadSuccess', function (file) {
             $('#' + file.id).find('p.state').text('已上传');
-            console.log('file : ' + file.name + " - uploadSuccess")
-        }
+            console.info('file : ' + file.name + " - uploadSuccess")
+        });
 
-        // 上传失败
-        uploader.onUploadError = function (file) {
+        // 文件上传出错时触发
+        uploader.on('uploadError', function (file) {
             $('#' + file.id).find('p.state').text('上传出错');
-            console.log('file : ' + file.name + " - uploadError")
-        }
+            console.error('file : ' + file.name + " - uploadError")
+        });
 
-        // 上传完成, 此方法在 UploadSuccess / UploadError 之后执行.
-        uploader.onUploadComplete = function (file) {
+        // 不管成功或者失败，文件上传完成时触发
+        uploader.on('uploadComplete', function (file) {
             //$('#' + file.id).find('.progress').fadeOut();
             console.log('file : ' + file.name + " - uploadComplete")
-        }
-
-        uploader.onReady = function () {
-            window.uploader = uploader;
-        }
+        });
     }
 
     var initElemEvents = function () {
