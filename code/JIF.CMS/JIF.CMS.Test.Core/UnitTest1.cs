@@ -2,6 +2,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 
 namespace JIF.CMS.Test.Core
 {
@@ -60,6 +61,21 @@ namespace JIF.CMS.Test.Core
                 var fnContent = System.IO.File.ReadAllBytes(fn);
 
                 fs.Write(fnContent, 0, fnContent.Count());
+            }
+        }
+
+        [TestMethod]
+        public void CreateAndWriteTextTest()
+        {
+            var fn = @"E:\JIF.CMS\code\JIF.CMS\JIF.CMS.Management\attachments\num.txt";
+
+            using (var fs = System.IO.File.Create(fn))
+            {
+                for (int i = 1; i <= 500000; i++)
+                {
+                    var v = Encoding.Default.GetBytes(i.ToString() + ",");
+                    fs.Write(v, 0, v.Count());
+                }
             }
         }
     }
