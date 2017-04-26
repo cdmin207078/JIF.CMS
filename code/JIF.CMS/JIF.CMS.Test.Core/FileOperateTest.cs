@@ -3,6 +3,10 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+<<<<<<< HEAD
+=======
+using System.IO;
+>>>>>>> refs/remotes/origin/master
 using System.Diagnostics;
 
 namespace JIF.CMS.Test.Core
@@ -84,6 +88,7 @@ namespace JIF.CMS.Test.Core
         [TestMethod]
         public void Write_WriteByte_Speed_Test()
         {
+<<<<<<< HEAD
             var f1 = @"F:\WorkDocument\JIF.CMS\code\JIF.CMS\JIF.CMS.Management\attachments\1.png";
             var f2 = @"F:\WorkDocument\JIF.CMS\code\JIF.CMS\JIF.CMS.Management\attachments\2.png";
             var f3 = @"F:\WorkDocument\JIF.CMS\code\JIF.CMS\JIF.CMS.Management\attachments\3.png";
@@ -114,13 +119,86 @@ namespace JIF.CMS.Test.Core
                     var fc = System.IO.File.ReadAllBytes(f1);
 
                     foreach (var c in fc)
+=======
+            var ff = @"E:\JIF.CMS\code\JIF.CMS\JIF.CMS.Management\attachments";
+            var fr = "VisualStudio2017_ProductLaunchPoster-1.png";
+            var ftsuffix = ".temp.";
+
+            var f1 = Path.Combine(ff, fr);
+            var f2 = Path.Combine(ff, "Wrtie-整体写入.png");
+            var f3 = Path.Combine(ff, "WriteByte-整体写入.png");
+            var f4 = Path.Combine(ff, "Wrtie-分片写入.png");
+            var f5 = Path.Combine(ff, "WriteByte-分片写入.png");
+
+            var fns = Directory.GetFiles(ff).Where(d => d.Contains(ftsuffix)).OrderBy(d => Convert.ToInt32(d.Substring(d.LastIndexOf(".") + 1)));
+
+
+            var watch = new Stopwatch();
+
+            watch.Start();
+
+            using (var fs = File.Create(f2))
+            {
+                var oc = File.ReadAllBytes(f1);
+
+                fs.Write(oc, 0, oc.Length);
+            }
+
+            Console.WriteLine($"完整文件, Write 写入耗时: {watch.ElapsedMilliseconds}");
+            watch.Restart();
+
+            using (var fs = File.Create(f3))
+            {
+                var oc = File.ReadAllBytes(f1);
+
+                foreach (var c in oc)
+                {
+                    fs.WriteByte(c);
+                }
+            }
+
+            Console.WriteLine($"完整文件, WriteByte 写入耗时: {watch.ElapsedMilliseconds}");
+            watch.Restart();
+
+
+
+            using (var fs = File.Create(f4))
+            {
+                foreach (var fn in fns)
+                {
+                    var oc = System.IO.File.ReadAllBytes(fn);
+                    fs.Write(oc, 0, oc.Length);
+                }
+            }
+
+            Console.WriteLine($"分片文件, Write 写入耗时: {watch.ElapsedMilliseconds}");
+            watch.Restart();
+
+
+            using (var fs = File.Create(f5))
+            {
+                foreach (var fn in fns)
+                {
+                    var oc = System.IO.File.ReadAllBytes(fn);
+                    foreach (var c in oc)
+>>>>>>> refs/remotes/origin/master
                     {
                         fs.WriteByte(c);
                     }
                 }
+<<<<<<< HEAD
                 watch.Stop();
                 Console.WriteLine($"WriteByte - 耗时: { watch.ElapsedMilliseconds    }___.");
             }
+=======
+            }
+
+            Console.WriteLine($"分片文件, WriteByte 写入耗时: {watch.ElapsedMilliseconds}");
+            watch.Restart();
+
+            watch.Stop();
+
+>>>>>>> refs/remotes/origin/master
         }
     }
 }

@@ -11,10 +11,6 @@ namespace JIF.CMS.Services
 {
     public partial interface IBaseService
     {
-        void throwJIFException(string message);
-
-        void throwJIFException(string message, Exception innerException);
-
         ///// <summary>
         ///// 根据主键编号获取实体对象
         ///// </summary>

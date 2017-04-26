@@ -202,7 +202,6 @@
         //$info.html(text);
     }
 
-
     var initWebUploader = function () {
 
         // 实例化
@@ -221,8 +220,7 @@
             chunked: true,
 
             // 如果要分片，分多大一片. 默认大小为5M.
-            //chunkSize: 5242880,
-            chunkSize: 1048576,
+            chunkSize: 5242880,
 
             // 如果某个分片由于网络问题出错，允许自动重传多少次. 默认 2 次
             chunkRetry: 2,
@@ -236,10 +234,8 @@
             fileCount++;
             fileSize += file.size;
 
-            console.log(file);
-
             this.md5File(file, 0, 1 * 1024 * 1024).then(function (ret) {
-                console.info(ret);
+                //console.info(ret);
             });
 
             var innerText = doT.template($('#dt-upload-item').text());
@@ -248,6 +244,16 @@
             setState('ready');
         });
 
+        // 当某个文件的分块在发送前触发，主要用来询问是否要添加附带参数，大文件在开起分片上传的前提下此事件可能会触发多次
+        uploader.on('uploadBeforeSend', function (object, data, headers) {
+            console.info('-----------------  uploadBeforeSend - start  -----------------');
+
+            console.log(object);
+            console.log(data);
+            console.log(headers);
+
+            console.info('-----------------  uploadBeforeSend - end  -----------------');
+        });
 
         // 文件上传过程中创建进度条实时显示。
         uploader.on('uploadProgress', function (file, percentage) {
@@ -267,24 +273,31 @@
             $percent.css('width', percentage * 100 + '%');
         });
 
-
         // 文件上传成功时触发
         uploader.on('uploadSuccess', function (file) {
             $('#' + file.id).find('p.state').text('已上传');
-            console.info('file : ' + file.name + " - uploadSuccess")
+            //console.info('file : ' + file.name + " - uploadSuccess")
         });
 
         // 文件上传出错时触发
         uploader.on('uploadError', function (file) {
             $('#' + file.id).find('p.state').text('上传出错');
-            console.error('file : ' + file.name + " - uploadError")
+            //console.error('file : ' + file.name + " - uploadError")
         });
 
         // 不管成功或者失败，文件上传完成时触发
         uploader.on('uploadComplete', function (file) {
             //$('#' + file.id).find('.progress').fadeOut();
-            console.log('file : ' + file.name + " - uploadComplete")
+            //console.log('file : ' + file.name + " - uploadComplete")
         });
+
+
+        uploader.register({
+            'make-thumb': function () {
+                console.log('make-thumb')
+            }
+        });
+
     }
 
     var initElemEvents = function () {
@@ -303,6 +316,15 @@
                 uploader.stop();
             }
         });
+
+
+
+        //iCheck for checkbox and radio inputs
+        $('input[type="checkbox"].minimal, input[type="radio"].minimal').iCheck({
+            checkboxClass: 'icheckbox_minimal-blue',
+            radioClass: 'iradio_minimal-blue'
+        });
+
     }
 
     return {
