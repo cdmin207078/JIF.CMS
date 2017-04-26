@@ -53,20 +53,20 @@ namespace JIF.CMS.Services.SysManager
         {
             if (model == null)
             {
-                throwJIFException("信息不能为空");
+                throw new JIFException("信息不能为空");
             }
 
             if (string.IsNullOrWhiteSpace(model.Account)
                 || string.IsNullOrWhiteSpace(model.Password)
                 || string.IsNullOrWhiteSpace(model.Email))
             {
-                throwJIFException("信息不完整");
+                throw new JIFException("信息不完整");
             }
 
             var exists = _sysAdminRepository.Table.Any(d => model.Account.ToLower().Trim() == d.Account.ToLower().Trim());
             if (exists)
             {
-                throwJIFException("帐号: " + model.Account + ", 已存在");
+                throw new JIFException("帐号: " + model.Account + ", 已存在");
             }
 
             var now = DateTime.Now;
@@ -94,13 +94,13 @@ namespace JIF.CMS.Services.SysManager
         {
             if (model == null)
             {
-                throwJIFException("信息不能为空");
+                throw new JIFException("信息不能为空");
             }
 
             var entity = _sysAdminRepository.Get(id);
             if (entity == null)
             {
-                throwJIFException("用户不存在");
+                throw new JIFException("用户不存在");
             }
 
             entity.Email = model.Email;
@@ -115,13 +115,13 @@ namespace JIF.CMS.Services.SysManager
         {
             if (string.IsNullOrWhiteSpace(newPwd))
             {
-                throwJIFException("密码不能为空");
+                throw new JIFException("密码不能为空");
             }
 
             var entity = _sysAdminRepository.Get(id);
             if (entity == null)
             {
-                throwJIFException("用户不存在");
+                throw new JIFException("用户不存在");
             }
 
             entity.Password = EncyptPwd(newPwd, entity.CreateTime);
@@ -153,7 +153,7 @@ namespace JIF.CMS.Services.SysManager
         {
             if (string.IsNullOrWhiteSpace(account) || string.IsNullOrWhiteSpace(password))
             {
-                throwJIFException("账号 / 密码 不能为空");
+                throw new JIFException("账号 / 密码 不能为空");
             }
 
             var entity = _sysAdminRepository.Table.FirstOrDefault(d => d.Account.ToLower().Trim() == account.ToLower().Trim());
@@ -170,7 +170,7 @@ namespace JIF.CMS.Services.SysManager
 
             if (cipherText != entity.Password)
             {
-                throwJIFException("密码不正确");
+                throw new JIFException("密码不正确");
             }
 
             //entity.LastLoginTime = DateTime.Now;

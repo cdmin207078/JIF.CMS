@@ -43,15 +43,5 @@ namespace JIF.CMS.Services
 
         //    return new PagedList<T>(query.OrderByDescending(d => d.Id), pageIndex, pageSize);
         //}
-
-        public void throwJIFException(string message)
-        {
-            throw new JIFException(message);
-        }
-
-        public void throwJIFException(string message, Exception innerException)
-        {
-            throw new JIFException(message, innerException);
-        }
     }
 }

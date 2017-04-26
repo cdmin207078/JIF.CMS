@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading;
 using System.Web;
 using System.Web.Mvc;
 
@@ -47,6 +48,7 @@ namespace JIF.CMS.Management.Controllers
 
                 lock (_locker)
                 {
+                    Thread.Sleep(new Random(1).Next(1000, 3000));
                     file.SaveAs(filepath);
                 }
 
@@ -65,7 +67,7 @@ namespace JIF.CMS.Management.Controllers
         private void mergeFile(string filename, string rootPath, int chunks)
         {
             // 上传完成合并文件
-            var fns = Directory.GetFiles(rootPath).Where(d => d.Contains(filename)).OrderByDescending(d => d);
+            var fns = Directory.GetFiles(rootPath).Where(d => d.Contains(filename)).OrderBy(d => Convert.ToInt32(d.Substring(d.LastIndexOf(".") + 1)));
             var segCount = fns.Count();
 
             if (chunks == segCount)
@@ -75,8 +77,7 @@ namespace JIF.CMS.Management.Controllers
                     foreach (var fn in fns)
                     {
                         var segContent = System.IO.File.ReadAllBytes(fn);
-
-                        fs.Write(segContent, 0, segContent.Count());
+                        fs.Write(segContent, 0, segContent.Length);
                     }
                 }
             }
