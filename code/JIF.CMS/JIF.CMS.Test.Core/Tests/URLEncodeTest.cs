@@ -3,7 +3,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Web;
 using System.Text;
 
-namespace JIF.CMS.Test.Core
+namespace JIF.CMS.Test.Core.Tests
 {
     [TestClass]
     public class URLEncodeTest

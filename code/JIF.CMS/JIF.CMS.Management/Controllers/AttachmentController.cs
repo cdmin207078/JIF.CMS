@@ -1,10 +1,8 @@
 ﻿using JIF.CMS.Web.Framework.Controllers;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading;
-using System.Web;
 using System.Web.Mvc;
 
 namespace JIF.CMS.Management.Controllers
@@ -13,7 +11,7 @@ namespace JIF.CMS.Management.Controllers
     {
         private static object _locker = new object();
 
-
+        [HttpGet]
         // GET: Attachment
         public ActionResult Index()
         {

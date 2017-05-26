@@ -6,7 +6,7 @@ using System.Text;
 using System.IO;
 using System.Diagnostics;
 
-namespace JIF.CMS.Test.Core
+namespace JIF.CMS.Test.Core.Tests
 {
     [TestClass]
     public class FileOperateTest
@@ -50,7 +50,6 @@ namespace JIF.CMS.Test.Core
 
         }
 
-
         [TestMethod]
         public void CreateFileTest()
         {
@@ -80,7 +79,6 @@ namespace JIF.CMS.Test.Core
                 }
             }
         }
-
 
         [TestMethod]
         public void Write_WriteByte_Speed_Test()

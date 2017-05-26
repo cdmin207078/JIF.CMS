@@ -7,7 +7,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace JIF.CMS.Core.Security
+namespace JIF.CMS.Core.Helpers
 {
     /// <summary>
     /// 加密算法类
