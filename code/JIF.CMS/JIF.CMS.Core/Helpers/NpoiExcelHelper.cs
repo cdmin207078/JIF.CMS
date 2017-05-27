@@ -3,6 +3,7 @@ using NPOI.SS.UserModel;
 using NPOI.XSSF.UserModel;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Dynamic;
 using System.IO;
 using System.Linq;
@@ -24,38 +25,68 @@ namespace JIF.CMS.Core.Helpers
             {
                 _workbook = new HSSFWorkbook();
             }
-
-
-            CreateSheet("Sheet1");
         }
 
-        #region Private
+        #region private methods
 
-        ISheet Sheet(int sheetIndex)
+        private ISheet Sheet(int sheetIndex)
         {
             return _workbook.GetSheetAt(sheetIndex);
         }
 
-        IRow Row(int sheetIndex, int rowIndex)
+        private IRow Row(int sheetIndex, int rowIndex)
         {
             return Sheet(sheetIndex).GetRow(rowIndex);
         }
 
-        ICell Cell(int sheetIndex, int rowIndex, int cellIndex)
+        private ICell Cell(int sheetIndex, int rowIndex, int cellIndex)
         {
             return Row(sheetIndex, rowIndex).GetCell(cellIndex, MissingCellPolicy.CREATE_NULL_AS_BLANK);
         }
 
-        #endregion
-
-        public void CreateSheet(string sheetName)
+        private int GetSheetIndex(string sheetName)
         {
-            _workbook.CreateSheet(sheetName);
+            return _workbook.GetSheetIndex(sheetName);
         }
 
-        public void CreateRow(int sheetIndex, int rowIndex)
+        private string GetSheetName(int sheetIndex)
+        {
+            return _workbook.GetSheetName(sheetIndex);
+        }
+
+        private void CreateRow(int sheetIndex, int rowIndex)
         {
             _workbook.GetSheetAt(sheetIndex).CreateRow(rowIndex);
+        }
+
+        /// <summary>
+        /// 检查是否存在指定sheetName的sheet
+        /// </summary>
+        /// <param name="sheetName"></param>
+        /// <returns></returns>
+        private bool IsAvailableSheetName(string sheetName)
+        {
+            // sheetName 不能为空
+            if (string.IsNullOrWhiteSpace(sheetName))
+                return false;
+
+            // 未找到相应sheet
+            if (GetSheetIndex(sheetName) == -1)
+                return false;
+
+            return true;
+        }
+
+        #endregion
+
+        public void CreateSheet()
+        {
+            _workbook.CreateSheet();
+        }
+
+        public void CreateSheet(string name)
+        {
+            _workbook.CreateSheet(name);
         }
 
         public void Write<T>(T source, int sheetIndex, int rowIndex, int cellIndex)
@@ -79,7 +110,7 @@ namespace JIF.CMS.Core.Helpers
                 //    //currentCell.CellStyle.DataFormat = format.GetFormat("yyyy-MM-dd HH:mm:ss");
 
                 //    currentCell.CellStyle.DataFormat = HSSFDataFormat.GetBuiltinFormat("yyyy-MM-dd HH:mm:ss");
-                //    currentCell.SetCellValue(Convert.ToDateTime(value));
+                //    currentCell.SetCellValue(Convert.ToDateTime(source));
                 //}
                 else
                 {
@@ -153,6 +184,11 @@ namespace JIF.CMS.Core.Helpers
             }
         }
 
+        public void Write(DataTable source, int sheetIndex, int rowIndex, int cellIndex)
+        {
+            throw new NotImplementedException();
+        }
+
         public void Write(List<dynamic> source, int sheetIndex, int rowIndex, int cellIndex)
         {
             if (source == null || source.Count() == 0)
@@ -169,6 +205,67 @@ namespace JIF.CMS.Core.Helpers
                 }
             }
         }
+
+        #region Write by sheetName
+
+        public void Write<T>(T source, string sheetName, int rowIndex, int cellIndex)
+        {
+            if (IsAvailableSheetName(sheetName))
+            {
+                Write(source, GetSheetIndex(sheetName), rowIndex, cellIndex);
+            }
+        }
+
+        public void Write<T>(T[] source, string sheetName, int rowIndex, int cellIndex)
+        {
+            if (IsAvailableSheetName(sheetName))
+            {
+                Write(source, GetSheetIndex(sheetName), rowIndex, cellIndex);
+            }
+        }
+
+        public void Write<T>(T[,] source, string sheetName, int rowIndex, int cellIndex)
+        {
+            if (IsAvailableSheetName(sheetName))
+            {
+                Write(source, GetSheetIndex(sheetName), rowIndex, cellIndex);
+            }
+        }
+
+        /// <summary>
+        /// 注意 :
+        /// 使用 使用此方法,写入用户自定义实体类型时,会自动根据类型属性名称字母排序数据列
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="source"></param>
+        /// <param name="sheetIndex"></param>
+        /// <param name="rowIndex"></param>
+        /// <param name="cellIndex"></param>
+        public void Write<T>(List<T> source, string sheetName, int rowIndex, int cellIndex)
+        {
+            if (IsAvailableSheetName(sheetName))
+            {
+                Write(source, GetSheetIndex(sheetName), rowIndex, cellIndex);
+            }
+        }
+
+        public void Write<T>(DataTable source, string sheetName, int rowIndex, int cellIndex)
+        {
+            if (IsAvailableSheetName(sheetName))
+            {
+                Write(source, GetSheetIndex(sheetName), rowIndex, cellIndex);
+            }
+        }
+
+        public void Write<T>(List<dynamic> source, string sheetName, int rowIndex, int cellIndex)
+        {
+            if (IsAvailableSheetName(sheetName))
+            {
+                Write(source, GetSheetIndex(sheetName), rowIndex, cellIndex);
+            }
+        }
+
+        #endregion
 
         public static List<dynamic> Read(string file, int sheetIndex, int rowIndex, int cellIndex)
         {
@@ -191,8 +288,8 @@ namespace JIF.CMS.Core.Helpers
             //遍历数据行
             for (int r = rowIndex; r <= sheet.LastRowNum; r++)
             {
-                dynamic dyData = new ExpandoObject();
-                var DicdyData = dyData as IDictionary<string, object>;
+                dynamic exo = new ExpandoObject();
+                var dicExo = exo as IDictionary<string, object>;
 
                 IRow row = sheet.GetRow(r);
 
@@ -202,15 +299,15 @@ namespace JIF.CMS.Core.Helpers
                     ICell cel = row.GetCell(c);
                     if (cel == null)
                     {
-                        DicdyData[Utils.ToNumberSystem26(c + 1)] = null;
+                        dicExo[Utils.ToNumberSystem26(c + 1)] = null;
                     }
                     else
                     {
-                        DicdyData[Utils.ToNumberSystem26(c + 1)] = cel.ToString();
+                        dicExo[Utils.ToNumberSystem26(c + 1)] = cel.ToString();
                     }
                 }
 
-                result.Add(dyData);
+                result.Add(exo);
             }
 
             return result;
