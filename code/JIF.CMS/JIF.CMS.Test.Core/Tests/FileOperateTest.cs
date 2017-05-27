@@ -6,7 +6,7 @@ using System.Text;
 using System.IO;
 using System.Diagnostics;
 
-namespace JIF.CMS.Test.Core
+namespace JIF.CMS.Test.Core.Tests
 {
     [TestClass]
     public class FileOperateTest

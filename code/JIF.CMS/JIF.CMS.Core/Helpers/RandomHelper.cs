@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace JIF.CMS.Core.Common
+namespace JIF.CMS.Core.Helpers
 {
     public static class RandomHelper
     {
@@ -115,7 +115,7 @@ namespace JIF.CMS.Core.Common
         /// <summary>
         /// 随机数格式
         /// </summary>
-        public enum Format
+        public enum Format : byte
         {
             /// <summary>
             /// 纯数字
@@ -245,9 +245,7 @@ namespace JIF.CMS.Core.Common
         /// <returns></returns>
         public static List<string> GenChineseName(int count)
         {
-            return null;
+            throw new NotImplementedException();
         }
-
-
     }
 }

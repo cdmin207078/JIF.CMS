@@ -2,7 +2,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Web.Security;
 
-namespace JIF.CMS.Test.Core
+namespace JIF.CMS.Test.Core.Tests
 {
     [TestClass]
     public class EncyptHelperTest

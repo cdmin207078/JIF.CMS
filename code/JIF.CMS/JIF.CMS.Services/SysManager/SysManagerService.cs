@@ -1,16 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using JIF.CMS.Core.Domain;
-using JIF.CMS.Core;
+﻿using JIF.CMS.Core;
 using JIF.CMS.Core.Data;
-using JIF.CMS.Core.Security;
-using System.Security.Cryptography;
+using JIF.CMS.Core.Domain;
+using JIF.CMS.Core.Helpers;
 using JIF.CMS.Services.SysManager.Dtos;
-using System.Linq.Expressions;
-using JIF.CMS.Core.Infrastructure;
+using System;
+using System.Linq;
 
 namespace JIF.CMS.Services.SysManager
 {
