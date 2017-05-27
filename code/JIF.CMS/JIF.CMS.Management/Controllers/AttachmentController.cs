@@ -32,6 +32,10 @@ namespace JIF.CMS.Management.Controllers
                 Directory.CreateDirectory(rootPath);
             }
 
+            // 延迟一下
+            Thread.Sleep(new Random(1).Next(1000, 3000));
+
+
             if (string.IsNullOrWhiteSpace(Request["chunks"]))
             {
                 var filepath = Path.Combine(rootPath, file.FileName);
@@ -48,7 +52,6 @@ namespace JIF.CMS.Management.Controllers
 
                 lock (_locker)
                 {
-                    Thread.Sleep(new Random(1).Next(1000, 3000));
                     file.SaveAs(filepath);
                 }
 

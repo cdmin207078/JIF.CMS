@@ -113,8 +113,10 @@
 
 <script id="dt-upload-item" type="text/x-dot-template">
     <div id="{{=it.id}}" class="item">
-        <h4 class="info">{{=it.name }}</h4>
-        <div class="progress progress-xxs active">
+        <h4 class="info">
+            {{=it.name }}
+        </h4>
+        <div class="progress active">
             <div class="progress-bar progress-bar-success progress-bar-striped" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 0%">
                 <span class="sr-only state">等待上传 <i>60%</i></span>
             </div>
@@ -158,5 +160,9 @@
             .uploader-panel .box {
                 margin-bottom: 0px;
             }
+
+        .sr-only {
+            position: relative;
+        }
     </style>
 }
