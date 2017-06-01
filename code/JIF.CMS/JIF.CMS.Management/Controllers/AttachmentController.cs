@@ -44,16 +44,17 @@ namespace JIF.CMS.Management.Controllers
                 var fn = string.Format("{0}.{1}", file.FileName, chunksuffix);
                 var filepath = Path.Combine(rootPath, fn);
 
-                lock (_locker)
-                {
-                    Thread.Sleep(new Random(1).Next(1000, 3000));
-                    file.SaveAs(filepath);
-                }
+                //lock (_locker)
+                //{
+                //Thread.Sleep(new Random(1).Next(1000, 3000));
+                file.SaveAs(filepath);
+                //}
 
-                mergeFile(file.FileName, rootPath, chunks);
+
+                //mergeFile(file.FileName, rootPath, chunks);
             }
 
-            return Json("OK");
+            return AjaxOk();
         }
 
         /// <summary>
@@ -76,6 +77,9 @@ namespace JIF.CMS.Management.Controllers
                     {
                         var segContent = System.IO.File.ReadAllBytes(fn);
                         fs.Write(segContent, 0, segContent.Length);
+
+                        // 删除分片
+                        System.IO.File.Delete(fn);
                     }
                 }
             }

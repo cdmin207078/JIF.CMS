@@ -413,7 +413,6 @@
     <Content Include="Content\simditor\styles\fonticon.scss" />
     <Content Include="Content\simditor\styles\simditor.scss" />
     <Content Include="js\attachment.js" />
-    <Content Include="js\upload.js" />
     <Content Include="Scripts\Layout.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>

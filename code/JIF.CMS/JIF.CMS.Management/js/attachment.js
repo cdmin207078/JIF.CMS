@@ -106,11 +106,9 @@
     }
 
     var init = function () {
-
         initWebUploader();
         initElemEvents();
     }
-
 
     var setState = function (val) {
         var file, stats;
@@ -220,13 +218,17 @@
             chunked: true,
 
             // 如果要分片，分多大一片. 默认大小为5M.
-            chunkSize: 5242880,
+            //chunkSize: 5242880,
+            chunkSize: 1048576,
 
             // 如果某个分片由于网络问题出错，允许自动重传多少次. 默认 2 次
             chunkRetry: 2,
 
             // 图片不压缩
-            compress: false
+            compress: false,
+
+            // 上传并发数。允许同时最大上传进程数。 [默认值：3]
+            //threads: 5
         });
 
         // 文件被添加进队列的时候触发
@@ -234,14 +236,23 @@
             fileCount++;
             fileSize += file.size;
 
-            this.md5File(file, 0, 1 * 1024 * 1024).then(function (ret) {
-                //console.info(ret);
+            this.md5File(file).then(function (ret) {
+                console.info(ret);
             });
 
             var innerText = doT.template($('#dt-upload-item').text());
-            $('#thelist').append(innerText(file));
+            $('#uploader-list').append(innerText(file));
 
             setState('ready');
+        });
+
+        // 某个文件开始上传前触发，一个文件只会触发一次
+        uploader.on('uploadStart', function (file) {
+            console.log('upload - Start');
+
+            this.md5File(file).then(function (ret) {
+                console.info(ret);
+            });
         });
 
         // 当某个文件的分块在发送前触发，主要用来询问是否要添加附带参数，大文件在开起分片上传的前提下此事件可能会触发多次
@@ -249,7 +260,12 @@
             console.info('-----------------  uploadBeforeSend - start  -----------------');
 
             console.log(object);
+
+            data.say = 'hello world.';
+
             console.log(data);
+
+
             console.log(headers);
 
             console.info('-----------------  uploadBeforeSend - end  -----------------');
@@ -257,26 +273,16 @@
 
         // 文件上传过程中创建进度条实时显示。
         uploader.on('uploadProgress', function (file, percentage) {
-            var $li = $('#' + file.id),
-                $percent = $li.find('.progress .progress-bar');
-
-            // 避免重复创建
-            if (!$percent.length) {
-                $percent = $('<div class="progress progress-striped active">' +
-                  '<div class="progress-bar" role="progressbar" style="width: 0%">' +
-                  '</div>' +
-                '</div>').appendTo($li).find('.progress-bar');
-            }
-
-            $li.find('p.state').text('上传中');
+            var $li = $('#' + file.id);
+            var $percent = $li.find('.progress .progress-bar');
 
             $percent.css('width', percentage * 100 + '%');
         });
 
         // 文件上传成功时触发
         uploader.on('uploadSuccess', function (file) {
-            $('#' + file.id).find('p.state').text('已上传');
-            //console.info('file : ' + file.name + " - uploadSuccess")
+            var $fi = $('#' + file.id);
+            $fi.find('.progress').removeClass('active');
         });
 
         // 文件上传出错时触发
@@ -291,12 +297,16 @@
             //console.log('file : ' + file.name + " - uploadComplete")
         });
 
-
-        uploader.register({
-            'make-thumb': function () {
-                console.log('make-thumb')
-            }
+        uploader.on('uploadAccept', function (object, ret) {
+            //console.log(object);
         });
+
+
+        //Uploader.register({
+        //    'make-thumb': function () {
+        //        console.log('make-thumb')
+        //    }
+        //});
 
     }
 
@@ -316,8 +326,6 @@
                 uploader.stop();
             }
         });
-
-
 
         //iCheck for checkbox and radio inputs
         $('input[type="checkbox"].minimal, input[type="radio"].minimal').iCheck({
