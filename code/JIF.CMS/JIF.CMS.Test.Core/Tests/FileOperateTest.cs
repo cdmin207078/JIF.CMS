@@ -83,6 +83,7 @@ namespace JIF.CMS.Test.Core.Tests
         [TestMethod]
         public void Write_WriteByte_Speed_Test()
         {
+
             var ff = @"E:\JIF.CMS\code\JIF.CMS\JIF.CMS.Management\attachments";
             var fr = "VisualStudio2017_ProductLaunchPoster-1.png";
             var ftsuffix = ".temp.";
@@ -144,17 +145,18 @@ namespace JIF.CMS.Test.Core.Tests
                 {
                     var oc = System.IO.File.ReadAllBytes(fn);
                     foreach (var c in oc)
+
                     {
                         fs.WriteByte(c);
                     }
                 }
+
             }
 
             Console.WriteLine($"分片文件, WriteByte 写入耗时: {watch.ElapsedMilliseconds}");
             watch.Restart();
 
             watch.Stop();
-
         }
     }
 }
