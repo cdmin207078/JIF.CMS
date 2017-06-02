@@ -19,7 +19,13 @@ namespace JIF.CMS.Management.Controllers
         }
 
         [HttpPost]
-        public ActionResult Upload()
+        public JsonResult PreCheckUpload()
+        {
+            return AjaxOk();
+        }
+
+        [HttpPost]
+        public JsonResult Upload()
         {
             var file = Request.Files[0];
             var rootPath = Server.MapPath("../attachments");
@@ -39,7 +45,7 @@ namespace JIF.CMS.Management.Controllers
             {
                 var chunk = Request["chunk"];                 // 当前分片批次
                 var chunks = int.Parse(Request["chunks"]);    // 分片总数
-                var chunksuffix = "temp." + chunk;            // 分片文件后缀名
+                var chunksuffix = "pr." + chunk;            // 分片文件后缀名
 
                 var fn = string.Format("{0}.{1}", file.FileName, chunksuffix);
                 var filepath = Path.Combine(rootPath, fn);

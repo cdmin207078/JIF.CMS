@@ -111,7 +111,7 @@
     }
 
     var setState = function (val) {
-        var file, stats;
+        var  stats;
 
         if (val === state) {
             return;
@@ -219,7 +219,7 @@
 
             // 如果要分片，分多大一片. 默认大小为5M.
             //chunkSize: 5242880,
-            chunkSize: 1048576,
+            //chunkSize: 1048576,
 
             // 如果某个分片由于网络问题出错，允许自动重传多少次. 默认 2 次
             chunkRetry: 2,
@@ -228,7 +228,7 @@
             compress: false,
 
             // 上传并发数。允许同时最大上传进程数。 [默认值：3]
-            //threads: 5
+            threads: 1
         });
 
         // 文件被添加进队列的时候触发
@@ -236,39 +236,38 @@
             fileCount++;
             fileSize += file.size;
 
-            this.md5File(file).then(function (ret) {
-                console.info(ret);
-            });
-
             var innerText = doT.template($('#dt-upload-item').text());
             $('#uploader-list').append(innerText(file));
+
+            this.md5File(file).then(function (ret) {
+                //console.warn('[fileQueued] ' + file.name + ':' + ret);
+            });
 
             setState('ready');
         });
 
         // 某个文件开始上传前触发，一个文件只会触发一次
         uploader.on('uploadStart', function (file) {
-            console.log('upload - Start');
-
-            this.md5File(file).then(function (ret) {
-                console.info(ret);
-            });
+            console.log('[uploadStart]' + file.name);
         });
 
         // 当某个文件的分块在发送前触发，主要用来询问是否要添加附带参数，大文件在开起分片上传的前提下此事件可能会触发多次
         uploader.on('uploadBeforeSend', function (object, data, headers) {
-            console.info('-----------------  uploadBeforeSend - start  -----------------');
+            //console.info('-----------------  uploadBeforeSend - start  -----------------');
 
-            console.log(object);
+            //console.log(object);
 
-            data.say = 'hello world.';
+            ////data.Say = 'hello world.';
 
-            console.log(data);
+            //console.log(data);
 
+            //this.md5File(object.file, object.start, object.end).then(function (ret) {
+            //    console.warn('uploadBeforeSend : md5 = ' + ret);
+            //});
 
-            console.log(headers);
+            ////console.log(headers);
 
-            console.info('-----------------  uploadBeforeSend - end  -----------------');
+            //console.info('-----------------  uploadBeforeSend - end  -----------------');
         });
 
         // 文件上传过程中创建进度条实时显示。
@@ -295,6 +294,12 @@
         uploader.on('uploadComplete', function (file) {
             //$('#' + file.id).find('.progress').fadeOut();
             //console.log('file : ' + file.name + " - uploadComplete")
+
+            console.log('[uploadComplete] ' + file.name);
+
+            // 暂停上传队列
+            uploader.stop();
+
         });
 
         uploader.on('uploadAccept', function (object, ret) {
@@ -319,6 +324,7 @@
             }
 
             if (state === 'ready') {
+                //console.log(uploader.getFiles());
                 uploader.upload();
             } else if (state === 'paused') {
                 uploader.upload();
@@ -326,6 +332,8 @@
                 uploader.stop();
             }
         });
+
+
 
         //iCheck for checkbox and radio inputs
         $('input[type="checkbox"].minimal, input[type="radio"].minimal').iCheck({
