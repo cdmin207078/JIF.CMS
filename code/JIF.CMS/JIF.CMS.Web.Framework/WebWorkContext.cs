@@ -49,12 +49,12 @@ namespace JIF.CMS.Web.Framework
         {
             get
             {
-                throw new NotImplementedException();
+                return false;
             }
 
             set
             {
-                throw new NotImplementedException();
+                ;
             }
         }
     }

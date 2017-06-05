@@ -74,6 +74,17 @@
     }
     @Scripts.Render("~/scripts/adminlte")
 
+    <script type="text/javascript">
+        @{
+            var _workContext = JIF.CMS.Core.Infrastructure.EngineContext.Current.Resolve<IWorkContext>();
+        }
+
+        var _workContext = {
+            uid: '@(_workContext.CurrentUser.Id)',
+            account: '@(_workContext.CurrentUser.Account)',
+        };
+    </script>
+
     @RenderSection("Scripts", false)
 
     @StackExchange.Profiling.MiniProfiler.RenderIncludes()

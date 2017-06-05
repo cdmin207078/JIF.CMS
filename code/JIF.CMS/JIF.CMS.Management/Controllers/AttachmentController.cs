@@ -1,4 +1,7 @@
-﻿using JIF.CMS.Web.Framework.Controllers;
+﻿using JIF.CMS.Core;
+using JIF.CMS.Core.Helpers;
+using JIF.CMS.Web.Framework.Controllers;
+using JIF.CMS.Web.Framework.Models;
 using System;
 using System.IO;
 using System.Linq;
@@ -11,34 +14,57 @@ namespace JIF.CMS.Management.Controllers
     {
         private static object _locker = new object();
 
+        private readonly string _attachmentRootPath;
+
+        private readonly IWorkContext _workContext;
+
+        public AttachmentController(IWorkContext workContext)
+        {
+            _workContext = workContext;
+
+            _attachmentRootPath = Server.MapPath("../attachments");
+        }
+
         [HttpGet]
-        // GET: Attachment
         public ActionResult Index()
         {
             return View();
         }
 
-        [HttpPost]
-        public JsonResult PreCheckUpload()
+        // 大文件上传之前, 判断是否是断点续传
+        [HttpGet]
+        public JsonResult BigFilePreCheck(string fname, int fsize, string lastModifiedDate)
         {
-            return AjaxOk();
+            var algo = EncyptHelper.CreateHashAlgoMd5();
+            var plain = string.Format("{0}-{1}-{2}-{3}", _workContext.CurrentUser.Account, fname, fsize, lastModifiedDate);
+            var cipher = EncyptHelper.Encrypt(algo, plain);
+
+            if (Directory.Exists(Path.Combine(_attachmentRootPath, cipher)))
+            {
+                return AjaxOk(Uploadmode.Continued);
+            }
+            else
+            {
+                return AjaxOk(Uploadmode.New);
+            }
         }
 
         [HttpPost]
         public JsonResult Upload()
         {
             var file = Request.Files[0];
-            var rootPath = Server.MapPath("../attachments");
 
             // 判断路径是否已经创建
-            if (false == Directory.Exists(rootPath))
+            if (false == Directory.Exists(_attachmentRootPath))
             {
-                Directory.CreateDirectory(rootPath);
+                Directory.CreateDirectory(_attachmentRootPath);
             }
+
+            // 检查上传模式 首次上传 \ 断点续传 \ 秒传
 
             if (string.IsNullOrWhiteSpace(Request["chunks"]))
             {
-                var filepath = Path.Combine(rootPath, file.FileName);
+                var filepath = Path.Combine(_attachmentRootPath, file.FileName);
                 file.SaveAs(filepath);
             }
             else
@@ -48,7 +74,7 @@ namespace JIF.CMS.Management.Controllers
                 var chunksuffix = "pr." + chunk;            // 分片文件后缀名
 
                 var fn = string.Format("{0}.{1}", file.FileName, chunksuffix);
-                var filepath = Path.Combine(rootPath, fn);
+                var filepath = Path.Combine(_attachmentRootPath, fn);
 
                 //lock (_locker)
                 //{

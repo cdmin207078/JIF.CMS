@@ -110,8 +110,13 @@
         initElemEvents();
     }
 
+    var getChunkSize = function () {
+        // 大于 5M, 则需要分割
+        return 1024 * 1024 * 5;
+    }
+
     var setState = function (val) {
-        var  stats;
+        var stats;
 
         if (val === state) {
             return;
@@ -212,7 +217,7 @@
             swf: '~/Content/webuploader-0.1.5/Uploader.swf',
 
             // 文件接收服务端。
-            server: '/Attachment/Upload',
+            server: '/attachment/upload',
 
             // 开启文件分片
             chunked: true,
@@ -222,7 +227,7 @@
             //chunkSize: 1048576,
 
             // 如果某个分片由于网络问题出错，允许自动重传多少次. 默认 2 次
-            chunkRetry: 2,
+            //chunkRetry: 2,
 
             // 图片不压缩
             compress: false,
@@ -238,10 +243,6 @@
 
             var innerText = doT.template($('#dt-upload-item').text());
             $('#uploader-list').append(innerText(file));
-
-            this.md5File(file).then(function (ret) {
-                //console.warn('[fileQueued] ' + file.name + ':' + ret);
-            });
 
             setState('ready');
         });
@@ -295,24 +296,17 @@
             //$('#' + file.id).find('.progress').fadeOut();
             //console.log('file : ' + file.name + " - uploadComplete")
 
-            console.log('[uploadComplete] ' + file.name);
+            console.info('[uploadComplete] ' + file.name);
 
             // 暂停上传队列
-            uploader.stop();
+            //uploader.stop();
 
         });
 
+        // 当某个文件上传到服务端响应后，会派送此事件来询问服务端响应是否有效。
         uploader.on('uploadAccept', function (object, ret) {
             //console.log(object);
         });
-
-
-        //Uploader.register({
-        //    'make-thumb': function () {
-        //        console.log('make-thumb')
-        //    }
-        //});
-
     }
 
     var initElemEvents = function () {
@@ -334,7 +328,6 @@
         });
 
 
-
         //iCheck for checkbox and radio inputs
         $('input[type="checkbox"].minimal, input[type="radio"].minimal').iCheck({
             checkboxClass: 'icheckbox_minimal-blue',
@@ -344,7 +337,82 @@
     }
 
     return {
-        init: init
+        init: init,
+        getChunkSize: getChunkSize
     };
 
 })(jQuery);
+
+
+WebUploader.Uploader.register({
+    'before-send-file': 'before_send_file'
+}, {
+    before_send_file: function (file) {
+
+        console.log(file);
+        console.assert('before-send-file');
+
+        var me = this,
+            owner = this.owner,
+            server = me.options.server,
+            deferred = WebUploader.Deferred();
+
+        var chunkSize = attachmentUpload.getChunkSize();
+
+        if (file.size < chunkSize) {
+            deferred.resolve();
+        } else {
+            var data = {
+                fname: file.name,
+                fsize: file.size,
+                lastModifiedDate: file.lastModifiedDate
+            };
+
+            $.get('/attachment/bigfileprecheck', data, function (result) {
+
+                console.log(result);
+
+                //if (result.success) {
+                //    deferred.resolve();
+                //}
+            });
+        }
+
+
+
+        return deferred.promise();
+
+        //owner.md5File(file.source)
+        //    .fail(function () {
+        //        // 如果读取出错了，则通过reject告诉webuploader文件上传出错。
+
+        //        deferred.reject();
+        //    }).then(function (md5) {
+
+        //        console.log(md5);
+
+        //        //deferred.resolve();
+        //        //// 与服务安验证
+        //        //$.ajax(server, {
+        //        //    dataType: 'json',
+        //        //    data: {
+        //        //        md5: ret
+        //        //    },
+        //        //    success: function (response) {
+
+        //        //        // 如果验证已经上传过
+        //        //        if (response.exist) {
+        //        //            owner.skipFile(file);
+
+        //        //            console.log('文件重复，已跳过');
+        //        //        }
+
+        //        //        // 介绍此promise, webuploader接着往下走。
+        //        //        deferred.resolve();
+        //        //    }
+        //        //});
+        //    });
+
+        //return deferred.promise();
+    }
+});

@@ -1,7 +1,4 @@
-﻿
-
-
-using JIF.CMS.Core.Domain;
+﻿using JIF.CMS.Core.Domain;
 
 namespace JIF.CMS.Core
 {
