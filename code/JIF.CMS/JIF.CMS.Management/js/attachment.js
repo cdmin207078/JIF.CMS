@@ -219,7 +219,6 @@
                     deferred = WebUploader.Deferred();
                 var chunkSize = getChunkSize();
 
-                console.log(me);
 
                 if (file.size < chunkSize) {
                     deferred.resolve();
@@ -289,7 +288,7 @@
             compress: false,
 
             // 上传并发数。允许同时最大上传进程数。 [默认值：3]
-            threads: 1,
+            //threads: 1,
         });
 
         // 文件被添加进队列的时候触发
@@ -314,10 +313,6 @@
             //console.info('-----------------  uploadBeforeSend - start  -----------------');
             console.info('[uploadBeforeSend]');
 
-            //console.log(object);
-            //console.log(data);
-            //console.log(headers);
-
             // 重设文件时间戳
             data.lastModifiedDate = Date.parse(data.lastModifiedDate);
 
@@ -341,19 +336,11 @@
         // 文件上传出错时触发
         uploader.on('uploadError', function (file) {
             $('#' + file.id).find('p.state').text('上传出错');
-            //console.error('file : ' + file.name + " - uploadError")
         });
 
         // 不管成功或者失败，文件上传完成时触发
         uploader.on('uploadComplete', function (file) {
-            //$('#' + file.id).find('.progress').fadeOut();
-            //console.log('file : ' + file.name + " - uploadComplete")
-
             console.info('[uploadComplete] ' + file.name);
-
-            // 暂停上传队列
-            //uploader.stop();
-
         });
 
         // 当某个文件上传到服务端响应后，会派送此事件来询问服务端响应是否有效。
