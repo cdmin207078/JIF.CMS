@@ -20,9 +20,9 @@ namespace JIF.CMS.Management.Controllers
 
         public AttachmentController(IWorkContext workContext)
         {
-            _workContext = workContext;
+            _attachmentRootPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "attachments");
 
-            _attachmentRootPath = Server.MapPath("../attachments");
+            _workContext = workContext;
         }
 
         [HttpGet]
@@ -31,37 +31,45 @@ namespace JIF.CMS.Management.Controllers
             return View();
         }
 
-        // 大文件上传之前, 判断是否是断点续传
-        [HttpGet]
-        public JsonResult BigFilePreCheck(string fname, int fsize, string lastModifiedDate)
+        private string BigFileChunkFolder(string fname, long fsize, long lastModifiedTimestamp)
         {
             var algo = EncyptHelper.CreateHashAlgoMd5();
-            var plain = string.Format("{0}-{1}-{2}-{3}", _workContext.CurrentUser.Account, fname, fsize, lastModifiedDate);
+            var plain = string.Format("{0}-{1}-{2}-{3}", _workContext.CurrentUser.Account, fname, fsize, lastModifiedTimestamp);
             var cipher = EncyptHelper.Encrypt(algo, plain);
 
-            if (Directory.Exists(Path.Combine(_attachmentRootPath, cipher)))
+            return Path.Combine(_attachmentRootPath, cipher);
+        }
+
+        // 大文件上传之前, 判断是否是断点续传
+        [HttpGet]
+        public JsonResult BigFilePreCheck(string fname, long fsize, long lastModifiedTimestamp)
+        {
+            var chunkFolder = BigFileChunkFolder(fname, fsize, lastModifiedTimestamp);
+
+            if (Directory.Exists(chunkFolder))
             {
-                return AjaxOk(Uploadmode.Continued);
+                var chunks = string.Join(",", Directory.GetFiles(Path.Combine(_attachmentRootPath, chunkFolder))
+                    .Select(d => d.Substring(d.LastIndexOf('\\') + 1)).ToArray());
+
+                return AjaxOk(new { mode = Uploadmode.Continued, chunks = chunks });
             }
             else
             {
-                return AjaxOk(Uploadmode.New);
+                return AjaxOk(new { mode = Uploadmode.New });
             }
         }
 
         [HttpPost]
         public JsonResult Upload()
         {
+            // 判断路径是否已经创建
+            if (!Directory.Exists(_attachmentRootPath))
+                Directory.CreateDirectory(_attachmentRootPath);
+
+
             var file = Request.Files[0];
 
-            // 判断路径是否已经创建
-            if (false == Directory.Exists(_attachmentRootPath))
-            {
-                Directory.CreateDirectory(_attachmentRootPath);
-            }
-
             // 检查上传模式 首次上传 \ 断点续传 \ 秒传
-
             if (string.IsNullOrWhiteSpace(Request["chunks"]))
             {
                 var filepath = Path.Combine(_attachmentRootPath, file.FileName);
@@ -69,21 +77,26 @@ namespace JIF.CMS.Management.Controllers
             }
             else
             {
+                var fname = Request["name"];
+                var fsize = long.Parse(Request["size"]);
+                var lastModifiedTimestamp = long.Parse(Request["lastModifiedDate"]);
+
+                var chunkFolder = BigFileChunkFolder(fname, fsize, lastModifiedTimestamp);
+
+                if (!Directory.Exists(chunkFolder))
+                    Directory.CreateDirectory(chunkFolder);
+
                 var chunk = Request["chunk"];                 // 当前分片批次
+
+                var filepath = Path.Combine(chunkFolder, chunk);
+
+                lock (_locker)
+                {
+                    file.SaveAs(filepath);
+                }
+
                 var chunks = int.Parse(Request["chunks"]);    // 分片总数
-                var chunksuffix = "pr." + chunk;            // 分片文件后缀名
-
-                var fn = string.Format("{0}.{1}", file.FileName, chunksuffix);
-                var filepath = Path.Combine(_attachmentRootPath, fn);
-
-                //lock (_locker)
-                //{
-                //Thread.Sleep(new Random(1).Next(1000, 3000));
-                file.SaveAs(filepath);
-                //}
-
-
-                //mergeFile(file.FileName, rootPath, chunks);
+                mergeFile(file.FileName, chunkFolder, chunks);
             }
 
             return AjaxOk();
@@ -98,7 +111,7 @@ namespace JIF.CMS.Management.Controllers
         private void mergeFile(string filename, string rootPath, int chunks)
         {
             // 上传完成合并文件
-            var fns = Directory.GetFiles(rootPath).Where(d => d.Contains(filename)).OrderBy(d => Convert.ToInt32(d.Substring(d.LastIndexOf(".") + 1)));
+            var fns = Directory.GetFiles(rootPath).OrderBy(d => Convert.ToInt32(d.Substring(d.LastIndexOf("\\") + 1)));
             var segCount = fns.Count();
 
             if (chunks == segCount)

@@ -106,6 +106,7 @@
     }
 
     var init = function () {
+        initHook();
         initWebUploader();
         initElemEvents();
     }
@@ -205,6 +206,61 @@
         //$info.html(text);
     }
 
+    var initHook = function () {
+
+        WebUploader.Uploader.register({
+            'before-send-file': 'before_send_file',
+            'before-send': 'before_send',
+        }, {
+            before_send_file: function (file) {
+                console.info('[hook - before_send_file]');
+
+                var me = this,
+                    deferred = WebUploader.Deferred();
+                var chunkSize = getChunkSize();
+
+                console.log(me);
+
+                if (file.size < chunkSize) {
+                    deferred.resolve();
+                } else {
+                    var data = {
+                        fname: file.name,
+                        fsize: file.size,
+                        lastModifiedTimestamp: Date.parse(file.lastModifiedDate)
+                    };
+
+                    $.get('/attachment/bigfileprecheck', data, function (res) {
+                        if (res.success) {
+                            if (res.data.mode == 1) {
+                                me.options.existsChunks = res.data.chunks.split(',');
+                            }
+
+                            deferred.resolve();
+                        }
+                    });
+                }
+
+                return deferred.promise();
+
+            }, before_send: function (file) {
+
+                var deferred = WebUploader.Deferred();
+
+                var me = this,
+                    existsChunks = me.options.existsChunks;
+
+                if (existsChunks && existsChunks.indexOf(file.chunk.toString()) > -1) {
+                    deferred.reject();
+                } else {
+                    deferred.resolve();
+                }
+
+                return deferred.promise();
+            }
+        });
+    }
+
     var initWebUploader = function () {
 
         // 实例化
@@ -233,11 +289,12 @@
             compress: false,
 
             // 上传并发数。允许同时最大上传进程数。 [默认值：3]
-            threads: 1
+            threads: 1,
         });
 
         // 文件被添加进队列的时候触发
         uploader.on('fileQueued', function (file) {
+
             fileCount++;
             fileSize += file.size;
 
@@ -249,24 +306,20 @@
 
         // 某个文件开始上传前触发，一个文件只会触发一次
         uploader.on('uploadStart', function (file) {
-            console.log('[uploadStart]' + file.name);
+            console.info('[uploadStart] - after before-send-file ');
         });
 
         // 当某个文件的分块在发送前触发，主要用来询问是否要添加附带参数，大文件在开起分片上传的前提下此事件可能会触发多次
         uploader.on('uploadBeforeSend', function (object, data, headers) {
             //console.info('-----------------  uploadBeforeSend - start  -----------------');
+            console.info('[uploadBeforeSend]');
 
             //console.log(object);
-
-            ////data.Say = 'hello world.';
-
             //console.log(data);
+            //console.log(headers);
 
-            //this.md5File(object.file, object.start, object.end).then(function (ret) {
-            //    console.warn('uploadBeforeSend : md5 = ' + ret);
-            //});
-
-            ////console.log(headers);
+            // 重设文件时间戳
+            data.lastModifiedDate = Date.parse(data.lastModifiedDate);
 
             //console.info('-----------------  uploadBeforeSend - end  -----------------');
         });
@@ -343,76 +396,3 @@
 
 })(jQuery);
 
-
-WebUploader.Uploader.register({
-    'before-send-file': 'before_send_file'
-}, {
-    before_send_file: function (file) {
-
-        console.log(file);
-        console.assert('before-send-file');
-
-        var me = this,
-            owner = this.owner,
-            server = me.options.server,
-            deferred = WebUploader.Deferred();
-
-        var chunkSize = attachmentUpload.getChunkSize();
-
-        if (file.size < chunkSize) {
-            deferred.resolve();
-        } else {
-            var data = {
-                fname: file.name,
-                fsize: file.size,
-                lastModifiedDate: file.lastModifiedDate
-            };
-
-            $.get('/attachment/bigfileprecheck', data, function (result) {
-
-                console.log(result);
-
-                //if (result.success) {
-                //    deferred.resolve();
-                //}
-            });
-        }
-
-
-
-        return deferred.promise();
-
-        //owner.md5File(file.source)
-        //    .fail(function () {
-        //        // 如果读取出错了，则通过reject告诉webuploader文件上传出错。
-
-        //        deferred.reject();
-        //    }).then(function (md5) {
-
-        //        console.log(md5);
-
-        //        //deferred.resolve();
-        //        //// 与服务安验证
-        //        //$.ajax(server, {
-        //        //    dataType: 'json',
-        //        //    data: {
-        //        //        md5: ret
-        //        //    },
-        //        //    success: function (response) {
-
-        //        //        // 如果验证已经上传过
-        //        //        if (response.exist) {
-        //        //            owner.skipFile(file);
-
-        //        //            console.log('文件重复，已跳过');
-        //        //        }
-
-        //        //        // 介绍此promise, webuploader接着往下走。
-        //        //        deferred.resolve();
-        //        //    }
-        //        //});
-        //    });
-
-        //return deferred.promise();
-    }
-});
