@@ -2,55 +2,63 @@
 
     var $wrap = $('#uploader'),
 
-        // 上传按钮
-        $upload = $wrap.find('.upload-btn'),
+        // 开始上传文件按钮
+        $uploadBtn = $('#btn-file-upload'),
 
-        // 添加的文件数量
-        fileCount = 0,
+        // 上传文件 - 拖拽区域
+        $uploadDnd = $wrap.find('.uploader-dnd'),
+        // 上传文件 - 文件列表
+        $uploadlist = $wrap.find('.uploader-list'),
 
-        // 添加的文件总大小
-        fileSize = 0,
+        // 添加的文件队列
+        files = [];
 
-        // 可能有pedding, ready, uploading, confirm, done.
-        state = 'pedding',
+    // 添加的文件数量
+    fileCount = 0,
 
-        // 所有文件的进度信息，key为file id
-        percentages = {},
+    // 添加的文件总大小
+    fileSize = 0,
 
-        // 判断浏览器是否支持图片的base64
-        isSupportBase64 = (function () {
-            var data = new Image();
-            var support = true;
-            data.onload = data.onerror = function () {
-                if (this.width != 1 || this.height != 1) {
-                    support = false;
-                }
+    // 可能有pedding, ready, uploading, confirm, done.
+    state = 'pedding',
+
+    // 所有文件的进度信息，key为file id
+    percentages = {},
+
+    // 判断浏览器是否支持图片的base64
+    isSupportBase64 = (function () {
+        var data = new Image();
+        var support = true;
+        data.onload = data.onerror = function () {
+            if (this.width != 1 || this.height != 1) {
+                support = false;
             }
-            data.src = "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==";
-            return support;
-        })(),
+        }
+        data.src = "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==";
+        return support;
+    })(),
 
-        // 检测是否已经安装flash，检测flash的版本
-        flashVersion = (function () {
-            var version;
+    // 检测是否已经安装flash，检测flash的版本
+    flashVersion = (function () {
+        var version;
 
+        try {
+            version = navigator.plugins['Shockwave Flash'];
+            version = version.description;
+        } catch (ex) {
             try {
-                version = navigator.plugins['Shockwave Flash'];
-                version = version.description;
-            } catch (ex) {
-                try {
-                    version = new ActiveXObject('ShockwaveFlash.ShockwaveFlash')
-                      .GetVariable('$version');
-                } catch (ex2) {
-                    version = '0.0';
-                }
+                version = new ActiveXObject('ShockwaveFlash.ShockwaveFlash')
+                  .GetVariable('$version');
+            } catch (ex2) {
+                version = '0.0';
             }
-            version = version.match(/\d+/g);
-            return parseFloat(version[0] + '.' + version[1], 10);
-        })(),
+        }
+        version = version.match(/\d+/g);
+        return parseFloat(version[0] + '.' + version[1], 10);
+    })(),
 
-        // WebUploader实例
-        uploader;
+    // WebUploader实例
+    uploader;
 
 
     if (!WebUploader.Uploader.support('flash') && WebUploader.browser.ie) {
@@ -123,8 +131,8 @@
             return;
         }
 
-        $upload.removeClass('state-' + state);
-        $upload.addClass('state-' + val);
+        $uploadBtn.removeClass('state-' + state);
+        $uploadBtn.addClass('state-' + val);
         state = val;
 
         switch (state) {
@@ -144,18 +152,18 @@
             case 'uploading':
                 $('#filePicker2').addClass('element-invisible');
                 $progress.show();
-                $upload.text('暂停上传');
+                $uploadBtn.text('暂停上传');
                 break;
 
             case 'paused':
                 $progress.show();
-                $upload.text('继续上传');
+                $uploadBtn.text('继续上传');
                 break;
 
             case 'confirm':
                 $progress.hide();
                 $('#filePicker2').removeClass('element-invisible');
-                $upload.text('开始上传');
+                $uploadBtn.text('开始上传');
 
                 stats = uploader.getStats();
                 if (stats.successNum && !stats.uploadFailNum) {
@@ -205,6 +213,7 @@
 
         //$info.html(text);
     }
+
 
     var initHook = function () {
 
@@ -268,6 +277,9 @@
             // 内部根据当前运行是创建，可能是input元素，也可能是flash.
             pick: '#picker',
 
+            // 指定Drag And Drop拖拽的容器，如果不指定，则不启动. [默认值：undefined]
+            dnd: '#uploader .uploader-dnd',
+
             // swf文件路径
             swf: '~/Content/webuploader-0.1.5/Uploader.swf',
 
@@ -294,18 +306,44 @@
         // 文件被添加进队列的时候触发
         uploader.on('fileQueued', function (file) {
 
+            files.push({ id: file.id, file: file });
             fileCount++;
             fileSize += file.size;
 
             var innerText = doT.template($('#dt-upload-item').text());
-            $('#uploader-list').append(innerText(file));
+            $uploadlist.append(innerText(file));
+
+            $uploadDnd.hide();
+            $uploadlist.show();
 
             setState('ready');
         });
 
+        // 当文件被移除队列后触发
+        uploader.on('fileDequeued', function (file) {
+
+            // 删除临时数据
+            files.forEach(function (element, index, array) {
+                if (element.id == file.id) {
+                    files.splice(index, 1);
+                    fileCount--;
+                    fileSize -= file.size;
+
+                    $uploadlist.find('.item[data-file-id=' + file.id + ']').fadeOut('fast');
+
+                    if (!files.length) {
+                        $uploadDnd.show();
+                        $uploadlist.hide();
+                    }
+
+                    console.log('[fileDequeued] fileCount: ' + fileCount + ', fileSize: ' + fileSize);
+                }
+            });
+        });
+
         // 某个文件开始上传前触发，一个文件只会触发一次
         uploader.on('uploadStart', function (file) {
-            console.info('[uploadStart] - after before-send-file ');
+            console.info('[uploadStart] - after before-send-file');
         });
 
         // 当某个文件的分块在发送前触发，主要用来询问是否要添加附带参数，大文件在开起分片上传的前提下此事件可能会触发多次
@@ -321,7 +359,7 @@
 
         // 文件上传过程中创建进度条实时显示。
         uploader.on('uploadProgress', function (file, percentage) {
-            var $li = $('#' + file.id);
+            var $li = $uploadlist.find('.item[data-file-id=' + file.id + ']');
             var $percent = $li.find('.progress .progress-bar');
 
             $percent.css('width', percentage * 100 + '%');
@@ -329,7 +367,7 @@
 
         // 文件上传成功时触发
         uploader.on('uploadSuccess', function (file) {
-            var $fi = $('#' + file.id);
+            var $fi = $uploadlist.find('.item[data-file-id=' + file.id + ']');
             $fi.find('.progress').removeClass('active');
         });
 
@@ -351,7 +389,7 @@
 
     var initElemEvents = function () {
 
-        $upload.on('click', function () {
+        $uploadBtn.on('click', function () {
 
             if ($(this).hasClass('disabled')) {
                 return false;
@@ -368,12 +406,51 @@
         });
 
 
-        //iCheck for checkbox and radio inputs
-        $('input[type="checkbox"].minimal, input[type="radio"].minimal').iCheck({
-            checkboxClass: 'icheckbox_minimal-blue',
-            radioClass: 'iradio_minimal-blue'
+        // 弹出选择文件对话框 - 隐藏这个id容器。同时，在自定义的按钮的click事件上手动触发input的click事件
+        // https://github.com/fex-team/webuploader/issues/2341
+        $('#picker-link').on('click', function () {
+            $('#picker input').click();
         });
 
+        // 文件上传选择 - 打开
+        $('#btn-open-choose').on('click', function () {
+            $wrap.stop();
+            $wrap.slideDown('fast');
+
+            $('#btn-open-choose').hide();
+            $('#btn-file-upload').show();
+            $('#btn-cancel-choose').show();
+        });
+
+        // 文件上传选择 - 取消清空
+        $('#btn-cancel-choose').on('click', function () {
+            $wrap.stop();
+            $wrap.slideUp('fast');
+
+            $('#btn-open-choose').show();
+            $('#btn-file-upload').hide();
+            $('#btn-cancel-choose').hide();
+
+            // 如果存在选择的文件, 则清空选择列表
+            if (files) {
+                files.forEach(function (f) {
+                    uploader.removeFile(f.id);
+                });
+
+                fileCount = 0;
+                fileSize = 0;
+                $uploadlist.empty();
+
+            }
+        });
+
+        // 文件上传 - 文件列表 - 删除文件
+        $(document).on('click', '#uploader .uploader-list .item .rm-file', function () {
+            var fid = $(this).attr('data-file-id');
+
+            // 从队列中删除文件
+            uploader.removeFile(fid);
+        });
     }
 
     return {

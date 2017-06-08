@@ -6,7 +6,10 @@
     <div class="col-md-12">
         <div class="box box-primary">
             <div class="box-header with-border">
-                <a href="" class="btn btn-success">上 传</a>
+
+                <a id="btn-open-choose" href="javascript:;" class="btn btn-success">上 传</a>
+                <a id="btn-file-upload" href="javascript:;" class="btn btn-success" style="display:none;">开始上传</a>
+                <a id="btn-cancel-choose" href="javascript:;" class="btn btn-default" style="display:none;">取 消</a>
 
                 <div class="pull-right">
                     <form action="/attachment" method="get" class="form-horizontal" style="max-width: 300px;">
@@ -22,24 +25,54 @@
 
             <div class="box-body">
 
+                <div id="uploader" style="display:none;">
+                    <div class="uploader-dnd" onselectstart="return false;">
+                        <div>
+                            <p>
+                                <div id="picker" style="display:none;"></div>
+                                <a id="picker-link" href="javascript:;">点击上传文件</a> 或者 推拽上传
+                            </p>
+                            <p>支持Excel和CSV文件（单个Excel最大100M，CSV最大800M）</p>
+                            <p>支持ZIP压缩包文件（单个压缩包最大200M）</p>
+                            <p>最多5个文件批量上传，默认识别第一个sheet文件</p>
+                            <p>一次导入最多支持10个工作表</p>
+                        </div>
+                        <div style="text-align:left; color:#aaa; max-width:600px; margin:20px auto 0;">
+                            <div>
 
-                <div id="uploader" class="wu-example">
-                    <!--用来存放文件信息-->
-                    <div id="uploader-list"></div>
-                    <div class="btns">
-                        <div id="picker">选择文件</div>
-                        <button class="btn btn-default upload-btn">开始上传</button>
+                                <p>表格示例</p>
+                                <p>1.请上传有标准行列的一维数据表格。（有合并单元格的数据请处理过后再上传，否则可能出现表头识别有误）</p>
+                                <p>2.日期字段需包含年月日（如2016/1/1），或年月日时分秒。（如2016/1/1 00:00:00）</p>
+                            </div>
+                        </div>
                     </div>
+
+                    <div class="uploader-list" style="display:none;"></div>
+
                 </div>
 
+                <!--用来存放文件信息-->
+                @*<div id="uploader" class="wu-example">
 
-                <table class="table table-bordered table-hover table-striped" style="display:none;">
+                        <div id="uploader-list"></div>
+                        <div class="btns">
+                            <div id="picker">选择文件</div>
+                            <button class="btn btn-default upload-btn">开始上传</button>
+                        </div>
+                    </div>*@
+
+
+                <table class="table table-bordered table-hover table-striped" style="">
                     <thead>
                         <tr>
                             <th style="width: 10px"><input type="checkbox" class="minimal"></th>
                             <th>文件名</th>
+                            <th>保存路径</th>
                             <th style="width:100px;">大小</th>
-                            <th style="width: 120px">修改日期</th>
+                            <th style="width: 120px">上传日期</th>
+                            <th style="width:100px;">上传者</th>
+                            <th style="width:50px;">操作</th>
+
                         </tr>
                     </thead>
                     <tbody>
@@ -51,9 +84,16 @@
                             </td>
                             <td>VisualStudio2017_ProductLaunchPoster-1.png</td>
                             <td>
+                                <a href="/attachments/angle_3.2.zip">/attachments/angle_3.2.zip</a>
+                            </td>
+                            <td>
                                 15.1 MB
                             </td>
                             <td>@DateTime.Now.ToString("yyyy-MM-dd HH:mm")</td>
+                            <td>chenning</td>
+                            <td>
+                                <a href="javascript:;" class="btn btn-xs btn-danger no-margin">删除</a>
+                            </td>
                         </tr>
                         }
                     </tbody>
@@ -65,8 +105,11 @@
 </div>
 
 <script id="dt-upload-item" type="text/x-dot-template">
-    <div id="{{=it.id}}" class="item">
-        <h4 class="info">{{=it.name }}</h4>
+    <div class="item" data-file-id="{{=it.id}}">
+        <h4 class="info">
+            <span>{{=it.name }}</span>
+            <a href="javascript:;" class="btn-danger btn-sm rm-file" data-file-id="{{=it.id}}">删除</a>
+        </h4>
         <div class="progress progress-sm active">
             <div class="progress-bar progress-bar-success progress-bar-striped" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 0%">
                 <span class="sr-only state">等待上传 <i>60%</i></span>
@@ -92,4 +135,32 @@
 
 @section Styles {
     <link href="~/Content/webuploader-0.1.5/webuploader.css" rel="stylesheet" />
+    <style type="text/css">
+        #uploader {
+            margin-bottom: 10px;
+        }
+
+            #uploader .uploader-dnd {
+                border: 2px dashed #e6e6e6;
+                padding: 30px 0px;
+                text-align: center;
+                background: url(./image.png) center 93px no-repeat;
+                font-family: '微软雅黑';
+                position: relative;
+            }
+
+                #uploader .uploader-dnd.webuploader-dnd-over {
+                    border-color: #999999;
+                }
+
+            #uploader .placeholder p {
+                margin-bottom: 5px;
+            }
+
+            #uploader .uploader-list {
+                margin-top: 10px;
+                border: 1px solid #ccc;
+                padding: 5px 5px;
+            }
+    </style>
 }
