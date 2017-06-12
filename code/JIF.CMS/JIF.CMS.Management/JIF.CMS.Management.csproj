@@ -414,6 +414,7 @@
     <Content Include="Content\simditor\styles\simditor.scss" />
     <Content Include="js\attachment.js" />
     <Content Include="Scripts\Layout.js" />
+    <Content Include="Scripts\underscore.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>

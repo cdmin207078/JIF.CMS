@@ -2,6 +2,9 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Web;
 using System.Text;
+using System.Collections.Generic;
+using JIF.CMS.Test.Core.Entities;
+using System.Linq;
 
 namespace JIF.CMS.Test.Core.Tests
 {
@@ -69,6 +72,27 @@ namespace JIF.CMS.Test.Core.Tests
             Console.WriteLine(HttpUtility.UrlDecode(b));
 
 
+        }
+
+
+        [TestMethod]
+        public void MyTestMethod()
+        {
+            var source = new List<Product>();
+            source.Add(new Product { SysNo = 1, ProductId = "P001", CreateTime = DateTime.Now, Price = 10.3m });
+            source.Add(new Product { SysNo = 2, ProductId = "P002", CreateTime = DateTime.Now, Price = 13.2m });
+            source.Add(new Product { SysNo = 3, ProductId = "P003", CreateTime = DateTime.Now, Price = 17.3m });
+            source.Add(new Product { SysNo = 4, ProductId = "P004", CreateTime = DateTime.Now, Price = 15.4m });
+            source.Add(new Product { SysNo = 5, ProductId = "P005", CreateTime = DateTime.Now, Price = 1.5m });
+
+            var target = new List<Product>();
+            target.Add(new Product { SysNo = 2, ProductId = "P002", CreateTime = DateTime.Now, Price = 13.2m });
+            target.Add(new Product { SysNo = 3, ProductId = "P003", CreateTime = DateTime.Now, Price = 17.3m });
+            target.Add(new Product { SysNo = 4, ProductId = "P004", CreateTime = DateTime.Now, Price = 15.4m });
+            target.Add(new Product { SysNo = 6, ProductId = "P004", CreateTime = DateTime.Now, Price = 15.4m });
+
+            var all = target.All(t => source.Any(s => s.SysNo == t.SysNo));
+            Console.WriteLine(all);
         }
     }
 }

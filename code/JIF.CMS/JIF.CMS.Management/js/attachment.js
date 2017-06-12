@@ -11,54 +11,55 @@
         $uploadlist = $wrap.find('.uploader-list'),
 
         // 添加的文件队列
-        files = [];
 
-    // 添加的文件数量
-    fileCount = 0,
+        files = [],
 
-    // 添加的文件总大小
-    fileSize = 0,
+        // 添加的文件数量
+        fileCount = 0,
 
-    // 可能有pedding, ready, uploading, confirm, done.
-    state = 'pedding',
+        // 添加的文件总大小
+        fileSize = 0,
 
-    // 所有文件的进度信息，key为file id
-    percentages = {},
+        // 可能有pedding, ready, uploading, confirm, done.
+        state = 'pedding',
 
-    // 判断浏览器是否支持图片的base64
-    isSupportBase64 = (function () {
-        var data = new Image();
-        var support = true;
-        data.onload = data.onerror = function () {
-            if (this.width != 1 || this.height != 1) {
-                support = false;
+        // 所有文件的进度信息，key为file id
+        percentages = {},
+
+        // 判断浏览器是否支持图片的base64
+        isSupportBase64 = (function () {
+            var data = new Image();
+            var support = true;
+            data.onload = data.onerror = function () {
+                if (this.width != 1 || this.height != 1) {
+                    support = false;
+                }
             }
-        }
-        data.src = "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==";
-        return support;
-    })(),
+            data.src = "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==";
+            return support;
+        })(),
 
-    // 检测是否已经安装flash，检测flash的版本
-    flashVersion = (function () {
-        var version;
+        // 检测是否已经安装flash，检测flash的版本
+        flashVersion = (function () {
+            var version;
 
-        try {
-            version = navigator.plugins['Shockwave Flash'];
-            version = version.description;
-        } catch (ex) {
             try {
-                version = new ActiveXObject('ShockwaveFlash.ShockwaveFlash')
-                  .GetVariable('$version');
-            } catch (ex2) {
-                version = '0.0';
+                version = navigator.plugins['Shockwave Flash'];
+                version = version.description;
+            } catch (ex) {
+                try {
+                    version = new ActiveXObject('ShockwaveFlash.ShockwaveFlash')
+                      .GetVariable('$version');
+                } catch (ex2) {
+                    version = '0.0';
+                }
             }
-        }
-        version = version.match(/\d+/g);
-        return parseFloat(version[0] + '.' + version[1], 10);
-    })(),
+            version = version.match(/\d+/g);
+            return parseFloat(version[0] + '.' + version[1], 10);
+        })(),
 
-    // WebUploader实例
-    uploader;
+        // WebUploader实例
+        uploader;
 
 
     if (!WebUploader.Uploader.support('flash') && WebUploader.browser.ie) {
@@ -114,8 +115,12 @@
     }
 
     var init = function () {
+
+        // 全局hook 绑定, 必须在 实例化之前执行
         initHook();
+
         initWebUploader();
+
         initElemEvents();
     }
 
@@ -214,6 +219,10 @@
         //$info.html(text);
     }
 
+    // 获取文件上传列表html对象
+    var getFileItemElement = function (fid) {
+        return $uploadlist.find('.item[data-file-id=' + fid + ']');
+    }
 
     var initHook = function () {
 
@@ -222,7 +231,7 @@
             'before-send': 'before_send',
         }, {
             before_send_file: function (file) {
-                console.info('[hook - before_send_file]');
+                //console.info('[hook - before_send_file]');
 
                 var me = this,
                     deferred = WebUploader.Deferred();
@@ -329,27 +338,31 @@
                     fileCount--;
                     fileSize -= file.size;
 
-                    $uploadlist.find('.item[data-file-id=' + file.id + ']').fadeOut('fast');
+                    getFileItemElement(file.id).fadeOut('fast');
 
                     if (!files.length) {
                         $uploadDnd.show();
                         $uploadlist.hide();
                     }
 
-                    console.log('[fileDequeued] fileCount: ' + fileCount + ', fileSize: ' + fileSize);
+                    //console.log('[fileDequeued] fileCount: ' + fileCount + ', fileSize: ' + fileSize);
                 }
             });
         });
 
         // 某个文件开始上传前触发，一个文件只会触发一次
         uploader.on('uploadStart', function (file) {
-            console.info('[uploadStart] - after before-send-file');
+            var $li = getFileItemElement(file.id);
+
+            $li.find('.rm-file').fadeOut('fast');
+
+            //console.info('[uploadStart] - after before-send-file');
         });
 
         // 当某个文件的分块在发送前触发，主要用来询问是否要添加附带参数，大文件在开起分片上传的前提下此事件可能会触发多次
         uploader.on('uploadBeforeSend', function (object, data, headers) {
             //console.info('-----------------  uploadBeforeSend - start  -----------------');
-            console.info('[uploadBeforeSend]');
+            //console.info('[uploadBeforeSend]');
 
             // 重设文件时间戳
             data.lastModifiedDate = Date.parse(data.lastModifiedDate);
@@ -359,15 +372,24 @@
 
         // 文件上传过程中创建进度条实时显示。
         uploader.on('uploadProgress', function (file, percentage) {
-            var $li = $uploadlist.find('.item[data-file-id=' + file.id + ']');
+            var $li = getFileItemElement(file.id);
             var $percent = $li.find('.progress .progress-bar');
 
             $percent.css('width', percentage * 100 + '%');
         });
 
+
+        // 文件上传暂停
+        uploader.on('stopUpload', function (a, b, c, d) {
+            //console.log('a = ' + a);
+            //console.log('b = ' + b);
+            //console.log('c = ' + c);
+            //console.log('d = ' + d);
+        });
+
         // 文件上传成功时触发
         uploader.on('uploadSuccess', function (file) {
-            var $fi = $uploadlist.find('.item[data-file-id=' + file.id + ']');
+            var $fi = getFileItemElement(file.id);
             $fi.find('.progress').removeClass('active');
         });
 
@@ -408,7 +430,7 @@
 
         // 弹出选择文件对话框 - 隐藏这个id容器。同时，在自定义的按钮的click事件上手动触发input的click事件
         // https://github.com/fex-team/webuploader/issues/2341
-        $('#picker-link').on('click', function () {
+        $('#picker-link, #btn-file-picker').on('click', function () {
             $('#picker input').click();
         });
 
@@ -419,6 +441,7 @@
 
             $('#btn-open-choose').hide();
             $('#btn-file-upload').show();
+            $('#btn-file-picker').show();
             $('#btn-cancel-choose').show();
         });
 
@@ -427,21 +450,18 @@
             $wrap.stop();
             $wrap.slideUp('fast');
 
+            if (files) {
+                for (var i = 0; i < files.length; i++) {
+
+                    uploader.removeFile(files[i].id);
+                    i--;
+                }
+            }
+
             $('#btn-open-choose').show();
             $('#btn-file-upload').hide();
+            $('#btn-file-picker').hide();
             $('#btn-cancel-choose').hide();
-
-            // 如果存在选择的文件, 则清空选择列表
-            if (files) {
-                files.forEach(function (f) {
-                    uploader.removeFile(f.id);
-                });
-
-                fileCount = 0;
-                fileSize = 0;
-                $uploadlist.empty();
-
-            }
         });
 
         // 文件上传 - 文件列表 - 删除文件
@@ -450,6 +470,16 @@
 
             // 从队列中删除文件
             uploader.removeFile(fid);
+        });
+
+        // 文件上传 - 文件列表 - 暂停上传
+        $(document).on('click', '#uploader .uploader-list .item .pause-file', function () {
+            var fid = $(this).attr('data-file-id');
+
+            var data = _.find(files, function (f) {
+                return f.id == fid;
+            });
+            uploader.stop(data.file);
         });
     }
 

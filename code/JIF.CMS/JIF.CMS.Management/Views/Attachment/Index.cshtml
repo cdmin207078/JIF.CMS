@@ -9,6 +9,7 @@
 
                 <a id="btn-open-choose" href="javascript:;" class="btn btn-success">上 传</a>
                 <a id="btn-file-upload" href="javascript:;" class="btn btn-success" style="display:none;">开始上传</a>
+                <a id="btn-file-picker" href="javascript:;" class="btn btn-default" style="display:none;">继续添加</a>
                 <a id="btn-cancel-choose" href="javascript:;" class="btn btn-default" style="display:none;">取 消</a>
 
                 <div class="pull-right">
@@ -26,7 +27,7 @@
             <div class="box-body">
 
                 <div id="uploader" style="display:none;">
-                    <div class="uploader-dnd" onselectstart="return false;">
+                    <div class="uploader-placehold uploader-dnd" onselectstart="return false;">
                         <div>
                             <p>
                                 <div id="picker" style="display:none;"></div>
@@ -47,7 +48,7 @@
                         </div>
                     </div>
 
-                    <div class="uploader-list" style="display:none;"></div>
+                    <div class="uploader-list uploader-dnd" onselectstart="return false;" style="display:none;"></div>
 
                 </div>
 
@@ -108,6 +109,7 @@
     <div class="item" data-file-id="{{=it.id}}">
         <h4 class="info">
             <span>{{=it.name }}</span>
+            <a href="javascript:;" class="btn-warning btn-sm pause-file" data-file-id="{{=it.id}}">暂停</a>
             <a href="javascript:;" class="btn-danger btn-sm rm-file" data-file-id="{{=it.id}}">删除</a>
         </h4>
         <div class="progress progress-sm active">
@@ -119,7 +121,7 @@
 </script>
 
 @section Scripts {
-
+    <script src="~/Scripts/underscore.js"></script>
     <script src="~/Content/webuploader-0.1.5/webuploader.js"></script>
     <script src="~/Content/doT/doT.min.js"></script>
     <script src="~/js/attachment.js"></script>
@@ -140,7 +142,7 @@
             margin-bottom: 10px;
         }
 
-            #uploader .uploader-dnd {
+            #uploader .uploader-placehold {
                 border: 2px dashed #e6e6e6;
                 padding: 30px 0px;
                 text-align: center;
@@ -149,9 +151,9 @@
                 position: relative;
             }
 
-                #uploader .uploader-dnd.webuploader-dnd-over {
-                    border-color: #999999;
-                }
+            #uploader .uploader-dnd.webuploader-dnd-over {
+                border-color: #999999;
+            }
 
             #uploader .placeholder p {
                 margin-bottom: 5px;
