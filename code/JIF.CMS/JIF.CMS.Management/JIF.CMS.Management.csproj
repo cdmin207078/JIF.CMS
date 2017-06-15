@@ -414,7 +414,7 @@
     <Content Include="Content\simditor\styles\simditor.scss" />
     <Content Include="js\attachment.js" />
     <Content Include="Scripts\Layout.js" />
-    <Content Include="Scripts\underscore.js" />
+    <Content Include="Content\lodash\lodash.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -423,6 +423,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\JIFExceptionAttribute.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\ArticleController.cs" />
     <Compile Include="Controllers\AttachmentController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\SysManagerController.cs" />
@@ -452,6 +453,7 @@
     <Content Include="Views\Shared\_CurrentUserInfo.cshtml" />
     <Content Include="Views\Shared\_NoData.cshtml" />
     <Content Include="Views\Attachment\Index.cshtml" />
+    <Content Include="Views\Article\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

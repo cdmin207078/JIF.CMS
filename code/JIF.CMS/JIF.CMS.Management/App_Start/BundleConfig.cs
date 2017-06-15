@@ -30,6 +30,7 @@ namespace JIF.CMS.Management
                 "~/Content/AdminLTE/plugins/iCheck/icheck.min.js",
                 "~/Content/jquery-confirm/jquery-confirm.min.js",
                 "~/Content/ios-switch/switch.js",
+                "~/Content/lodash/lodash.js",
                 "~/Scripts/Layout.js"
                 ));
         }
