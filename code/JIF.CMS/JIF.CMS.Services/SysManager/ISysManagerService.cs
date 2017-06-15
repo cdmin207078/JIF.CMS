@@ -18,14 +18,14 @@ namespace JIF.CMS.Services.SysManager
         /// 新增 管理员信息
         /// </summary>
         /// <param name="model"></param>
-        void Add(SysAdminInertBasicInfo model);
+        void Add(SysAdminInertBasicInfoInput model);
 
         /// <summary>
         /// 修改 管理员基本信息
         /// </summary>
         /// <param name="id"></param>
         /// <param name="model"></param>
-        void UpdateBasicInfo(int id, SysAdminUpdateBasicInfo model);
+        void UpdateBasicInfo(int id, SysAdminUpdateBasicInfoInput model);
 
         /// <summary>
         /// 修改 管理员登录密码
@@ -47,7 +47,7 @@ namespace JIF.CMS.Services.SysManager
         /// <param name="pageIndex">页码</param>
         /// <param name="pageSize">页大小</param>
         /// <returns></returns>
-        IPagedList<SysAdminSearchListOutDto> Get(string q, int pageIndex = 1, int pageSize = int.MaxValue);
+        IPagedList<SysAdminSearchListOutput> Get(string q, int pageIndex = 1, int pageSize = int.MaxValue);
 
         /// <summary>
         /// 管理员登陆
@@ -55,6 +55,6 @@ namespace JIF.CMS.Services.SysManager
         /// <param name="account"></param>
         /// <param name="password"></param>
         /// <returns></returns>
-        LoginOutputDto Login(string account, string password);
+        LoginOutput Login(string account, string password);
     }
 }

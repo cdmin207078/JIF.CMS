@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace JIF.CMS.Services.Articles.Dtos
 {
-    public class DeleteArticleDto
+    public class DeleteArticleInput
     {
         /// <summary>
         /// 文章编号

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace JIF.CMS.Services.SysManager.Dtos
 {
-    public class SysAdminInertBasicInfo
+    public class SysAdminInertBasicInfoInput
     {
         /// <summary>
         /// 账户

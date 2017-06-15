@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace JIF.CMS.Services.Articles.Dtos
 {
-    public class ArticleSearchListOutDto
+    public class SearchArticleListOutput
     {
         public int Id { get; set; }
 

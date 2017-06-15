@@ -43,7 +43,7 @@ namespace JIF.CMS.Services.SysManager
             return _sysAdminRepository.Get(id);
         }
 
-        public void Add(SysAdminInertBasicInfo model)
+        public void Add(SysAdminInertBasicInfoInput model)
         {
             if (model == null)
             {
@@ -84,7 +84,7 @@ namespace JIF.CMS.Services.SysManager
             throw new NotImplementedException();
         }
 
-        public void UpdateBasicInfo(int id, SysAdminUpdateBasicInfo model)
+        public void UpdateBasicInfo(int id, SysAdminUpdateBasicInfoInput model)
         {
             if (model == null)
             {
@@ -123,13 +123,13 @@ namespace JIF.CMS.Services.SysManager
             _sysAdminRepository.Update(entity);
         }
 
-        public IPagedList<SysAdminSearchListOutDto> Get(string q, int pageIndex = 1, int pageSize = int.MaxValue)
+        public IPagedList<SysAdminSearchListOutput> Get(string q, int pageIndex = 1, int pageSize = int.MaxValue)
         {
             var query = (from a in _sysAdminRepository.Table
                          join b in _sysAdminRepository.Table
                          on a.CreateUserId equals b.Id
                          where a.Account.Contains(q) || a.Email.Contains(q) || a.CellPhone.Contains(q)
-                         select new SysAdminSearchListOutDto
+                         select new SysAdminSearchListOutput
                          {
                              Id = a.Id,
                              Account = a.Account,
@@ -140,10 +140,10 @@ namespace JIF.CMS.Services.SysManager
                              Enable = a.Enable
                          }).OrderByDescending(d => d.Id);
 
-            return new PagedList<SysAdminSearchListOutDto>(query, pageIndex, pageSize);
+            return new PagedList<SysAdminSearchListOutput>(query, pageIndex, pageSize);
         }
 
-        public LoginOutputDto Login(string account, string password)
+        public LoginOutput Login(string account, string password)
         {
             if (string.IsNullOrWhiteSpace(account) || string.IsNullOrWhiteSpace(password))
             {
@@ -172,7 +172,7 @@ namespace JIF.CMS.Services.SysManager
 
             //_userRepository.Update(entity);
 
-            return new LoginOutputDto
+            return new LoginOutput
             {
                 UserId = entity.Id
             };

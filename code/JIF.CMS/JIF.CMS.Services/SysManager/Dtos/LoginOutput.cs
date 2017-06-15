@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace JIF.CMS.Services.SysManager.Dtos
 {
-    public class LoginOutputDto
+    public class LoginOutput
     {
         public int UserId { get; set; }
     }

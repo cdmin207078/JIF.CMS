@@ -1,11 +1,7 @@
 ﻿using JIF.CMS.Core;
-using JIF.CMS.Core.Domain;
+using JIF.CMS.Core.Domain.Articles;
 using JIF.CMS.Services.Articles.Dtos;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace JIF.CMS.Services.Articles
 {
@@ -18,20 +14,20 @@ namespace JIF.CMS.Services.Articles
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        void Insert(ArticleDto model);
+        void Insert(InsertArticleInput model);
 
         /// <summary>
         /// 删除文章
         /// </summary>
         /// <param name="id"></param>
-        void Delete(DeleteArticleDto model);
+        void Delete(DeleteArticleInput model);
 
         /// <summary>
         /// 修改文章
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        void Update(int id, ArticleDto model);
+        void Update(int id, InsertArticleInput model);
 
         Article GetArticle(int id);
 
@@ -42,7 +38,7 @@ namespace JIF.CMS.Services.Articles
         /// <param name="pageIndex">页码</param>
         /// <param name="pageSize">页大小</param>
         /// <returns></returns>
-        IPagedList<ArticleSearchListOutDto> GetArticles(string q, int pageIndex = 1, int pageSize = int.MaxValue);
+        IPagedList<SearchArticleListOutput> GetArticles(string q, int pageIndex = 1, int pageSize = int.MaxValue);
 
         #endregion
 
@@ -55,7 +51,7 @@ namespace JIF.CMS.Services.Articles
         /// </summary>
         /// <param name="id">分类名称</param>
         /// <param name="forcedelartcle">是否同时删除所属分类下的文章</param>
-        void Delete(DeleteArticleCategoryDto model);
+        void Delete(DeleteArticleCategoryInput model);
 
         void Update(ArticleCategory model);
 

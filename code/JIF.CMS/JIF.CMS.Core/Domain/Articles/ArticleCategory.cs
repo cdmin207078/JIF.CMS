@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace JIF.CMS.Core.Domain
+namespace JIF.CMS.Core.Domain.Articles
 {
     public partial class ArticleCategory : BaseEntity
     {

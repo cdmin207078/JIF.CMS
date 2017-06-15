@@ -42,21 +42,24 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Articles\ArticleService.cs" />
-    <Compile Include="Articles\Dtos\ArticleSearchListOutDto.cs" />
-    <Compile Include="Articles\Dtos\ArticleDto.cs" />
-    <Compile Include="Articles\Dtos\DeleteArticleCategoryDto.cs" />
-    <Compile Include="Articles\Dtos\DeleteArticleDto.cs" />
+    <Compile Include="Articles\Dtos\SearchArticleListOutput.cs" />
+    <Compile Include="Articles\Dtos\InsertArticleInput.cs" />
+    <Compile Include="Articles\Dtos\DeleteArticleCategoryInput.cs" />
+    <Compile Include="Articles\Dtos\DeleteArticleInput.cs" />
     <Compile Include="Articles\IArticleService.cs" />
+    <Compile Include="Attachments\AttachmentService.cs" />
+    <Compile Include="Attachments\Dtos\InsertAttachmentInput.cs" />
+    <Compile Include="Attachments\IAttachmentService.cs" />
     <Compile Include="Authentication\FormsCookiesAuthenticationService.cs" />
     <Compile Include="Authentication\IAuthenticationService.cs" />
     <Compile Include="Authentication\WebApiFormsCookiesAuthenticationService.cs" />
     <Compile Include="BaseService.cs" />
     <Compile Include="IBaseService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SysManager\Dtos\LoginOutputDto.cs" />
-    <Compile Include="SysManager\Dtos\SysAdminInertBasicInfo.cs" />
-    <Compile Include="SysManager\Dtos\SysAdminSearchListOutDto.cs" />
-    <Compile Include="SysManager\Dtos\SysAdminUpdateBasicInfo.cs" />
+    <Compile Include="SysManager\Dtos\LoginOutput.cs" />
+    <Compile Include="SysManager\Dtos\SysAdminInertBasicInfoInput.cs" />
+    <Compile Include="SysManager\Dtos\SysAdminSearchListOutput.cs" />
+    <Compile Include="SysManager\Dtos\SysAdminUpdateBasicInfoInput.cs" />
     <Compile Include="SysManager\ISysManagerService.cs" />
     <Compile Include="SysManager\SysManagerService.cs" />
   </ItemGroup>

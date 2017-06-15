@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace JIF.CMS.Services.SysManager.Dtos
 {
-    public class SysAdminUpdateBasicInfo
+    public class SysAdminUpdateBasicInfoInput
     {
         /// <summary>
         /// 电子邮箱

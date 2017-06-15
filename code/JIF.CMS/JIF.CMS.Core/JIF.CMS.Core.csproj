@@ -103,8 +103,9 @@
   <ItemGroup>
     <Compile Include="Configuration\JIFConfig.cs" />
     <Compile Include="Data\IRepository.cs" />
-    <Compile Include="Domain\Article.cs" />
-    <Compile Include="Domain\ArticleCategory.cs" />
+    <Compile Include="Domain\Articles\Article.cs" />
+    <Compile Include="Domain\Articles\ArticleCategory.cs" />
+    <Compile Include="Domain\Attachment.cs" />
     <Compile Include="Domain\BaseEntity.cs" />
     <Compile Include="Domain\SysAdmin.cs" />
     <Compile Include="Domain\SysLog.cs" />

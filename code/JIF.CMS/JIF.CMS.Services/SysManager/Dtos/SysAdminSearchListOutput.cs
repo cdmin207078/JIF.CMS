@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace JIF.CMS.Services.SysManager.Dtos
 {
-    public class SysAdminSearchListOutDto
+    public class SysAdminSearchListOutput
     {
         /// <summary>
         /// 主键自增

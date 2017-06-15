@@ -452,7 +452,6 @@
 
             if (files) {
                 for (var i = 0; i < files.length; i++) {
-
                     uploader.removeFile(files[i].id);
                     i--;
                 }

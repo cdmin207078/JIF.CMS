@@ -1,12 +1,11 @@
-﻿using JIF.CMS.Core.Data;
+﻿using JIF.CMS.Core;
+using JIF.CMS.Core.Data;
 using JIF.CMS.Core.Domain;
+using JIF.CMS.Core.Domain.Articles;
+using JIF.CMS.Services.Articles.Dtos;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using JIF.CMS.Core;
-using JIF.CMS.Services.Articles.Dtos;
 
 namespace JIF.CMS.Services.Articles
 {
@@ -29,7 +28,7 @@ namespace JIF.CMS.Services.Articles
             _workContext = workContext;
         }
 
-        public void Insert(ArticleDto model)
+        public void Insert(InsertArticleInput model)
         {
             if (string.IsNullOrWhiteSpace(model.Title)
                 || string.IsNullOrWhiteSpace(model.MarkdownContent))
@@ -52,12 +51,12 @@ namespace JIF.CMS.Services.Articles
 
         }
 
-        public void Delete(DeleteArticleDto model)
+        public void Delete(DeleteArticleInput model)
         {
             throw new NotImplementedException();
         }
 
-        public void Update(int id, ArticleDto model)
+        public void Update(int id, InsertArticleInput model)
         {
             if (string.IsNullOrWhiteSpace(model.Title)
                 || string.IsNullOrWhiteSpace(model.MarkdownContent))
@@ -90,12 +89,12 @@ namespace JIF.CMS.Services.Articles
             return _articleRepository.Get(id);
         }
 
-        public IPagedList<ArticleSearchListOutDto> GetArticles(string q, int pageIndex = 1, int pageSize = int.MaxValue)
+        public IPagedList<SearchArticleListOutput> GetArticles(string q, int pageIndex = 1, int pageSize = int.MaxValue)
         {
             var query = from article in _articleRepository.Table
                         join sysadmin in _sysAdminRepository.Table on article.CreateUserId equals sysadmin.Id
                         join category in _articleCategoryRepository.Table on article.CategoryId equals category.Id
-                        select new ArticleSearchListOutDto
+                        select new SearchArticleListOutput
                         {
                             Id = article.Id,
                             Title = article.Title,
@@ -109,7 +108,7 @@ namespace JIF.CMS.Services.Articles
                 query = query.Where(d => d.Title.ToLower().Contains(q.ToLower()));
             }
 
-            return new PagedList<ArticleSearchListOutDto>(query.OrderByDescending(d => d.Id), pageIndex, pageSize);
+            return new PagedList<SearchArticleListOutput>(query.OrderByDescending(d => d.Id), pageIndex, pageSize);
         }
 
 
@@ -129,7 +128,7 @@ namespace JIF.CMS.Services.Articles
             _articleCategoryRepository.Insert(model);
         }
 
-        public void Delete(DeleteArticleCategoryDto model)
+        public void Delete(DeleteArticleCategoryInput model)
         {
             throw new NotImplementedException();
         }
