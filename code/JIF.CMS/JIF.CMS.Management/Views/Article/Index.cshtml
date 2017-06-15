@@ -1,0 +1,199 @@
+﻿@{
+    ViewBag.Title = "文章管理";
+
+}
+
+
+<div class="row">
+    <div class="col-md-12">
+
+        <div class="box box-primary">
+            <div class="box-header with-border">
+                <a href="javascript:;" class="btn btn-success">新 增</a>
+                <a href="javascript:;" class="btn btn-info" id="btn-deferred">deferred / promise</a>
+
+                <a href="javascript:;" class="btn btn-warning" id="btn-async-a">Async A</a>
+                <a href="javascript:;" class="btn btn-danger" id="btn-async-b">Async A + B</a>
+                <a href="javascript:;" class="btn btn-default" id="btn-async-c">Async A -> B -> C 链条</a>
+                <a href="javascript:;" class="btn btn-default" id="btn-async-d">使用 Ajax 返回的 Promise</a>
+
+
+
+
+                <div class="pull-right">
+                    <form action="/article/" method="get" class="form-horizontal" style="max-width: 300px;">
+                        <div class="input-group">
+                            <input type="text" class="form-control" name="s" placeholder="标题" value="@ViewBag.SearchWords">
+                            <span class="input-group-btn">
+                                <button type="submit" class="btn btn-info btn-flat">搜 索</button>
+                            </span>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div class="box-body">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+    <script type="text/javascript">
+
+        var _asyncB;
+
+        $(function () {
+
+            var $outputBox = $('.box-body');
+
+            function print(s) {
+                $outputBox.append('<p>' + s + '</p>');
+            }
+
+
+            function asyncA() {
+                return $.ajax({
+                    url: '/article/a'
+                });
+            }
+
+            function asyncB(message) {
+                return $.ajax({
+                    url: '/article/b',
+                    data: { message }
+                });
+            }
+
+
+            function asyncC(message) {
+                return $.ajax({
+                    url: '/article/c',
+                    data: { message }
+                });
+            }
+
+
+            var deferred = new $.Deferred();
+
+
+            deferred.done(function () {
+
+                print('deferred is resolved');
+
+            }).fail(function () {
+
+                print('deferred is rejected');
+
+            }).always(function () {
+
+                print('always run no matter deferred is resolved or rejected');
+
+            });
+
+
+            $('#btn-deferred').click(function () {
+
+                deferred.reject();
+
+                deferred.done(function () {
+                    print('resolve 之后绑定的 done, 会立即执行');
+                });
+
+                deferred.fail(function () {
+                    print('reject 之后绑定的 fail, 会立即执行');
+                });
+
+                deferred.always(function () {
+                    print('resolve 之后绑定的  always');
+                });
+
+
+                var mm = wait(2000);
+
+                console.log(mm);
+                mm.done(function () {
+                    print(' +2s 之后.')
+                });
+            });
+
+
+            function wait(time) {
+                var deferred = $.Deferred();
+
+                setTimeout(function () {
+                    deferred.resolve();
+                }, time);
+
+                return deferred.promise();
+            }
+
+
+
+            $('#btn-async-a').click(function () {
+                asyncA().done(function () {
+                    print('async - A done 1.');
+                }, function () {
+                    print('async - A done 2.');
+                }, function () {
+                    print('async - A done 3.');
+                }).fail(function () {
+                    print('async - A fail.');
+                }).always(function () {
+                    print('async - A complete.');
+                });
+            });
+
+            $('#btn-async-b').click(function () {
+                $.when(asyncC(), asyncB()).then(function (dataC, dataB) {
+
+                    _asyncB = dataB;
+                    console.log(dataB);
+
+                    print('A+B Ok.  dataB : ' + dataB[0] + ',dataC : ' + dataC[0]);
+                }, function (dataC, dataB) {
+
+                    console.log(dataB);
+                    console.log(dataC);
+
+                    print('async A + B, fail. dataB : ' + dataB[0] + ',dataC : ' + dataC[0]);
+                });
+            });
+
+            $('#btn-async-c').click(function () {
+                asyncA().then(function (data) {
+
+                    print(data);
+                    console.log(data);
+
+                    return asyncB(data);
+
+                }).then(function (data) {
+                    print(data);
+                    console.log(data);
+
+                    return asyncC(data);
+
+                }).then(function (data) {
+
+                    print(data);
+                    console.log(data);
+
+                }, function (data) {
+                    print('C - 失败');
+                });
+            });
+
+
+            $('#btn-async-d').click(function () {
+                var ac = asyncC('hello world').done(function (data) {
+                    print(data);
+                });
+
+                ac.resolve();
+            });
+        });
+    </script>
+}
