@@ -90,10 +90,10 @@ namespace JIF.CMS.Management.Controllers
 
                 var filepath = Path.Combine(chunkFolder, chunk);
 
-                lock (_locker)
-                {
-                    file.SaveAs(filepath);
-                }
+                //lock (_locker)
+                //{
+                file.SaveAs(filepath);
+                //}
 
                 var chunks = int.Parse(Request["chunks"]);    // 分片总数
                 mergeFile(file.FileName, chunkFolder, chunks);

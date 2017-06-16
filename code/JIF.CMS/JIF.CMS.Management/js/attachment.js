@@ -61,7 +61,6 @@
         // WebUploader实例
         uploader;
 
-
     if (!WebUploader.Uploader.support('flash') && WebUploader.browser.ie) {
 
         // flash 安装了但是版本过低。
@@ -114,19 +113,15 @@
         return;
     }
 
-    var init = function () {
-
-        // 全局hook 绑定, 必须在 实例化之前执行
-        initHook();
-
-        initWebUploader();
-
-        initElemEvents();
-    }
-
+    // 获取chunk 文件分片大小
     var getChunkSize = function () {
         // 大于 5M, 则需要分割
         return 1024 * 1024 * 5;
+    }
+
+    // 获取文件上传列表html对象
+    var getFileItemElement = function (fid) {
+        return $uploadlist.find('.item[data-file-id=' + fid + ']');
     }
 
     var setState = function (val) {
@@ -219,9 +214,15 @@
         //$info.html(text);
     }
 
-    // 获取文件上传列表html对象
-    var getFileItemElement = function (fid) {
-        return $uploadlist.find('.item[data-file-id=' + fid + ']');
+
+    var init = function () {
+
+        // 全局hook 绑定, 必须在 实例化之前执行
+        initHook();
+
+        initWebUploader();
+
+        initElemEvents();
     }
 
     var initHook = function () {
@@ -331,6 +332,11 @@
         // 当文件被移除队列后触发
         uploader.on('fileDequeued', function (file) {
 
+            console.log('[fileDequeued] ' + file.id);
+
+            console.log(_.find(files, function (f) { return f.id === file.id; }));
+
+
             // 删除临时数据
             files.forEach(function (element, index, array) {
                 if (element.id == file.id) {
@@ -427,14 +433,13 @@
             }
         });
 
-
         // 弹出选择文件对话框 - 隐藏这个id容器。同时，在自定义的按钮的click事件上手动触发input的click事件
         // https://github.com/fex-team/webuploader/issues/2341
         $('#picker-link, #btn-file-picker').on('click', function () {
             $('#picker input').click();
         });
 
-        // 文件上传选择 - 打开
+        // 上传 - 按钮 - 打开上传界面区域
         $('#btn-open-choose').on('click', function () {
             $wrap.stop();
             $wrap.slideDown('fast');
@@ -445,7 +450,7 @@
             $('#btn-cancel-choose').show();
         });
 
-        // 文件上传选择 - 取消清空
+        // 上传 - 按钮 - 关闭上传区域, 清空上传队列
         $('#btn-cancel-choose').on('click', function () {
             $wrap.stop();
             $wrap.slideUp('fast');
@@ -478,13 +483,12 @@
             var data = _.find(files, function (f) {
                 return f.id == fid;
             });
-            uploader.stop(data.file);
+            uploader.cancelFile(fid);
         });
     }
 
     return {
         init: init,
-        getChunkSize: getChunkSize
     };
 
 })(jQuery);
