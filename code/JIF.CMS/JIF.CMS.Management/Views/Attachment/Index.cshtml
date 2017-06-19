@@ -27,7 +27,7 @@
             <div class="box-body">
 
                 <div id="uploader" style="display:none;">
-                    <div class="uploader-placehold uploader-dnd" onselectstart="return false;">
+                    <div class="uploader-placehold uploader-dnd">
                         <div>
                             <p>
                                 <div id="picker" style="display:none;"></div>
@@ -48,7 +48,7 @@
                         </div>
                     </div>
 
-                    <div class="uploader-list uploader-dnd" onselectstart="return false;" style="display:none;"></div>
+                    <div class="uploader-list uploader-dnd" style="display:none;"></div>
 
                 </div>
 
@@ -109,7 +109,8 @@
     <div class="item" data-file-id="{{=it.id}}">
         <h4 class="info">
             <span>{{=it.name }}</span>
-            <a href="javascript:;" class="btn-warning btn-sm pause-file" data-file-id="{{=it.id}}">暂停</a>
+            <a href="javascript:;" class="btn-info btn-sm upload-file" style="display:none;" data-file-id="{{=it.id}}">上传</a>
+            <a href="javascript:;" class="btn-warning btn-sm pause-file" style="display:none;" data-file-id="{{=it.id}}">暂停</a>
             <a href="javascript:;" class="btn-danger btn-sm rm-file" data-file-id="{{=it.id}}">删除</a>
         </h4>
         <div class="progress progress-sm active">
@@ -121,7 +122,8 @@
 </script>
 
 @section Scripts {
-    <script src="~/Content/webuploader-0.1.5/webuploader.js"></script>
+    @Scripts.Render("~/scripts/web-uploader")
+
     <script src="~/Content/doT/doT.min.js"></script>
     <script src="~/js/attachment.js"></script>
 
@@ -135,7 +137,8 @@
 
 
 @section Styles {
-    <link href="~/Content/webuploader-0.1.5/webuploader.css" rel="stylesheet" />
+    @Styles.Render("~/styles/web-uploader")
+
     <style type="text/css">
         #uploader {
             margin-bottom: 10px;

@@ -33,6 +33,12 @@ namespace JIF.CMS.Management
                 "~/Content/lodash/lodash.js",
                 "~/Scripts/Layout.js"
                 ));
+
+
+
+            // web uploader
+            bundles.Add(new StyleBundle("~/styles/web-uploader").Include("~/Content/webuploader/webuploader.css"));
+            bundles.Add(new ScriptBundle("~/scripts/web-uploader").Include("~/Content/webuploader/webuploader.js"));
         }
     }
 }

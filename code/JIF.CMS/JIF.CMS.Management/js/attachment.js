@@ -11,7 +11,6 @@
         $uploadlist = $wrap.find('.uploader-list'),
 
         // 添加的文件队列
-
         files = [],
 
         // 添加的文件数量
@@ -143,26 +142,18 @@
                 break;
 
             case 'ready':
-                $('#filePicker2').removeClass('element-invisible');
-                //$queue.show();
-                //$statusBar.removeClass('element-invisible');
                 uploader.refresh();
                 break;
 
             case 'uploading':
-                $('#filePicker2').addClass('element-invisible');
-                $progress.show();
                 $uploadBtn.text('暂停上传');
                 break;
 
             case 'paused':
-                $progress.show();
                 $uploadBtn.text('继续上传');
                 break;
 
             case 'confirm':
-                $progress.hide();
-                $('#filePicker2').removeClass('element-invisible');
                 $uploadBtn.text('开始上传');
 
                 stats = uploader.getStats();
@@ -213,7 +204,6 @@
 
         //$info.html(text);
     }
-
 
     var init = function () {
 
@@ -332,35 +322,28 @@
         // 当文件被移除队列后触发
         uploader.on('fileDequeued', function (file) {
 
-            console.log('[fileDequeued] ' + file.id);
+            var rf = _.remove(files, function (f) { return f.id == file.id; });
 
-            console.log(_.find(files, function (f) { return f.id === file.id; }));
+            if (rf) {
 
+                fileCount--;
+                fileSize -= file.size;
 
-            // 删除临时数据
-            files.forEach(function (element, index, array) {
-                if (element.id == file.id) {
-                    files.splice(index, 1);
-                    fileCount--;
-                    fileSize -= file.size;
+                getFileItemElement(file.id).fadeOut('fast');
 
-                    getFileItemElement(file.id).fadeOut('fast');
-
-                    if (!files.length) {
-                        $uploadDnd.show();
-                        $uploadlist.hide();
-                    }
-
-                    //console.log('[fileDequeued] fileCount: ' + fileCount + ', fileSize: ' + fileSize);
+                if (!files.length) {
+                    $uploadDnd.show();
+                    $uploadlist.hide();
                 }
-            });
+            }
         });
 
         // 某个文件开始上传前触发，一个文件只会触发一次
         uploader.on('uploadStart', function (file) {
             var $li = getFileItemElement(file.id);
 
-            $li.find('.rm-file').fadeOut('fast');
+            $li.find('.rm-file').show();
+            $li.find('.pause-file').show();
 
             //console.info('[uploadStart] - after before-send-file');
         });
@@ -384,13 +367,9 @@
             $percent.css('width', percentage * 100 + '%');
         });
 
-
         // 文件上传暂停
-        uploader.on('stopUpload', function (a, b, c, d) {
-            //console.log('a = ' + a);
-            //console.log('b = ' + b);
-            //console.log('c = ' + c);
-            //console.log('d = ' + d);
+        uploader.on('stopUpload', function (file) {
+            console.log('[stopUpload]', file);
         });
 
         // 文件上传成功时触发
@@ -480,15 +459,31 @@
         $(document).on('click', '#uploader .uploader-list .item .pause-file', function () {
             var fid = $(this).attr('data-file-id');
 
-            var data = _.find(files, function (f) {
-                return f.id == fid;
-            });
-            uploader.cancelFile(fid);
+            var f = _.find(files, function (o) { return o.id == fid; });
+
+            uploader.stop(f.file);
+
+            $(this).hide();
+            $(this).siblings('.upload-file').show();
+        });
+
+        // 文件上传 - 文件列表 - 暂停之后, 继续上传
+        $(document).on('click', '#uploader .uploader-list .item .upload-file', function () {
+            var fid = $(this).attr('data-file-id');
+
+            uploader.upload(fid);
+
+            $(this).hide();
+            $(this).siblings('.pause-file').show();
         });
     }
 
     return {
         init: init,
+        uploader: uploader,
+        getFiles: function () {
+            return uploader.getFiles();
+        }
     };
 
 })(jQuery);
