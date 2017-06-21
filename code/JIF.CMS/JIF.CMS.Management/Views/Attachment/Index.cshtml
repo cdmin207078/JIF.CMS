@@ -52,17 +52,6 @@
 
                 </div>
 
-                <!--用来存放文件信息-->
-                @*<div id="uploader" class="wu-example">
-
-                        <div id="uploader-list"></div>
-                        <div class="btns">
-                            <div id="picker">选择文件</div>
-                            <button class="btn btn-default upload-btn">开始上传</button>
-                        </div>
-                    </div>*@
-
-
                 <table class="table table-bordered table-hover table-striped" style="">
                     <thead>
                         <tr>
@@ -109,6 +98,7 @@
     <div class="item" data-file-id="{{=it.id}}">
         <h4 class="info">
             <span>{{=it.name }}</span>
+            <small class="text-green upload-item-status"></small>
             <a href="javascript:;" class="btn-info btn-sm upload-file" style="display:none;" data-file-id="{{=it.id}}">上传</a>
             <a href="javascript:;" class="btn-warning btn-sm pause-file" style="display:none;" data-file-id="{{=it.id}}">暂停</a>
             <a href="javascript:;" class="btn-danger btn-sm rm-file" data-file-id="{{=it.id}}">删除</a>

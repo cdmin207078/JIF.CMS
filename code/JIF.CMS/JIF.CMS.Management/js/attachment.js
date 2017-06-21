@@ -5,6 +5,9 @@
         // 开始上传文件按钮
         $uploadBtn = $('#btn-file-upload'),
 
+        // 开始上传文件按钮
+        $uploadCancelBtn = $('#btn-cancel-choose'),
+
         // 上传文件 - 拖拽区域
         $uploadDnd = $wrap.find('.uploader-dnd'),
         // 上传文件 - 文件列表
@@ -18,6 +21,9 @@
 
         // 添加的文件总大小
         fileSize = 0,
+
+        //// 验证文件总数量, 超出则不允许加入队列
+        //fileNumLimit = 5,
 
         // 可能有pedding, ready, uploading, confirm, done.
         state = 'pedding',
@@ -121,6 +127,24 @@
     // 获取文件上传列表html对象
     var getFileItemElement = function (fid) {
         return $uploadlist.find('.item[data-file-id=' + fid + ']');
+    }
+
+    // 获得文件分片数量
+    var getFileUploadChunks = function (fsize) {
+
+        var chunkSize = getChunkSize();
+
+        // 文件大小小于分片大小, 无需分片
+        if (fsize <= chunkSize)
+            return 1;
+
+        var chunks = fsize / chunkSize;
+
+        if (chunks % 1 !== 0) {
+            chunks = chunks + 1;
+        }
+
+        return parseInt(chunks);
     }
 
     var setState = function (val) {
@@ -238,7 +262,7 @@
                         lastModifiedTimestamp: Date.parse(file.lastModifiedDate)
                     };
 
-                    $.get('/attachment/bigfileprecheck', data, function (res) {
+                    $.post('/attachment/bigfileprecheck', data, function (res) {
                         if (res.success) {
                             if (res.data.mode == 1) {
                                 me.options.existsChunks = res.data.chunks.split(',');
@@ -306,6 +330,8 @@
         // 文件被添加进队列的时候触发
         uploader.on('fileQueued', function (file) {
 
+            console.log(uploader.getStats());
+
             files.push({ id: file.id, file: file });
             fileCount++;
             fileSize += file.size;
@@ -344,8 +370,6 @@
 
             $li.find('.rm-file').show();
             $li.find('.pause-file').show();
-
-            //console.info('[uploadStart] - after before-send-file');
         });
 
         // 当某个文件的分块在发送前触发，主要用来询问是否要添加附带参数，大文件在开起分片上传的前提下此事件可能会触发多次
@@ -367,15 +391,67 @@
             $percent.css('width', percentage * 100 + '%');
         });
 
+
+        // 文件上传开始, 若file有值, 则表示是继续上传, 否则则为首次上传
+        uploader.on('startUpload', function (file) {
+            if (file) {
+                console.info('[startUpload] - ' + file.name);
+            } else {
+                console.info('[startUpload] - 首次上传');
+            }
+
+            $uploadBtn.attr('disabled', 'disabled');
+            $uploadCancelBtn.attr('disabled', 'disabled');
+        });
+
+        // 当所有文件上传结束时触发
+        uploader.on('uploadFinished', function () {
+            console.info('[uploadFinished] - All trans over.');
+
+            $uploadBtn.removeAttr('disabled');
+            $uploadCancelBtn.removeAttr('disabled');
+        });
+
+
         // 文件上传暂停
         uploader.on('stopUpload', function (file) {
-            console.log('[stopUpload]', file);
+            //console.log('[stopUpload]', file);
         });
 
         // 文件上传成功时触发
         uploader.on('uploadSuccess', function (file) {
-            var $fi = getFileItemElement(file.id);
-            $fi.find('.progress').removeClass('active');
+
+            var $li = getFileItemElement(file.id);
+            var chunks = getFileUploadChunks(file.size);
+
+            if (chunks === 1) {
+                $li.find('.upload-item-status').text('上传成功').addClass('text-green');
+
+                $li.find('.btn-sm').remove();
+                $li.find('.progress').remove();
+
+            } else {
+
+                var data = {
+                    name: file.name,
+                    size: file.size,
+                    lastModifiedTimestamp: Date.parse(file.lastModifiedDate),
+                    chunks: getFileUploadChunks(file.size)
+                };
+
+                $.post('/attachment/mergeFile', data, function (result) {
+
+                    if (result.success) {
+                        $li.find('.upload-item-status').text('上传成功').addClass('text-green');
+                    } else {
+                        $li.find('.upload-item-status').text('上传成功, 合并失败.  信息：' + result.message).addClass('text-red');
+                    }
+
+                    $li.find('.btn-sm').remove();
+                    $li.find('.progress').remove();
+                });
+            }
+
         });
 
         // 文件上传出错时触发
@@ -424,13 +500,18 @@
             $wrap.slideDown('fast');
 
             $('#btn-open-choose').hide();
-            $('#btn-file-upload').show();
+            $uploadBtn.show();
             $('#btn-file-picker').show();
-            $('#btn-cancel-choose').show();
+            $uploadCancelBtn.show();
         });
 
         // 上传 - 按钮 - 关闭上传区域, 清空上传队列
-        $('#btn-cancel-choose').on('click', function () {
+        $uploadCancelBtn.on('click', function () {
+
+            if ($uploadCancelBtn.attr('disabled') === 'disabled') {
+                return;
+            }
+
             $wrap.stop();
             $wrap.slideUp('fast');
 
@@ -442,9 +523,9 @@
             }
 
             $('#btn-open-choose').show();
-            $('#btn-file-upload').hide();
+            $uploadBtn.hide();
             $('#btn-file-picker').hide();
-            $('#btn-cancel-choose').hide();
+            $uploadCancelBtn.hide();
         });
 
         // 文件上传 - 文件列表 - 删除文件

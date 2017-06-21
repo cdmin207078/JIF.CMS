@@ -1169,7 +1169,7 @@
         'base',
         'mediator',
         'runtime/client'
-    ], function( Base, Mediator, RuntimeClent ) {
+    ], function( Base, Mediator, RuntimeClient ) {
     
         var $ = Base.$;
     
@@ -1182,7 +1182,7 @@
                 return;
             }
     
-            RuntimeClent.call( this, 'DragAndDrop' );
+            RuntimeClient.call( this, 'DragAndDrop' );
         }
     
         DragAndDrop.options = {
@@ -1190,7 +1190,7 @@
             disableGlobalDnd: false
         };
     
-        Base.inherits( RuntimeClent, {
+        Base.inherits( RuntimeClient, {
             constructor: DragAndDrop,
     
             init: function() {
@@ -1526,17 +1526,17 @@
         'base',
         'mediator',
         'runtime/client'
-    ], function( Base, Mediator, RuntimeClent ) {
+    ], function (Base, Mediator, RuntimeClient) {
     
         var $ = Base.$;
     
         function FilePaste( opts ) {
             opts = this.options = $.extend({}, opts );
             opts.container = $( opts.container || document.body );
-            RuntimeClent.call( this, 'FilePaste' );
+            RuntimeClient.call(this, 'FilePaste');
         }
     
-        Base.inherits( RuntimeClent, {
+        Base.inherits(RuntimeClient, {
             constructor: FilePaste,
     
             init: function() {
@@ -4957,8 +4957,9 @@
                     owner.trigger( e.type );
                 };
     
-                changeHandler = function( e ) {
-                    var clone;
+                changeHandler = function (e) {
+                    var fn = arguments.callee,
+                        clone;
     
                     // 解决chrome 56 第二次打开文件选择器，然后点击取消，依然会触发change事件的问题
                     if (e.target.files.length === 0){

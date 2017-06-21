@@ -31,9 +31,17 @@ namespace JIF.CMS.Management.Controllers
             return View();
         }
 
-        private string BigFileChunkFolder(string fname, long fsize, long lastModifiedTimestamp)
+        /// <summary>
+        /// 获得大文件分片存储文件目录
+        /// </summary>
+        /// <param name="fname"></param>
+        /// <param name="fsize"></param>
+        /// <param name="lastModifiedTimestamp"></param>
+        /// <returns></returns>
+        private string getBigFileChunkFolder(string fname, long fsize, long lastModifiedTimestamp)
         {
             var algo = EncyptHelper.CreateHashAlgoMd5();
+
             var plain = string.Format("{0}-{1}-{2}-{3}", _workContext.CurrentUser.Account, fname, fsize, lastModifiedTimestamp);
             var cipher = EncyptHelper.Encrypt(algo, plain);
 
@@ -41,10 +49,10 @@ namespace JIF.CMS.Management.Controllers
         }
 
         // 大文件上传之前, 判断是否是断点续传
-        [HttpGet]
+        [HttpPost]
         public JsonResult BigFilePreCheck(string fname, long fsize, long lastModifiedTimestamp)
         {
-            var chunkFolder = BigFileChunkFolder(fname, fsize, lastModifiedTimestamp);
+            var chunkFolder = getBigFileChunkFolder(fname, fsize, lastModifiedTimestamp);
 
             if (Directory.Exists(chunkFolder))
             {
@@ -77,16 +85,16 @@ namespace JIF.CMS.Management.Controllers
             }
             else
             {
-                var fname = Request["name"];
-                var fsize = long.Parse(Request["size"]);
-                var lastModifiedTimestamp = long.Parse(Request["lastModifiedDate"]);
+                var fname = Request["name"];                                                // 文件名称
+                var chunk = Request["chunk"];                                               // 当前分片批次
+                var fsize = long.Parse(Request["size"]);                                    // 文件大小
+                var lastModifiedTimestamp = long.Parse(Request["lastModifiedDate"]);        // 文件最后修改时间
 
-                var chunkFolder = BigFileChunkFolder(fname, fsize, lastModifiedTimestamp);
+                var chunkFolder = getBigFileChunkFolder(fname, fsize, lastModifiedTimestamp);
 
                 if (!Directory.Exists(chunkFolder))
                     Directory.CreateDirectory(chunkFolder);
 
-                var chunk = Request["chunk"];                 // 当前分片批次
 
                 var filepath = Path.Combine(chunkFolder, chunk);
 
@@ -95,28 +103,32 @@ namespace JIF.CMS.Management.Controllers
                 file.SaveAs(filepath);
                 //}
 
-                var chunks = int.Parse(Request["chunks"]);    // 分片总数
-                mergeFile(file.FileName, chunkFolder, chunks);
+                //var chunks = int.Parse(Request["chunks"]);    // 分片总数
+                //mergeFile(file.FileName, chunkFolder, chunks);
             }
 
             return AjaxOk();
         }
 
+        [HttpPost]
         /// <summary>
         /// 合并文件
         /// </summary>
-        /// <param name="filename">上传文件名称</param>
-        /// <param name="rootPath">文件保存根路径</param>
+        /// <param name="name">文件名称</param>
+        /// <param name="size">文件大小</param>
+        /// <param name="lastModifiedTimestamp">文件最后修改时间</param>
         /// <param name="chunks">合并文件总批次</param>
-        private void mergeFile(string filename, string rootPath, int chunks)
+        public JsonResult MergeFile(string name, int size, long lastModifiedTimestamp, int chunks)
         {
+            var chunkFolder = getBigFileChunkFolder(name, size, lastModifiedTimestamp);
+
             // 上传完成合并文件
-            var fns = Directory.GetFiles(rootPath).OrderBy(d => Convert.ToInt32(d.Substring(d.LastIndexOf("\\") + 1)));
+            var fns = Directory.GetFiles(chunkFolder).OrderBy(d => Convert.ToInt32(d.Substring(d.LastIndexOf("\\") + 1)));
             var segCount = fns.Count();
 
             if (chunks == segCount)
             {
-                using (var fs = System.IO.File.Create(Path.Combine(rootPath, filename)))
+                using (var fs = System.IO.File.Create(Path.Combine(chunkFolder, name)))
                 {
                     foreach (var fn in fns)
                     {
@@ -128,6 +140,12 @@ namespace JIF.CMS.Management.Controllers
                     }
                 }
             }
+            else
+            {
+                return AjaxFail("文件分片数不够");
+            }
+
+            return AjaxOk();
         }
     }
 }
