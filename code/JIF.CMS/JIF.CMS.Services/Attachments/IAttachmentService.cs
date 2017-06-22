@@ -1,5 +1,6 @@
 ﻿using JIF.CMS.Core;
 using JIF.CMS.Core.Domain;
+using JIF.CMS.Services.Attachments.Dtos;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +11,7 @@ namespace JIF.CMS.Services.Attachments
 {
     public interface IAttachmentService
     {
-        void Insert(Attachment model);
+        void Insert(InsertAttachmentInput model);
 
         void Delete(int id);
 
@@ -21,6 +22,6 @@ namespace JIF.CMS.Services.Attachments
         /// <param name="pageIndex">页码</param>
         /// <param name="pageSize">页大小</param>
         /// <returns></returns>
-        IPagedList<Attachment> GetArticles(string q, int pageIndex = 1, int pageSize = int.MaxValue);
+        IPagedList<AttachmentSearchListOutput> Get(string q, int pageIndex = 1, int pageSize = int.MaxValue);
     }
 }

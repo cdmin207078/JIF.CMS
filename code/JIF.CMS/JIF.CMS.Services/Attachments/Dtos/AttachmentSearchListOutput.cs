@@ -4,10 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace JIF.CMS.Core.Domain
+namespace JIF.CMS.Services.Attachments.Dtos
 {
-    public class Attachment : BaseEntity
+    public class AttachmentSearchListOutput
     {
+        public int Id { get; set; }
+
         /// <summary>
         /// 文件名称
         /// </summary>
@@ -25,6 +27,6 @@ namespace JIF.CMS.Core.Domain
 
         public DateTime CreateTime { get; set; }
 
-        public int CreateUserId { get; set; }
+        public string CreateUserName { get; set; }
     }
 }

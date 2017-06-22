@@ -7,6 +7,7 @@ using JIF.CMS.Core.Infrastructure;
 using JIF.CMS.Core.Infrastructure.DependencyManagement;
 using JIF.CMS.Data.EntityFramework;
 using JIF.CMS.Services.Articles;
+using JIF.CMS.Services.Attachments;
 using JIF.CMS.Services.Authentication;
 using JIF.CMS.Services.SysManager;
 using System;
@@ -65,6 +66,8 @@ namespace JIF.CMS.Web.Framework
             // Services
             builder.RegisterType<ArticleService>().As<IArticleService>().InstancePerLifetimeScope();
             builder.RegisterType<SysManagerService>().As<ISysManagerService>().InstancePerLifetimeScope();
+            builder.RegisterType<AttachmentService>().As<IAttachmentService>().InstancePerLifetimeScope();
+
 
         }
     }

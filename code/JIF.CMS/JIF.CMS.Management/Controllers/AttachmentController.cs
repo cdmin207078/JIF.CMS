@@ -1,5 +1,7 @@
 ﻿using JIF.CMS.Core;
 using JIF.CMS.Core.Helpers;
+using JIF.CMS.Services.Attachments;
+using JIF.CMS.Services.Attachments.Dtos;
 using JIF.CMS.Web.Framework.Controllers;
 using JIF.CMS.Web.Framework.Models;
 using System;
@@ -12,16 +14,18 @@ namespace JIF.CMS.Management.Controllers
 {
     public class AttachmentController : AdminControllerBase
     {
-        private static object _locker = new object();
-
         private readonly string _attachmentRootPath;
 
         private readonly IWorkContext _workContext;
 
-        public AttachmentController(IWorkContext workContext)
+        private IAttachmentService _attachmentService;
+
+        public AttachmentController(IWorkContext workContext
+            , IAttachmentService attachmentService)
         {
             _attachmentRootPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "attachments");
 
+            _attachmentService = attachmentService;
             _workContext = workContext;
         }
 
@@ -67,6 +71,21 @@ namespace JIF.CMS.Management.Controllers
             }
         }
 
+        /// <summary>
+        /// 新增上传附件记录
+        /// </summary>
+        private void InsertAttachment(string filename, long filesize, string savepath)
+        {
+            var attachment = new InsertAttachmentInput
+            {
+                Name = filename,
+                Size = filesize,
+                SavePath = savepath
+            };
+
+            _attachmentService.Insert(attachment);
+        }
+
         [HttpPost]
         public JsonResult Upload()
         {
@@ -82,6 +101,8 @@ namespace JIF.CMS.Management.Controllers
             {
                 var filepath = Path.Combine(_attachmentRootPath, file.FileName);
                 file.SaveAs(filepath);
+
+                InsertAttachment(file.FileName, long.Parse(Request["size"]), filepath);
             }
             else
             {
@@ -95,16 +116,9 @@ namespace JIF.CMS.Management.Controllers
                 if (!Directory.Exists(chunkFolder))
                     Directory.CreateDirectory(chunkFolder);
 
-
                 var filepath = Path.Combine(chunkFolder, chunk);
 
-                //lock (_locker)
-                //{
                 file.SaveAs(filepath);
-                //}
-
-                //var chunks = int.Parse(Request["chunks"]);    // 分片总数
-                //mergeFile(file.FileName, chunkFolder, chunks);
             }
 
             return AjaxOk();
@@ -128,7 +142,9 @@ namespace JIF.CMS.Management.Controllers
 
             if (chunks == segCount)
             {
-                using (var fs = System.IO.File.Create(Path.Combine(chunkFolder, name)))
+                var filepath = Path.Combine(chunkFolder, name);
+
+                using (var fs = System.IO.File.Create(filepath))
                 {
                     foreach (var fn in fns)
                     {
@@ -138,6 +154,8 @@ namespace JIF.CMS.Management.Controllers
                         // 删除分片
                         System.IO.File.Delete(fn);
                     }
+
+                    InsertAttachment(name, size, filepath);
                 }
             }
             else

@@ -48,6 +48,7 @@
     <Compile Include="Articles\Dtos\DeleteArticleInput.cs" />
     <Compile Include="Articles\IArticleService.cs" />
     <Compile Include="Attachments\AttachmentService.cs" />
+    <Compile Include="Attachments\Dtos\AttachmentSearchListOutput.cs" />
     <Compile Include="Attachments\Dtos\InsertAttachmentInput.cs" />
     <Compile Include="Attachments\IAttachmentService.cs" />
     <Compile Include="Authentication\FormsCookiesAuthenticationService.cs" />
