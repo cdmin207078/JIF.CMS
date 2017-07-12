@@ -11,7 +11,9 @@ namespace JIF.CMS.Core.Helpers
 {
     /// <summary>
     /// 加密算法类
-    /// 参考文献: http://www.cnblogs.com/rush/archive/2011/07/24/2115613.html
+    /// 参考文献: 
+    /// http://www.cnblogs.com/rush/archive/2011/07/24/2115613.html  -- 打造属于你的加密Helper类
+    /// http://www.cnblogs.com/vamei/p/3480994.html                  -- RSA加密与破解
     /// </summary>
     public static class EncyptHelper
     {
@@ -175,7 +177,6 @@ namespace JIF.CMS.Core.Helpers
         /// <returns></returns>
         public static string Encrypt(HashAlgorithm hashAlgorithm, string plainText)
         {
-            string[] tabStringHex = new string[16];
             UTF8Encoding UTF8 = new System.Text.UTF8Encoding();
             byte[] data = UTF8.GetBytes(plainText);
             byte[] result = hashAlgorithm.ComputeHash(data);
