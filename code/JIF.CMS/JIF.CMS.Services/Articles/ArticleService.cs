@@ -47,7 +47,6 @@ namespace JIF.CMS.Services.Articles
                 Content = model.Content,
                 CategoryId = model.CategoryId,
                 AllowComments = model.AllowComments,
-                Published = model.Published,
                 CreateTime = DateTime.Now,
                 CreateUserId = _workContext.CurrentUser.Id
             };
@@ -85,8 +84,6 @@ namespace JIF.CMS.Services.Articles
             entity.Content = model.Content;
             entity.CategoryId = model.CategoryId;
             entity.AllowComments = model.AllowComments;
-            entity.Published = model.Published;
-            entity.IsDeleted = model.IsDeleted;
             entity.UpdateTime = DateTime.Now;
             entity.UpdateUserId = _workContext.CurrentUser.Id;
 

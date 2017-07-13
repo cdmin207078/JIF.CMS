@@ -39,6 +39,9 @@
                 <div class="form-group">
                     <input type="checkbox" class="minimal" id="inp-allow-comments" @(article.AllowComments ? "checked" : "")>
                     <label for="inp-allow-comments">允许评论</label>
+                    &nbsp;
+                    <input type="checkbox" class="minimal" id="inp-pub" @(article.Status == JIF.CMS.Core.Domain.ArticleStatus.Pub ? "checked" : "")>
+                    <label for="inp-pub">是否发布</label>
                 </div>
 
             </div>

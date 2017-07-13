@@ -54,7 +54,6 @@ namespace JIF.CMS.Core.Helpers
 
                         double itsw = 0d;
                         double itsh = 0d;
-                        int itsin = 0;
 
                         //与宽高比对比
                         if (d1 > wd)

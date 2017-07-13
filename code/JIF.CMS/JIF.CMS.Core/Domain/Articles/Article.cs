@@ -29,14 +29,9 @@ namespace JIF.CMS.Core.Domain.Articles
         public bool AllowComments { get; set; }
 
         /// <summary>
-        /// 是否已经发布
+        /// 状态
         /// </summary>
-        public bool Published { get; set; }
-
-        /// <summary>
-        /// 是否已删除
-        /// </summary>
-        public bool IsDeleted { get; set; }
+        public ArticleStatus Status { get; set; }
 
         /// <summary>
         /// 所属分类编号

@@ -2,7 +2,6 @@
 
     var _editor;
 
-
     var init = function () {
 
         $('.datepicker').datepicker({
@@ -13,7 +12,7 @@
         _editor = editormd({
             id: 'txt-content',
             height: 650,
-            path: '../content/editor.md/lib/',
+            path: '/content/editor.md/lib/',
             placeholder: '文如流沙, 思若泉涌'
         });
     }
