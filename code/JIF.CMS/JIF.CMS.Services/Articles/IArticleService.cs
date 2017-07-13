@@ -61,7 +61,7 @@ namespace JIF.CMS.Services.Articles
         /// <returns></returns>
         ArticleCategory GetCategory(int id);
 
-        IEnumerable<ArticleCategory> GetCategories();
+        List<ArticleCategory> GetCategories();
 
         #endregion
     }

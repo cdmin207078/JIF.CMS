@@ -1,6 +1,7 @@
 ﻿@{
     ViewBag.Title = "文章管理";
 
+    var articles = ViewBag.list as IPagedList<JIF.CMS.Services.Articles.Dtos.SearchArticleListOutput>;
 }
 
 
@@ -9,7 +10,7 @@
 
         <div class="box box-primary">
             <div class="box-header with-border">
-                <a href="javascript:;" class="btn btn-success">新 增</a>
+                <a href="/article/add" class="btn btn-success">新 增</a>
                 <a href="javascript:;" class="btn btn-info" id="btn-deferred">deferred / promise</a>
 
                 <a href="javascript:;" class="btn btn-warning" id="btn-async-a">Async A</a>
@@ -17,13 +18,10 @@
                 <a href="javascript:;" class="btn btn-default" id="btn-async-c">Async A -> B -> C 链条</a>
                 <a href="javascript:;" class="btn btn-default" id="btn-async-d">使用 Ajax 返回的 Promise</a>
 
-
-
-
                 <div class="pull-right">
                     <form action="/article/" method="get" class="form-horizontal" style="max-width: 300px;">
                         <div class="input-group">
-                            <input type="text" class="form-control" name="s" placeholder="标题" value="@ViewBag.SearchWords">
+                            <input type="text" class="form-control" name="Q" placeholder="标题" value="@ViewBag.Q">
                             <span class="input-group-btn">
                                 <button type="submit" class="btn btn-info btn-flat">搜 索</button>
                             </span>
@@ -33,7 +31,50 @@
             </div>
 
             <div class="box-body">
+                @if (articles != null && articles.Any())
+                {
+                    <table class="table table-bordered table-hover table-condensed table-striped">
+                        <thead>
+                            <tr>
+                                <th style="width: 10px"><input type="checkbox" class="minimal"></th>
+                                <th>标题</th>
+                                <th>作者</th>
+                                <th>分类</th>
+                                <th>日期</th>
+                                <th style="width:50px;">操作</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var article in articles)
+                            {
+                                <tr class="no-padding">
+                                    <td>
+                                        <input type="checkbox" class="minimal">
+                                    </td>
+                                    <td>@article.Title</td>
+                                    <td>@article.Author</td>
+                                    <td>@article.Category</td>
+                                    <td>@article.CreateTime.ToString(JIFConsts.DATETIME_DATE)</td>
+                                    <td>
+                                        <a href="/article/detail/@article.Id" class="btn btn-xs btn-primary no-margin">详情</a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
 
+                        <tfoot>
+                            <tr>
+                                <td colspan="7">
+                                    @Html.Partial("_Pager", articles)
+                                </td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                }
+                else
+                {
+                    @Html.Partial("_NoData");
+                }
             </div>
         </div>
     </div>

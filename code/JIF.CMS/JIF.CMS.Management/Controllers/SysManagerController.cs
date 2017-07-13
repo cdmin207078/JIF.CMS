@@ -22,13 +22,13 @@ namespace JIF.CMS.Management.Controllers
         }
 
         [HttpGet]
-        public ActionResult Index(string s = "", int pageIndex = JIFConsts.SYS_PAGE_INDEX, int pageSize = JIFConsts.SYS_PAGE_SIZE)
+        public ActionResult Index(string Q = "", int pageIndex = JIFConsts.SYS_PAGE_INDEX, int pageSize = JIFConsts.SYS_PAGE_SIZE)
         {
-            s = s.Trim();
+            Q = Q.Trim();
 
-            ViewBag.Managers = _sysManagerService.Get(s, pageIndex, pageSize);
+            ViewBag.list = _sysManagerService.Get(Q, pageIndex, pageSize);
 
-            ViewBag.SearchWords = s;
+            ViewBag.Q = Q;
 
             return View();
         }

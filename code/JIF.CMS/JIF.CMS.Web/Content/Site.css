@@ -1,0 +1,53 @@
+﻿body {
+    font-family: Helvetica Neue,Helvetica,PingFang SC,Hiragino Sans GB,Microsoft YaHei,Noto Sans CJK SC,WenQuanYi Micro Hei,Arial,sans-serif;
+    font-size: 15px;
+    color: #262626;
+    background: #f7f8fa;
+    -webkit-tap-highlight-color: rgba(0,0,0,0);
+}
+
+.navbar-default{
+  background-color: #fff;
+}
+
+body > .container {
+    padding: 60px 15px 0;
+}
+
+.col-lg-1, .col-lg-10, .col-lg-11, .col-lg-12, .col-lg-2, .col-lg-3, .col-lg-4, .col-lg-5, .col-lg-6, .col-lg-7, .col-lg-8, .col-lg-9, .col-md-1, .col-md-10, .col-md-11, .col-md-12, .col-md-2, .col-md-3, .col-md-4, .col-md-5, .col-md-6, .col-md-7, .col-md-8, .col-md-9, .col-sm-1, .col-sm-10, .col-sm-11, .col-sm-12, .col-sm-2, .col-sm-3, .col-sm-4, .col-sm-5, .col-sm-6, .col-sm-7, .col-sm-8, .col-sm-9, .col-xs-1, .col-xs-10, .col-xs-11, .col-xs-12, .col-xs-2, .col-xs-3, .col-xs-4, .col-xs-5, .col-xs-6, .col-xs-7, .col-xs-8, .col-xs-9 {
+  margin: 10px 0px;
+  padding: 0px 10px;
+}
+
+
+/* -------------------------------- Index --------------------------------  */
+.article-item {
+  padding: 5px;
+  height: 290px;
+  background-color: #fff;
+  border: 1px solid #e7eaf1;
+  border-radius: 2px;
+  box-shadow: 0 1px 3px rgba(0,37,55,.05);
+  box-sizing: border-box;
+  word-break: break-all;
+  background-image: url('http://pic36.photophoto.cn/20150831/0008020285631726_b.jpg');
+}
+
+
+
+
+.article-item h3 {
+  margin-top: 200px;
+}
+
+.article-item small {
+  color: #fff;
+}
+
+.article-item h3 a{
+  color:#fff;
+}
+
+
+/* -------------------------------- Index --------------------------------  */
+

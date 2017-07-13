@@ -30,16 +30,21 @@ namespace JIF.CMS.Services.Articles
 
         public void Insert(InsertArticleInput model)
         {
-            if (string.IsNullOrWhiteSpace(model.Title)
-                || string.IsNullOrWhiteSpace(model.MarkdownContent))
+            if (string.IsNullOrWhiteSpace(model.Title))
             {
-                throw new JIFException("文章 标题 / 内容 不能为空");
+                throw new JIFException("文章标题不能为空");
+            }
+
+            if (string.IsNullOrWhiteSpace(model.Content) && string.IsNullOrWhiteSpace(model.MarkdownContent))
+            {
+                throw new JIFException("文章内容不能为空");
             }
 
             var entity = new Article
             {
                 Title = model.Title,
                 MarkdownContent = model.MarkdownContent,
+                Content = model.Content,
                 CategoryId = model.CategoryId,
                 AllowComments = model.AllowComments,
                 Published = model.Published,
@@ -58,10 +63,14 @@ namespace JIF.CMS.Services.Articles
 
         public void Update(int id, InsertArticleInput model)
         {
-            if (string.IsNullOrWhiteSpace(model.Title)
-                || string.IsNullOrWhiteSpace(model.MarkdownContent))
+            if (string.IsNullOrWhiteSpace(model.Title))
             {
-                throw new JIFException("文章 标题 / 内容 不能为空");
+                throw new JIFException("文章标题不能为空");
+            }
+
+            if (string.IsNullOrWhiteSpace(model.Content) && string.IsNullOrWhiteSpace(model.MarkdownContent))
+            {
+                throw new JIFException("文章内容不能为空");
             }
 
             var entity = GetArticle(id);
@@ -72,8 +81,8 @@ namespace JIF.CMS.Services.Articles
             }
 
             entity.Title = model.Title;
-            //entity.Content = model.Content;
             entity.MarkdownContent = model.MarkdownContent;
+            entity.Content = model.Content;
             entity.CategoryId = model.CategoryId;
             entity.AllowComments = model.AllowComments;
             entity.Published = model.Published;
@@ -112,7 +121,6 @@ namespace JIF.CMS.Services.Articles
         }
 
 
-
         public void Insert(ArticleCategory model)
         {
             if (string.IsNullOrWhiteSpace(model.Name))
@@ -143,7 +151,7 @@ namespace JIF.CMS.Services.Articles
             return _articleCategoryRepository.Get(id);
         }
 
-        public IEnumerable<ArticleCategory> GetCategories()
+        public List<ArticleCategory> GetCategories()
         {
             return _articleCategoryRepository.Table.OrderByDescending(d => d.Order).ToList();
         }

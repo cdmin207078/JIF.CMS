@@ -34,11 +34,25 @@ namespace JIF.CMS.Management
                 "~/Scripts/Layout.js"
                 ));
 
+            // bootstrap-datepicker
+            bundles.Add(new StyleBundle("~/styles/bootstrap-datepicker").Include("~/Content/bootstrap-datepicker/css/bootstrap-datepicker.css"));
+            bundles.Add(new ScriptBundle("~/scripts/bootstrap-datepicker").Include(
+                "~/Content/bootstrap-datepicker/js/bootstrap-datepicker.js",
+                "~/Content/bootstrap-datepicker/locales/bootstrap-datepicker.zh-CN.min.js"));
 
+            // editor.md
+            bundles.Add(new StyleBundle("~/styles/editor.md").Include("~/Content/editor.md/css/editormd.css"));
+            bundles.Add(new ScriptBundle("~/scripts/editor.md").Include("~/Content/editor.md/editormd.js"));
 
             // web uploader
             bundles.Add(new StyleBundle("~/styles/web-uploader").Include("~/Content/webuploader/webuploader.css"));
             bundles.Add(new ScriptBundle("~/scripts/web-uploader").Include("~/Content/webuploader/webuploader.js"));
+
+            // pages
+            bundles.Add(new ScriptBundle("~/scripts/page/article").Include("~/scripts/pages/article.js"));
+            bundles.Add(new ScriptBundle("~/scripts/page/attachment").Include("~/scripts/pages/attachment.js"));
+
+
         }
     }
 }

@@ -68,24 +68,24 @@
                     <tbody>
                         @for (int i = 0; i < 20; i++)
                         {
-                        <tr>
-                            <td>
-                                <input type="checkbox" class="minimal">
-                            </td>
-                            <td>VisualStudio2017_ProductLaunchPoster-1.png</td>
-                            <td>
-                                <a href="/attachments/angle_3.2.zip">/attachments/angle_3.2.zip</a>
-                            </td>
-                            <td>
-                                15.1 MB
-                            </td>
-                            <td>@DateTime.Now.ToString("yyyy-MM-dd HH:mm")</td>
-                            <td>chenning</td>
-                            <td>
-                                <a href="javascript:;" class="btn btn-xs btn-primary no-margin">下载</a>
-                                <a href="javascript:;" class="btn btn-xs btn-danger no-margin">删除</a>
-                            </td>
-                        </tr>
+                            <tr>
+                                <td>
+                                    <input type="checkbox" class="minimal">
+                                </td>
+                                <td>VisualStudio2017_ProductLaunchPoster-1.png</td>
+                                <td>
+                                    <a href="/attachments/angle_3.2.zip">/attachments/angle_3.2.zip</a>
+                                </td>
+                                <td>
+                                    15.1 MB
+                                </td>
+                                <td>@DateTime.Now.ToString("yyyy-MM-dd HH:mm")</td>
+                                <td>chenning</td>
+                                <td>
+                                    <a href="javascript:;" class="btn btn-xs btn-primary no-margin">下载</a>
+                                    <a href="javascript:;" class="btn btn-xs btn-danger no-margin">删除</a>
+                                </td>
+                            </tr>
                         }
                     </tbody>
                 </table>
@@ -113,10 +113,11 @@
 </script>
 
 @section Scripts {
-    @Scripts.Render("~/scripts/web-uploader")
-
     <script src="~/Content/doT/doT.min.js"></script>
-    <script src="~/js/attachment.js"></script>
+
+    @Scripts.Render("~/scripts/web-uploader")
+    @Scripts.Render("~/scripts/page/attachment")
+
 
     <script type="text/javascript">
         $(function () {

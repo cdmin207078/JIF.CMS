@@ -25,16 +25,16 @@ namespace JIF.CMS.Management
             EngineContext.Initialize(false);
 
             //初始化EF6的性能监控
-            MiniProfilerEF6.Initialize();
+            //MiniProfilerEF6.Initialize();
         }
 
         protected void Application_BeginRequest()
         {
-            MiniProfiler.Start();
+            //MiniProfiler.Start();
         }
         protected void Application_EndRequest()
         {
-            MiniProfiler.Stop();
+            //MiniProfiler.Stop();
         }
     }
 }

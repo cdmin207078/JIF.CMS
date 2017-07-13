@@ -16,7 +16,7 @@ namespace JIF.CMS.Services.Articles.Dtos
         /// <summary>
         /// 正文内容
         /// </summary>
-        //public string Content { get; set; }
+        public string Content { get; set; }
 
         /// <summary>
         /// Markdown格式 正文内容
