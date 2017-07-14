@@ -20,7 +20,7 @@ namespace JIF.CMS.Services.Articles
         /// 删除文章
         /// </summary>
         /// <param name="id"></param>
-        void Delete(DeleteArticleInput model);
+        void DeleteArticle(int id);
 
         /// <summary>
         /// 修改文章
@@ -38,7 +38,7 @@ namespace JIF.CMS.Services.Articles
         /// <param name="pageIndex">页码</param>
         /// <param name="pageSize">页大小</param>
         /// <returns></returns>
-        IPagedList<SearchArticleListOutput> GetArticles(string q, int pageIndex = 1, int pageSize = int.MaxValue);
+        IPagedList<SearchArticleListOutput> GetArticles(string q, bool isDeleted = false, int pageIndex = 1, int pageSize = int.MaxValue);
 
         #endregion
 

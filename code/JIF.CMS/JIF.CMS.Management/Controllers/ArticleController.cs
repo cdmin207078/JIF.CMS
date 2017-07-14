@@ -2,6 +2,7 @@
 using JIF.CMS.Core.Domain.Articles;
 using JIF.CMS.Management.Models;
 using JIF.CMS.Services.Articles;
+using JIF.CMS.Services.Articles.Dtos;
 using JIF.CMS.Web.Framework.Controllers;
 using System;
 using System.Collections.Generic;
@@ -26,7 +27,7 @@ namespace JIF.CMS.Management.Controllers
         {
             Q = Q.Trim();
 
-            ViewBag.list = _articleService.GetArticles(Q, pageIndex, pageSize);
+            ViewBag.list = _articleService.GetArticles(Q, pageIndex: pageIndex, pageSize: pageSize);
 
             ViewBag.Q = Q;
 
@@ -68,9 +69,20 @@ namespace JIF.CMS.Management.Controllers
         }
 
         [HttpPost]
+        [ValidateInput(false)]
         // 保存文章
-        public JsonResult Save()
+        public JsonResult Save(int id, InsertArticleInput model)
         {
+            if (id == 0)
+            {
+                _articleService.Insert(model);
+            }
+            else
+            {
+                _articleService.Update(id, model);
+            }
+
+
             return AjaxOk();
         }
 

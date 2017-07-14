@@ -47,6 +47,7 @@ namespace JIF.CMS.Services.Articles
                 Content = model.Content,
                 CategoryId = model.CategoryId,
                 AllowComments = model.AllowComments,
+                IsPublished = model.IsPublished,
                 CreateTime = DateTime.Now,
                 CreateUserId = _workContext.CurrentUser.Id
             };
@@ -55,9 +56,19 @@ namespace JIF.CMS.Services.Articles
 
         }
 
-        public void Delete(DeleteArticleInput model)
+        public void DeleteArticle(int id)
         {
-            throw new NotImplementedException();
+            var entity = _articleRepository.Get(id);
+            if (entity == null)
+            {
+                throw new JIFException("文章不存在");
+            }
+
+            entity.IsDeleted = true;
+            entity.UpdateUserId = _workContext.CurrentUser.Id;
+            entity.UpdateTime = DateTime.Now;
+
+            _articleRepository.Update(entity);
         }
 
         public void Update(int id, InsertArticleInput model)
@@ -84,6 +95,7 @@ namespace JIF.CMS.Services.Articles
             entity.Content = model.Content;
             entity.CategoryId = model.CategoryId;
             entity.AllowComments = model.AllowComments;
+            entity.IsPublished = model.IsPublished;
             entity.UpdateTime = DateTime.Now;
             entity.UpdateUserId = _workContext.CurrentUser.Id;
 
@@ -95,18 +107,23 @@ namespace JIF.CMS.Services.Articles
             return _articleRepository.Get(id);
         }
 
-        public IPagedList<SearchArticleListOutput> GetArticles(string q, int pageIndex = 1, int pageSize = int.MaxValue)
+        public IPagedList<SearchArticleListOutput> GetArticles(string q, bool isDeleted = false, int pageIndex = 1, int pageSize = int.MaxValue)
         {
             var query = from article in _articleRepository.Table
-                        join sysadmin in _sysAdminRepository.Table on article.CreateUserId equals sysadmin.Id
+                        join cu in _sysAdminRepository.Table on article.CreateUserId equals cu.Id
+                        join uu in _sysAdminRepository.Table on article.UpdateUserId equals uu.Id
                         join category in _articleCategoryRepository.Table on article.CategoryId equals category.Id
+                        where article.IsDeleted == isDeleted
                         select new SearchArticleListOutput
                         {
                             Id = article.Id,
                             Title = article.Title,
-                            Author = sysadmin.Account,
+                            Author = cu.Account,
+                            CreateTime = article.CreateTime,
                             Category = category.Name,
-                            CreateTime = article.CreateTime
+                            LastUpdateTime = article.UpdateTime.HasValue ? article.UpdateTime.Value : article.CreateTime,
+                            LastUpdateUser = uu == null ? cu.Account : uu.Account,
+                            IsPublished = article.IsPublished
                         };
 
             if (!string.IsNullOrWhiteSpace(q))

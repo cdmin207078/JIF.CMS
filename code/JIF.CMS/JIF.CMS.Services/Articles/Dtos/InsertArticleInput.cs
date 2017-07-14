@@ -31,16 +31,11 @@ namespace JIF.CMS.Services.Articles.Dtos
         /// <summary>
         /// 是否已经发布
         /// </summary>
-        public bool Published { get; set; }
+        public bool IsPublished { get; set; }
 
         /// <summary>
         /// 所属分类编号
         /// </summary>
         public int CategoryId { get; set; }
-
-        /// <summary>
-        /// 是否已删除
-        /// </summary>
-        public bool IsDeleted { get; set; }
     }
 }

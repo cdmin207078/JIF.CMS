@@ -18,7 +18,7 @@ namespace JIF.CMS.Management
                 .Include("~/Content/AdminLTE/dist/css/AdminLTE.css")
                 .Include("~/Content/AdminLTE/dist/css/skins/_all-skins.css")
                 .Include("~/Content/AdminLTE/plugins/iCheck/all.css")
-                .Include("~/Content/jquery-confirm/jquery-confirm.min.css")
+                .Include("~/Content/jquery-confirm/jquery-confirm.css")
                 .Include("~/Content/ios-switch/switch.css")
                 .Include("~/Content/AdminLTE/font-awesome.min.css", new CssRewriteUrlTransform()));
 
@@ -28,7 +28,7 @@ namespace JIF.CMS.Management
                 "~/Content/AdminLTE/plugins/slimScroll/jquery.slimscroll.min.js",
                 "~/Content/AdminLTE/dist/js/app.js",
                 "~/Content/AdminLTE/plugins/iCheck/icheck.min.js",
-                "~/Content/jquery-confirm/jquery-confirm.min.js",
+                "~/Content/jquery-confirm/jquery-confirm.js",
                 "~/Content/ios-switch/switch.js",
                 "~/Content/lodash/lodash.js",
                 "~/Scripts/Layout.js"

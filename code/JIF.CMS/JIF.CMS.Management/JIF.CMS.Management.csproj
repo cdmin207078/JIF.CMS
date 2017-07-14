@@ -804,8 +804,8 @@
     <Content Include="Content\fonts\fontawesome-webfont.svg" />
     <Content Include="Content\ios-switch\switch.css" />
     <Content Include="Content\ios-switch\switch.js" />
-    <Content Include="Content\jquery-confirm\jquery-confirm.min.css" />
-    <Content Include="Content\jquery-confirm\jquery-confirm.min.js" />
+    <Content Include="Content\jquery-confirm\jquery-confirm.css" />
+    <Content Include="Content\jquery-confirm\jquery-confirm.js" />
     <Content Include="Content\simditor\images\image.png" />
     <Content Include="Content\simditor\scripts\hotkeys.js" />
     <Content Include="Content\simditor\scripts\hotkeys.min.js" />

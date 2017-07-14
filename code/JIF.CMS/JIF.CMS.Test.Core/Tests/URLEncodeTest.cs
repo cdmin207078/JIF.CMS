@@ -94,5 +94,25 @@ namespace JIF.CMS.Test.Core.Tests
             var all = target.All(t => source.Any(s => s.SysNo == t.SysNo));
             Console.WriteLine(all);
         }
+
+
+        [TestMethod]
+        public void Test_JS_Esacpe_Html()
+        {
+            var s = "";
+            Console.WriteLine(s);
+
+            Console.WriteLine(HttpUtility.UrlDecode(s));
+            Console.WriteLine(HttpUtility.UrlDecode(HttpUtility.UrlDecode(s)));
+
+            Console.WriteLine(HttpUtility.HtmlDecode(s));
+
+
+            var ss = @"&lt;p&gt;&lt;img alt=&quot;Image&quot; src=&quot;http://img.xiami.net/images/album/img46/1046/5619561472119930.jpg&quot; width=&quot;707&quot; height=&quot;707&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;纵有红颜 百生千劫&lt;/p&gt;&lt;p&gt;难消君心 万古情愁&lt;/p&gt;&lt;p&gt;青峰之巅 山外之山&lt;/p&gt;&lt;p&gt;晚霞寂照 星夜无眠&lt;/p&gt;&lt;p&gt;&amp;nbsp;&lt;/p&gt;&lt;p&gt;如幻大千 惊鸿一瞥&lt;/p&gt;&lt;p&gt;一曲终了 悲欣交集&lt;/p&gt;&lt;p&gt;夕阳之间 天外之天&lt;/p&gt;&lt;p&gt;梅花清幽 独立春寒&lt;/p&gt;&lt;p&gt;&amp;nbsp;&lt;/p&gt;&lt;p&gt;红尘中 你的无上清凉&lt;/p&gt;&lt;p&gt;寂静光明 默默照耀世界&lt;/p&gt;&lt;p&gt;行如风 如君一骑绝尘&lt;/p&gt;&lt;p&gt;空谷绝响 至今谁在倾听&lt;/p&gt;&lt;p&gt;&amp;nbsp;&lt;/p&gt;&lt;p&gt;一念净心 花开遍世界&lt;/p&gt;&lt;p&gt;每临绝境 峰回路又转&lt;/p&gt;&lt;p&gt;但凭净信 自在出乾坤&lt;/p&gt;&lt;p&gt;恰似如梦初醒 归途在眼前&lt;/p&gt;&lt;p&gt;&amp;nbsp;&lt;/p&gt;&lt;p&gt;行尽天涯 静默山水间&lt;/p&gt;&lt;p&gt;倾听晚风 拂柳笛声残&lt;/p&gt;&lt;p&gt;踏破芒鞋 烟雨任平生&lt;/p&gt;&lt;p&gt;慧行坚勇 究畅恒无极&lt;/p&gt;";
+
+            Console.WriteLine(HttpUtility.UrlDecode(ss));
+            Console.WriteLine(HttpUtility.HtmlDecode(ss));
+
+        }
     }
 }

@@ -40,7 +40,10 @@
                                 <th>标题</th>
                                 <th>作者</th>
                                 <th>分类</th>
-                                <th>日期</th>
+                                <th>创建日期</th>
+                                <th style="width:50px;">状态</th>
+                                <th>最后更新时间</th>
+                                <th>更新者</th>
                                 <th style="width:50px;">操作</th>
                             </tr>
                         </thead>
@@ -56,6 +59,18 @@
                                     <td>@article.Category</td>
                                     <td>@article.CreateTime.ToString(JIFConsts.DATETIME_DATE)</td>
                                     <td>
+                                        @if (article.IsPublished)
+                                        {
+                                            <span class="label label-success">已发布</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="label label-warning">未发布</span>
+                                        }
+                                    </td>
+                                    <td>@article.LastUpdateTime.ToString(JIFConsts.DATETIME_DATE)</td>
+                                    <td>@article.LastUpdateUser</td>
+                                    <td>
                                         <a href="/article/detail/@article.Id" class="btn btn-xs btn-primary no-margin">详情</a>
                                     </td>
                                 </tr>
@@ -64,7 +79,7 @@
 
                         <tfoot>
                             <tr>
-                                <td colspan="7">
+                                <td colspan="9">
                                     @Html.Partial("_Pager", articles)
                                 </td>
                             </tr>
