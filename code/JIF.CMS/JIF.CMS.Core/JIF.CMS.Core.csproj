@@ -105,6 +105,8 @@
     <Compile Include="Data\IRepository.cs" />
     <Compile Include="Domain\Articles\Article.cs" />
     <Compile Include="Domain\Articles\ArticleCategory.cs" />
+    <Compile Include="Domain\Articles\ArticleTag.cs" />
+    <Compile Include="Domain\Articles\Tag.cs" />
     <Compile Include="Domain\Attachment.cs" />
     <Compile Include="Domain\BaseEntity.cs" />
     <Compile Include="Domain\DomainEnums.cs" />

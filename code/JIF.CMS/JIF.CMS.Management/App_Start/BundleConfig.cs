@@ -23,6 +23,7 @@ namespace JIF.CMS.Management
                 .Include("~/Content/AdminLTE/font-awesome.min.css", new CssRewriteUrlTransform()));
 
             bundles.Add(new ScriptBundle("~/scripts/adminlte").Include(
+                "~/Content/moment/moment.js",
                 "~/Content/AdminLTE/plugins/jQuery/jquery-2.2.3.min.js",
                 "~/Content/AdminLTE/bootstrap/bootstrap.js",
                 "~/Content/AdminLTE/plugins/slimScroll/jquery.slimscroll.min.js",
@@ -34,15 +35,20 @@ namespace JIF.CMS.Management
                 "~/Scripts/Layout.js"
                 ));
 
-            // bootstrap-datepicker
-            bundles.Add(new StyleBundle("~/styles/bootstrap-datepicker").Include("~/Content/bootstrap-datepicker/css/bootstrap-datepicker.css"));
-            bundles.Add(new ScriptBundle("~/scripts/bootstrap-datepicker").Include(
-                "~/Content/bootstrap-datepicker/js/bootstrap-datepicker.js",
-                "~/Content/bootstrap-datepicker/locales/bootstrap-datepicker.zh-CN.min.js"));
+            // bootstrap-daterangepicker
+            bundles.Add(new StyleBundle("~/styles/datetimepicker").Include("~/Content/datetimepicker/jquery.datetimepicker.min.css"));
+            bundles.Add(new ScriptBundle("~/scripts/datetimepicker").Include("~/Content/datetimepicker/jquery.datetimepicker.full.js"));
 
             // editor.md
             bundles.Add(new StyleBundle("~/styles/editor.md").Include("~/Content/editor.md/css/editormd.css"));
             bundles.Add(new ScriptBundle("~/scripts/editor.md").Include("~/Content/editor.md/editormd.js"));
+
+
+            // editor.md
+            bundles.Add(new StyleBundle("~/styles/tagsinput").Include("~/Content/jquery-tagsinput/jquery.tagsinput.css"));
+            bundles.Add(new ScriptBundle("~/scripts/tagsinput").Include("~/Content/jquery-tagsinput/jquery.tagsinput.js"));
+
+
 
             // web uploader
             bundles.Add(new StyleBundle("~/styles/web-uploader").Include("~/Content/webuploader/webuploader.css"));
@@ -51,8 +57,6 @@ namespace JIF.CMS.Management
             // pages
             bundles.Add(new ScriptBundle("~/scripts/page/article").Include("~/scripts/pages/article.js"));
             bundles.Add(new ScriptBundle("~/scripts/page/attachment").Include("~/scripts/pages/attachment.js"));
-
-
         }
     }
 }

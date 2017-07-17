@@ -4,19 +4,25 @@
 
     var init = function () {
 
-        $('.datepicker').datepicker({
-            format: 'yyyy-mm-dd',
-            language: 'zh-CN'
-        });
-
         _editor = editormd({
             id: 'txt-content',
             height: 650,
             path: '/content/editor.md/lib/',
             placeholder: '文如流沙, 思若泉涌',
-            saveHTMLToTextarea: true,   // 保存 HTML 到 Textarea - 加上这个才能markdown转html
+            saveHTMLToTextarea: true,   // 保存 HTML 到 Textarea - 加上这个才能markdown转html
         });
 
+
+        // 日期时间组件初始化
+        $.datetimepicker.setLocale('zh');
+
+        $('.datepicker').datetimepicker({
+            format: 'Y-m-d H:i:s'
+        });
+
+
+        // tags 组件初始化
+        $('#inp-tags').tagsInput();
 
         // 保存按钮 - 点击
         $('#btn-save').click(function () {
@@ -28,7 +34,9 @@
                 content: _editor.getHTML(),
                 categoryId: $('#inp-category').val(),
                 allowComments: $('#inp-allow-comments').is(':checked'),
-                isPublished: $('#inp-pub').is(':checked')
+                isPublished: $('#inp-pub').is(':checked'),
+                publishTime: $('#inp-pub-date').val(),
+                tags: $('#inp-tags').val().split(',')
             };
 
             if (!data.title.trim()) {

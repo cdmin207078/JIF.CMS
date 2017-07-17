@@ -50,5 +50,10 @@ namespace JIF.CMS.Core.Domain.Articles
         public DateTime? UpdateTime { get; set; }
 
         public int? UpdateUserId { get; set; }
+
+        /// <summary>
+        /// 发布日期
+        /// </summary>
+        public DateTime PublishTime { get; set; }
     }
 }

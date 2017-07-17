@@ -41,6 +41,7 @@
                                 <th>作者</th>
                                 <th>分类</th>
                                 <th>创建日期</th>
+                                <th>发布日期</th>
                                 <th style="width:50px;">状态</th>
                                 <th>最后更新时间</th>
                                 <th>更新者</th>
@@ -58,6 +59,7 @@
                                     <td>@article.Author</td>
                                     <td>@article.Category</td>
                                     <td>@article.CreateTime.ToString(JIFConsts.DATETIME_DATE)</td>
+                                    <td>@article.PublishTime.ToString(JIFConsts.DATETIME_DATE)</td>
                                     <td>
                                         @if (article.IsPublished)
                                         {
@@ -79,7 +81,7 @@
 
                         <tfoot>
                             <tr>
-                                <td colspan="9">
+                                <td colspan="10">
                                     @Html.Partial("_Pager", articles)
                                 </td>
                             </tr>

@@ -39,8 +39,10 @@ namespace JIF.CMS.Management.Controllers
         {
             ArticleEditViewModel vm = new ArticleEditViewModel
             {
-                Article = new Article(),
-                Categories = _articleService.GetCategories()
+                Article = new Article() { PublishTime = DateTime.Now },
+                Categories = _articleService.GetCategories(),
+                ArticleTags = new List<string>(),
+                Tags = _articleService.GetTags().Keys.ToList()
             };
 
             ViewBag.Title = "撰写文章";
@@ -60,12 +62,21 @@ namespace JIF.CMS.Management.Controllers
             ArticleEditViewModel vm = new ArticleEditViewModel
             {
                 Article = article,
-                Categories = _articleService.GetCategories()
+                Categories = _articleService.GetCategories(),
+                ArticleTags = _articleService.GetArticleTags(id).Select(d => d.Name).ToList(),
+                Tags = _articleService.GetTags().Keys.ToList()
             };
 
             ViewBag.Title = string.Format("编辑 - " + article.Title);
 
             return View(vm);
+        }
+
+
+        [HttpGet]
+        public ActionResult Recycled()
+        {
+            return View();
         }
 
         [HttpPost]

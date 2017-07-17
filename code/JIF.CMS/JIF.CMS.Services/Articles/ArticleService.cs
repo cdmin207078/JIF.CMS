@@ -13,19 +13,87 @@ namespace JIF.CMS.Services.Articles
     {
         private readonly IRepository<Article> _articleRepository;
         private readonly IRepository<ArticleCategory> _articleCategoryRepository;
+        private readonly IRepository<Tag> _tagRepository;
+        private readonly IRepository<ArticleTag> _articleTagRepository;
+
         private readonly IRepository<SysAdmin> _sysAdminRepository;
+
 
         private readonly IWorkContext _workContext;
 
         public ArticleService(IRepository<Article> articleRepository,
             IRepository<ArticleCategory> articleCategoryRepository,
+            IRepository<Tag> tagRepository,
+            IRepository<ArticleTag> articleTagRepository,
             IRepository<SysAdmin> sysAdminRepository,
             IWorkContext workContext)
         {
             _articleRepository = articleRepository;
+            _tagRepository = tagRepository;
+            _articleTagRepository = articleTagRepository;
             _articleCategoryRepository = articleCategoryRepository;
             _sysAdminRepository = sysAdminRepository;
             _workContext = workContext;
+        }
+
+
+        /// <summary>
+        /// 获取 tags 字典 , key : name, val : id
+        /// </summary>
+        /// <returns></returns>
+
+        public Dictionary<string, int> GetTags()
+        {
+            var tags = _tagRepository.Table.ToList();
+
+            if (tags == null || !tags.Any())
+            {
+                return new Dictionary<string, int>();
+            }
+
+            return tags.ToDictionary(k => k.Name, v => v.Id);
+        }
+
+        /// <summary>
+        /// 获取文章具有tags
+        /// </summary>
+        /// <param name="id">文章系统编号</param>
+        /// <returns></returns>
+        public List<Tag> GetArticleTags(int id)
+        {
+            return (from a in _articleTagRepository.Table
+                    join b in _tagRepository.Table on a.TagId equals b.Id
+                    where a.ArticleId == id
+                    select b).ToList();
+        }
+
+
+        /// <summary>
+        /// 保存文章标签数据
+        /// </summary>
+        /// <param name="articleId">文章编号</param>
+        /// <param name="tags">标签</param>
+        private void SaveArticleTags(int articleId, List<string> tags)
+        {
+            if (tags != null && tags.Any())
+            {
+                var tagsDic = GetTags();
+
+                foreach (var t in tags)
+                {
+                    if (tagsDic.ContainsKey(t))
+                    {
+                        _articleTagRepository.Insert(new ArticleTag { ArticleId = articleId, TagId = tagsDic[t] });
+                    }
+                    else
+                    {
+                        var tag = new Tag { Name = t };
+                        _tagRepository.Insert(tag);
+
+                        _articleTagRepository.Insert(new ArticleTag { ArticleId = articleId, TagId = tag.Id });
+                    }
+                }
+            }
         }
 
         public void Insert(InsertArticleInput model)
@@ -40,11 +108,12 @@ namespace JIF.CMS.Services.Articles
                 throw new JIFException("文章内容不能为空");
             }
 
-            var entity = new Article
+            var article = new Article
             {
                 Title = model.Title,
                 MarkdownContent = model.MarkdownContent,
                 Content = model.Content,
+                PublishTime = model.PublishTime,
                 CategoryId = model.CategoryId,
                 AllowComments = model.AllowComments,
                 IsPublished = model.IsPublished,
@@ -52,8 +121,10 @@ namespace JIF.CMS.Services.Articles
                 CreateUserId = _workContext.CurrentUser.Id
             };
 
-            _articleRepository.Insert(entity);
+            _articleRepository.Insert(article);
 
+            // 保存文章标签
+            SaveArticleTags(article.Id, model.Tags);
         }
 
         public void DeleteArticle(int id)
@@ -93,6 +164,7 @@ namespace JIF.CMS.Services.Articles
             entity.Title = model.Title;
             entity.MarkdownContent = model.MarkdownContent;
             entity.Content = model.Content;
+            entity.PublishTime = model.PublishTime;
             entity.CategoryId = model.CategoryId;
             entity.AllowComments = model.AllowComments;
             entity.IsPublished = model.IsPublished;
@@ -100,6 +172,12 @@ namespace JIF.CMS.Services.Articles
             entity.UpdateUserId = _workContext.CurrentUser.Id;
 
             _articleRepository.Update(entity);
+
+
+
+            // 保存文章标签, 先删除原有文章标签
+            _articleTagRepository.Delete(_articleTagRepository.Table.Where(d => d.ArticleId == id));
+            SaveArticleTags(id, model.Tags);
         }
 
         public Article GetArticle(int id)
@@ -111,7 +189,8 @@ namespace JIF.CMS.Services.Articles
         {
             var query = from article in _articleRepository.Table
                         join cu in _sysAdminRepository.Table on article.CreateUserId equals cu.Id
-                        join uu in _sysAdminRepository.Table on article.UpdateUserId equals uu.Id
+                        join uu in _sysAdminRepository.Table on article.UpdateUserId equals uu.Id into auu
+                        from uu in auu.DefaultIfEmpty()
                         join category in _articleCategoryRepository.Table on article.CategoryId equals category.Id
                         where article.IsDeleted == isDeleted
                         select new SearchArticleListOutput
@@ -123,7 +202,8 @@ namespace JIF.CMS.Services.Articles
                             Category = category.Name,
                             LastUpdateTime = article.UpdateTime.HasValue ? article.UpdateTime.Value : article.CreateTime,
                             LastUpdateUser = uu == null ? cu.Account : uu.Account,
-                            IsPublished = article.IsPublished
+                            IsPublished = article.IsPublished,
+                            PublishTime = article.PublishTime
                         };
 
             if (!string.IsNullOrWhiteSpace(q))

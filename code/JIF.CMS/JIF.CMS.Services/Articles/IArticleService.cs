@@ -7,6 +7,20 @@ namespace JIF.CMS.Services.Articles
 {
     public interface IArticleService
     {
+        /// <summary>
+        /// 获取 tags 字典 , key : name, val : id
+        /// </summary>
+        /// <returns></returns>
+        Dictionary<string, int> GetTags();
+
+
+        /// <summary>
+        /// 获取文章具有tags
+        /// </summary>
+        /// <param name="id">文章系统编号</param>
+        /// <returns></returns>
+        List<Tag> GetArticleTags(int id);
+
         #region Artilce
 
         /// <summary>

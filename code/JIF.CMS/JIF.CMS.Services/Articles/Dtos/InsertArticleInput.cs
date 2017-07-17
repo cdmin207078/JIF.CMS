@@ -34,8 +34,18 @@ namespace JIF.CMS.Services.Articles.Dtos
         public bool IsPublished { get; set; }
 
         /// <summary>
+        /// 发布日期
+        /// </summary>
+        public DateTime PublishTime { get; set; }
+
+        /// <summary>
         /// 所属分类编号
         /// </summary>
         public int CategoryId { get; set; }
+
+        /// <summary>
+        /// 标签
+        /// </summary>
+        public List<string> Tags { get; set; }
     }
 }

@@ -44,5 +44,10 @@ namespace JIF.CMS.Services.Articles.Dtos
         /// 已发布
         /// </summary>
         public bool IsPublished { get; set; }
+
+        /// <summary>
+        /// 发布日期
+        /// </summary>
+        public DateTime PublishTime { get; set; }
     }
 }
