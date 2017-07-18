@@ -38,13 +38,22 @@ namespace JIF.CMS.Services.Articles
 
 
         /// <summary>
+        /// 获取 所有tags 列表
+        /// </summary>
+        /// <returns></returns>
+        public List<Tag> GetTags()
+        {
+            return _tagRepository.Table.ToList();
+        }
+
+        /// <summary>
         /// 获取 tags 字典 , key : name, val : id
         /// </summary>
         /// <returns></returns>
 
-        public Dictionary<string, int> GetTags()
+        public Dictionary<string, int> GetTagsDict()
         {
-            var tags = _tagRepository.Table.ToList();
+            var tags = GetTags();
 
             if (tags == null || !tags.Any())
             {
@@ -77,10 +86,13 @@ namespace JIF.CMS.Services.Articles
         {
             if (tags != null && tags.Any())
             {
-                var tagsDic = GetTags();
+                var tagsDic = GetTagsDict();
 
                 foreach (var t in tags)
                 {
+                    if (string.IsNullOrWhiteSpace(t))
+                        continue;
+
                     if (tagsDic.ContainsKey(t))
                     {
                         _articleTagRepository.Insert(new ArticleTag { ArticleId = articleId, TagId = tagsDic[t] });

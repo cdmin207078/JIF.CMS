@@ -1,0 +1,94 @@
+﻿@{
+    ViewBag.Title = "分类管理";
+}
+
+
+<div class="row">
+    <div class="col-md-12">
+
+        <div class="box box-primary">
+            <div class="box-body">
+
+                <table class="table table-bordered table-hover table-condensed table-striped">
+                    <thead>
+                        <tr>
+                            <th style="width: 10px"><input class="form-control input-sm minimal" type="checkbox"></th>
+                            <th style="width: 200px">排序</th>
+                            <th>分类名称</th>
+                            <th style="width:105px;">操作</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for (int i = 0; i < 5; i++)
+                        {
+                            <tr class="no-padding">
+                                <td>
+                                    <input class="form-control input-sm minimal" type="checkbox">
+                                </td>
+                                <td>
+                                    <input class="form-control input-sm" type="number" value="1" />
+                                </td>
+                                <td>
+                                    <input class="form-control input-sm" type="text" value="关于我们" />
+                                </td>
+                                <td>
+                                    <a href="javascript:;" class="btn btn-xs btn-default no-margin" data-toggle="tooltip" data-original-title="上移"><i class="fa fa-caret-up"></i></a>
+                                    <a href="javascript:;" class="btn btn-xs btn-default no-margin" data-toggle="tooltip" data-original-title="下移"><i class="fa fa-caret-down"></i></a>
+                                    <a href="javascript:;" class="btn btn-xs btn-default no-margin" data-toggle="tooltip" data-original-title="管理"><i class="fa fa-cog"></i></a>
+                                    <a href="javascript:;" class="btn btn-xs bg-red btn-default no-margin" data-toggle="tooltip" data-original-title="删除"><i class="fa fa-trash"></i></a>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td></td>
+                                <td colspan="3">
+
+
+                                    <table class="table table-bordered table-hover table-condensed table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th style="width: 10px"><input class="form-control input-sm minimal" type="checkbox"></th>
+                                                <th style="width: 200px">排序</th>
+                                                <th>分类名称</th>
+                                                <th style="width:105px;">操作</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @for (int j = 0; j < 5; j++)
+                                            {
+                                                <tr class="no-padding">
+                                                    <td>
+                                                        <input class="form-control input-sm minimal" type="checkbox">
+                                                    </td>
+                                                    <td>
+                                                        <input class="form-control input-sm" type="number" value="1" />
+                                                    </td>
+                                                    <td>
+                                                        <input class="form-control input-sm" type="text" value="关于我们" />
+                                                    </td>
+                                                    <td>
+                                                        <a href="javascript:;" class="btn btn-xs btn-default no-margin" data-toggle="tooltip" data-original-title="上移"><i class="fa fa-caret-up"></i></a>
+                                                        <a href="javascript:;" class="btn btn-xs btn-default no-margin" data-toggle="tooltip" data-original-title="下移"><i class="fa fa-caret-down"></i></a>
+                                                        <a href="javascript:;" class="btn btn-xs btn-default no-margin" data-toggle="tooltip" data-original-title="管理"><i class="fa fa-cog"></i></a>
+                                                        <a href="javascript:;" class="btn btn-xs bg-red btn-default no-margin" data-toggle="tooltip" data-original-title="删除"><i class="fa fa-trash"></i></a>
+                                                    </td>
+                                                </tr>
+                                            }
+
+                                        </tbody>
+                                    </table>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+
+                    <tfoot>
+                        <tr>
+                            <td colspan="10"></td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

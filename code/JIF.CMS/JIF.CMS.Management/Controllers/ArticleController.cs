@@ -22,7 +22,7 @@ namespace JIF.CMS.Management.Controllers
             _articleService = articleService;
         }
 
-        // GET: Article
+        // 文章列表页面
         public ActionResult Index(string Q = "", int pageIndex = JIFConsts.SYS_PAGE_INDEX, int pageSize = JIFConsts.SYS_PAGE_SIZE)
         {
             Q = Q.Trim();
@@ -34,6 +34,7 @@ namespace JIF.CMS.Management.Controllers
             return View();
         }
 
+        // 新增文章页面
         [HttpGet]
         public ActionResult Add()
         {
@@ -42,7 +43,7 @@ namespace JIF.CMS.Management.Controllers
                 Article = new Article() { PublishTime = DateTime.Now },
                 Categories = _articleService.GetCategories(),
                 ArticleTags = new List<string>(),
-                Tags = _articleService.GetTags().Keys.ToList()
+                Tags = _articleService.GetTagsDict().Keys.ToList()
             };
 
             ViewBag.Title = "撰写文章";
@@ -50,6 +51,7 @@ namespace JIF.CMS.Management.Controllers
             return View("Detail", vm);
         }
 
+        // 文章详情页 & 指定文章编辑页面
         [HttpGet]
         public ActionResult Detail(int id)
         {
@@ -64,7 +66,7 @@ namespace JIF.CMS.Management.Controllers
                 Article = article,
                 Categories = _articleService.GetCategories(),
                 ArticleTags = _articleService.GetArticleTags(id).Select(d => d.Name).ToList(),
-                Tags = _articleService.GetTags().Keys.ToList()
+                Tags = _articleService.GetTagsDict().Keys.ToList()
             };
 
             ViewBag.Title = string.Format("编辑 - " + article.Title);
@@ -72,16 +74,16 @@ namespace JIF.CMS.Management.Controllers
             return View(vm);
         }
 
-
+        // 文章回收站页面
         [HttpGet]
         public ActionResult Recycled()
         {
             return View();
         }
 
+        // 新增 & 修改文章保存
         [HttpPost]
         [ValidateInput(false)]
-        // 保存文章
         public JsonResult Save(int id, InsertArticleInput model)
         {
             if (id == 0)
@@ -94,6 +96,45 @@ namespace JIF.CMS.Management.Controllers
             }
 
 
+            return AjaxOk();
+        }
+
+        // 删除文章
+        public JsonResult DeleteArticle(int id)
+        {
+            return AjaxOk();
+        }
+
+        // 文章分类列表页面 
+        public ActionResult Categories()
+        {
+            return View();
+        }
+
+        // 保存文章分类
+        public JsonResult SaveCategories()
+        {
+            return AjaxOk();
+        }
+
+        // 标签列表页面
+        [HttpGet]
+        public ActionResult Tags()
+        {
+            return View();
+        }
+
+        // 保存标签
+        [HttpPost]
+        public JsonResult SaveTag()
+        {
+            return AjaxOk();
+        }
+
+        // 删除标签
+        [HttpPost]
+        public JsonResult DelTag()
+        {
             return AjaxOk();
         }
 

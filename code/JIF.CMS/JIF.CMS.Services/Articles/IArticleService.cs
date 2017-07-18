@@ -8,11 +8,16 @@ namespace JIF.CMS.Services.Articles
     public interface IArticleService
     {
         /// <summary>
+        /// 获取 所有tags 列表
+        /// </summary>
+        /// <returns></returns>
+        List<Tag> GetTags();
+
+        /// <summary>
         /// 获取 tags 字典 , key : name, val : id
         /// </summary>
         /// <returns></returns>
-        Dictionary<string, int> GetTags();
-
+        Dictionary<string, int> GetTagsDict();
 
         /// <summary>
         /// 获取文章具有tags

@@ -27,7 +27,7 @@
                     <input type="text" class="form-control datepicker" id="inp-pub-date" placeholder="发布日期" value="@article.PublishTime.ToString(JIFConsts.DATETIME_NORMAL)">
                 </div>
                 <div class="form-group">
-                    <label>所属分类</label>
+                    <label>所属分类</label>&nbsp;<i id="op-categories" class="fa fa-cog" style="cursor:pointer;" data-toggle="tooltip" data-original-title="管理分类"></i></small>
                     <select class="form-control" id="inp-category">
                         @foreach (var cate in Model.Categories)
                         {
@@ -38,11 +38,11 @@
                 <div class="form-group">
                     <label for="inp-pub-tags">标签</label>
                     <input type="text" class="form-control" id="inp-tags" placeholder="标签" value="@(string.Join(",",Model.ArticleTags))" />
-                    <div>
-                        <hr />
+                    <div id="all-tags" style="margin-top:5px;">
+                        <small class="btn-block" style="margin-bottom:5px;">所有标签&nbsp;<i id="op-tags" class="fa fa-cog" style="cursor:pointer;" data-toggle="tooltip" data-original-title="管理标签"></i></small>
                         @foreach (var t in Model.Tags)
                         {
-                            <span>@t</span>
+                            <button type="button" class="btn @(Model.ArticleTags.Any(d => d == t) ? "bg-maroon":"btn-default") btn-xs btn-flat">@t</button>
                         }
                     </div>
                 </div>
@@ -58,6 +58,8 @@
 
             <div class="box-footer">
                 <button id="btn-save" type="submit" class="btn btn-success">保 存</button>
+                <button id="btn-del" type="submit" class="btn btn-danger">删 除</button>
+
             </div>
         </div>
     </div>

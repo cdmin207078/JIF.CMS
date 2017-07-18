@@ -812,6 +812,8 @@
     <Content Include="Views\Attachment\Index.cshtml" />
     <Content Include="Views\Article\Index.cshtml" />
     <Content Include="Views\Article\Detail.cshtml" />
+    <Content Include="Views\Article\Categories.cshtml" />
+    <Content Include="Views\Article\Tags.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

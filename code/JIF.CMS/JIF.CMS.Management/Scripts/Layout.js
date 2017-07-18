@@ -15,6 +15,10 @@ $(function () {
     //});
 
 
+    // 管理标签 tooltip
+    $('[data-toggle="tooltip"]').tooltip();
+
+
     // 检查页面是否需要弹出错误提醒
     var exp = $('#JIFExceptionMessage');
     if (exp.length) {
