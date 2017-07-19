@@ -16,7 +16,7 @@ namespace JIF.CMS.Core.Domain.Articles
         /// <summary>
         /// 分类排序
         /// </summary>
-        public int Order { get; set; }
+        public int OrderIndex { get; set; }
 
         /// <summary>
         /// 所属父级分类编号

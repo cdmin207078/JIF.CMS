@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.IO;
 using System.Diagnostics;
+using JIF.CMS.Test.Core.Entities;
 
 namespace JIF.CMS.Test.Core.Tests
 {
@@ -157,6 +158,69 @@ namespace JIF.CMS.Test.Core.Tests
             watch.Restart();
 
             watch.Stop();
+        }
+
+        [TestMethod]
+        public void MyTestMethod()
+        {
+            var list = new List<Product>() {
+                new Product {
+                    SysNo = 1,
+                    Price = 35,
+                    CreateTime = DateTime.Now,
+                    ProductId = "P115b"
+                },
+                new Product {
+                    SysNo = 2,
+                    Price = 73,
+                    CreateTime = DateTime.Now,
+                    ProductId = "P115w"
+                },
+                new Product {
+                    SysNo = 3,
+                    Price = 73,
+                    CreateTime = DateTime.Now,
+                    ProductId = "P115w"
+                },
+                new Product {
+                    SysNo = 4,
+                    Price = 18,
+                    CreateTime = DateTime.Now,
+                    ProductId = "P115w"
+                },
+
+            };
+
+            var o = list.FirstOrDefault(d => d.SysNo == 10)?.Price;
+
+            //list.Remove(o);
+
+
+
+
+            var oo = list.OrderBy(d => d.Price).ThenByDescending(d => d.SysNo).ToList();
+
+
+            var temp = list.Where(d => d.SysNo > 3).ToList();
+
+            var dict = new Dictionary<int, List<Product>>();
+
+            dict.Add(1, list.Where(d => d.SysNo > 0).ToList());
+
+
+            list.RemoveAt(0);
+
+
+            Console.WriteLine(list);
+
+            Console.WriteLine(dict);
+
+
+
+
+
+
+
         }
     }
 }

@@ -48,14 +48,18 @@ namespace JIF.CMS.Management
             bundles.Add(new StyleBundle("~/styles/tagsinput").Include("~/Content/jquery-tagsinput/jquery.tagsinput.css"));
             bundles.Add(new ScriptBundle("~/scripts/tagsinput").Include("~/Content/jquery-tagsinput/jquery.tagsinput.js"));
 
-
-
             // web uploader
             bundles.Add(new StyleBundle("~/styles/web-uploader").Include("~/Content/webuploader/webuploader.css"));
             bundles.Add(new ScriptBundle("~/scripts/web-uploader").Include("~/Content/webuploader/webuploader.js"));
 
+            // jquery ui
+            bundles.Add(new StyleBundle("~/styles/jquery-ui").Include("~/Content/jquery-ui/jquery-ui.css"));
+            bundles.Add(new ScriptBundle("~/scripts/jquery-ui").Include("~/Content/jquery-ui/jquery-ui.js"));
+
+
             // pages
             bundles.Add(new ScriptBundle("~/scripts/page/article").Include("~/scripts/pages/article.js"));
+            bundles.Add(new ScriptBundle("~/scripts/page/article-categories").Include("~/scripts/pages/article-categories.js"));
             bundles.Add(new ScriptBundle("~/scripts/page/attachment").Include("~/scripts/pages/attachment.js"));
         }
     }

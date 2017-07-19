@@ -2,6 +2,7 @@
 using JIF.CMS.Core.Data;
 using JIF.CMS.Core.Domain;
 using JIF.CMS.Core.Domain.Articles;
+using JIF.CMS.Core.Helpers;
 using JIF.CMS.Services.Articles.Dtos;
 using System;
 using System.Collections.Generic;
@@ -55,7 +56,7 @@ namespace JIF.CMS.Services.Articles
         {
             var tags = GetTags();
 
-            if (tags == null || !tags.Any())
+            if (tags.IsNullOrEmpty())
             {
                 return new Dictionary<string, int>();
             }
@@ -84,7 +85,7 @@ namespace JIF.CMS.Services.Articles
         /// <param name="tags">标签</param>
         private void SaveArticleTags(int articleId, List<string> tags)
         {
-            if (tags != null && tags.Any())
+            if (tags.IsNullOrEmpty())
             {
                 var tagsDic = GetTagsDict();
 
@@ -257,9 +258,104 @@ namespace JIF.CMS.Services.Articles
             return _articleCategoryRepository.Get(id);
         }
 
+        /// <summary>
+        /// 获取所有文章分类列表
+        /// </summary>
+        /// <returns></returns>
         public List<ArticleCategory> GetCategories()
         {
-            return _articleCategoryRepository.Table.OrderByDescending(d => d.Order).ToList();
+            return _articleCategoryRepository.Table.ToList();
+        }
+
+        /// <summary>
+        /// 获取所有文章分类, 转为 层级 - 数据源 对照字典
+        /// </summary>
+        /// <remarks>key : level, value : categories</remarks>
+        public Dictionary<int, List<ArticleCategory>> GetCategoriesLevelDict()
+        {
+            var categories = GetCategories();
+            if (categories.IsNullOrEmpty())
+            {
+                return new Dictionary<int, List<ArticleCategory>>();
+            }
+
+            // 层数
+            var level = 1;
+
+            var result = new Dictionary<int, List<ArticleCategory>>();
+
+            var firstLevel = categories.Where(d => d.ParentCategoryId == 0).OrderBy(d => d.OrderIndex).ToList();
+
+            result.Add(level, firstLevel);
+            categories.RemoveAll(d => firstLevel.Any(l => l.Id == d.Id));
+
+            while (true)
+            {
+                var parents = result.LastOrDefault().Value.Select(d => d.Id).ToList();
+
+                var levels = categories.Where(d => parents.Contains(d.ParentCategoryId)).OrderBy(d => d.OrderIndex).ToList();
+                if (levels.IsNullOrEmpty())
+                    break;
+                else
+                {
+                    level++;
+                    result.Add(level, levels);
+                    categories.RemoveAll(d => levels.Any(l => l.Id == d.Id));
+                }
+
+                if (categories.Any())
+                    break;
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        /// 获取所有文章分类, 对象关系关系树结构.
+        /// </summary>
+        /// <returns>返回顶层节点, 分支使用各个节点依次访问</returns>
+        public List<TreeRelationObject<ArticleCategory>> GetCategoriesTreeRelation()
+        {
+            var categories = GetCategories().OrderBy(d => d.ParentCategoryId).ThenBy(d => d.OrderIndex).ToList();
+            if (categories.IsNullOrEmpty())
+            {
+                return new List<TreeRelationObject<ArticleCategory>>();
+            }
+
+            var result = new List<TreeRelationObject<ArticleCategory>>();
+
+            //while (true)
+            //{
+            //    var c = categories.FirstOrDefault();
+            //    categories.RemoveAt(0);
+
+            //    var nrb = new TreeRelationObject<ArticleCategory>
+            //    {
+            //        Current = c,
+            //        Parent = result.FirstOrDefault(d => d.Current.Id == c.ParentCategoryId)?.Current,
+            //        Childs = categories.Where(d => d.ParentCategoryId == c.Id).OrderBy(d => d.OrderIndex).ToList(),
+            //    };
+
+            //    result.Add(nrb);
+
+            //    if (categories.IsNullOrEmpty())
+            //        break;
+            //}
+
+            // set current & parent
+            result = categories.Select(cate => new TreeRelationObject<ArticleCategory>
+            {
+                Current = cate,
+                Parent = categories.FirstOrDefault(d => d.Id == cate.ParentCategoryId)
+            }).ToList();
+
+            // set childs
+            result.ForEach(cate =>
+            {
+                cate.Childs = result.Where(d => d.Current.ParentCategoryId == cate.Current.Id).ToList();
+            });
+
+            return result.Where(d => d.Parent == null).OrderBy(d => d.Current.OrderIndex).ToList();
         }
     }
 }

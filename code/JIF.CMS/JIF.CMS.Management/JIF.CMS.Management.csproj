@@ -719,6 +719,8 @@
     <Content Include="Content\jquery-confirm\jquery-confirm.js" />
     <Content Include="Content\jquery-tagsinput\jquery.tagsinput.css" />
     <Content Include="Content\jquery-tagsinput\jquery.tagsinput.js" />
+    <Content Include="Content\jquery-ui\jquery-ui.css" />
+    <Content Include="Content\jquery-ui\jquery-ui.js" />
     <Content Include="Content\moment\moment.js" />
     <Content Include="Content\simditor\images\image.png" />
     <Content Include="Content\simditor\scripts\hotkeys.js" />
@@ -759,6 +761,7 @@
     <Content Include="Content\simditor\styles\editor.scss" />
     <Content Include="Content\simditor\styles\fonticon.scss" />
     <Content Include="Content\simditor\styles\simditor.scss" />
+    <Content Include="Scripts\pages\article-categories.js" />
     <Content Include="Scripts\pages\attachment.js" />
     <Content Include="Scripts\Layout.js" />
     <Content Include="Content\lodash\lodash.js" />
@@ -814,6 +817,7 @@
     <Content Include="Views\Article\Detail.cshtml" />
     <Content Include="Views\Article\Categories.cshtml" />
     <Content Include="Views\Article\Tags.cshtml" />
+    <Content Include="Views\Article\_CategoriesItem.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

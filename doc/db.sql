@@ -57,18 +57,33 @@ DROP TABLE IF EXISTS `article_categories`;
 CREATE TABLE IF NOT EXISTS `article_categories` (
   `Id` int(11) NOT NULL AUTO_INCREMENT,
   `Name` varchar(50) NOT NULL,
-  `Order` tinyint(4) NOT NULL DEFAULT '0',
+  `OrderIndex` tinyint(4) NOT NULL DEFAULT '0',
   `ParentCategoryId` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`Id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COMMENT='文章分类表';
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8 COMMENT='文章分类表';
 
--- 正在导出表  jif.cms.article_categories 的数据：~3 rows (大约)
+-- 正在导出表  jif.cms.article_categories 的数据：~18 rows (大约)
 DELETE FROM `article_categories`;
 /*!40000 ALTER TABLE `article_categories` DISABLE KEYS */;
-INSERT INTO `article_categories` (`Id`, `Name`, `Order`, `ParentCategoryId`) VALUES
+INSERT INTO `article_categories` (`Id`, `Name`, `OrderIndex`, `ParentCategoryId`) VALUES
 	(1, '程序开发', 1, 0),
-	(2, 'C#, .Net', 2, 0),
-	(3, '生活随笔', 3, 0);
+	(2, 'C# & .Net', 3, 1),
+	(3, '生活随笔', 3, 0),
+	(4, 'es6', 1, 9),
+	(5, 'quartz.net 翻译', 2, 2),
+	(6, '小宇', 0, 3),
+	(7, '音乐', 2, 0),
+	(8, '异步多线程', 1, 2),
+	(9, '前端开发', 0, 1),
+	(10, '设计模式', 0, 2),
+	(11, 'asp.net mvc', 0, 2),
+	(12, '古典', 0, 7),
+	(13, '摇滚', 0, 7),
+	(14, '西方古典', 0, 12),
+	(15, '东方古典', 0, 12),
+	(16, '笛子', 0, 15),
+	(17, '竹笛', 0, 16),
+	(18, '竖笛', 0, 16);
 /*!40000 ALTER TABLE `article_categories` ENABLE KEYS */;
 
 

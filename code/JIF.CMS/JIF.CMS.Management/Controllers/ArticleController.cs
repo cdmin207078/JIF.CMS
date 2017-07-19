@@ -108,7 +108,7 @@ namespace JIF.CMS.Management.Controllers
         // 文章分类列表页面 
         public ActionResult Categories()
         {
-            return View();
+            return View(_articleService.GetCategoriesTreeRelation());
         }
 
         // 保存文章分类

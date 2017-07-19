@@ -113,6 +113,8 @@
     <Compile Include="Domain\SysAdmin.cs" />
     <Compile Include="Domain\SysLog.cs" />
     <Compile Include="Domain\IUser.cs" />
+    <Compile Include="Domain\NetRelationObject.cs" />
+    <Compile Include="Helpers\ExtensionHelper.cs" />
     <Compile Include="Helpers\ImageHelper.cs" />
     <Compile Include="Helpers\NpoiExcelHelper.cs" />
     <Compile Include="Helpers\Utils.cs" />

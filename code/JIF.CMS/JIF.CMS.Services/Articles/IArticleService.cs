@@ -1,4 +1,5 @@
 ﻿using JIF.CMS.Core;
+using JIF.CMS.Core.Domain;
 using JIF.CMS.Core.Domain.Articles;
 using JIF.CMS.Services.Articles.Dtos;
 using System.Collections.Generic;
@@ -80,7 +81,24 @@ namespace JIF.CMS.Services.Articles
         /// <returns></returns>
         ArticleCategory GetCategory(int id);
 
+        /// <summary>
+        /// 获取所有文章分类列表
+        /// </summary>
+        /// <returns></returns>
         List<ArticleCategory> GetCategories();
+
+        /// <summary>
+        /// 获取所有文章分类, 转换为层级结构
+        /// </summary>
+        /// <remarks>key : level, value : categories</remarks>
+        Dictionary<int, List<ArticleCategory>> GetCategoriesLevelDict();
+
+
+        /// <summary>
+        /// 获取所有文章分类, 对象关系关系树结构.
+        /// </summary>
+        /// <returns>返回顶层节点, 分支使用各个节点依次访问</returns>
+        List<TreeRelationObject<ArticleCategory>> GetCategoriesTreeRelation();
 
         #endregion
     }
