@@ -357,5 +357,14 @@ namespace JIF.CMS.Services.Articles
 
             return result.Where(d => d.Parent == null).OrderBy(d => d.Current.OrderIndex).ToList();
         }
+
+
+        /// <summary>
+        /// 获取所有文章分类, 对象树前序遍历
+        /// </summary>
+        public void GetCategoriesSortArray()
+        {
+
+        }
     }
 }
