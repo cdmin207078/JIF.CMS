@@ -6,11 +6,11 @@
         <td></td>
         <td colspan="3">
 
-            <table class="table table-bordered table-hover table-condensed table-striped">
+            <table class="table table-bordered table-hover table-condensed">
                 <thead>
                     <tr>
                         <th style="width: 10px"><input class="form-control input-sm minimal" type="checkbox"></th>
-                        <th style="width: 200px">排序</th>
+                        @*<th style="width: 200px">排序</th>*@
                         <th>分类名称</th>
                         <th style="width:130px;">操作</th>
                     </tr>
@@ -18,18 +18,19 @@
                 <tbody>
                     @foreach (var node in Model)
                     {
-                        <tr class="no-padding">
+                        var hasChild = node.Childs != null && node.Childs.Any();
+
+                        <tr class="no-padding" data-has-child="@(hasChild ? "1":"0")">
                             <td>
                                 <input class="form-control input-sm minimal" type="checkbox">
                             </td>
-                            <td>
-                                <input class="form-control input-sm" type="number" value="@node.Current.OrderIndex" />
-                            </td>
+                            @*<td>
+                                    <input class="form-control input-sm" type="number" value="@node.Current.OrderIndex" />
+                                </td>*@
                             <td>
                                 <input class="form-control input-sm" type="text" value="@node.Current.Name" />
                             </td>
-                            <td class="op-td">
-                                <a href="javascript:;" class="btn btn-xs btn-default no-margin" data-toggle="tooltip" data-original-title="增加下级"><i class="fa fa-plus"></i></a>
+                            <td class="op-td" data-cate-id="@node.Current.Id" data-cate-name="@node.Current.Name">
                                 <a href="javascript:;" class="btn btn-xs btn-default no-margin" data-toggle="tooltip" data-original-title="上移"><i class="fa fa-caret-up"></i></a>
                                 <a href="javascript:;" class="btn btn-xs btn-default no-margin" data-toggle="tooltip" data-original-title="下移"><i class="fa fa-caret-down"></i></a>
                                 <a href="javascript:;" class="btn btn-xs btn-default no-margin" data-toggle="tooltip" data-original-title="管理"><i class="fa fa-cog"></i></a>
@@ -37,7 +38,7 @@
                             </td>
                         </tr>
 
-                        if (node.Childs != null && node.Childs.Any())
+                        if (hasChild)
                         {
                             Html.RenderPartial("_CategoriesItem", node.Childs);
                         }

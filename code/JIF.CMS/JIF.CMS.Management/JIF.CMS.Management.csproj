@@ -818,6 +818,8 @@
     <Content Include="Views\Article\Categories.cshtml" />
     <Content Include="Views\Article\Tags.cshtml" />
     <Content Include="Views\Article\_CategoriesItem.cshtml" />
+    <Content Include="Views\Article\CategoryInfo.cshtml" />
+    <Content Include="Views\Article\_CategoriesSelectOptions.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

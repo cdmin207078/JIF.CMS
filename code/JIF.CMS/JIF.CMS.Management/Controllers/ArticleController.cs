@@ -81,7 +81,7 @@ namespace JIF.CMS.Management.Controllers
             return View();
         }
 
-        // 新增 & 修改文章保存
+        // 保存文章
         [HttpPost]
         [ValidateInput(false)]
         public JsonResult Save(int id, InsertArticleInput model)
@@ -100,22 +100,40 @@ namespace JIF.CMS.Management.Controllers
         }
 
         // 删除文章
+        [HttpPost]
         public JsonResult DeleteArticle(int id)
         {
             return AjaxOk();
         }
 
-        // 文章分类列表页面 
+        // 分类列表
+        [HttpGet]
         public ActionResult Categories()
         {
             return View(_articleService.GetCategoriesTreeRelation());
         }
 
-        // 保存文章分类
+        // 查看分类信息
+        [HttpGet]
+        public ActionResult CategoryInfo(int? id)
+        {
+            return View();
+        }
+
+        // 保存分类
+        [HttpPost]
         public JsonResult SaveCategories()
         {
             return AjaxOk();
         }
+
+        // 删除分类
+        [HttpPost]
+        public JsonResult DeleteCategory()
+        {
+            return AjaxOk();
+        }
+
 
         // 标签列表页面
         [HttpGet]
