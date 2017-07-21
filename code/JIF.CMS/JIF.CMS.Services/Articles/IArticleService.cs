@@ -100,6 +100,11 @@ namespace JIF.CMS.Services.Articles
         /// <returns>返回顶层节点, 分支使用各个节点依次访问</returns>
         List<TreeRelationObject<ArticleCategory>> GetCategoriesTreeRelation();
 
+        /// <summary>
+        /// 获取所有文章分类, 对象树先序遍历
+        /// </summary>
+        List<TreeRelationObjectTraverseWrapper<ArticleCategory>> GetCategoriesSortArray();
+
         #endregion
     }
 }

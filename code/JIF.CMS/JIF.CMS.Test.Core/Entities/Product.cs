@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace JIF.CMS.Test.Core.Entities
 {
-    class Product
+    public class Product
     {
         public DateTime CreateTime { get; set; }
         public int SysNo { get; set; }
