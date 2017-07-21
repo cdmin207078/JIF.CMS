@@ -117,6 +117,7 @@ namespace JIF.CMS.Management.Controllers
         [HttpGet]
         public ActionResult CategoryInfo(int? id)
         {
+            ViewBag.Categories = _articleService.GetCategoriesSortArray();
             return View();
         }
 

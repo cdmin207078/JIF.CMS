@@ -1,14 +1,18 @@
 ﻿@{
     Layout = null;
+
+    var categories = ViewBag.Categories as List<JIF.CMS.Core.Domain.TreeRelationObjectSortArray<JIF.CMS.Core.Domain.Articles.ArticleCategory>>;
 }
 <div>
     <div class="form-group">
         <label>父级分类</label>
         <select class="form-control" id="inp-category">
             <option value="0">- 无 -</option>
-            <option value="1">程序开发</option>
-            <option value="2">C# & .Net</option>
-            <option value="5">异步多线程</option>
+
+            @foreach (var cate in categories)
+            {
+                <option value="@cate.Current.Id">@cate.Current.Name</option>
+            }
         </select>
     </div>
 
