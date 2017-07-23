@@ -13,16 +13,6 @@ namespace JIF.CMS.Core.Domain.Articles
         /// </summary>
         public string Name { get; set; }
 
-        ///// <summary>
-        ///// 分类排序
-        ///// </summary>
-        //public int OrderIndex { get; set; }
-
-        ///// <summary>
-        ///// 所属父级分类编号
-        ///// </summary>
-        //public int ParentId { get; set; }
-
         /// <summary>
         /// 封面图片
         /// </summary>

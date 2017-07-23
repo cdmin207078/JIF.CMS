@@ -21,7 +21,6 @@ namespace JIF.CMS.Data.EntityFramework
             modelBuilder.Entity<ArticleTag>().ToTable("article_tags").HasKey(d => d.Id);
             modelBuilder.Entity<Attachment>().ToTable("attachments").HasKey(d => d.Id);
 
-
             base.OnModelCreating(modelBuilder);
         }
     }

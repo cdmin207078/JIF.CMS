@@ -62,7 +62,7 @@ namespace JIF.CMS.Test.Core.Tests
 
 
             List<PP> ff1 = new List<PP>() { }; 
-            List<Product> fff1 = ff1; 
+            //List<Product> fff1 = ff1; 
 
 
 

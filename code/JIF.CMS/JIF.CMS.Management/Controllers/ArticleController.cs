@@ -31,6 +31,9 @@ namespace JIF.CMS.Management.Controllers
 
             ViewBag.Q = Q;
 
+            var categories = _articleService.GetCategories();
+
+
             return View();
         }
 

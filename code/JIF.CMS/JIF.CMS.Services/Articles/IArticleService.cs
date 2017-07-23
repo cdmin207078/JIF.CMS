@@ -93,12 +93,11 @@ namespace JIF.CMS.Services.Articles
         /// <remarks>key : level, value : categories</remarks>
         Dictionary<int, List<ArticleCategory>> GetCategoriesLevelDict();
 
-
         /// <summary>
         /// 获取所有文章分类, 对象关系关系树结构.
         /// </summary>
         /// <returns>返回顶层节点, 分支使用各个节点依次访问</returns>
-        List<TreeRelationObject<ArticleCategory>> GetCategoriesTreeRelation();
+        List<ArticleCategory> GetCategoriesTreeRelation();
 
         /// <summary>
         /// 获取所有文章分类, 对象树先序遍历

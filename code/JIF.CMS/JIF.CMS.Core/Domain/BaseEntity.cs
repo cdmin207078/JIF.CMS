@@ -13,4 +13,17 @@ namespace JIF.CMS.Core.Domain
         /// </summary>
         public int Id { get; set; }
     }
+
+
+    public abstract class InfoOperation : BaseEntity
+    {
+
+        public DateTime CreateTime { get; set; }
+
+        public int CreateUserId { get; set; }
+
+        public DateTime? UpdateTime { get; set; }
+
+        public int? UpdateUserId { get; set; }
+    }
 }

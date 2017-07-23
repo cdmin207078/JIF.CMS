@@ -10,7 +10,6 @@ namespace JIF.CMS.Core.Extensions
 {
     public static class TreeRelationObjectExtension
     {
-
         /// <summary>
         /// 获取对象关系关系树结构
         /// </summary>
@@ -21,6 +20,14 @@ namespace JIF.CMS.Core.Extensions
             where TEntity : TreeRelationObject
         {
             var result = new List<TEntity>();
+
+            if (source.IsNullOrEmpty())
+            {
+                return result;
+            }
+
+            source = source.OrderBy(d => d.ParentId).ThenBy(d => d.OrderIndex).ToList();
+
 
             if (!source.IsNullOrEmpty())
             {
@@ -61,20 +68,16 @@ namespace JIF.CMS.Core.Extensions
                 return result;
             }
 
+            source = source.OrderBy(d => d.ParentId).ThenBy(d => d.OrderIndex).ToList();
+
             // 取顶级元素, 升序
             source = source.Where(d => d.Parent == null).OrderBy(d => d.OrderIndex).ToList();
 
             // 先序遍历对象树
             recursiveTreebyPreorderTraversal(source, result, 0);
 
-
-
             return result;
         }
-
-
-
-
 
         /// <summary>
         /// 递归 - 先序遍历对象树
@@ -96,13 +99,9 @@ namespace JIF.CMS.Core.Extensions
 
                 if (!o.Childs.IsNullOrEmpty())
                 {
-                    recursiveTreebyPreorderTraversal<TEntity>(o.Childs as List<TEntity>, result, level: level + 1);
+                    recursiveTreebyPreorderTraversal(o.Childs.Select(d => (TEntity)d).ToList(), result, level + 1);
                 }
             }
         }
-
-
-
-
     }
 }

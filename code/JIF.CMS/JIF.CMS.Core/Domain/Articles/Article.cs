@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace JIF.CMS.Core.Domain.Articles
 {
-    public class Article : BaseEntity
+    public class Article : InfoOperation
     {
         /// <summary>
         /// 文章标题
@@ -43,13 +43,13 @@ namespace JIF.CMS.Core.Domain.Articles
         /// </summary>
         public int CategoryId { get; set; }
 
-        public DateTime CreateTime { get; set; }
+        //public DateTime CreateTime { get; set; }
 
-        public int CreateUserId { get; set; }
+        //public int CreateUserId { get; set; }
 
-        public DateTime? UpdateTime { get; set; }
+        //public DateTime? UpdateTime { get; set; }
 
-        public int? UpdateUserId { get; set; }
+        //public int? UpdateUserId { get; set; }
 
         /// <summary>
         /// 发布日期

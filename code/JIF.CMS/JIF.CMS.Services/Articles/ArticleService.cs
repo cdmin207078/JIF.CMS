@@ -317,91 +317,15 @@ namespace JIF.CMS.Services.Articles
         /// <returns>只返回已排序的顶层节点, 分支使用各个节点依次访问</returns>
         public List<ArticleCategory> GetCategoriesTreeRelation()
         {
-            var categories = GetCategories().OrderBy(d => d.ParentId).ThenBy(d => d.OrderIndex).ToList();
-            if (categories.IsNullOrEmpty())
-            {
-                return new List<ArticleCategory>();
-            }
-
-            return categories.AsTreeRelation();
-
-
-            //var result = new List<TreeRelationObject<ArticleCategory>>();
-
-            ////while (true)
-            ////{
-            ////    var c = categories.FirstOrDefault();
-            ////    categories.RemoveAt(0);
-
-            ////    var nrb = new TreeRelationObject<ArticleCategory>
-            ////    {
-            ////        Current = c,
-            ////        Parent = result.FirstOrDefault(d => d.Current.Id == c.ParentCategoryId)?.Current,
-            ////        Childs = categories.Where(d => d.ParentCategoryId == c.Id).OrderBy(d => d.OrderIndex).ToList(),
-            ////    };
-
-            ////    result.Add(nrb);
-
-            ////    if (categories.IsNullOrEmpty())
-            ////        break;
-            ////}
-
-            //// set current & parent
-            //result = categories.Select(cate => new TreeRelationObject<ArticleCategory>
-            //{
-            //    Current = cate,
-            //    Parent = categories.FirstOrDefault(d => d.Id == cate.ParentId)
-            //}).ToList();
-
-            //// set childs
-            //result.ForEach(cate =>
-            //{
-            //    cate.Childs = result.Where(d => d.Current.ParentId == cate.Current.Id).OrderBy(d => d.Current.OrderIndex).ToList();
-            //});
-
-            //return result.Where(d => d.Parent == null).OrderBy(d => d.Current.OrderIndex).ToList();
+            return GetCategories().AsTreeRelation();
         }
 
+        /// <summary>
+        /// 获取所有文章分类, 对象树先序遍历
+        /// </summary>
         public List<TreeRelationObjectTraverseWrapper<ArticleCategory>> GetCategoriesSortArray()
         {
-
-            //var categories = GetCategoriesTreeRelation();
-
-            //var data = categories.GetTreeRelationPreorder();
-
-            //return categories.GetTreeRelationPreorder();
-            return null;
-
+            return GetCategories().GetTreeRelationPreorder();
         }
-
-        ///// <summary>
-        ///// 获取所有文章分类, 对象树先序遍历
-        ///// </summary>
-        //public List<TreeRelationObjectSortArray<ArticleCategory>> GetCategoriesSortArray()
-        //{
-        //    var result = new List<TreeRelationObjectSortArray<ArticleCategory>>();
-
-        //    recursiveCategoriesTree(GetCategoriesTreeRelation(), result, 0);
-
-        //    return result;
-        //}
-
-        //// 递归 - 先序遍历对象树
-        //private void recursiveCategoriesTree(List<TreeRelationObject<ArticleCategory>> categories, List<TreeRelationObjectSortArray<ArticleCategory>> result, int level)
-        //{
-        //    foreach (var cate in categories)
-        //    {
-        //        result.Add(new TreeRelationObjectSortArray<ArticleCategory>
-        //        {
-        //            Level = level,
-        //            Current = cate.Current
-        //        });
-
-        //        if (!cate.Childs.IsNullOrEmpty())
-        //        {
-        //            recursiveCategoriesTree(cate.Childs, result, level + 1);
-        //        }
-        //    }
-        //}
     }
 }
