@@ -305,7 +305,7 @@
             dnd: '#uploader .uploader-dnd',
 
             // swf文件路径
-            swf: '~/Content/webuploader-0.1.5/Uploader.swf',
+            swf: '~/Content/webuploader/Uploader.swf',
 
             // 文件接收服务端。
             server: '/attachment/upload',
