@@ -51,34 +51,105 @@ namespace JIF.CMS.Test.Core.Tests
 
 
 
-        public void fff()
+        [TestMethod]
+        public void Covariant_Contravariant_Test()
         {
 
-            Product pro = new PP();
+            IEnumerable<Product> products = new List<Box>() {
+                new Box { SysNo = 1,Color = "red" },
+                new Box { SysNo = 2, Color = "green" },
+                new Box { SysNo = 3, Color= "dark" },
+            };
+
+            //show_nibian((List<Box>)products);
 
 
-            Func<string, PP> ff = (x) =>{return null;}; 
-            Func<string, Product> fff = ff;
+            List<Box> boxs = new List<Box>
+            {
+                 new Box { SysNo = 1, Color="yellow"},
+                 new Box { SysNo = 2, Color="blue"},
+                 new Box { SysNo = 3, Color= "purple"},
+            };
 
 
-            List<PP> ff1 = new List<PP>() { }; 
-            //List<Product> fff1 = ff1; 
+            //show_xiebian(boxs);
+
+
+            var result = boxs.xiebian();
 
 
 
+            //foreach (var item in result)
+            //{
+            //    Console.WriteLine("no: {0}, color: {1}", item.SysNo, item.Color);
 
+            //}
+
+
+            //IEnumerable<Product> aa = null;
+            //IEnumerable<Box> bb = null;
+
+
+            //IList<Product> cc = null;
+            //IList<Box> dd = null;
+
+            //aa = bb;  // 协变
+
+            //bb = aa;  // 
+
+
+            //cc = aa;
+            //aa = cc;
+            //aa = dd;
+            //bb = cc;
+            //bb = dd;
+
+            //cc = dd;
+            //dd = cc;
         }
 
 
+        private void show_nibian(List<Box> boxs)
+        {
+            foreach (var b in boxs)
+            {
+                Console.WriteLine("no: {0}, color: {1}", b.SysNo, b.Color);
+            }
+        }
 
+
+        private void show_xiebian(IEnumerable<Product> products)
+        {
+            foreach (var p in products)
+            {
+
+                var b = (Box)p;
+
+                Console.WriteLine("no: {0}, color: {1}", b.SysNo, b.Color);
+            }
+        }
     }
 
 
-    public class PP : Product
+    public static class ExtendsClass
+    {
+        public static IEnumerable<Product> xiebian(this IEnumerable<Product> boxs)
+        {
+            foreach (var b in boxs)
+            {
+                Console.WriteLine("no: {0}", b.SysNo);
+            }
+
+            var result = boxs.ToList();
+
+            return result;
+        }
+    }
+
+    public class Box : Product
 
     {
-        public string Na { get; set; }
-
+        public string Color { get; set; }
     }
 
 

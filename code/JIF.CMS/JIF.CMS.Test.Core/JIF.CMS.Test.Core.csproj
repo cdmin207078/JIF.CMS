@@ -67,6 +67,7 @@
     <Compile Include="Tests\NpoiExcelHelperTest.cs" />
     <Compile Include="Tests\ImageHelperTest.cs" />
     <Compile Include="Tests\GenericStudyTest.cs" />
+    <Compile Include="Tests\Contravariant_Covariant_Test.cs" />
     <Compile Include="Tests\URLEncodeTest.cs" />
   </ItemGroup>
   <ItemGroup>

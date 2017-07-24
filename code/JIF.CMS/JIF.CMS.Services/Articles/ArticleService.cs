@@ -317,7 +317,7 @@ namespace JIF.CMS.Services.Articles
         /// <returns>只返回已排序的顶层节点, 分支使用各个节点依次访问</returns>
         public List<ArticleCategory> GetCategoriesTreeRelation()
         {
-            return GetCategories().AsTreeRelation();
+            return GetCategories().AsTreeRelation().ToList();
         }
 
         /// <summary>
@@ -325,7 +325,7 @@ namespace JIF.CMS.Services.Articles
         /// </summary>
         public List<TreeRelationObjectTraverseWrapper<ArticleCategory>> GetCategoriesSortArray()
         {
-            return GetCategories().GetTreeRelationPreorder();
+            return GetCategories().GetTreeRelationPreorder().ToList();
         }
     }
 }

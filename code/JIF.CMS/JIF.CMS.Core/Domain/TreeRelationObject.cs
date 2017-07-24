@@ -10,7 +10,7 @@ namespace JIF.CMS.Core.Domain
     /// <summary>
     /// 树关系对象基类
     /// </summary>
-    public abstract partial class TreeRelationObject : BaseEntity
+    public abstract class TreeRelationObject : BaseEntity
     {
         /// <summary>
         /// 分类排序
@@ -24,7 +24,7 @@ namespace JIF.CMS.Core.Domain
 
         public virtual TreeRelationObject Parent { get; set; }
 
-        public virtual List<TreeRelationObject> Childs { get; set; }
+        public virtual IEnumerable<TreeRelationObject> Childs { get; set; }
 
         /// <summary>
         /// 是否具有父级

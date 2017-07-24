@@ -1,5 +1,7 @@
-﻿@model List<JIF.CMS.Core.Domain.TreeRelationObject<JIF.CMS.Core.Domain.Articles.ArticleCategory>>
-
+﻿@model IEnumerable<JIF.CMS.Core.Domain.Articles.ArticleCategory>
+@{ 
+    Layout = null;
+}
 @if (Model != null && Model.Any())
 {
     <tr>
@@ -28,9 +30,9 @@
                                     <input class="form-control input-sm" type="number" value="@node.Current.OrderIndex" />
                                 </td>*@
                             <td>
-                                <input class="form-control input-sm" type="text" value="@node.Current.Name" />
+                                <input class="form-control input-sm" type="text" value="@node.Name" />
                             </td>
-                            <td class="op-td" data-cate-id="@node.Current.Id" data-cate-name="@node.Current.Name">
+                            <td class="op-td" data-cate-id="@node.Id" data-cate-name="@node.Name">
                                 <a href="javascript:;" class="btn btn-xs btn-default no-margin" data-toggle="tooltip" data-original-title="上移"><i class="fa fa-caret-up"></i></a>
                                 <a href="javascript:;" class="btn btn-xs btn-default no-margin" data-toggle="tooltip" data-original-title="下移"><i class="fa fa-caret-down"></i></a>
                                 <a href="javascript:;" class="btn btn-xs btn-default no-margin" data-toggle="tooltip" data-original-title="管理"><i class="fa fa-cog"></i></a>
@@ -40,7 +42,7 @@
 
                         if (hasChild)
                         {
-                            Html.RenderPartial("_CategoriesItem", node.Childs);
+                            Html.RenderPartial("_CategoriesItem", node.Childs.Select(d => (JIF.CMS.Core.Domain.Articles.ArticleCategory)d));
                         }
                     }
 

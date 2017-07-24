@@ -16,7 +16,7 @@ namespace JIF.CMS.Data.EntityFramework
         {
             modelBuilder.Entity<SysAdmin>().ToTable("sys_admin").HasKey(d => d.Id);
             modelBuilder.Entity<Article>().ToTable("articles").HasKey(d => d.Id);
-            modelBuilder.Entity<ArticleCategory>().ToTable("article_categories").HasKey(d => d.Id);
+            modelBuilder.Entity<ArticleCategory>().ToTable("article_categories").HasKey(d => d.Id).Ignore(d => d.Parent).Ignore(d => d.Childs);
             modelBuilder.Entity<Tag>().ToTable("tags").HasKey(d => d.Id);
             modelBuilder.Entity<ArticleTag>().ToTable("article_tags").HasKey(d => d.Id);
             modelBuilder.Entity<Attachment>().ToTable("attachments").HasKey(d => d.Id);

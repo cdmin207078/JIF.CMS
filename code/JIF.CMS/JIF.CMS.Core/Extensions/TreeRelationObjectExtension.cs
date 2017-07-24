@@ -16,40 +16,26 @@ namespace JIF.CMS.Core.Extensions
         /// <typeparam name="TEntity"></typeparam>
         /// <param name="source">原始对象数据列表</param>
         /// <returns>只返回已排序的顶层节点, 分支使用各个节点依次访问</returns>
-        public static List<TEntity> AsTreeRelation<TEntity>(this List<TEntity> source)
+        public static IEnumerable<TEntity> AsTreeRelation<TEntity>(this IEnumerable<TEntity> source)
             where TEntity : TreeRelationObject
         {
-            var result = new List<TEntity>();
-
             if (source.IsNullOrEmpty())
-            {
-                return result;
-            }
+                return source;
 
-            source = source.OrderBy(d => d.ParentId).ThenBy(d => d.OrderIndex).ToList();
+            source = source.OrderBy(d => d.ParentId).ThenBy(d => d.OrderIndex);
 
 
             if (!source.IsNullOrEmpty())
             {
-                // set current & parent
-                result = source.Select(s =>
+                //set current &parent
+                foreach (var s in source)
                 {
-                    var o = Activator.CreateInstance(typeof(TEntity)) as TEntity;
-
-                    o.Parent = source.FirstOrDefault(d => d.Id == s.ParentId);
-
-                    return o;
-                }).ToList();
-
-                // set childs
-                result.ForEach(r =>
-                {
-                    r.Childs = result.Where(d => d.ParentId == r.Id).OrderBy(d => d.OrderIndex).ToList<TreeRelationObject>();
-                });
-
+                    s.Parent = source.FirstOrDefault(d => d.Id == s.ParentId);
+                    s.Childs = source.Where(d => d.ParentId == s.Id).OrderBy(d => d.OrderIndex).ToList();
+                }
             }
 
-            return result.Where(d => d.Parent == null).OrderBy(d => d.OrderIndex).ToList();
+            return source.Where(d => d.Parent == null).OrderBy(d => d.OrderIndex).ToList();
         }
 
         /// <summary>
@@ -58,20 +44,17 @@ namespace JIF.CMS.Core.Extensions
         /// <typeparam name="TEntity"></typeparam>
         /// <param name="soruce"></param>
         /// <returns></returns>
-        public static List<TreeRelationObjectTraverseWrapper<TEntity>> GetTreeRelationPreorder<TEntity>(this List<TEntity> source)
+        public static IEnumerable<TreeRelationObjectTraverseWrapper<TEntity>> GetTreeRelationPreorder<TEntity>(this IEnumerable<TEntity> source)
             where TEntity : TreeRelationObject
         {
-            var result = new List<TreeRelationObjectTraverseWrapper<TEntity>>();
 
             if (source.IsNullOrEmpty())
-            {
-                return result;
-            }
+                return new List<TreeRelationObjectTraverseWrapper<TEntity>>();
 
-            source = source.OrderBy(d => d.ParentId).ThenBy(d => d.OrderIndex).ToList();
+            // 获得关系树
+            source = source.AsTreeRelation();
 
-            // 取顶级元素, 升序
-            source = source.Where(d => d.Parent == null).OrderBy(d => d.OrderIndex).ToList();
+            var result = new List<TreeRelationObjectTraverseWrapper<TEntity>>();
 
             // 先序遍历对象树
             recursiveTreebyPreorderTraversal(source, result, 0);
@@ -86,7 +69,7 @@ namespace JIF.CMS.Core.Extensions
         /// <param name="oTree"></param>
         /// <param name="result"></param>
         /// <param name="level"></param>
-        private static void recursiveTreebyPreorderTraversal<TEntity>(List<TEntity> source, List<TreeRelationObjectTraverseWrapper<TEntity>> result, int level)
+        private static void recursiveTreebyPreorderTraversal<TEntity>(IEnumerable<TEntity> source, List<TreeRelationObjectTraverseWrapper<TEntity>> result, int level)
             where TEntity : TreeRelationObject
         {
             foreach (var o in source)
