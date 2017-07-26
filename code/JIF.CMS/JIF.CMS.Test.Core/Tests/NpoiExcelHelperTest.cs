@@ -328,6 +328,39 @@ namespace JIF.CMS.Test.Core.Tests
 
             Console.WriteLine(rs);
         }
+
+
+        [TestMethod]
+        public void Test_100_x_60000()
+        {
+            NpoiExcelHelper excel = new NpoiExcelHelper(true);
+            excel.CreateSheet();
+
+            excel.Write(new[] { "第一列", "第二列", "三", "肆" }, 0, 0, 0);
+
+            var names = RandomHelper.Gen(RandomHelper.Format.Chinese, 1000, 1000);
+
+            var data = new List<dynamic>();
+
+            for (int i = 1; i < 60000; i++)
+            {
+                dynamic o = new ExpandoObject();
+
+                o.A = "Hello World";
+                o.aasd = DateTime.Now.ToString("yyyy-MM-dd");
+                o.c223C = 1.1m;
+                o.asd21D = 2.2d;
+                o.asdE = names[RandomHelper.Gen(1, 1000)];
+                o.F_q = names[RandomHelper.Gen(1, 1000)];
+                o.Aqw = names[RandomHelper.Gen(1, 1000)];
+
+                data.Add(o);
+            }
+
+            excel.Write(data, 0, 1, 0);
+
+            excel.Export(Path.Combine(_output_directory, MethodBase.GetCurrentMethod().Name + ".csv"));
+        }
     }
 }
 

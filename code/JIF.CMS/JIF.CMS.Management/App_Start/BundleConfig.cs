@@ -13,17 +13,18 @@ namespace JIF.CMS.Management
         {
 
             // AdminLte
-            bundles.Add(new StyleBundle("~/styles/adminlte")
-                .Include("~/Content/AdminLTE/bootstrap/bootstrap.css")
-                .Include("~/Content/AdminLTE/dist/css/AdminLTE.css")
-                .Include("~/Content/AdminLTE/dist/css/skins/_all-skins.css")
-                .Include("~/Content/AdminLTE/plugins/iCheck/all.css")
-                .Include("~/Content/jquery-confirm/jquery-confirm.css")
-                .Include("~/Content/ios-switch/switch.css")
+            bundles.Add(new StyleBundle("~/styles/adminlte").Include(
+                "~/Content/AdminLTE/bootstrap/bootstrap.css",
+                "~/Content/AdminLTE/dist/css/AdminLTE.css",
+                "~/Content/AdminLTE/dist/css/skins/_all-skins.css",
+                "~/Content/AdminLTE/plugins/iCheck/all.css",
+                "~/Content/jquery-confirm/jquery-confirm.css",
+                "~/Content/ios-switch/switch.css")
                 .Include("~/Content/AdminLTE/font-awesome.min.css", new CssRewriteUrlTransform()));
 
             bundles.Add(new ScriptBundle("~/scripts/adminlte").Include(
                 "~/Content/moment/moment.js",
+                "~/Content/lodash/lodash.js",
                 "~/Content/AdminLTE/plugins/jQuery/jquery-2.2.3.min.js",
                 "~/Content/AdminLTE/bootstrap/bootstrap.js",
                 "~/Content/AdminLTE/plugins/slimScroll/jquery.slimscroll.min.js",
@@ -31,7 +32,6 @@ namespace JIF.CMS.Management
                 "~/Content/AdminLTE/plugins/iCheck/icheck.min.js",
                 "~/Content/jquery-confirm/jquery-confirm.js",
                 "~/Content/ios-switch/switch.js",
-                "~/Content/lodash/lodash.js",
                 "~/Scripts/Layout.js"
                 ));
 
