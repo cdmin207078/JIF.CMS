@@ -1,4 +1,5 @@
 ﻿using JIF.CMS.Core;
+using JIF.CMS.Core.Configuration;
 using JIF.CMS.Core.Domain.Articles;
 using JIF.CMS.Management.Models;
 using JIF.CMS.Services.Articles;
@@ -16,10 +17,12 @@ namespace JIF.CMS.Management.Controllers
     public class ArticleController : AdminControllerBase
     {
         private readonly IArticleService _articleService;
+        private readonly JIFConfig _config;
 
-        public ArticleController(IArticleService articleService)
+        public ArticleController(IArticleService articleService, JIFConfig config)
         {
             _articleService = articleService;
+            _config = config;
         }
 
         // 文章列表页面
@@ -30,6 +33,11 @@ namespace JIF.CMS.Management.Controllers
             ViewBag.list = _articleService.GetArticles(Q, pageIndex: pageIndex, pageSize: pageSize);
 
             ViewBag.Q = Q;
+
+            ViewBag.AttachmentUploadFTPAddress = _config.AttachmentUploadFTPAddress;
+            ViewBag.AttachmentUploadFTPAccount = _config.AttachmentUploadFTPAccount;
+            ViewBag.AttachmentUploadFTPPwd = _config.AttachmentUploadFTPPwd;
+
 
             return View();
         }

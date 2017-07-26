@@ -28,6 +28,7 @@ namespace JIF.CMS.Core.Infrastructure
                 Singleton<IEngine>.Instance = new JIFEngine();
 
                 var config = ConfigurationManager.GetSection("JIFConfig") as JIFConfig;
+
                 Singleton<IEngine>.Instance.Initialize(config);
             }
             return Singleton<IEngine>.Instance;
