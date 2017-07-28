@@ -222,5 +222,17 @@ namespace JIF.CMS.Test.Core.Tests
 
 
         }
+
+
+        [TestMethod]
+        public void File_Name_Ext_Test()
+        {
+            var filename = "1111111.txt";
+
+            var ext = filename.Substring(filename.LastIndexOf('.'));
+
+            Console.WriteLine(ext);
+
+        }
     }
 }

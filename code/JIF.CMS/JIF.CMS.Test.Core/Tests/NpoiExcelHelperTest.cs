@@ -330,36 +330,167 @@ namespace JIF.CMS.Test.Core.Tests
         }
 
 
+
         [TestMethod]
-        public void Test_100_x_60000()
+        public void Test_col_10_row_600()
         {
             NpoiExcelHelper excel = new NpoiExcelHelper(true);
-            excel.CreateSheet();
+            excel.CreateSheet("A Chinese Tall Story");
 
-            excel.Write(new[] { "第一列", "第二列", "三", "肆" }, 0, 0, 0);
+            for (int i = 0; i < 10; i++)
+            {
+                excel.Write("第 " + i + " 列", 0, 0, i);
+            }
 
-            var names = RandomHelper.Gen(RandomHelper.Format.Chinese, 1000, 1000);
 
             var data = new List<dynamic>();
 
-            for (int i = 1; i < 60000; i++)
+            for (int i = 1; i < 600; i++)
             {
                 dynamic o = new ExpandoObject();
 
-                o.A = "Hello World";
-                o.aasd = DateTime.Now.ToString("yyyy-MM-dd");
-                o.c223C = 1.1m;
-                o.asd21D = 2.2d;
-                o.asdE = names[RandomHelper.Gen(1, 1000)];
-                o.F_q = names[RandomHelper.Gen(1, 1000)];
-                o.Aqw = names[RandomHelper.Gen(1, 1000)];
+                o.A1 = RandomHelper.Gen(0, 10000);
+                o.A2 = RandomHelper.Gen(0, 10000);
+                o.A3 = RandomHelper.Gen(0, 10000);
+                o.A4 = RandomHelper.Gen(0, 10000);
+                o.A5 = RandomHelper.Gen(0, 10000);
+                o.A6 = RandomHelper.Gen(0, 10000);
+                o.A7 = RandomHelper.Gen(0, 10000);
+                o.A8 = RandomHelper.Gen(0, 10000);
+                o.A9 = RandomHelper.Gen(0, 10000);
+                o.A10 = RandomHelper.Gen(0, 10000);
 
                 data.Add(o);
             }
 
             excel.Write(data, 0, 1, 0);
 
-            excel.Export(Path.Combine(_output_directory, MethodBase.GetCurrentMethod().Name + ".csv"));
+            excel.Export(Path.Combine(_output_directory, MethodBase.GetCurrentMethod().Name + ".xlsx"));
+        }
+
+
+
+        [TestMethod]
+        public void Test_col_30_row_300000()
+        {
+            NpoiExcelHelper excel = new NpoiExcelHelper(true);
+            excel.CreateSheet();
+
+            for (int i = 0; i < 30; i++)
+            {
+                excel.Write("第 " + i + " 列", 0, 0, i);
+            }
+
+
+            var data = new List<dynamic>();
+
+            for (int i = 1; i < 100000; i++)
+            {
+                dynamic o = new ExpandoObject();
+
+                o.A1 = RandomHelper.Gen(0, 10000);
+                o.A2 = RandomHelper.Gen(0, 10000);
+                o.A3 = RandomHelper.Gen(0, 10000);
+                o.A4 = RandomHelper.Gen(0, 10000);
+                o.A5 = RandomHelper.Gen(0, 10000);
+                o.A6 = RandomHelper.Gen(0, 10000);
+                o.A7 = RandomHelper.Gen(0, 10000);
+                o.A8 = RandomHelper.Gen(0, 10000);
+                o.A9 = RandomHelper.Gen(0, 10000);
+                o.A10 = RandomHelper.Gen(0, 10000);
+                o.A11 = RandomHelper.Gen(0, 10000);
+                o.A12 = RandomHelper.Gen(0, 10000);
+                o.A13 = RandomHelper.Gen(0, 10000);
+                o.A14 = RandomHelper.Gen(0, 10000);
+                o.A15 = RandomHelper.Gen(0, 10000);
+                o.A16 = RandomHelper.Gen(0, 10000);
+                o.A17 = RandomHelper.Gen(0, 10000);
+                o.A18 = RandomHelper.Gen(0, 10000);
+                o.A19 = RandomHelper.Gen(0, 10000);
+                o.A20 = RandomHelper.Gen(0, 10000);
+                o.A21 = RandomHelper.Gen(0, 10000);
+                o.A22 = RandomHelper.Gen(0, 10000);
+                o.A23 = RandomHelper.Gen(0, 10000);
+                o.A24 = RandomHelper.Gen(0, 10000);
+                o.A25 = RandomHelper.Gen(0, 10000);
+                o.A26 = RandomHelper.Gen(0, 10000);
+                o.A27 = RandomHelper.Gen(0, 10000);
+                o.A28 = RandomHelper.Gen(0, 10000);
+                o.A29 = RandomHelper.Gen(0, 10000);
+                o.A30 = RandomHelper.Gen(0, 10000);
+
+
+                data.Add(o);
+            }
+
+            excel.Write(data, 0, 1, 0);
+
+            excel.Export(Path.Combine(_output_directory, MethodBase.GetCurrentMethod().Name + ".xlsx"));
+        }
+
+
+        [TestMethod]
+        public void Test_Multiple_Sheet()
+        {
+
+            NpoiExcelHelper excel = new NpoiExcelHelper(true);
+            excel.CreateSheet("郭源潮");
+
+            for (int i = 0; i < 10; i++)
+            {
+                excel.Write("第 " + i + " 列", 0, 0, i);
+            }
+
+
+            var data = new List<dynamic>();
+
+            for (int i = 1; i < 100; i++)
+            {
+                dynamic o = new ExpandoObject();
+
+                o.A1 = RandomHelper.Gen(0, 10000);
+                o.A2 = RandomHelper.Gen(0, 10000);
+                o.A3 = RandomHelper.Gen(0, 10000);
+                o.A4 = RandomHelper.Gen(0, 10000);
+                o.A5 = RandomHelper.Gen(0, 10000);
+                o.A6 = RandomHelper.Gen(0, 10000);
+                o.A7 = RandomHelper.Gen(0, 10000);
+                o.A8 = RandomHelper.Gen(0, 10000);
+                o.A9 = RandomHelper.Gen(0, 10000);
+                o.A10 = RandomHelper.Gen(0, 10000);
+
+                data.Add(o);
+            }
+
+            excel.Write(data, 0, 1, 0);
+
+
+            excel.CreateSheet("空港曲");
+
+            for (int i = 0; i < 5; i++)
+            {
+                excel.Write("第 " + i + " 列", 1, 0, i);
+            }
+
+
+            var data2 = new List<dynamic>();
+
+            for (int i = 1; i < 50; i++)
+            {
+                dynamic o = new ExpandoObject();
+
+                o.A1 = RandomHelper.Gen(0, 10000);
+                o.A2 = RandomHelper.Gen(0, 10000);
+                o.A3 = RandomHelper.Gen(0, 10000);
+                o.A4 = RandomHelper.Gen(0, 10000);
+                o.A5 = RandomHelper.Gen(0, 10000);
+
+                data2.Add(o);
+            }
+
+            excel.Write(data2, 1, 1, 0);
+
+            excel.Export(Path.Combine(_output_directory, MethodBase.GetCurrentMethod().Name + ".xlsx"));
         }
     }
 }

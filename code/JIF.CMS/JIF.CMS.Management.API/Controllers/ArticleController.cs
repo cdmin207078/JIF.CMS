@@ -22,7 +22,7 @@ namespace JIF.CMS.Management.API.Controllers
         [WebApi.Framework.Filters.AdminAuthorize]
         public IHttpActionResult GetArticles(string q = "", int pageIndex = JIFConsts.SYS_PAGE_INDEX, int pageSize = JIFConsts.SYS_PAGE_SIZE)
         {
-            return AjaxOk(_articleService.GetArticles(q, pageIndex, pageSize).ToPagedData());
+            return AjaxOk(_articleService.GetArticles(q, false, pageIndex, pageSize).ToPagedData());
         }
 
         [HttpGet]

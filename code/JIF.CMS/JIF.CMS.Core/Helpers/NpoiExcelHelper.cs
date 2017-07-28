@@ -15,6 +15,8 @@ namespace JIF.CMS.Core.Helpers
     {
         private IWorkbook _workbook;
 
+        public bool IsExcel2007 { get; }
+
         public NpoiExcelHelper(bool IsExcel2007 = false)
         {
             if (IsExcel2007)
@@ -25,6 +27,8 @@ namespace JIF.CMS.Core.Helpers
             {
                 _workbook = new HSSFWorkbook();
             }
+
+            this.IsExcel2007 = IsExcel2007;
         }
 
         #region private methods
