@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace JIF.CMS.Core.Extensions
 {
-    public static class TreeRelationObjectExtension
+    public static class TreeRelationObjectExtensions
     {
         /// <summary>
         /// 获取对象关系关系树结构

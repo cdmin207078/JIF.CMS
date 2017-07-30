@@ -1,4 +1,5 @@
-﻿using JIF.CMS.Core.Domain.Articles;
+﻿using JIF.CMS.Core.Domain;
+using JIF.CMS.Core.Domain.Articles;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,5 +16,13 @@ namespace JIF.CMS.Management.Models
         public List<string> ArticleTags { get; set; }
 
         public List<string> Tags { get; set; }
+    }
+
+
+    public class ArticleCategoryInfoViewModel
+    {
+        public List<TreeRelationObjectTraverseWrapper<ArticleCategory>> Categories { get; set; }
+
+        public ArticleCategory Category { get; set; }
     }
 }

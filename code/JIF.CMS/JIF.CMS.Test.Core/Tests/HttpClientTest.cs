@@ -115,5 +115,22 @@ namespace JIF.CMS.Test.Core.Tests
             Console.WriteLine(client.Execute(request).Content);
 
         }
+
+        public string Indent(int count)
+        {
+            return "".PadLeft(count);
+        }
+
+        [TestMethod]
+        public void MyTestMethod1111111111111()
+        {
+            Console.WriteLine(new String('x', 10));
+            Console.WriteLine(Indent(0) + "List");
+            Console.WriteLine(Indent(3) + "Item 1");
+            Console.WriteLine(Indent(6) + "Item 1.1");
+            Console.WriteLine(Indent(6) + "Item 1.2");
+            Console.WriteLine(Indent(3) + "Item 2");
+            Console.WriteLine(Indent(6) + "Item 2.1");
+        }
     }
 }

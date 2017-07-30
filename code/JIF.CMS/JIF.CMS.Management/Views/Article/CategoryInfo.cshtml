@@ -1,24 +1,24 @@
-﻿@{
+﻿@model ArticleCategoryInfoViewModel
+@{
     Layout = null;
-
-    var categories = ViewBag.Categories as List<JIF.CMS.Core.Domain.TreeRelationObjectTraverseWrapper<JIF.CMS.Core.Domain.Articles.ArticleCategory>>;
 }
 <div>
+    <input type="hidden" id="hid-id" value="@Model.Category.Id" />
     <div class="form-group">
         <label>父级分类</label>
         <select class="form-control" id="inp-category">
             <option value="0">- 无 -</option>
 
-            @foreach (var cate in categories)
+            @foreach (var cate in Model.Categories)
             {
-                <option value="@cate.Current.Id">@cate.Level - @cate.Current.Name</option>
+                <option value="@cate.Current.Id" @(cate.Current.Id == Model.Category.ParentId ? "selected=\"selected\"" : "")>@Html.Raw("&nbsp".Repeat(cate.Level * 2))@cate.Current.Name</option>
             }
         </select>
     </div>
 
     <div class="form-group">
         <label for="inp-title">分类名称</label>
-        <input type="text" class="form-control" id="inp-title" placeholder="分类名称" value="">
+        <input type="text" class="form-control" id="inp-title" placeholder="分类名称" value="@Model.Category.Name">
     </div>
 
 </div>

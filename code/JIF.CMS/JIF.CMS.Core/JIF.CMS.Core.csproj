@@ -115,8 +115,9 @@
     <Compile Include="Domain\SysLog.cs" />
     <Compile Include="Domain\IUser.cs" />
     <Compile Include="Domain\TreeRelationObject.cs" />
-    <Compile Include="Extensions\TreeRelationObjectExtension.cs" />
-    <Compile Include="Helpers\ExtensionHelper.cs" />
+    <Compile Include="Extensions\StringExtensions.cs" />
+    <Compile Include="Extensions\TreeRelationObjectExtensions.cs" />
+    <Compile Include="Extensions\IEnumerableExtensions.cs" />
     <Compile Include="Helpers\ImageHelper.cs" />
     <Compile Include="Helpers\NpoiExcelHelper.cs" />
     <Compile Include="Helpers\Utils.cs" />

@@ -123,10 +123,22 @@ namespace JIF.CMS.Management.Controllers
 
         // 查看分类信息
         [HttpGet]
-        public ActionResult CategoryInfo(int? id)
+        public ActionResult CategoryInfo(int id)
         {
-            ViewBag.Categories = _articleService.GetCategoriesSortArray();
-            return View();
+            var vm = new ArticleCategoryInfoViewModel
+            {
+                Categories = _articleService.GetCategoriesSortArray(),
+                Category = id == 0 ? new ArticleCategory() : _articleService.GetCategory(id)
+            };
+
+            return View(vm);
+        }
+
+
+        // 保存分类信息
+        public JsonResult SaveCategory()
+        {
+            return AjaxOk();
         }
 
         // 保存分类

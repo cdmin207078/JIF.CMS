@@ -124,6 +124,23 @@
                     }).fail(function () {
                         self.setContent('Something went wrong.');
                     });
+                },
+                buttons: {
+                    save: {
+                        text: '保存',
+                        action: function () {
+                            var data = {
+                                id: this.$content.find('#hid-id').val(),
+                                parentid: this.$content.find('#inp-category').val(),
+                                name: this.$content.find('#inp-title').val(),
+                            };
+
+                        }
+                    },
+                    cancel: {
+                        text: '取消',
+                        action: function () { }
+                    }
                 }
             });
         });
