@@ -114,5 +114,40 @@ namespace JIF.CMS.Test.Core.Tests
             Console.WriteLine(HttpUtility.HtmlDecode(ss));
 
         }
+
+
+        [TestMethod]
+        public void MyTestMethod1111123()
+        {
+            //var s = "Hello World";
+
+
+            //Console.WriteLine(HttpUtility.UrlPathEncode(s));
+            //Console.WriteLine(UrlPathEncodeUpper(s));
+
+            //var url = "C+ +/c#";
+            var url = "利乐®A3冰淇淋灌装机";
+
+            var enurl = "%E5%88%A9%E4%B9%90%C2%AEA3%E5%86%B0%E6%B7%87%E6%B7%8B%E7%81%8C%E8%A3%85%E6%9C%BA";
+            Console.WriteLine(enurl.Length);
+
+            Console.WriteLine(HttpUtility.UrlEncode(url));
+            Console.WriteLine(HttpUtility.UrlDecode(HttpUtility.UrlEncode(url)));
+
+            Console.WriteLine(HttpUtility.UrlPathEncode(url));
+            Console.WriteLine(HttpUtility.UrlDecode(HttpUtility.UrlPathEncode(url)));
+
+            Console.WriteLine(HttpUtility.HtmlEncode(url));
+            Console.WriteLine(HttpUtility.HtmlDecode(HttpUtility.HtmlEncode(url)));
+
+            Console.WriteLine(HttpUtility.HtmlAttributeEncode(url));
+            Console.WriteLine(HttpUtility.UrlDecode(HttpUtility.HtmlAttributeEncode(url)));
+
+            Console.WriteLine(HttpUtility.JavaScriptStringEncode(url));
+            Console.WriteLine(HttpUtility.UrlDecode(HttpUtility.JavaScriptStringEncode(url)));
+
+
+            Console.WriteLine(Uri.EscapeDataString(url));
+        }
     }
 }

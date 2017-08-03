@@ -18,20 +18,20 @@ namespace JIF.CMS.Management
                 "~/Content/AdminLTE/dist/css/AdminLTE.css",
                 "~/Content/AdminLTE/dist/css/skins/_all-skins.css",
                 "~/Content/AdminLTE/plugins/iCheck/all.css",
-                "~/Content/jquery-confirm/jquery-confirm.css",
-                "~/Content/ios-switch/switch.css")
+                "~/Content/ios-switch/switch.css",
+                "~/Content/jquery-confirm/jquery-confirm.css")
                 .Include("~/Content/AdminLTE/font-awesome.min.css", new CssRewriteUrlTransform()));
 
             bundles.Add(new ScriptBundle("~/scripts/adminlte").Include(
-                "~/Content/moment/moment.js",
-                "~/Content/lodash/lodash.js",
                 "~/Content/AdminLTE/plugins/jQuery/jquery-2.2.3.min.js",
                 "~/Content/AdminLTE/bootstrap/bootstrap.js",
                 "~/Content/AdminLTE/plugins/slimScroll/jquery.slimscroll.min.js",
+                "~/Content/AdminLTE/plugins/iCheck/icheck.js",
                 "~/Content/AdminLTE/dist/js/app.js",
-                "~/Content/AdminLTE/plugins/iCheck/icheck.min.js",
-                "~/Content/jquery-confirm/jquery-confirm.js",
+                "~/Content/moment/moment.js",
+                "~/Content/lodash/lodash.js",
                 "~/Content/ios-switch/switch.js",
+                "~/Content/jquery-confirm/jquery-confirm.js",
                 "~/Scripts/Layout.js"
                 ));
 

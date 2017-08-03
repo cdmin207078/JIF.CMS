@@ -168,11 +168,6 @@ namespace JIF.CMS.Test.Core.Tests
                 o.aasd = DateTime.Now.ToString("yyyy-MM-dd");
                 o.c223C = 1.1m;
                 o.asd21D = 2.2d;
-                o.asdE = names[RandomHelper.Gen(1, 1000)];
-                o.F_q = names[RandomHelper.Gen(1, 1000)];
-                o.Aqw = names[RandomHelper.Gen(1, 1000)];
-                o.Aqw = RandomHelper.Gen(1, int.MaxValue);
-
 
                 data.Add(o);
             }
@@ -208,7 +203,9 @@ namespace JIF.CMS.Test.Core.Tests
 
             NpoiExcelHelper excel = new NpoiExcelHelper();
             excel.CreateSheet();
-            excel.Write(data, 0, 0, 0);
+
+            excel.Write(new string[] { "作曲", "作词", "键盘" }, 0, 0, 0);
+            excel.Write(data, 0, 1, 0);
             excel.Export(Path.Combine(_output_directory, MethodBase.GetCurrentMethod().Name + ".xls"));
 
         }
@@ -332,10 +329,10 @@ namespace JIF.CMS.Test.Core.Tests
 
 
         [TestMethod]
-        public void Test_col_10_row_600()
+        public void Test_col_10_row_700()
         {
             NpoiExcelHelper excel = new NpoiExcelHelper(true);
-            excel.CreateSheet("A Chinese Tall Story");
+            excel.CreateSheet("镜子");
 
             for (int i = 0; i < 10; i++)
             {
@@ -467,7 +464,7 @@ namespace JIF.CMS.Test.Core.Tests
 
             excel.CreateSheet("空港曲");
 
-            for (int i = 0; i < 5; i++)
+            for (int i = 0; i < 19; i++)
             {
                 excel.Write("第 " + i + " 列", 1, 0, i);
             }
@@ -484,6 +481,20 @@ namespace JIF.CMS.Test.Core.Tests
                 o.A3 = RandomHelper.Gen(0, 10000);
                 o.A4 = RandomHelper.Gen(0, 10000);
                 o.A5 = RandomHelper.Gen(0, 10000);
+                o.A6 = RandomHelper.Gen(0, 10000);
+                o.A7 = RandomHelper.Gen(0, 10000);
+                o.A8 = RandomHelper.Gen(0, 10000);
+                o.A9 = RandomHelper.Gen(0, 10000);
+                o.A10 = RandomHelper.Gen(0, 10000);
+                o.A11 = RandomHelper.Gen(0, 10000);
+                o.A12 = RandomHelper.Gen(0, 10000);
+                o.A13 = RandomHelper.Gen(0, 10000);
+                o.A14 = RandomHelper.Gen(0, 10000);
+                o.A15 = RandomHelper.Gen(0, 10000);
+                o.A16 = RandomHelper.Gen(0, 10000);
+                o.A17 = RandomHelper.Gen(0, 10000);
+                o.A18 = RandomHelper.Gen(0, 10000);
+                o.A19 = RandomHelper.Gen(0, 10000);
 
                 data2.Add(o);
             }
@@ -491,6 +502,28 @@ namespace JIF.CMS.Test.Core.Tests
             excel.Write(data2, 1, 1, 0);
 
             excel.Export(Path.Combine(_output_directory, MethodBase.GetCurrentMethod().Name + ".xlsx"));
+        }
+
+
+        [TestMethod]
+        public void MyTestMethod111we123()
+        {
+            int? a = null;
+            int? b = 3;
+
+            DateTime? c = null;
+            DateTime? d = DateTime.Now;
+
+            Console.WriteLine(a.GetValueOrDefault());
+            Console.WriteLine(b);
+            Console.WriteLine(c.ToString());
+            Console.WriteLine(c.GetValueOrDefault());
+            Console.WriteLine(d);
+
+
+            var s = "2017-07-31/5DDD04D7CDF7FF823E94D0A09AD953A6.csv";
+
+            Console.WriteLine(s.Substring(s.IndexOf("/") + 1));
         }
     }
 }
