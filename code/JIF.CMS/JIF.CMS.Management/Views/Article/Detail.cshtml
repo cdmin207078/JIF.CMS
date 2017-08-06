@@ -29,9 +29,10 @@
                 <div class="form-group">
                     <label>所属分类</label>&nbsp;<i id="op-categories" class="fa fa-cog" style="cursor:pointer;" data-toggle="tooltip" data-original-title="管理分类"></i></small>
                     <select class="form-control" id="inp-category">
+                        <option value="0">- 无 -</option>
                         @foreach (var cate in Model.Categories)
                         {
-                            <option value="@cate.Id" @(article.CategoryId == cate.Id ? "selected=\"selected\"" : "")>@cate.Name</option>
+                            <option value="@cate.Current.Id" @(article.CategoryId == cate.Current.Id ? "selected=\"selected\"" : "")>@Html.Raw("&nbsp".Repeat(cate.Level * 2))@cate.Current.Name</option>
                         }
                     </select>
                 </div>
@@ -54,6 +55,48 @@
                     <label for="inp-pub">是否发布</label><small class="text-warning">(* 不发布前台则无法显示)</small>
                 </div>
 
+
+
+                <div class="form-group">
+                    <label>文章封面</label>
+                    <div>
+                        <p class="picker-cover-img-placeholder">
+                            选择封面
+                        </p>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>附件</label>
+                    <div>
+                        <ul>
+                            @*<li>
+                                <span>gold 接口调用整理.txt</span>
+                                <span>
+                                    <a href="javascript:;" class="btn btn-xs bg-red no-margin" data-toggle="tooltip" data-original-title="删除"><i class="fa fa-trash"></i></a>
+                                </span>
+                            </li>
+                            <li>
+                                <span>数据结构 C#描述.rar</span>
+                                <span>
+                                    <a href="javascript:;" class="btn btn-xs bg-red no-margin" data-toggle="tooltip" data-original-title="删除"><i class="fa fa-trash"></i></a>
+                                </span>
+                            </li>
+                            <li>
+                                <span>cn_windows_server_2012_r2_x64_dvd_2707961.iso</span>
+                                <span>
+                                    <a href="javascript:;" class="btn btn-xs bg-red no-margin" data-toggle="tooltip" data-original-title="删除"><i class="fa fa-trash"></i></a>
+                                </span>
+                            </li>*@
+                        </ul>
+                        <p class="picker-attachment-file">
+                            添加
+                        </p>
+
+                    </div>
+
+                </div>
+
             </div>
 
             <div class="box-footer">
@@ -73,4 +116,25 @@
 
 @section Styles{
     @Styles.Render("~/styles/editor.md", "~/styles/datetimepicker", "~/styles/tagsinput")
+
+    <style type="text/css">
+        .picker-cover-img-placeholder {
+            text-align: center;
+            border: 1px #bfbfbf dashed;
+            height: 100px;
+            line-height: 100px;
+            cursor: pointer;
+            letter-spacing: 5px;
+            color: #afafaf;
+        }
+
+        .picker-attachment-file {
+            text-align: center;
+            border: 1px #bfbfbf dashed;
+            line-height: 25px;
+            cursor: pointer;
+            letter-spacing: 5px;
+            color: #afafaf;
+        }
+    </style>
 }

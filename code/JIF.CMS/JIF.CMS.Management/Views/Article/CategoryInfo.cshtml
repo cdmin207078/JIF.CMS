@@ -21,4 +21,31 @@
         <input type="text" class="form-control" id="inp-title" placeholder="分类名称" value="@Model.Category.Name">
     </div>
 
+
+    <div class="form-group">
+        <label for="inp-desc">描述</label>
+        <textarea typeof="text" class="form-control" id="inp-desc" placeholder="描述信息" rows="3">@Model.Category.Description</textarea>
+    </div>
+
+    <div class="form-group">
+        <label>封面图片</label>
+        <div>
+            <span class="mailbox-attachment-icon">
+                <img class="category-cover-img" src="@Model.Category.CoverImg" />
+                <i class="fa fa-file-image-o" style="@(string.IsNullOrWhiteSpace(Model.Category.CoverImg)?"":"display:none;")"></i>
+            </span>
+
+            <div class="mailbox-attachment-info">
+                <div id="picker" style="display:none;"></div>
+                <button id="btn-picker-cover-img" type="submit" class="btn btn-sm btn-default">选 择</button>
+                <button id="btn-rm-cover-img" type="submit" class="btn btn-sm btn-danger">删 除</button>
+
+                @*<a href="#" class="mailbox-attachment-name"><i class="fa fa-paperclip"></i> App Description.docx</a>
+                    <span class="mailbox-attachment-size">
+                        1,245 KB
+                        <a href="#" class="btn btn-default btn-xs pull-right"><i class="fa fa-cloud-download"></i></a>
+                    </span>*@
+            </div>
+        </div>
+    </div>
 </div>

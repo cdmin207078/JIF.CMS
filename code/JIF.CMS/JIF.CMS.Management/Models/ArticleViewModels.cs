@@ -11,7 +11,7 @@ namespace JIF.CMS.Management.Models
     {
         public Article Article { get; set; }
 
-        public List<ArticleCategory> Categories { get; set; }
+        public List<TreeRelationObjectTraverseWrapper<ArticleCategory>> Categories { get; set; }
 
         public List<string> ArticleTags { get; set; }
 

@@ -7,6 +7,7 @@ using JIF.CMS.Services.Articles.Dtos;
 using JIF.CMS.Web.Framework.Controllers;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Web;
@@ -19,11 +20,16 @@ namespace JIF.CMS.Management.Controllers
         private readonly IArticleService _articleService;
         private readonly JIFConfig _config;
 
+        private readonly string _base_attachment = "attachments";
+        private readonly string _cover_img_folder = "ActicleCategoryCoverImgs";
+
         public ArticleController(IArticleService articleService, JIFConfig config)
         {
             _articleService = articleService;
             _config = config;
         }
+
+        #region Article
 
         // 文章列表页面
         public ActionResult Index(string Q = "", int pageIndex = JIFConsts.SYS_PAGE_INDEX, int pageSize = JIFConsts.SYS_PAGE_SIZE)
@@ -49,7 +55,7 @@ namespace JIF.CMS.Management.Controllers
             ArticleEditViewModel vm = new ArticleEditViewModel
             {
                 Article = new Article() { PublishTime = DateTime.Now },
-                Categories = _articleService.GetCategories(),
+                Categories = _articleService.GetCategoriesSortArray(),
                 ArticleTags = new List<string>(),
                 Tags = _articleService.GetTagsDict().Keys.ToList()
             };
@@ -72,7 +78,7 @@ namespace JIF.CMS.Management.Controllers
             ArticleEditViewModel vm = new ArticleEditViewModel
             {
                 Article = article,
-                Categories = _articleService.GetCategories(),
+                Categories = _articleService.GetCategoriesSortArray(),
                 ArticleTags = _articleService.GetArticleTags(id).Select(d => d.Name).ToList(),
                 Tags = _articleService.GetTagsDict().Keys.ToList()
             };
@@ -114,6 +120,10 @@ namespace JIF.CMS.Management.Controllers
             return AjaxOk();
         }
 
+        #endregion
+
+        #region Category
+
         // 分类列表
         [HttpGet]
         public ActionResult Categories()
@@ -134,17 +144,35 @@ namespace JIF.CMS.Management.Controllers
             return View(vm);
         }
 
-
-        // 保存分类信息
-        public JsonResult SaveCategory()
+        [HttpPost]
+        public JsonResult UploadCategoryCoverImg()
         {
-            return AjaxOk();
+            var file = Request.Files[0];
+
+            var filext = Path.GetExtension(file.FileName);
+
+            var filename = Guid.NewGuid().ToString();
+
+            var filepath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, _base_attachment, _cover_img_folder, filename + filext);
+            file.SaveAs(filepath);
+
+            var relativePath = Path.Combine(@"\", _base_attachment, _cover_img_folder, filename + filext);
+            return AjaxOk(relativePath);
         }
 
-        // 保存分类
+        // 保存分类信息
         [HttpPost]
-        public JsonResult SaveCategories()
+        public JsonResult SaveCategory(int id, InsertArticleCategoryInput model)
         {
+            if (id == 0)
+            {
+                _articleService.Insert(model);
+            }
+            else
+            {
+                _articleService.Update(id, model);
+            }
+
             return AjaxOk();
         }
 
@@ -155,6 +183,9 @@ namespace JIF.CMS.Management.Controllers
             return AjaxOk();
         }
 
+        #endregion
+
+        #region Tag
 
         // 标签列表页面
         [HttpGet]
@@ -176,6 +207,8 @@ namespace JIF.CMS.Management.Controllers
         {
             return AjaxOk();
         }
+
+        #endregion
 
         public ContentResult A()
         {

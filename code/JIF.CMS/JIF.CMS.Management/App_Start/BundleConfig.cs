@@ -14,23 +14,25 @@ namespace JIF.CMS.Management
 
             // AdminLte
             bundles.Add(new StyleBundle("~/styles/adminlte").Include(
+                "~/Content/font-awesome/font-awesome.min.css",
                 "~/Content/AdminLTE/bootstrap/bootstrap.css",
+                "~/Content/jquery-ui/jquery-ui.css",
                 "~/Content/AdminLTE/dist/css/AdminLTE.css",
                 "~/Content/AdminLTE/dist/css/skins/_all-skins.css",
-                "~/Content/AdminLTE/plugins/iCheck/all.css",
                 "~/Content/ios-switch/switch.css",
                 "~/Content/jquery-confirm/jquery-confirm.css")
-                .Include("~/Content/AdminLTE/font-awesome.min.css", new CssRewriteUrlTransform()));
+                .Include("~/Content/AdminLTE/plugins/iCheck/minimal/_all.css", new CssRewriteUrlTransform()));
 
             bundles.Add(new ScriptBundle("~/scripts/adminlte").Include(
+                "~/Content/moment/moment.js",
+                "~/Content/lodash/lodash.js",
                 "~/Content/AdminLTE/plugins/jQuery/jquery-2.2.3.min.js",
                 "~/Content/AdminLTE/bootstrap/bootstrap.js",
                 "~/Content/AdminLTE/plugins/slimScroll/jquery.slimscroll.min.js",
                 "~/Content/AdminLTE/plugins/iCheck/icheck.js",
                 "~/Content/AdminLTE/dist/js/app.js",
-                "~/Content/moment/moment.js",
-                "~/Content/lodash/lodash.js",
                 "~/Content/ios-switch/switch.js",
+                "~/Content/jquery-ui/jquery-ui.js",
                 "~/Content/jquery-confirm/jquery-confirm.js",
                 "~/Scripts/Layout.js"
                 ));
@@ -43,19 +45,13 @@ namespace JIF.CMS.Management
             bundles.Add(new StyleBundle("~/styles/editor.md").Include("~/Content/editor.md/css/editormd.css"));
             bundles.Add(new ScriptBundle("~/scripts/editor.md").Include("~/Content/editor.md/editormd.js"));
 
-
-            // editor.md
+            // tagsinput
             bundles.Add(new StyleBundle("~/styles/tagsinput").Include("~/Content/jquery-tagsinput/jquery.tagsinput.css"));
             bundles.Add(new ScriptBundle("~/scripts/tagsinput").Include("~/Content/jquery-tagsinput/jquery.tagsinput.js"));
 
             // web uploader
             bundles.Add(new StyleBundle("~/styles/web-uploader").Include("~/Content/webuploader/webuploader.css"));
             bundles.Add(new ScriptBundle("~/scripts/web-uploader").Include("~/Content/webuploader/webuploader.js"));
-
-            // jquery ui
-            bundles.Add(new StyleBundle("~/styles/jquery-ui").Include("~/Content/jquery-ui/jquery-ui.css"));
-            bundles.Add(new ScriptBundle("~/scripts/jquery-ui").Include("~/Content/jquery-ui/jquery-ui.js"));
-
 
             // pages
             bundles.Add(new ScriptBundle("~/scripts/page/article").Include("~/scripts/pages/article.js"));

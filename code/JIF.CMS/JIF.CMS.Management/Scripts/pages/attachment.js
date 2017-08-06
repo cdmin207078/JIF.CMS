@@ -414,7 +414,6 @@
             $uploadCancelBtn.removeAttr('disabled');
         });
 
-
         // 文件上传暂停
         uploader.on('stopUpload', function (file) {
             //console.log('[stopUpload]', file);

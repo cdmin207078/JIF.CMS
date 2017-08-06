@@ -3,7 +3,6 @@
     ViewBag.Title = "分类管理";
 }
 
-
 <div class="row">
     <div class="col-md-12">
 
@@ -57,13 +56,23 @@
 
 
 @section Styles {
+    @Styles.Render("~/styles/web-uploader")
+
     <style type="text/css">
         .table {
             margin-bottom: 0px;
         }
+
+        /*.mailbox-attachment-icon {
+            padding: 0 0;
+        }*/
+
+        /*.category-cover-img {
+            max-height: 200px;
+        }*/
     </style>
 }
 
 @section Scripts{
-    @Scripts.Render("~/scripts/jquery-ui", "~/scripts/page/article-categories")
+    @Scripts.Render("~/scripts/web-uploader", "~/scripts/page/article-categories")
 }

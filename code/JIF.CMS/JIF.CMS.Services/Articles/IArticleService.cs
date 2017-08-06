@@ -64,16 +64,16 @@ namespace JIF.CMS.Services.Articles
 
         #region ArticleCategory
 
-        void Insert(ArticleCategory model);
+        void Insert(InsertArticleCategoryInput model);
 
         /// <summary>
         /// 删除文章分类
         /// </summary>
         /// <param name="id">分类名称</param>
         /// <param name="forcedelartcle">是否同时删除所属分类下的文章</param>
-        void Delete(DeleteArticleCategoryInput model);
+        void DeleteArticleCategory(int id);
 
-        void Update(ArticleCategory model);
+        void Update(int id, InsertArticleCategoryInput model);
 
         /// <summary>
         /// 获取具体文章分类信息

@@ -229,6 +229,8 @@ namespace JIF.CMS.Test.Core.Tests
         {
             var filename = "1111111.txt";
 
+            Console.WriteLine(Path.GetExtension(filename));
+
             var ext = filename.Substring(filename.LastIndexOf('.'));
 
             Console.WriteLine(ext);

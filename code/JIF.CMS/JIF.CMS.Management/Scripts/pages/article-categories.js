@@ -1,7 +1,8 @@
 ﻿; (function () {
 
-    var _tr_background_color = 'rgb(255,255,255)';
-    var _tr_odd_background_color = 'rgb(251,251,251)';
+    var _tr_background_color = 'rgb(255,255,255)',
+        _tr_odd_background_color = 'rgb(251,251,251)',
+        uploader;
 
     // 交换行信息
     var exchangeRow = function ($top, $topChilds, $bottom, $bottomChilds) {
@@ -42,7 +43,37 @@
 
     }
 
+    // 初始化上传组件
+    var initUpload = function () {
+        uploader = WebUploader.create({
+            pick: '#picker',
+            auto: true,
+            swf: '~/Content/webuploader/Uploader.swf',
+            server: '/article/uploadcategorycoverimg',
+            // 不压缩image, 默认如果是jpeg，文件上传前会压缩一把再上传
+            resize: false,
+        });
+
+        // 文件上传成功时触发
+        uploader.on('uploadSuccess', function (file, response) {
+            if (response.success) {
+                console.log(response.message);
+                $('.category-cover-img').attr('src', response.message).siblings('i').hide();
+            }
+        });
+    }
+
+
     var init = function () {
+        // 编辑分类 - 选择封面图片
+        $(document).on('click', '#btn-picker-cover-img', function () {
+            $('#picker input').click();
+        });
+
+        // 编辑分类 - 删除封面图片
+        $(document).on('click', '#btn-picker-cover-img', function () {
+            $('#picker input').click();
+        });
 
         // tr hover
         $(document).on('mouseenter', '.table-hover > tbody > tr', function () {
@@ -109,11 +140,11 @@
 
         // 编辑分类
         $(document).on('click', '.op-td a:has(> .fa-cog)', function () {
-
             var cate_id = $(this).parent().attr('data-cate-id');
             var cate_name = $(this).parent().attr('data-cate-name');
 
             $.confirm({
+                columnClass: 'medium',
                 content: function () {
                     var self = this;
                     return $.get({
@@ -125,16 +156,26 @@
                         self.setContent('Something went wrong.');
                     });
                 },
+                onContentReady: function () {
+                    // 上传组件初始化
+                    initUpload();
+                },
                 buttons: {
                     save: {
                         text: '保存',
                         action: function () {
+                            var id = this.$content.find('#hid-id').val();
+
                             var data = {
-                                id: this.$content.find('#hid-id').val(),
                                 parentid: this.$content.find('#inp-category').val(),
                                 name: this.$content.find('#inp-title').val(),
+                                coverimg: this.$content.find('.category-cover-img').attr('src'),
+                                description: this.$content.find('#inp-desc').val()
                             };
 
+                            $.post('/article/savecategory/' + id, data, function () {
+                                alert('保存成功')
+                            });
                         }
                     },
                     cancel: {

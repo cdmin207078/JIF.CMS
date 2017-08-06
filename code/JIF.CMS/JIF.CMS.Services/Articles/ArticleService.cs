@@ -39,6 +39,8 @@ namespace JIF.CMS.Services.Articles
         }
 
 
+        #region Article
+
         /// <summary>
         /// 获取 所有tags 列表
         /// </summary>
@@ -78,7 +80,6 @@ namespace JIF.CMS.Services.Articles
                     select b).ToList();
         }
 
-
         /// <summary>
         /// 保存文章标签数据
         /// </summary>
@@ -113,14 +114,10 @@ namespace JIF.CMS.Services.Articles
         public void Insert(InsertArticleInput model)
         {
             if (string.IsNullOrWhiteSpace(model.Title))
-            {
                 throw new JIFException("文章标题不能为空");
-            }
 
             if (string.IsNullOrWhiteSpace(model.Content) && string.IsNullOrWhiteSpace(model.MarkdownContent))
-            {
                 throw new JIFException("文章内容不能为空");
-            }
 
             var article = new Article
             {
@@ -159,21 +156,16 @@ namespace JIF.CMS.Services.Articles
         public void Update(int id, InsertArticleInput model)
         {
             if (string.IsNullOrWhiteSpace(model.Title))
-            {
                 throw new JIFException("文章标题不能为空");
-            }
+
 
             if (string.IsNullOrWhiteSpace(model.Content) && string.IsNullOrWhiteSpace(model.MarkdownContent))
-            {
                 throw new JIFException("文章内容不能为空");
-            }
 
             var entity = GetArticle(id);
 
             if (entity == null)
-            {
                 throw new JIFException("欲修改文章不存在");
-            }
 
             entity.Title = model.Title;
             entity.MarkdownContent = model.MarkdownContent;
@@ -186,8 +178,6 @@ namespace JIF.CMS.Services.Articles
             entity.UpdateUserId = _workContext.CurrentUser.Id;
 
             _articleRepository.Update(entity);
-
-
 
             // 保存文章标签, 先删除原有文章标签
             _articleTagRepository.Delete(_articleTagRepository.Table.Where(d => d.ArticleId == id));
@@ -228,30 +218,55 @@ namespace JIF.CMS.Services.Articles
             return new PagedList<SearchArticleListOutput>(query.OrderByDescending(d => d.Id), pageIndex, pageSize);
         }
 
+        #endregion
 
-        public void Insert(ArticleCategory model)
+        #region Article Category
+
+        public void Insert(InsertArticleCategoryInput model)
         {
             if (string.IsNullOrWhiteSpace(model.Name))
-            {
                 throw new JIFException("分类名称不能为空");
-            }
 
-            if (_articleCategoryRepository.Table.Any(d => d.Name == model.Name && d.Id != model.Id))
-            {
+            if (_articleCategoryRepository.Table.Any(d => d.Name == model.Name))
                 throw new JIFException("分类名称已经存在");
-            }
 
-            _articleCategoryRepository.Insert(model);
+            // 新增时排序默认排到所属分类最末
+            var orderIndex = _articleCategoryRepository.Table.Where(d => d.ParentId == model.ParentId).Max(d => d.OrderIndex) + 1;
+
+            var entity = new ArticleCategory
+            {
+                Name = model.Name,
+                ParentId = model.ParentId,
+                CoverImg = model.CoverImg,
+                Description = model.Description,
+                OrderIndex = orderIndex
+            };
+
+            _articleCategoryRepository.Insert(entity);
         }
 
-        public void Delete(DeleteArticleCategoryInput model)
+        public void DeleteArticleCategory(int id)
         {
+            //_articleCategoryRepository.Delete();
             throw new NotImplementedException();
         }
 
-        public void Update(ArticleCategory model)
+        public void Update(int id, InsertArticleCategoryInput model)
         {
-            throw new NotImplementedException();
+            if (_articleCategoryRepository.Table.Any(d => d.Name == model.Name && d.Id != id))
+                throw new JIFException("分类名称已经存在");
+
+            var entity = _articleCategoryRepository.Get(id);
+
+            if (entity == null)
+                throw new JIFException("分类不存在");
+
+            entity.Name = model.Name;
+            entity.ParentId = model.ParentId;
+            entity.CoverImg = model.CoverImg;
+            entity.Description = model.Description;
+
+            _articleCategoryRepository.Update(entity);
         }
 
         public ArticleCategory GetCategory(int id)
@@ -327,5 +342,7 @@ namespace JIF.CMS.Services.Articles
         {
             return GetCategories().GetTreeRelationPreorder().ToList();
         }
+
+        #endregion
     }
 }
