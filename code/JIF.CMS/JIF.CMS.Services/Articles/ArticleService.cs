@@ -284,6 +284,32 @@ namespace JIF.CMS.Services.Articles
         }
 
         /// <summary>
+        /// 获得所有文章分类, 包含下属文章
+        /// </summary>
+        /// <returns></returns>
+        public List<ArticleCategory> GetCategoriesWithArticles()
+        {
+
+            var categories = _articleCategoryRepository.Table.ToList();
+
+            var articles = _articleRepository.Table.ToList();
+
+            var adc = articles.ToDictionary(d => d.CategoryId, v => v);
+
+            var alu = articles.ToLookup(d => d.CategoryId);
+
+
+            return categories;
+
+            //return data.Select(d => new ArticleCategory
+            //{
+            //    Id = d.Id,
+            //    Name = d.Name,
+            //    Articles = d.Articles.ToList()
+            //}).ToList();
+        }
+
+        /// <summary>
         /// 获取所有文章分类, 转为 层级 - 数据源 对照字典
         /// </summary>
         /// <remarks>key : level, value : categories</remarks>
@@ -332,6 +358,8 @@ namespace JIF.CMS.Services.Articles
         /// <returns>只返回已排序的顶层节点, 分支使用各个节点依次访问</returns>
         public List<ArticleCategory> GetCategoriesTreeRelation()
         {
+
+
             return GetCategories().AsTreeRelation().ToList();
         }
 

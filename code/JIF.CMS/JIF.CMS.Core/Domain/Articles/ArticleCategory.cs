@@ -22,5 +22,8 @@ namespace JIF.CMS.Core.Domain.Articles
         /// 描述
         /// </summary>
         public string Description { get; set; }
+
+
+        //public virtual List<Article> Articles { get; set; }
     }
 }

@@ -5,6 +5,7 @@ using JIF.CMS.Management.Models;
 using JIF.CMS.Services.Articles;
 using JIF.CMS.Services.Articles.Dtos;
 using JIF.CMS.Web.Framework.Controllers;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -128,6 +129,10 @@ namespace JIF.CMS.Management.Controllers
         [HttpGet]
         public ActionResult Categories()
         {
+            var data = _articleService.GetCategoriesWithArticles();
+
+            var djs = JsonConvert.SerializeObject(data);
+
             return View(_articleService.GetCategoriesTreeRelation());
         }
 
