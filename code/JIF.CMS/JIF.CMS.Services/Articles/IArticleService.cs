@@ -87,8 +87,6 @@ namespace JIF.CMS.Services.Articles
         /// <returns></returns>
         List<ArticleCategory> GetCategories();
 
-        List<ArticleCategory> GetCategoriesWithArticles();
-
         /// <summary>
         /// 获取所有文章分类, 转换为层级结构
         /// </summary>

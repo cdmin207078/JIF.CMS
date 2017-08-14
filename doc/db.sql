@@ -1,6 +1,6 @@
 -- --------------------------------------------------------
 -- 主机:                           192.168.0.120
--- 服务器版本:                        5.5.53 - MySQL Community Server (GPL)
+-- 服务器版本:                        5.5.53-log - MySQL Community Server (GPL)
 -- 服务器操作系统:                      Win32
 -- HeidiSQL 版本:                  9.4.0.5125
 -- --------------------------------------------------------
@@ -13,12 +13,10 @@
 
 
 -- 导出 jif.cms 的数据库结构
-DROP DATABASE IF EXISTS `jif.cms`;
 CREATE DATABASE IF NOT EXISTS `jif.cms` /*!40100 DEFAULT CHARACTER SET utf8 */;
 USE `jif.cms`;
 
 -- 导出  表 jif.cms.articles 结构
-DROP TABLE IF EXISTS `articles`;
 CREATE TABLE IF NOT EXISTS `articles` (
   `Id` int(11) NOT NULL AUTO_INCREMENT,
   `Title` longtext,
@@ -49,12 +47,11 @@ INSERT INTO `articles` (`Id`, `Title`, `Content`, `MarkdownContent`, `AllowComme
 	(431, '山河故人', '<p><img src="http://static.cnbetacdn.com/article/2017/0716/47d8858530a66d0.gif" alt="熊猫" title="熊猫"></p>\n', '![熊猫](http://static.cnbetacdn.com/article/2017/0716/47d8858530a66d0.gif "熊猫")', 1, NULL, b'0', b'0', 3, '2016-12-17 12:50:13', 1, '2017-07-17 10:30:03', 1, '2017-07-17 11:12:54'),
 	(432, '香奈儿', '<p>作曲 : 王菲</p><p>作词 : 林夕</p><p>王子挑选宠儿</p><p>外套寻找它的模特儿</p><p>那么多的玻璃鞋</p><p>有很多人适合</p><p>没有独一无二</p><p>我是谁的安琪儿</p><p>你是谁的模特儿</p><p>亲爱的 亲爱的</p><p>让你我 好好 配合</p><p>让你我 慢慢 选择</p><p>你快乐 我也 快乐</p><p>你是模特儿我是</p><p>香奈儿 香奈儿 香奈儿</p><p>香奈儿 香奈儿</p><p>嘴唇挑选颜色</p><p>感情寻找它的模特儿</p><p>衣服挂在橱窗</p><p>有太多人适合</p><p>没有独一无二</p><p>我是谁的安琪儿</p><p>你是谁的模特儿</p><p>亲爱的 亲爱的</p><p>让你我 好好 配合</p><p>让你我 慢慢 选择</p><p>你快乐 我也 快乐</p><p>你是模特儿我是</p><p>香奈儿 香奈儿 香奈儿</p><p>香奈儿 香奈儿</p>', '# 香奈儿', 1, NULL, b'1', b'0', 1, '2016-12-18 17:52:39', 3, '2017-04-17 00:05:46', 3, '2017-07-17 11:12:54'),
 	(433, '成都', '<p>作曲 : 赵雷</p>\n<p>作词 : 赵雷</p>\n<p>让我掉下眼泪的 不只昨夜的酒</p>\n<p>让我依依不舍的 不只你的温柔</p>\n<p>一路还要走多久 你攥着我的手</p>\n<p>让我感到为难的 是挣扎的自由</p>\n<p>分别总是在九月 回忆是思念的愁</p>\n<p>深秋嫩绿的垂柳 亲吻着我额头</p>\n<p>在那座阴雨的小城里</p>\n<p>我从未忘记你</p>\n<p>成都 带不走的 只有你</p>\n<p>和我在成都的街头走一走 喔哦</p>\n<p>直到所有的灯都熄灭了也不停留</p>\n<p>你会挽着我的衣袖</p>\n<p>我会把手揣进裤兜</p>\n', '作曲 : 赵雷\n\n作词 : 赵雷\n\n让我掉下眼泪的 不只昨夜的酒\n\n让我依依不舍的 不只你的温柔\n\n一路还要走多久 你攥着我的手\n\n让我感到为难的 是挣扎的自由\n\n分别总是在九月 回忆是思念的愁\n\n深秋嫩绿的垂柳 亲吻着我额头\n\n在那座阴雨的小城里\n\n我从未忘记你\n\n成都 带不走的 只有你\n\n和我在成都的街头走一走 喔哦\n\n直到所有的灯都熄灭了也不停留\n\n你会挽着我的衣袖\n\n我会把手揣进裤兜', 1, NULL, b'1', b'0', 3, '2016-12-24 15:06:09', 1, '2017-07-17 10:56:19', 1, '2017-07-17 11:12:54'),
-	(434, 'phpstudy 访问速度慢解决办法', '<h2 id="h2-u95EEu9898u7F18u7531"><a name="问题缘由" class="reference-link"></a><span class="header-link octicon octicon-link"></span>问题缘由</h2><p>因为自己对 php + mysql 套装没有系统研究过，所以直接使用了 phpstudy 来配置 php + mysql 环境，数据库与网站程序在同一台服务器上。但是发现网站访问速度较慢，打开页面基本需要 5s 左右。 最终找到缘由，解决方案如下：</p>\n<blockquote>\n<p>PHP5.3以上，如果是链接localhost，会检测是IPV4还是IPV6，所以会比较慢。解决办法是：链接数据的时候，不要填写localhost，改为127.0.0.1</p>\n</blockquote>\n<p>直接找到网站数据库连接文件，修改数据库链接地址 localhost =&gt; 127.0.0.1</p>\n<p>例如，本网站基于typecho搭建的，故在网站根目录下找到 <code>config.inc.php</code>文件，修改如下：</p>\n<pre><code class="lang-php">$db-&gt;addServer(array (\n  &#39;host&#39; =&gt; &#39;127.0.0.1&#39;, // 之前此处若数据库在本地则为 localhost\n  ....其他配置\n)\n</code></pre>\n<h2 id="h2-u53C2u8003"><a name="参考" class="reference-link"></a><span class="header-link octicon octicon-link"></span>参考</h2><p><a href="http://bbs.csdn.net/topics/390983216#post-401035514">phpstudy打开网页很慢如何处理 - csdn</a></p>\n', '## 问题缘由\n因为自己对 php + mysql 套装没有系统研究过，所以直接使用了 phpstudy 来配置 php + mysql 环境，数据库与网站程序在同一台服务器上。但是发现网站访问速度较慢，打开页面基本需要 5s 左右。 最终找到缘由，解决方案如下：\n\n> PHP5.3以上，如果是链接localhost，会检测是IPV4还是IPV6，所以会比较慢。解决办法是：链接数据的时候，不要填写localhost，改为127.0.0.1\n\n直接找到网站数据库连接文件，修改数据库链接地址 localhost => 127.0.0.1\n\n例如，本网站基于typecho搭建的，故在网站根目录下找到 `config.inc.php`文件，修改如下：\n\n```php\n$db->addServer(array (\n  \'host\' => \'127.0.0.1\', // 之前此处若数据库在本地则为 localhost\n  ....其他配置\n)\n```\n\n## 参考\n\n[phpstudy打开网页很慢如何处理 - csdn](http://bbs.csdn.net/topics/390983216#post-401035514)', 1, NULL, b'1', b'0', 1, '2017-07-14 12:19:50', 5, '2017-07-18 11:57:22', 1, '2017-07-17 20:15:00'),
+	(434, 'phpstudy 访问速度慢解决办法', '<h2 id="h2-u95EEu9898u7F18u7531"><a name="问题缘由" class="reference-link"></a><span class="header-link octicon octicon-link"></span>问题缘由</h2><p>因为自己对 php + mysql 套装没有系统研究过，所以直接使用了 phpstudy 来配置 php + mysql 环境，数据库与网站程序在同一台服务器上。但是发现网站访问速度较慢，打开页面基本需要 5s 左右。 最终找到缘由，解决方案如下：</p>\n<blockquote>\n<p>PHP5.3以上，如果是链接localhost，会检测是IPV4还是IPV6，所以会比较慢。解决办法是：链接数据的时候，不要填写localhost，改为127.0.0.1</p>\n</blockquote>\n<p>直接找到网站数据库连接文件，修改数据库链接地址 localhost =&gt; 127.0.0.1</p>\n<p>例如，本网站基于typecho搭建的，故在网站根目录下找到 <code>config.inc.php</code>文件，修改如下：</p>\n<pre><code class="lang-php">$db-&gt;addServer(array (\n  &#39;host&#39; =&gt; &#39;127.0.0.1&#39;, // 之前此处若数据库在本地则为 localhost\n  ....其他配置\n)\n</code></pre>\n<h2 id="h2-u53C2u8003"><a name="参考" class="reference-link"></a><span class="header-link octicon octicon-link"></span>参考</h2><p><a href="http://bbs.csdn.net/topics/390983216#post-401035514">phpstudy打开网页很慢如何处理 - csdn</a></p>\n', '## 问题缘由\n因为自己对 php + mysql 套装没有系统研究过，所以直接使用了 phpstudy 来配置 php + mysql 环境，数据库与网站程序在同一台服务器上。但是发现网站访问速度较慢，打开页面基本需要 5s 左右。 最终找到缘由，解决方案如下：\n\n> PHP5.3以上，如果是链接localhost，会检测是IPV4还是IPV6，所以会比较慢。解决办法是：链接数据的时候，不要填写localhost，改为127.0.0.1\n\n直接找到网站数据库连接文件，修改数据库链接地址 localhost => 127.0.0.1\n\n例如，本网站基于typecho搭建的，故在网站根目录下找到 `config.inc.php`文件，修改如下：\n\n```php\n$db->addServer(array (\n  \'host\' => \'127.0.0.1\', // 之前此处若数据库在本地则为 localhost\n  ....其他配置\n)\n```\n\n## 参考\n\n[phpstudy打开网页很慢如何处理 - csdn](http://bbs.csdn.net/topics/390983216#post-401035514)', 1, NULL, b'1', b'0', 1, '2017-07-14 12:19:50', 5, '2017-08-13 14:28:04', 5, '2017-07-17 20:15:00'),
 	(435, '历历万乡', '<p>作曲 : 陈粒</p>\n<p>作词 : 陈南西</p>\n<p>她住在七月的洪流上</p>\n<p>天台倾倒理想一万丈</p>\n<p>她午睡在北风仓皇途经的芦苇荡</p>\n<p>她梦中的草原白茫茫</p>\n<p>列车搭上悲欢去辗转</p>\n<p>她尝遍了每个异乡限时赠送的糖</p>\n<p>若我站在朝阳上 能否脱去昨日的惆怅</p>\n<p>单薄语言能否传达我所有的牵挂</p>\n<p>若有天我不复勇往 能否坚持走完这一场</p>\n<p>踏遍万水千山总有一地故乡</p>\n<p>城市慷慨亮整夜光</p>\n<p>如同少年不惧岁月长</p>\n<p>她想要的不多只是和别人的不一样</p>\n<p>烛光倒影为我添茶</p>\n<p>相逢太短不等茶水凉</p>\n<p>你扔下的习惯还顽强活在我身上</p>\n<p>若我站在朝阳上 能否脱去昨日的惆怅</p>\n<p>单薄语言能否传达我所有的牵挂</p>\n<p>若有天我不复勇往 能否坚持走完这一场</p>\n<p>踏遍万水千山总有一地故乡</p>\n<p>若我站在朝阳上 能否脱去昨日的惆怅</p>\n<p>单薄语言能否传达我所有的牵挂</p>\n<p>若有天我不复勇往 能否坚持走完这一场</p>\n<p>踏遍万水千山总有一地故乡</p>\n<p>她走在马蹄的余声中</p>\n<p>夕阳燃烧离别多少场</p>\n<p>她向陌生人们解说陌生人的风光</p>\n<p>等她归来坐下对我讲</p>\n<p>故人旧时容颜未沧桑</p>\n<p>我们仍旧想要当初想要的不一样</p>\n', '作曲 : 陈粒\n\n作词 : 陈南西\n\n她住在七月的洪流上\n\n天台倾倒理想一万丈\n\n她午睡在北风仓皇途经的芦苇荡\n\n她梦中的草原白茫茫\n\n列车搭上悲欢去辗转\n\n她尝遍了每个异乡限时赠送的糖\n\n若我站在朝阳上 能否脱去昨日的惆怅\n\n单薄语言能否传达我所有的牵挂\n\n若有天我不复勇往 能否坚持走完这一场\n\n踏遍万水千山总有一地故乡\n\n城市慷慨亮整夜光\n\n如同少年不惧岁月长\n\n她想要的不多只是和别人的不一样\n\n烛光倒影为我添茶\n\n相逢太短不等茶水凉\n\n你扔下的习惯还顽强活在我身上\n\n若我站在朝阳上 能否脱去昨日的惆怅\n\n单薄语言能否传达我所有的牵挂\n\n若有天我不复勇往 能否坚持走完这一场\n\n踏遍万水千山总有一地故乡\n\n若我站在朝阳上 能否脱去昨日的惆怅\n\n单薄语言能否传达我所有的牵挂\n\n若有天我不复勇往 能否坚持走完这一场\n\n踏遍万水千山总有一地故乡\n\n她走在马蹄的余声中\n\n夕阳燃烧离别多少场\n\n她向陌生人们解说陌生人的风光\n\n等她归来坐下对我讲\n\n故人旧时容颜未沧桑\n\n我们仍旧想要当初想要的不一样', 1, NULL, b'1', b'0', 3, '2017-07-17 18:54:56', 1, '2017-07-18 14:41:49', 1, '2017-07-20 22:00:28');
 /*!40000 ALTER TABLE `articles` ENABLE KEYS */;
 
 -- 导出  表 jif.cms.article_attachments 结构
-DROP TABLE IF EXISTS `article_attachments`;
 CREATE TABLE IF NOT EXISTS `article_attachments` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `article_id` int(11) NOT NULL,
@@ -68,7 +65,6 @@ DELETE FROM `article_attachments`;
 /*!40000 ALTER TABLE `article_attachments` ENABLE KEYS */;
 
 -- 导出  表 jif.cms.article_categories 结构
-DROP TABLE IF EXISTS `article_categories`;
 CREATE TABLE IF NOT EXISTS `article_categories` (
   `Id` int(11) NOT NULL AUTO_INCREMENT,
   `Name` varchar(50) NOT NULL,
@@ -83,28 +79,27 @@ CREATE TABLE IF NOT EXISTS `article_categories` (
 DELETE FROM `article_categories`;
 /*!40000 ALTER TABLE `article_categories` DISABLE KEYS */;
 INSERT INTO `article_categories` (`Id`, `Name`, `OrderIndex`, `ParentId`, `CoverImg`, `Description`) VALUES
-	(1, '程序开发', 1, 0, '', ''),
-	(2, 'C# & .Net', 3, 1, '', ''),
+	(1, '程序开发', 1, 0, '\\attachments\\ActicleCategoryCoverImgs\\dad56c53-effc-4fde-bb8e-fe0eb8e8404b.jpg', ''),
+	(2, 'C# & .Net', 2, 1, '', ''),
 	(3, '生活随笔', 3, 0, '', ''),
 	(4, 'es6', 1, 9, '', ''),
-	(5, 'quartz.net 翻译', 2, 2, '', ''),
-	(6, '小宇', 0, 3, '', ''),
+	(5, 'quartz.net 翻译', 3, 2, '', ''),
+	(6, '小宇', 1, 3, '', ''),
 	(7, '音乐', 2, 0, '', ''),
-	(8, '异步多线程', 1, 2, '', ''),
-	(9, '前端开发', 0, 1, '', ''),
-	(10, '设计模式', 0, 2, '\\attachments\\ActicleCategoryCoverImgs\\c1570c3c-8f12-4672-ac75-52ca1c738761.jpg', '设计模式 GOF\nHello world'),
-	(11, 'asp.net mvc', 0, 2, '', ''),
-	(12, '古典', 0, 7, '', ''),
-	(13, '摇滚', 0, 7, '', ''),
-	(14, '西方古典', 0, 12, '', ''),
-	(15, '东方古典', 0, 12, '', ''),
-	(16, '笛子', 0, 15, '', ''),
-	(17, '竹笛', 0, 16, '', ''),
-	(18, '竖笛', 0, 16, '', '');
+	(8, '异步多线程', 1, 2, '', '111'),
+	(9, '前端开发', 1, 1, '', ''),
+	(10, '设计模式', 4, 2, '\\attachments\\ActicleCategoryCoverImgs\\5b22c94d-3b43-41af-9ccc-7502df967e8b.jpg', '设计模式 GOF\nHello world'),
+	(11, 'asp.net mvc', 2, 2, '', ''),
+	(12, '古典', 1, 7, '', ''),
+	(13, '摇滚', 2, 7, '', ''),
+	(14, '西方古典', 1, 12, '', ''),
+	(15, '东方古典', 2, 12, '', ''),
+	(16, '笛子', 1, 15, '', ''),
+	(17, '竹笛', 1, 16, '', ''),
+	(18, '竖笛', 2, 16, '', '');
 /*!40000 ALTER TABLE `article_categories` ENABLE KEYS */;
 
 -- 导出  表 jif.cms.article_tags 结构
-DROP TABLE IF EXISTS `article_tags`;
 CREATE TABLE IF NOT EXISTS `article_tags` (
   `Id` int(11) NOT NULL AUTO_INCREMENT,
   `TagId` int(11) NOT NULL,
@@ -122,7 +117,6 @@ INSERT INTO `article_tags` (`Id`, `TagId`, `ArticleId`) VALUES
 /*!40000 ALTER TABLE `article_tags` ENABLE KEYS */;
 
 -- 导出  表 jif.cms.attachments 结构
-DROP TABLE IF EXISTS `attachments`;
 CREATE TABLE IF NOT EXISTS `attachments` (
   `Id` int(11) NOT NULL AUTO_INCREMENT,
   `SavePath` text NOT NULL,
@@ -143,7 +137,6 @@ INSERT INTO `attachments` (`Id`, `SavePath`, `Name`, `Size`, `CreateTime`, `Crea
 /*!40000 ALTER TABLE `attachments` ENABLE KEYS */;
 
 -- 导出  表 jif.cms.sys_admin 结构
-DROP TABLE IF EXISTS `sys_admin`;
 CREATE TABLE IF NOT EXISTS `sys_admin` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `account` varchar(50) NOT NULL DEFAULT '0',
@@ -169,7 +162,6 @@ INSERT INTO `sys_admin` (`id`, `account`, `password`, `email`, `cellphone`, `ena
 /*!40000 ALTER TABLE `sys_admin` ENABLE KEYS */;
 
 -- 导出  表 jif.cms.tags 结构
-DROP TABLE IF EXISTS `tags`;
 CREATE TABLE IF NOT EXISTS `tags` (
   `Id` int(11) NOT NULL AUTO_INCREMENT,
   `Name` varchar(50) NOT NULL,

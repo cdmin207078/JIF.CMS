@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace JIF.CMS.Core.Helpers
+namespace JIF.CMS.Core.Extensions
 {
     public static class IEnumerableExtension
     {

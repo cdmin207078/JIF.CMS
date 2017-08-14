@@ -35,12 +35,6 @@
             if ($topChilds)
                 $topChilds.find('.op-td a').removeClass('disabled');
         });
-
-    }
-
-    // 升级行信息
-    var upgradeRow = function () {
-
     }
 
     // 初始化上传组件
@@ -63,14 +57,29 @@
         });
     }
 
+    // 初始化树结构
+    var initTree = function () {
+
+        var zTreeObj;
+        // zTree 的参数配置，深入使用请参考 API 文档（setting 配置详解）
+        var setting = {};
+        // zTree 的数据属性，深入使用请参考 API 文档（zTreeNode 节点数据详解）
+        var zNodes = [
+            {
+                name: "test1", open: true, children: [
+                    { name: "test1_1" }, { name: "test1_2" }]
+            },
+            {
+                name: "test2", open: true, children: [
+                    { name: "test2_1" }, { name: "test2_2" }]
+            }
+        ];
+
+        zTreeObj = $.fn.zTree.init($("#treeDemo"), setting, zNodes);
+    }
 
     var init = function () {
         // 编辑分类 - 选择封面图片
-        $(document).on('click', '#btn-picker-cover-img', function () {
-            $('#picker input').click();
-        });
-
-        // 编辑分类 - 删除封面图片
         $(document).on('click', '#btn-picker-cover-img', function () {
             $('#picker input').click();
         });
@@ -173,8 +182,27 @@
                                 description: this.$content.find('#inp-desc').val()
                             };
 
-                            $.post('/article/savecategory/' + id, data, function () {
-                                alert('保存成功')
+                            $.ajax({
+                                url: '/article/savecategory/' + id,
+                                data: data,
+                                type: 'post',
+                                success: function () {
+                                    console.log('self ajax');
+
+                                    $.alert({
+                                        title: '消息',
+                                        content: '保存成功',
+                                        autoClose: 'done|3000',
+                                        buttons: {
+                                            done: {
+                                                text: '确定 ',
+                                                action: function () {
+
+                                                }
+                                            }
+                                        }
+                                    });
+                                }
                             });
                         }
                     },
@@ -195,5 +223,6 @@
 
     $(function () {
         init();
+        initTree();
     });
 })();

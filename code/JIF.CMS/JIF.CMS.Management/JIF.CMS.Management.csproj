@@ -89,6 +89,7 @@
       <HintPath>..\packages\Newtonsoft.Json.10.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="System.Runtime.Caching" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -172,6 +173,10 @@
     <Content Include="Content\AdminLTE\dist\img\user8-128x128.jpg" />
     <Content Include="Content\AdminLTE\dist\js\app.js" />
     <Content Include="Content\AdminLTE\dist\js\demo.js" />
+    <Content Include="Content\dragula\dragula.css" />
+    <Content Include="Content\dragula\dragula.js" />
+    <Content Include="Content\dragula\dragula.min.css" />
+    <Content Include="Content\dragula\dragula.min.js" />
     <Content Include="Content\font-awesome\font-awesome.min.css" />
     <Content Include="Content\AdminLTE\plugins\bootstrap-slider\bootstrap-slider.js" />
     <Content Include="Content\AdminLTE\plugins\bootstrap-slider\slider.css" />
@@ -774,6 +779,33 @@
     <Content Include="Content\webuploader\webuploader.nolog.min.js" />
     <Content Include="Content\webuploader\webuploader.withoutimage.js" />
     <Content Include="Content\webuploader\webuploader.withoutimage.min.js" />
+    <Content Include="Content\ztreeV3\css\demo.css" />
+    <Content Include="Content\ztreeV3\css\zTreeStyle\img\diy\1_close.png" />
+    <Content Include="Content\ztreeV3\css\zTreeStyle\img\diy\1_open.png" />
+    <Content Include="Content\ztreeV3\css\zTreeStyle\img\diy\2.png" />
+    <Content Include="Content\ztreeV3\css\zTreeStyle\img\diy\3.png" />
+    <Content Include="Content\ztreeV3\css\zTreeStyle\img\diy\4.png" />
+    <Content Include="Content\ztreeV3\css\zTreeStyle\img\diy\5.png" />
+    <Content Include="Content\ztreeV3\css\zTreeStyle\img\diy\6.png" />
+    <Content Include="Content\ztreeV3\css\zTreeStyle\img\diy\7.png" />
+    <Content Include="Content\ztreeV3\css\zTreeStyle\img\diy\8.png" />
+    <Content Include="Content\ztreeV3\css\zTreeStyle\img\diy\9.png" />
+    <Content Include="Content\ztreeV3\css\zTreeStyle\img\line_conn.gif" />
+    <Content Include="Content\ztreeV3\css\zTreeStyle\img\loading.gif" />
+    <Content Include="Content\ztreeV3\css\zTreeStyle\img\zTreeStandard.gif" />
+    <Content Include="Content\ztreeV3\css\zTreeStyle\img\zTreeStandard.png" />
+    <Content Include="Content\ztreeV3\css\zTreeStyle\zTreeStyle.css" />
+    <Content Include="Content\ztreeV3\js\jquery-1.4.4.min.js" />
+    <Content Include="Content\ztreeV3\js\jquery.ztree.all.js" />
+    <Content Include="Content\ztreeV3\js\jquery.ztree.all.min.js" />
+    <Content Include="Content\ztreeV3\js\jquery.ztree.core.js" />
+    <Content Include="Content\ztreeV3\js\jquery.ztree.core.min.js" />
+    <Content Include="Content\ztreeV3\js\jquery.ztree.excheck.js" />
+    <Content Include="Content\ztreeV3\js\jquery.ztree.excheck.min.js" />
+    <Content Include="Content\ztreeV3\js\jquery.ztree.exedit.js" />
+    <Content Include="Content\ztreeV3\js\jquery.ztree.exedit.min.js" />
+    <Content Include="Content\ztreeV3\js\jquery.ztree.exhide.js" />
+    <Content Include="Content\ztreeV3\js\jquery.ztree.exhide.min.js" />
     <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\simditor\styles\editor.scss" />
@@ -829,6 +861,7 @@
     <Content Include="fonts\fontawesome-webfont.woff" />
     <Content Include="fonts\fontawesome-webfont.woff2" />
     <Content Include="fonts\FontAwesome.otf" />
+    <Content Include="appsettings.json" />
     <None Include="Properties\PublishProfiles\cn-pc.pubxml" />
     <Content Include="Views\SysManager\Add.cshtml" />
     <Content Include="Views\SysManager\Detail.cshtml" />

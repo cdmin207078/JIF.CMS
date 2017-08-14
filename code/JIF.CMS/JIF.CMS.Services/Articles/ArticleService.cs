@@ -222,6 +222,10 @@ namespace JIF.CMS.Services.Articles
 
         #region Article Category
 
+        /// <summary>
+        /// 新增文章分类
+        /// </summary>
+        /// <param name="model"></param>
         public void Insert(InsertArticleCategoryInput model)
         {
             if (string.IsNullOrWhiteSpace(model.Name))
@@ -245,12 +249,21 @@ namespace JIF.CMS.Services.Articles
             _articleCategoryRepository.Insert(entity);
         }
 
+        /// <summary>
+        /// 删除文章分类
+        /// </summary>
+        /// <param name="id"></param>
         public void DeleteArticleCategory(int id)
         {
             //_articleCategoryRepository.Delete();
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// 修改分类信息
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="model"></param>
         public void Update(int id, InsertArticleCategoryInput model)
         {
             if (_articleCategoryRepository.Table.Any(d => d.Name == model.Name && d.Id != id))
@@ -260,6 +273,12 @@ namespace JIF.CMS.Services.Articles
 
             if (entity == null)
                 throw new JIFException("分类不存在");
+
+            // 若更改所属父级, 则组内排序初始化为组内末尾
+            if (entity.ParentId != model.ParentId)
+            {
+                entity.OrderIndex = _articleCategoryRepository.Table.Where(d => d.ParentId == model.ParentId).Max(d => d.OrderIndex) + 1;
+            }
 
             entity.Name = model.Name;
             entity.ParentId = model.ParentId;
@@ -281,32 +300,6 @@ namespace JIF.CMS.Services.Articles
         public List<ArticleCategory> GetCategories()
         {
             return _articleCategoryRepository.Table.ToList();
-        }
-
-        /// <summary>
-        /// 获得所有文章分类, 包含下属文章
-        /// </summary>
-        /// <returns></returns>
-        public List<ArticleCategory> GetCategoriesWithArticles()
-        {
-
-            var categories = _articleCategoryRepository.Table.ToList();
-
-            var articles = _articleRepository.Table.ToList();
-
-            var adc = articles.ToDictionary(d => d.CategoryId, v => v);
-
-            var alu = articles.ToLookup(d => d.CategoryId);
-
-
-            return categories;
-
-            //return data.Select(d => new ArticleCategory
-            //{
-            //    Id = d.Id,
-            //    Name = d.Name,
-            //    Articles = d.Articles.ToList()
-            //}).ToList();
         }
 
         /// <summary>

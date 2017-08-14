@@ -22,7 +22,7 @@
                     {
                         var hasChild = node.Childs != null && node.Childs.Any();
 
-                        <tr class="no-padding" data-has-child="@(hasChild ? "1":"0")">
+                        <tr class="no-padding" data-has-child="@(hasChild ? "1":"0")" data-cate-id="@node.Id">
                             <td>
                                 <input class="form-control input-sm minimal" type="checkbox">
                             </td>

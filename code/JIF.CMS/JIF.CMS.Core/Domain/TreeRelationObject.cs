@@ -1,9 +1,5 @@
-﻿using JIF.CMS.Core.Helpers;
-using System;
+﻿using JIF.CMS.Core.Extensions;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace JIF.CMS.Core.Domain
 {

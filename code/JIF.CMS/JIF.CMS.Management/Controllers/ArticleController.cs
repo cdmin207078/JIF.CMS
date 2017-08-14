@@ -22,7 +22,7 @@ namespace JIF.CMS.Management.Controllers
         private readonly JIFConfig _config;
 
         private readonly string _base_attachment = "attachments";
-        private readonly string _cover_img_folder = "ActicleCategoryCoverImgs";
+        private readonly string _cover_img_folder = "acticleCategoryCoverImgs";
 
         public ArticleController(IArticleService articleService, JIFConfig config)
         {
@@ -38,13 +38,7 @@ namespace JIF.CMS.Management.Controllers
             Q = Q.Trim();
 
             ViewBag.list = _articleService.GetArticles(Q, pageIndex: pageIndex, pageSize: pageSize);
-
             ViewBag.Q = Q;
-
-            ViewBag.AttachmentUploadFTPAddress = _config.AttachmentUploadFTPAddress;
-            ViewBag.AttachmentUploadFTPAccount = _config.AttachmentUploadFTPAccount;
-            ViewBag.AttachmentUploadFTPPwd = _config.AttachmentUploadFTPPwd;
-
 
             return View();
         }
@@ -129,10 +123,6 @@ namespace JIF.CMS.Management.Controllers
         [HttpGet]
         public ActionResult Categories()
         {
-            var data = _articleService.GetCategoriesWithArticles();
-
-            var djs = JsonConvert.SerializeObject(data);
-
             return View(_articleService.GetCategoriesTreeRelation());
         }
 

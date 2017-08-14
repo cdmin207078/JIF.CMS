@@ -1,4 +1,4 @@
-﻿
+﻿@model JIF.CMS.Core.Configuration.JIFConfig
 
 <div class="row">
     <div class="col-md-5">
@@ -9,7 +9,12 @@
             </div>
 
             <div class="box-body">
-                <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=443070377&auto=1&height=66"></iframe>
+                <h1>@Model.WebSiteInfo.SiteName</h1>
+                <h2>@Model.WebSiteInfo.Email</h2>
+                <h3>@Model.WebSiteInfo.GitHub</h3>
+
+                <h1>@Model.AttachmentConfig.UploadAddress</h1>
+                @*<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=443070377&auto=1&height=66"></iframe>*@
             </div>
         </div>
     </div>

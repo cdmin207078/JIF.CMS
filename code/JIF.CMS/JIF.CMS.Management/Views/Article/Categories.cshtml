@@ -4,6 +4,40 @@
 }
 
 <div class="row">
+    <div class="col-md-4">
+
+        <div class="box box-primary">
+            <div class="box-body">
+                <ul>
+                    @foreach (var cate in Model)
+                    {
+                        <li>
+                            <a href="javascript:;">@cate.Name</a>
+                            @if (!cate.Childs.IsNullOrEmpty())
+                            {
+                                <ul>
+                                    @foreach (var item in cate.Childs)
+                                    {
+                                        <li><a href="javascript:;">@(((JIF.CMS.Core.Domain.Articles.ArticleCategory)item).Name)</a></li>
+                                    }
+                                </ul>
+                            }
+                        </li>
+                    }
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-8">
+        <div class="box box-primary">
+            <div class="box-body">
+                <h1>Option</h1>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
     <div class="col-md-12">
 
         <div class="box box-primary">
@@ -21,9 +55,7 @@
                     <tbody>
                         @foreach (var node in Model)
                         {
-                            var hasChild = node.Childs != null && node.Childs.Any();
-
-                            <tr class="no-padding" data-has-child="@(hasChild ? "1":"0")">
+                            <tr class="no-padding" data-has-child="@(node.Childs.IsNullOrEmpty() ? "1":"0")" data-cate-id="@node.Id">
                                 <td>
                                     <input class="form-control input-sm minimal" type="checkbox">
                                 </td>
@@ -41,7 +73,7 @@
                                 </td>
                             </tr>
 
-                            if (hasChild)
+                            if (!node.Childs.IsNullOrEmpty())
                             {
                                 Html.RenderPartial("_CategoriesItem", node.Childs.Select(d => (JIF.CMS.Core.Domain.Articles.ArticleCategory)d));
                             }
@@ -54,25 +86,29 @@
     </div>
 </div>
 
+@section Scripts{
+    <script src="~/Content/ztreeV3/js/jquery.ztree.core.js"></script>
+    @Scripts.Render("~/scripts/web-uploader", "~/scripts/page/article-categories")
+}
+
 
 @section Styles {
     @Styles.Render("~/styles/web-uploader")
-
+    <link href="~/Content/ztreeV3/css/zTreeStyle/zTreeStyle.css" rel="stylesheet" />
     <style type="text/css">
         .table {
             margin-bottom: 0px;
         }
 
+        li {
+            list-style:none;
+        }
         /*.mailbox-attachment-icon {
-            padding: 0 0;
-        }*/
+                    padding: 0 0;
+                }*/
 
         /*.category-cover-img {
-            max-height: 200px;
-        }*/
+                    max-height: 200px;
+                }*/
     </style>
-}
-
-@section Scripts{
-    @Scripts.Render("~/scripts/web-uploader", "~/scripts/page/article-categories")
 }
