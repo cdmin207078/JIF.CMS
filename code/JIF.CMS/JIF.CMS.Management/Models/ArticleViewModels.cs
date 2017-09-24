@@ -24,5 +24,22 @@ namespace JIF.CMS.Management.Models
         public List<TreeRelationObjectTraverseWrapper<ArticleCategory>> Categories { get; set; }
 
         public ArticleCategory Category { get; set; }
+
+        //public int Id { get; set; }
+
+        ///// <summary>
+        ///// 分类名称
+        ///// </summary>
+        //public string Name { get; set; }
+
+        ///// <summary>
+        ///// 封面图片
+        ///// </summary>
+        //public string CoverImg { get; set; }
+
+        ///// <summary>
+        ///// 描述
+        ///// </summary>
+        //public string Description { get; set; }
     }
 }

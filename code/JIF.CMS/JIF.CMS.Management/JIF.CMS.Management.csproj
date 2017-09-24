@@ -749,6 +749,7 @@
     <Content Include="Content\jquery-ui\jquery-ui.css" />
     <Content Include="Content\jquery-ui\jquery-ui.js" />
     <Content Include="Content\moment\moment.js" />
+    <Content Include="Content\Nestable\jquery.nestable.js" />
     <Content Include="Content\simditor\images\image.png" />
     <Content Include="Content\simditor\scripts\hotkeys.js" />
     <Content Include="Content\simditor\scripts\hotkeys.min.js" />
@@ -875,6 +876,7 @@
     <Content Include="Views\Article\Tags.cshtml" />
     <Content Include="Views\Article\_CategoriesItem.cshtml" />
     <Content Include="Views\Article\CategoryInfo.cshtml" />
+    <Content Include="Views\Article\_Categories.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

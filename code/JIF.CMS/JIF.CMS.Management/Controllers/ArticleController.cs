@@ -19,18 +19,15 @@ namespace JIF.CMS.Management.Controllers
     public class ArticleController : AdminControllerBase
     {
         private readonly IArticleService _articleService;
-        private readonly JIFConfig _config;
-
         private readonly string _base_attachment = "attachments";
         private readonly string _cover_img_folder = "acticleCategoryCoverImgs";
 
-        public ArticleController(IArticleService articleService, JIFConfig config)
+        public ArticleController(IArticleService articleService)
         {
             _articleService = articleService;
-            _config = config;
         }
 
-        #region Article
+        #region Articles
 
         // 文章列表页面
         public ActionResult Index(string Q = "", int pageIndex = JIFConsts.SYS_PAGE_INDEX, int pageSize = JIFConsts.SYS_PAGE_SIZE)
@@ -117,11 +114,18 @@ namespace JIF.CMS.Management.Controllers
 
         #endregion
 
-        #region Category
+        #region Categories
 
-        // 分类列表
+        // 分类管理页面
         [HttpGet]
         public ActionResult Categories()
+        {
+            return View();
+        }
+
+        // 分类列表部分
+        [HttpGet]
+        public ActionResult _Categories()
         {
             return View(_articleService.GetCategoriesTreeRelation());
         }
@@ -130,11 +134,18 @@ namespace JIF.CMS.Management.Controllers
         [HttpGet]
         public ActionResult CategoryInfo(int id)
         {
-            var vm = new ArticleCategoryInfoViewModel
+            ArticleCategoryInfoViewModel vm;
+
+            if (id < 0)
+                vm = null;
+            else
             {
-                Categories = _articleService.GetCategoriesSortArray(),
-                Category = id == 0 ? new ArticleCategory() : _articleService.GetCategory(id)
-            };
+                vm = new ArticleCategoryInfoViewModel
+                {
+                    Categories = _articleService.GetCategoriesSortArray(),
+                    Category = _articleService.GetCategory(id) ?? new ArticleCategory()
+                };
+            }
 
             return View(vm);
         }
@@ -173,14 +184,15 @@ namespace JIF.CMS.Management.Controllers
 
         // 删除分类
         [HttpPost]
-        public JsonResult DeleteCategory()
+        public JsonResult DeleteCategory(int id)
         {
+            _articleService.DeleteArticleCategory(id);
             return AjaxOk();
         }
 
         #endregion
 
-        #region Tag
+        #region Tags
 
         // 标签列表页面
         [HttpGet]

@@ -39,7 +39,7 @@ namespace JIF.CMS.Services.Articles
         }
 
 
-        #region Article
+        #region Tags
 
         /// <summary>
         /// 获取 所有tags 列表
@@ -110,6 +110,10 @@ namespace JIF.CMS.Services.Articles
                 }
             }
         }
+
+        #endregion
+
+        #region Article
 
         public void Insert(InsertArticleInput model)
         {
@@ -255,8 +259,23 @@ namespace JIF.CMS.Services.Articles
         /// <param name="id"></param>
         public void DeleteArticleCategory(int id)
         {
-            //_articleCategoryRepository.Delete();
-            throw new NotImplementedException();
+            var category = _articleCategoryRepository.Get(id);
+
+            if (category == null)
+                return;
+
+            var articles = _articleRepository.Table.Where(d => d.CategoryId == id).ToList();
+            if (!articles.IsNullOrEmpty())
+            {
+                articles.ForEach(d =>
+                {
+                    d.CategoryId = 0;
+                });
+
+                _articleRepository.Update(articles);
+            }
+
+            _articleCategoryRepository.Delete(category);
         }
 
         /// <summary>

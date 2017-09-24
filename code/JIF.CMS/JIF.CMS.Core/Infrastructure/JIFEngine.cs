@@ -55,7 +55,7 @@ namespace JIF.CMS.Core.Infrastructure
 
             //dependencies
             var typeFinder = new WebAppTypeFinder();
-            builder.RegisterInstance(config).As<JIFConfig>().SingleInstance();
+            //builder.RegisterInstance(config).As<JIFConfig>().SingleInstance();
             builder.RegisterInstance(this).As<IEngine>().SingleInstance();
             builder.RegisterInstance(typeFinder).As<ITypeFinder>().SingleInstance();
 

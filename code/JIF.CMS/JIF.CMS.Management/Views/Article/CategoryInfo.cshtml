@@ -2,50 +2,70 @@
 @{
     Layout = null;
 }
-<div>
-    <input type="hidden" id="hid-id" value="@Model.Category.Id" />
-    <div class="form-group">
-        <label>父级分类</label>
-        <select class="form-control" id="inp-category">
-            <option value="0">- 无 -</option>
 
-            @foreach (var cate in Model.Categories)
-            {
-                <option value="@cate.Current.Id" @(cate.Current.Id == Model.Category.ParentId ? "selected=\"selected\"" : "")>@Html.Raw("&nbsp".Repeat(cate.Level * 2))@cate.Current.Name</option>
-            }
-        </select>
-    </div>
+<div class="box-body">
+    @if (Model != null)
+    {
+        <div class="form-group">
+            <label>所属分类</label>
+            <select id="inp-category" class="form-control">
+                <option value="0">- 无 -</option>
 
-    <div class="form-group">
-        <label for="inp-title">分类名称</label>
-        <input type="text" class="form-control" id="inp-title" placeholder="分类名称" value="@Model.Category.Name">
-    </div>
+                @foreach (var cate in Model.Categories)
+                {
+                    <option value="@cate.Current.Id" @((Model.Category != null && cate.Current.Id == Model.Category.ParentId) ? "selected=\"selected\"" : "")>@Html.Raw("&nbsp".Repeat(cate.Level * 2))@cate.Current.Name</option>
+                }
+            </select>
+        </div>
 
+        <div class="form-group">
+            <label>名称</label>
+            <input type="text" id="inp-name" class="form-control" placeholder="名称" value="@Model.Category.Name" />
+        </div>
+        <div class="form-group">
+            <label>描述</label>
+            <textarea id="inp-desc" class="form-control" rows="3" placeholder="描述">@Model.Category.Description</textarea>
+        </div>
 
-    <div class="form-group">
-        <label for="inp-desc">描述</label>
-        <textarea typeof="text" class="form-control" id="inp-desc" placeholder="描述信息" rows="3">@Model.Category.Description</textarea>
-    </div>
+        <div class="form-group">
+            <label>封面图片</label>
+            <div>
+                <span class="mailbox-attachment-icon">
+                    <img id="category-cover-img" src="@Model.Category.CoverImg" />
+                    <i class="fa fa-file-image-o" style="@(string.IsNullOrWhiteSpace(Model.Category.CoverImg)?"":"display:none;")"></i>
+                </span>
 
-    <div class="form-group">
-        <label>封面图片</label>
-        <div>
-            <span class="mailbox-attachment-icon">
-                <img class="category-cover-img" src="@Model.Category.CoverImg" />
-                <i class="fa fa-file-image-o" style="@(string.IsNullOrWhiteSpace(Model.Category.CoverImg)?"":"display:none;")"></i>
-            </span>
-
-            <div class="mailbox-attachment-info">
-                <div id="picker" style="display:none;"></div>
-                <button id="btn-picker-cover-img" type="submit" class="btn btn-sm btn-default">选 择</button>
-                <button id="btn-rm-cover-img" type="submit" class="btn btn-sm btn-danger">删 除</button>
-
-                @*<a href="#" class="mailbox-attachment-name"><i class="fa fa-paperclip"></i> App Description.docx</a>
-                    <span class="mailbox-attachment-size">
-                        1,245 KB
-                        <a href="#" class="btn btn-default btn-xs pull-right"><i class="fa fa-cloud-download"></i></a>
-                    </span>*@
+                <div class="mailbox-attachment-info">
+                    <div id="picker" style="display:none;"></div>
+                    <button id="btn-picker-cover-img" type="submit" class="btn btn-sm btn-default">选 择</button>
+                    <button id="btn-rm-cover-img" type="submit" class="btn btn-sm btn-danger">删 除</button>
+                    @*<a href="#" class="mailbox-attachment-name"><i class="fa fa-paperclip"></i> App Description.docx</a>
+                        <span class="mailbox-attachment-size">
+                            1,245 KB
+                            <a href="#" class="btn btn-default btn-xs pull-right"><i class="fa fa-cloud-download"></i></a>
+                        </span>*@
+                </div>
             </div>
         </div>
-    </div>
+    }
+    else
+    {
+        <div class="category-placeholder" style="text-align:center;">
+            <h3 class="text-muted">请选择具体分类</h3>
+        </div>
+    }
 </div>
+
+@if (Model != null)
+{
+    <div class="box-footer">
+        <button type="button" class="btn btn-default btn-save" data-id="@Model.Category.Id">保存</button>
+        <button type="button" class="btn btn-default btn-cancel">取消</button>
+
+        @if (Model.Category != null && Model.Category.Id != 0)
+        {
+            <button type="button" class="btn btn-danger btn-del pull-right" data-id="@Model.Category.Id" data-name="@Model.Category.Name">删除</button>
+        }
+
+    </div>
+}

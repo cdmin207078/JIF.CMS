@@ -1,0 +1,21 @@
+﻿@model IEnumerable<JIF.CMS.Core.Domain.Articles.ArticleCategory>
+@{ Layout = null; }
+@if (!Model.IsNullOrEmpty())
+{
+    <ol class="dd-list">
+        @foreach (var cate in Model)
+        {
+            <li class="dd-item dd3-item" data-id="@cate.Id">
+                <div class="dd-handle dd3-handle"></div>
+                <div class="dd3-content">
+                    <span>@cate.Name</span>
+                    <a href="javascript:;" class="btn btn-xs btn-default no-margin pull-right cate-modify" data-toggle="tooltip" data-original-title="编辑" data-id="@cate.Id"><i class="fa fa-pencil"></i></a>
+                </div>
+                @if (!cate.Childs.IsNullOrEmpty())
+                {
+                    @Html.Partial("_Categories", cate.Childs)
+                }
+            </li>
+        }
+    </ol>
+}
