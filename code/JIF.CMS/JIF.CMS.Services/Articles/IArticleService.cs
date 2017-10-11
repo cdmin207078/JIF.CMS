@@ -104,6 +104,13 @@ namespace JIF.CMS.Services.Articles
         /// </summary>
         List<TreeRelationObjectTraverseWrapper<ArticleCategory>> GetCategoriesSortArray();
 
+
+        /// <summary>
+        /// 保存分类层级关系
+        /// </summary>
+        /// <param name="categories"></param>
+        void SaveCategoriesSort(List<SaveCagegoriesSortInput> sorts);
+
         #endregion
     }
 }

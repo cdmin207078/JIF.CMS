@@ -74,7 +74,6 @@
         $.get('/article/_categories', function (ret) {
             $('#category-list').html(ret);
         });
-
     }
 
     var init = function () {
@@ -210,6 +209,19 @@
         });
 
 
+        // 分类列表 - 保存排序
+        $('#category-save-sort').click(function () {
+            var data = $('#category-list').nestable('serialize');
+
+            $.ajax({
+                url: '/article/saveCategoriesSort',
+                type: 'post',
+                data: { sorts: data },
+                success: function (ret) {
+
+                }
+            });
+        });
 
         // 分类详情 - 新增
         $('#category-add').click(function () {
@@ -278,23 +290,27 @@
                         text: '确定',
                         btnClass: 'btn-red',
                         action: function () {
-                            $.post('/article/deleteCategory/' + id).done(function (ret) {
-                                $.alert({
-                                    type: ret.success ? 'green' : 'red',
-                                    title: ret.success ? '消息' : '错误',
-                                    content: ret.success ? '删除成功' : ret.message,
-                                    buttons: {
-                                        done: {
-                                            text: '确定 ',
-                                            action: function () {
-                                                if (ret.success) {
-                                                    loadCategories();
-                                                    loadCategoryInfo(-1);
+                            $.ajax({
+                                url: '/article/deleteCategory/' + id,
+                                type: 'post',
+                                success: function (ret) {
+                                    $.alert({
+                                        type: ret.success ? 'green' : 'red',
+                                        title: ret.success ? '消息' : '错误',
+                                        content: ret.success ? '删除成功' : ret.message,
+                                        buttons: {
+                                            done: {
+                                                text: '确定 ',
+                                                action: function () {
+                                                    if (ret.success) {
+                                                        loadCategories();
+                                                        loadCategoryInfo(-1);
+                                                    }
                                                 }
                                             }
                                         }
-                                    }
-                                });
+                                    });
+                                }
                             });
                         }
                     },

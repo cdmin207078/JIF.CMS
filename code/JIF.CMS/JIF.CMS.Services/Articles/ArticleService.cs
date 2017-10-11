@@ -38,7 +38,6 @@ namespace JIF.CMS.Services.Articles
             _workContext = workContext;
         }
 
-
         #region Tags
 
         /// <summary>
@@ -383,6 +382,39 @@ namespace JIF.CMS.Services.Articles
             return GetCategories().GetTreeRelationPreorder().ToList();
         }
 
+        /// <summary>
+        /// 保存分类层级关系
+        /// </summary>
+        /// <param name="categories"></param>
+        public void SaveCategoriesSort(List<SaveCagegoriesSortInput> sorts)
+        {
+            var categories = _articleCategoryRepository.Table.ToDictionary(d => d.Id);
+            recursiveUpdateCategoryRelations(categories, sorts, 0);
+            _articleCategoryRepository.Update(categories.Values);
+        }
+
+        /// <summary>
+        /// 递归设置分类所属父级 & 排序
+        /// </summary>
+        /// <param name="categories"></param>
+        /// <param name="sorts"></param>
+        /// <param name="parentId"></param>
+        private void recursiveUpdateCategoryRelations(Dictionary<int, ArticleCategory> categories, List<SaveCagegoriesSortInput> sorts, int parentId)
+        {
+            if (categories.IsNullOrEmpty() || sorts.IsNullOrEmpty())
+                return;
+
+            for (int i = 0; i < sorts.Count; i++)
+            {
+                var sort = sorts[i];
+                var category = categories[sort.Id];
+
+                category.ParentId = parentId;
+                category.OrderIndex = i;
+
+                recursiveUpdateCategoryRelations(categories, sort.Children, sort.Id);
+            }
+        }
         #endregion
     }
 }

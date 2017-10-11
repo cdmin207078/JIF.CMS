@@ -43,6 +43,7 @@
   <ItemGroup>
     <Compile Include="Articles\ArticleService.cs" />
     <Compile Include="Articles\Dtos\InsertArticleCategoryInput.cs" />
+    <Compile Include="Articles\Dtos\SaveCagegoriesSortInput.cs" />
     <Compile Include="Articles\Dtos\SearchArticleListOutput.cs" />
     <Compile Include="Articles\Dtos\InsertArticleInput.cs" />
     <Compile Include="Articles\Dtos\DeleteArticleCategoryInput.cs" />

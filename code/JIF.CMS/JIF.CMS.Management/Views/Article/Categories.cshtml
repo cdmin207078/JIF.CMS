@@ -7,6 +7,9 @@
         <div class="box box-primary">
             <div class="box-header with-border">
                 <h3 class="box-title">所有分类</h3>
+                <div class="box-tools pull-left">
+                    <button type="button" id="category-add" class="btn btn-info btn-sm">新增</button>
+                </div>
             </div>
             <div class="box-body">
                 <div class="dd" id="category-list">
@@ -15,7 +18,7 @@
             </div>
 
             <div class="box-footer">
-                <button type="button" class="btn btn-default">保存排序</button>
+                <button type="button" id="category-save-sort" class="btn btn-default">保存排序</button>
             </div>
         </div>
     </div>
@@ -24,9 +27,6 @@
         <div class="box box-primary" id="category-info">
             <div class="box-header with-border">
                 <h3 class="box-title">分类详情</h3>
-                <div class="box-tools pull-left">
-                    <button type="button" id="category-add" class="btn btn-info btn-sm">新增</button>
-                </div>
             </div>
             @Html.Action("CategoryInfo", new { id = -1 })
         </div>
@@ -51,7 +51,6 @@
 
 @section Styles {
     @Styles.Render("~/styles/web-uploader")
-    <link href="~/Content/ztreeV3/css/zTreeStyle/zTreeStyle.css" rel="stylesheet" />
     <style type="text/css">
         .table {
             margin-bottom: 0px;

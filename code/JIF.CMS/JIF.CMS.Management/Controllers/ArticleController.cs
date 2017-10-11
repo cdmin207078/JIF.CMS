@@ -150,6 +150,13 @@ namespace JIF.CMS.Management.Controllers
             return View(vm);
         }
 
+        // 保存分类排序
+        public ActionResult SaveCategoriesSort(List<SaveCagegoriesSortInput> sorts)
+        {
+            _articleService.SaveCategoriesSort(sorts);
+            return AjaxOk();
+        }
+
         [HttpPost]
         public JsonResult UploadCategoryCoverImg()
         {
