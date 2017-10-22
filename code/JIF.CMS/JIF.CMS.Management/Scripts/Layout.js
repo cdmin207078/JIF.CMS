@@ -41,13 +41,23 @@ var _cms = (function () {
         });
     }
 
-    var ok = function (content) {
+    var ok = function (content, callback) {
         $.alert({
             type: 'green',
             title: '信息',
             content: content,
             //backgroundDismiss: true,
-            //buttons:[]
+            buttons: {
+                ok: {
+                    text: '确定',
+                    action: function () {
+                        if (typeof (callback) == 'function')
+                            callback();
+                        else if (typeof (callback) == 'string')
+                            location.href = callback;
+                    }
+                }
+            }
         });
     }
 

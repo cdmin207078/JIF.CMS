@@ -15,6 +15,8 @@ namespace JIF.CMS.Core.Configuration
         public WebSiteInfoConfig WebSiteInfo { get; set; }
 
         public AttachmentConfig AttachmentConfig { get; set; }
+
+        public RedisConfig RedisConfig { get; set; }
     }
 
     public class WebSiteInfoConfig
@@ -32,5 +34,21 @@ namespace JIF.CMS.Core.Configuration
     public class AttachmentConfig
     {
         public string UploadAddress { get; set; }
+    }
+
+    /// <summary>
+    /// Redis缓存配置节点
+    /// </summary>
+    public class RedisConfig
+    {
+        /// <summary>
+        /// 是否启用
+        /// </summary>
+        public bool Enabled { get; set; }
+
+        /// <summary>
+        /// 服务地址
+        /// </summary>
+        public string Server { get; set; }
     }
 }

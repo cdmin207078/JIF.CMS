@@ -48,7 +48,7 @@
                                 <th>创建日期</th>
                                 <th>发布日期</th>
                                 <th style="width:50px;">状态</th>
-                                <th>最后更新时间</th>
+                                <th>最近更新</th>
                                 <th>更新者</th>
                                 <th style="width:50px;">操作</th>
                             </tr>
@@ -62,7 +62,16 @@
                                     </td>
                                     <td>@article.Title</td>
                                     <td>@article.Author</td>
-                                    <td>@article.Category</td>
+                                    <td>
+                                        @if (string.IsNullOrWhiteSpace(article.Category))
+                                        {
+                                            <span class="text-muted">-- 未分类 --</span>
+                                        }
+                                        else
+                                        {
+                                            <span>@article.Category</span>
+                                        }
+                                    </td>
                                     <td>@article.CreateTime.ToString(JIFConsts.DATETIME_DATE)</td>
                                     <td>@article.PublishTime.ToString(JIFConsts.DATETIME_DATE)</td>
                                     <td>

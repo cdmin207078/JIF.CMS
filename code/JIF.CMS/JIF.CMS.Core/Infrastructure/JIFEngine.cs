@@ -49,13 +49,12 @@ namespace JIF.CMS.Core.Infrastructure
         {
             var builder = new ContainerBuilder();
 
-
             //we create new instance of ContainerBuilder
             //because Build() or Update() method can only be called once on a ContainerBuilder.
 
             //dependencies
             var typeFinder = new WebAppTypeFinder();
-            //builder.RegisterInstance(config).As<JIFConfig>().SingleInstance();
+            builder.RegisterInstance(config).As<JIFConfig>().SingleInstance();
             builder.RegisterInstance(this).As<IEngine>().SingleInstance();
             builder.RegisterInstance(typeFinder).As<ITypeFinder>().SingleInstance();
 

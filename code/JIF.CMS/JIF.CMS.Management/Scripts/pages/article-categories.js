@@ -218,7 +218,9 @@
                 type: 'post',
                 data: { sorts: data },
                 success: function (ret) {
-
+                    if (ret.success) {
+                        _cms.ok('保存成功');
+                    }
                 }
             });
         });
@@ -326,11 +328,7 @@
         $(document).on('click', '#btn-picker-cover-img', function () {
             $('#picker input').click();
         });
-
-
     }
-
-
 
     $(function () {
         init();

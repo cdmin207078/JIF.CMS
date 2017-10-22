@@ -13,6 +13,7 @@
                     <input type="text" class="form-control" id="inp-title" placeholder="文章标题" value="@article.Title">
                 </div>
                 <div class="form-group">
+                    <label for="txt-content">正文</label>
                     <div id="txt-content"><textarea style="display:none;">@article.MarkdownContent</textarea></div>
                 </div>
             </div>
@@ -36,6 +37,18 @@
                         }
                     </select>
                 </div>
+
+                <div class="form-group">
+                    <label>所属分类</label>
+                    <select class="form-control select2" id="sel-categories" multiple="multiple">
+                        @foreach (var cate in Model.Categories)
+                        {
+                            <option value="@cate.Current.Id">@cate.Current.Name</option>
+                        }
+                    </select>
+                </div>
+
+
                 <div class="form-group">
                     <label for="inp-pub-tags">标签</label>
                     <input type="text" class="form-control" id="inp-tags" placeholder="标签" value="@(string.Join(",",Model.ArticleTags))" />
@@ -47,15 +60,6 @@
                         }
                     </div>
                 </div>
-                <div class="form-group">
-                    <input type="checkbox" class="minimal" id="inp-allow-comments" @(article.AllowComments ? "checked" : "")>
-                    <label for="inp-allow-comments">允许评论</label>
-                    &nbsp;
-                    <input type="checkbox" class="minimal" id="inp-pub" @(article.IsPublished ? "checked" : "")>
-                    <label for="inp-pub">是否发布</label><small class="text-warning">(* 不发布前台则无法显示)</small>
-                </div>
-
-
 
                 <div class="form-group">
                     <label>文章封面</label>
@@ -71,23 +75,23 @@
                     <div>
                         <ul>
                             @*<li>
-                                <span>gold 接口调用整理.txt</span>
-                                <span>
-                                    <a href="javascript:;" class="btn btn-xs bg-red no-margin" data-toggle="tooltip" data-original-title="删除"><i class="fa fa-trash"></i></a>
-                                </span>
-                            </li>
-                            <li>
-                                <span>数据结构 C#描述.rar</span>
-                                <span>
-                                    <a href="javascript:;" class="btn btn-xs bg-red no-margin" data-toggle="tooltip" data-original-title="删除"><i class="fa fa-trash"></i></a>
-                                </span>
-                            </li>
-                            <li>
-                                <span>cn_windows_server_2012_r2_x64_dvd_2707961.iso</span>
-                                <span>
-                                    <a href="javascript:;" class="btn btn-xs bg-red no-margin" data-toggle="tooltip" data-original-title="删除"><i class="fa fa-trash"></i></a>
-                                </span>
-                            </li>*@
+                                    <span>gold 接口调用整理.txt</span>
+                                    <span>
+                                        <a href="javascript:;" class="btn btn-xs bg-red no-margin" data-toggle="tooltip" data-original-title="删除"><i class="fa fa-trash"></i></a>
+                                    </span>
+                                </li>
+                                <li>
+                                    <span>数据结构 C#描述.rar</span>
+                                    <span>
+                                        <a href="javascript:;" class="btn btn-xs bg-red no-margin" data-toggle="tooltip" data-original-title="删除"><i class="fa fa-trash"></i></a>
+                                    </span>
+                                </li>
+                                <li>
+                                    <span>cn_windows_server_2012_r2_x64_dvd_2707961.iso</span>
+                                    <span>
+                                        <a href="javascript:;" class="btn btn-xs bg-red no-margin" data-toggle="tooltip" data-original-title="删除"><i class="fa fa-trash"></i></a>
+                                    </span>
+                                </li>*@
                         </ul>
                         <p class="picker-attachment-file">
                             添加
@@ -95,6 +99,19 @@
 
                     </div>
 
+                </div>
+            </div>
+
+            <div class="box-footer">
+                <div class="form-group">
+                    <label>高级选项</label>
+                    <div>
+                        <input type="checkbox" class="minimal" id="inp-allow-comments" @(article.AllowComments ? "checked" : "")>
+                        <label for="inp-allow-comments">允许评论</label>
+                        &nbsp;
+                        <input type="checkbox" class="minimal" id="inp-pub" @(article.IsPublished ? "checked" : "")>
+                        <label for="inp-pub">是否发布</label><small class="text-warning">(* 不发布前台则无法显示)</small>
+                    </div>
                 </div>
 
             </div>
@@ -111,10 +128,12 @@
 <input type="hidden" id="inp-id" value="@article.Id" />
 
 @section Scripts{
+    <script src="~/Content/select2/js/select2.full.js"></script>
     @Scripts.Render("~/scripts/editor.md", "~/scripts/datetimepicker", "~/scripts/tagsinput", "~/scripts/page/article")
 }
 
 @section Styles{
+    <link href="~/Content/select2/css/select2.css" rel="stylesheet" />
     @Styles.Render("~/styles/editor.md", "~/styles/datetimepicker", "~/styles/tagsinput")
 
     <style type="text/css">

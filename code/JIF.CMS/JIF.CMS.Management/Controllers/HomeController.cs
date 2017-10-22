@@ -1,4 +1,5 @@
 ﻿using JIF.CMS.Core;
+using JIF.CMS.Core.Cache;
 using JIF.CMS.Core.Configuration;
 using JIF.CMS.Services.Articles;
 using JIF.CMS.Services.Authentication;
@@ -17,50 +18,25 @@ namespace JIF.CMS.Management.Controllers
 {
     public class HomeController : AdminControllerBase
     {
-        public readonly IWorkContext _workContext;
+        private readonly IWorkContext _workContext;
+        private readonly JIFConfig _config;
+        private readonly ICacheManager _cacheManager;
         private readonly IAuthenticationService _authenticationService;
 
-        public HomeController(IWorkContext workContext, IAuthenticationService authenticationService)
+        public HomeController(JIFConfig config, IWorkContext workContext, IAuthenticationService authenticationService, ICacheManager cacheManager)
         {
+            _config = config;
+            _cacheManager = cacheManager;
             _workContext = workContext;
             _authenticationService = authenticationService;
         }
 
-
-        private JIFConfig GetConfig()
-        {
-            //var config = HttpRuntime.Cache.Get("JIFConfig") as JIFConfig;
-            //if (config != null)
-            //    return config;
-
-            //var appsettings = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "appsettings.json");
-
-            //var cdp = new CacheDependency(appsettings);
-            //var setting = JsonConvert.DeserializeObject<JIFConfig>(System.IO.File.ReadAllText(appsettings));
-
-            //HttpContext.Cache.Insert("JIFConfig", setting, cdp);
-
-            //return setting;
-
-            ObjectCache cache = MemoryCache.Default;
-            var config = cache["JIFConfig"] as JIFConfig;
-
-            if (config == null)
-            {
-                CacheItemPolicy policy = new CacheItemPolicy();
-                var appSettingsFile = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "appsettings.json");
-                policy.ChangeMonitors.Add(new HostFileChangeMonitor(new[] { appSettingsFile }));
-
-                config = JsonConvert.DeserializeObject<JIFConfig>(System.IO.File.ReadAllText(appSettingsFile));
-
-                cache.Add("JIFConfig", config, policy);
-            }
-            return config;
-        }
-
         public ActionResult Index()
         {
-            return View(GetConfig());
+            //ViewBag.RedisName = _cacheManager.Get<string>("name:string");
+            ViewBag.RedisName = _cacheManager.Get<string>("cms:class:1:users");
+
+            return View(_config);
         }
 
         public ActionResult CurrentUserInfo(string viewpath)

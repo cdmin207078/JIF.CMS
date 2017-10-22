@@ -4,6 +4,8 @@
 
     var init = function () {
 
+        $('#sel-categories').select2();
+
         // 初始化 编辑器
         _editor = editormd({
             id: 'txt-content',
@@ -50,7 +52,7 @@
 
             $.post('/article/save', data, function (result) {
                 if (result.success) {
-                    _cms.ok('保存成功');
+                    _cms.ok('保存成功', '/article');
                 } else {
                     _cms.err(result.message);
                 }

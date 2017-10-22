@@ -198,7 +198,8 @@ namespace JIF.CMS.Services.Articles
                         join cu in _sysAdminRepository.Table on article.CreateUserId equals cu.Id
                         join uu in _sysAdminRepository.Table on article.UpdateUserId equals uu.Id into auu
                         from uu in auu.DefaultIfEmpty()
-                        join category in _articleCategoryRepository.Table on article.CategoryId equals category.Id
+                        join category in _articleCategoryRepository.Table on article.CategoryId equals category.Id into cates
+                        from category in cates.DefaultIfEmpty()
                         where article.IsDeleted == isDeleted
                         select new SearchArticleListOutput
                         {
@@ -275,6 +276,8 @@ namespace JIF.CMS.Services.Articles
             }
 
             _articleCategoryRepository.Delete(category);
+
+            //TODO 删除文章分类, 将所属分类下所有文章归为, 未分类
         }
 
         /// <summary>

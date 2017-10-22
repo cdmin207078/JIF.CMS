@@ -149,5 +149,16 @@ namespace JIF.CMS.Test.Core.Tests
 
             Console.WriteLine(Uri.EscapeDataString(url));
         }
+
+        [TestMethod]
+        public void AWKLJD()
+        {
+
+            Console.WriteLine(HttpUtility.UrlDecode("%E6%89%8B%E6%9C%BA%E5%8F%B7%2F%E9%82%AE%E7%AE%B1%2F%E7%94%A8%E6%88%B7%E5%90%8D"));
+            var s = "";
+            s = null;
+
+            Console.WriteLine(s ?? "空");
+        }
     }
 }

@@ -99,6 +99,10 @@
       <Project>{51e131eb-eac0-4339-99c2-2477712459e4}</Project>
       <Name>JIF.CMS.Data.EntityFramework</Name>
     </ProjectReference>
+    <ProjectReference Include="..\JIF.CMS.Redis\JIF.CMS.Redis.csproj">
+      <Project>{829814f2-4f75-4388-9da9-577486d332e9}</Project>
+      <Name>JIF.CMS.Redis</Name>
+    </ProjectReference>
     <ProjectReference Include="..\JIF.CMS.Services\JIF.CMS.Services.csproj">
       <Project>{9532bcac-0342-4297-a8b6-6028326c01b1}</Project>
       <Name>JIF.CMS.Services</Name>
