@@ -22,39 +22,39 @@ namespace JIF.CMS.Management.API.Controllers
         [WebApi.Framework.Filters.AdminAuthorize]
         public IHttpActionResult GetArticles(string q = "", int pageIndex = JIFConsts.SYS_PAGE_INDEX, int pageSize = JIFConsts.SYS_PAGE_SIZE)
         {
-            return AjaxOk(_articleService.GetArticles(q, false, pageIndex, pageSize).ToPagedData());
+            return JsonOk(_articleService.GetArticles(q, false, pageIndex, pageSize).ToPagedData());
         }
 
         [HttpGet]
         public IHttpActionResult GetCategories()
         {
-            return AjaxOk(_articleService.GetCategories());
+            return JsonOk(_articleService.GetCategories());
         }
 
         [HttpGet]
         public IHttpActionResult GetArticle(int id)
         {
-            return AjaxOk(_articleService.GetArticle(id));
+            return JsonOk(_articleService.GetArticle(id));
         }
 
         [HttpPost]
         public IHttpActionResult AddArticle(InsertArticleInput model)
         {
             _articleService.Insert(model);
-            return AjaxOk("文章添加成功");
+            return JsonOk("文章添加成功");
         }
 
         [HttpPost]
         public IHttpActionResult UpdateArticle(int id, InsertArticleInput model)
         {
             _articleService.Update(id, model);
-            return AjaxOk("文章修改成功");
+            return JsonOk("文章修改成功");
         }
 
         [HttpPost]
         public IHttpActionResult AddCategory(ArticleCategory model)
         {
-            return AjaxFail("文章分类添加 - 未实现");
+            return JsonFail("文章分类添加 - 未实现");
         }
     }
 }

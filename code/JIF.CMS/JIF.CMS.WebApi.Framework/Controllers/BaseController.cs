@@ -12,11 +12,11 @@ namespace JIF.CMS.WebApi.Framework.Controllers
     {
         [NonAction]
         /// <summary>
-        /// Ajax请求成功
+        /// Json请求成功
         /// </summary>
         /// <param name="message">附加消息</param>
         /// <returns></returns>
-        public IHttpActionResult AjaxOk()
+        public IHttpActionResult JsonOk()
         {
             return Ok(new
             {
@@ -26,10 +26,10 @@ namespace JIF.CMS.WebApi.Framework.Controllers
 
         [NonAction]
         /// <summary>
-        /// Ajax请求成功
+        /// Json请求成功
         /// </summary>
         /// <returns></returns>
-        public IHttpActionResult AjaxOk(string message)
+        public IHttpActionResult JsonOk(string message)
         {
             return Ok(new
             {
@@ -40,12 +40,12 @@ namespace JIF.CMS.WebApi.Framework.Controllers
 
         [NonAction]
         /// <summary>
-        /// Ajax请求成功
+        /// Json请求成功
         /// </summary>
         /// <param name="code">错误码</param>
         /// <param name="message">附加消息</param>
         /// <returns></returns>
-        public IHttpActionResult AjaxOk(int code, string message)
+        public IHttpActionResult JsonOk(int code, string message)
         {
             return Ok(new
             {
@@ -57,12 +57,12 @@ namespace JIF.CMS.WebApi.Framework.Controllers
 
         [NonAction]
         /// <summary>
-        /// Ajax请求成功
+        /// Json请求成功
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="data">返回数据</param>
         /// <returns></returns>
-        public IHttpActionResult AjaxOk<T>(T data)
+        public IHttpActionResult JsonOk<T>(T data)
         {
             return Ok(new
             {
@@ -73,13 +73,13 @@ namespace JIF.CMS.WebApi.Framework.Controllers
 
         [NonAction]
         /// <summary>
-        /// Ajax请求成功
+        /// Json请求成功
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="data">返回数据</param>
         /// <param name="message">附加消息</param>
         /// <returns></returns>
-        public IHttpActionResult AjaxOk<T>(string message, T data)
+        public IHttpActionResult JsonOk<T>(string message, T data)
         {
             return Ok(new
             {
@@ -91,14 +91,14 @@ namespace JIF.CMS.WebApi.Framework.Controllers
 
         [NonAction]
         /// <summary>
-        /// Ajax请求成功
+        /// Json请求成功
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="data">返回数据</param>
         /// <param name="code">错误码</param>
         /// <param name="message">附加消息</param>
         /// <returns></returns>
-        public IHttpActionResult AjaxOk<T>(int code, string message, T data)
+        public IHttpActionResult JsonOk<T>(int code, string message, T data)
         {
             return Ok(new
             {
@@ -111,10 +111,10 @@ namespace JIF.CMS.WebApi.Framework.Controllers
 
         [NonAction]
         /// <summary>
-        /// Ajax请求错误
+        /// Json请求错误
         /// </summary>
         /// <returns></returns>
-        public IHttpActionResult AjaxFail()
+        public IHttpActionResult JsonFail()
         {
             return Ok(new
             {
@@ -124,11 +124,11 @@ namespace JIF.CMS.WebApi.Framework.Controllers
 
         [NonAction]
         /// <summary>
-        /// Ajax请求错误
+        /// Json请求错误
         /// </summary>
         /// <param name="message">附加消息</param>
         /// <returns></returns>
-        public IHttpActionResult AjaxFail(string message)
+        public IHttpActionResult JsonFail(string message)
         {
             return Ok(new
             {
@@ -139,12 +139,12 @@ namespace JIF.CMS.WebApi.Framework.Controllers
 
         [NonAction]
         /// <summary>
-        /// Ajax请求错误
+        /// Json请求错误
         /// </summary>
         /// <param name="code">错误码</param>
         /// <param name="message">附加消息</param>
         /// <returns></returns>
-        public IHttpActionResult AjaxFail(int code, string message)
+        public IHttpActionResult JsonFail(int code, string message)
         {
             return Ok(new
             {
@@ -156,12 +156,12 @@ namespace JIF.CMS.WebApi.Framework.Controllers
 
         [NonAction]
         /// <summary>
-        /// Ajax请求错误
+        /// Json请求错误
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="data">返回数据</param>
         /// <returns></returns>
-        public IHttpActionResult AjaxFail<T>(T data)
+        public IHttpActionResult JsonFail<T>(T data)
         {
             return Ok(new
             {
@@ -172,13 +172,13 @@ namespace JIF.CMS.WebApi.Framework.Controllers
 
         [NonAction]
         /// <summary>
-        /// Ajax请求错误
+        /// Json请求错误
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="data">返回数据</param>
         /// <param name="message">附加消息</param>
         /// <returns></returns>
-        public IHttpActionResult AjaxFail<T>(string message, T data)
+        public IHttpActionResult JsonFail<T>(string message, T data)
         {
             return Ok(new
             {
@@ -190,14 +190,14 @@ namespace JIF.CMS.WebApi.Framework.Controllers
 
         [NonAction]
         /// <summary>
-        /// Ajax请求错误
+        /// Json请求错误
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="code">错误码</param>
         /// <param name="data">返回数据</param>
         /// <param name="message">附加消息</param>
         /// <returns></returns>
-        public IHttpActionResult AjaxFail<T>(int code, string message, T data)
+        public IHttpActionResult JsonFail<T>(int code, string message, T data)
         {
             return Ok(new
             {
