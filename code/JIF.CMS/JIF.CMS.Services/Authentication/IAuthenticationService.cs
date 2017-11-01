@@ -17,7 +17,7 @@ namespace JIF.CMS.Services.Authentication
         /// </summary>
         /// <param name="customer">Customer</param>
         /// <param name="createPersistentCookie">A value indicating whether to create a persistent cookie</param>
-        void SignIn(IUser user, bool createPersistentCookie);
+        void SignIn(IUser user);
 
         /// <summary>
         /// Sign out

@@ -33,7 +33,7 @@ namespace JIF.CMS.Management.API.Controllers
             {
                 var sysAdmin = _sysManagerService.Get(userInfo.UserId);
 
-                _authenticationService.SignIn(sysAdmin, true);
+                _authenticationService.SignIn(sysAdmin);
 
                 return JsonOk("登陆成功");
             }

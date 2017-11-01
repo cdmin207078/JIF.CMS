@@ -47,10 +47,6 @@ namespace JIF.CMS.Services.Authentication
         /// <returns></returns>
         public IUser GetAuthenticatedUser()
         {
-
-            var httpcontext = System.Web.HttpContext.Current;
-
-
             if (_cachedUser != null)
                 return _cachedUser;
 
@@ -75,8 +71,12 @@ namespace JIF.CMS.Services.Authentication
         /// </summary>
         /// <param name="user"></param>
         /// <param name="createPersistentCookie"></param>
-        public void SignIn(IUser user, bool createPersistentCookie)
+        public void SignIn(IUser user)
         {
+            // 根据IsPersistent是否为true, 以及webconfig中的timeout来确定cookies的到期时间
+            // 如果 Cookie 是持久的, 为 true；否则为 false
+            var isPersistent = true;
+
             var now = DateTime.UtcNow.ToLocalTime();
 
             var ticket = new FormsAuthenticationTicket(
@@ -84,7 +84,7 @@ namespace JIF.CMS.Services.Authentication
               user.Account,
               now,
               now.Add(_expirationTimeSpan),
-              createPersistentCookie,
+              isPersistent,
               user.Id.ToString(),
               FormsAuthentication.FormsCookiePath);
 

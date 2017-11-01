@@ -39,7 +39,7 @@ namespace JIF.CMS.Management.Controllers
             {
                 var sysAdmin = _sysManagerService.Get(userInfo.UserId);
 
-                _authenticationService.SignIn(sysAdmin, true);
+                _authenticationService.SignIn(sysAdmin);
 
                 if (!String.IsNullOrEmpty(returnUrl) && Url.IsLocalUrl(returnUrl))
                     return Redirect(returnUrl);

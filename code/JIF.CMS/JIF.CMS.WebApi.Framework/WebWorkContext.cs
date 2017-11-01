@@ -22,24 +22,7 @@ namespace JIF.CMS.WebApi.Framework
                 if (_cachedUser != null)
                     return _cachedUser;
 
-                IUser user = null;
-
-                // 针对后台job 调用,无 httpcontext 对象,则使用后台任务帐号
-                // check whether request is made by a background task
-                // in this case return built-in user record for background task
-
-                // if (_httpContext == null)
-                // {
-                //     user = _userService.GetCustomerBySystemName(SystemCustomerNames.BackgroundTask);
-                // }
-
-                // registered user
-                if (user == null)
-                {
-                    user = EngineContext.Current.Resolve<IAuthenticationService>().GetAuthenticatedUser();
-                }
-
-                _cachedUser = user;
+                _cachedUser = EngineContext.Current.Resolve<IAuthenticationService>().GetAuthenticatedUser();
 
                 return _cachedUser;
             }

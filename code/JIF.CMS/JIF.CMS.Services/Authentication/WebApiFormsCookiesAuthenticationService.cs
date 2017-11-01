@@ -15,7 +15,7 @@ namespace JIF.CMS.Services.Authentication
             throw new NotImplementedException();
         }
 
-        public void SignIn(IUser user, bool createPersistentCookie)
+        public void SignIn(IUser user)
         {
             throw new JIFException("生成token, 关联redis, 返回用户信息. 未实现");
         }
