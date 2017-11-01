@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Common.Logging;
+using JIF.CMS.Core.Infrastructure;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,6 +12,13 @@ namespace JIF.CMS.WebApi.Framework.Controllers
 {
     public class BaseController : ApiController
     {
+        protected readonly ILog Logger;
+
+        public BaseController()
+        {
+            Logger = EngineContext.Current.Resolve<ILog>();
+        }
+
         [NonAction]
         /// <summary>
         /// Json请求成功

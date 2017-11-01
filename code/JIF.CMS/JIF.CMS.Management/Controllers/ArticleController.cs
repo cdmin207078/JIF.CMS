@@ -102,14 +102,14 @@ namespace JIF.CMS.Management.Controllers
             }
 
 
-            return AjaxOk();
+            return JsonOk();
         }
 
         // 删除文章
         [HttpPost]
         public JsonResult DeleteArticle(int id)
         {
-            return AjaxOk();
+            return JsonOk();
         }
 
         #endregion
@@ -154,7 +154,7 @@ namespace JIF.CMS.Management.Controllers
         public ActionResult SaveCategoriesSort(List<SaveCagegoriesSortInput> sorts)
         {
             _articleService.SaveCategoriesSort(sorts);
-            return AjaxOk();
+            return JsonOk();
         }
 
         [HttpPost]
@@ -170,7 +170,7 @@ namespace JIF.CMS.Management.Controllers
             file.SaveAs(filepath);
 
             var relativePath = Path.Combine(@"\", _base_attachment, _cover_img_folder, filename + filext);
-            return AjaxOk(relativePath);
+            return JsonOk(relativePath);
         }
 
         // 保存分类信息
@@ -186,7 +186,7 @@ namespace JIF.CMS.Management.Controllers
                 _articleService.Update(id, model);
             }
 
-            return AjaxOk();
+            return JsonOk();
         }
 
         // 删除分类
@@ -194,7 +194,7 @@ namespace JIF.CMS.Management.Controllers
         public JsonResult DeleteCategory(int id)
         {
             _articleService.DeleteArticleCategory(id);
-            return AjaxOk();
+            return JsonOk();
         }
 
         #endregion
@@ -212,14 +212,14 @@ namespace JIF.CMS.Management.Controllers
         [HttpPost]
         public JsonResult SaveTag()
         {
-            return AjaxOk();
+            return JsonOk();
         }
 
         // 删除标签
         [HttpPost]
         public JsonResult DelTag()
         {
-            return AjaxOk();
+            return JsonOk();
         }
 
         #endregion

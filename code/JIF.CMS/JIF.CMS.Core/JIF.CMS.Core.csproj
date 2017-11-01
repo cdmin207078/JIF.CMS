@@ -159,7 +159,7 @@
     <Compile Include="IWorkContext.cs" />
     <Compile Include="JIFConsts.cs" />
     <Compile Include="JIFException.cs" />
-    <Compile Include="Loggers\Log4netLoggers.cs" />
+    <Compile Include="Loggers\ExceptionslessLogger.cs" />
     <Compile Include="PagedData.cs" />
     <Compile Include="PagedList.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

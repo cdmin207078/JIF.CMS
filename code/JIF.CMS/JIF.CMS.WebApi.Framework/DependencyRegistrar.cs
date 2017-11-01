@@ -18,6 +18,7 @@ using JIF.CMS.Services.Authentication;
 using JIF.CMS.Services.Articles;
 using JIF.CMS.Services.SysManager;
 using System.Web;
+using Common.Logging;
 
 namespace JIF.CMS.WebApi.Framework
 {
@@ -66,8 +67,13 @@ namespace JIF.CMS.WebApi.Framework
             // OPTIONAL: work context
             builder.RegisterType<WebWorkContext>().As<IWorkContext>().InstancePerLifetimeScope();
 
+            // OPTIONAL: logging
+            builder.RegisterInstance<ILog>(LogManager.GetLogger("")).SingleInstance();
+
             // OPTIONAL: AuthenticationService
             builder.RegisterType<FormsCookiesAuthenticationService>().As<IAuthenticationService>().InstancePerLifetimeScope();
+
+
 
             // Services
             builder.RegisterType<ArticleService>().As<IArticleService>().InstancePerLifetimeScope();

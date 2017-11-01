@@ -63,11 +63,11 @@ namespace JIF.CMS.Management.Controllers
                 var chunks = string.Join(",", Directory.GetFiles(Path.Combine(_attachmentRootPath, chunkFolder))
                     .Select(d => d.Substring(d.LastIndexOf('\\') + 1)).ToArray());
 
-                return AjaxOk(new { mode = Uploadmode.Continued, chunks = chunks });
+                return JsonOk(new { mode = Uploadmode.Continued, chunks = chunks });
             }
             else
             {
-                return AjaxOk(new { mode = Uploadmode.New });
+                return JsonOk(new { mode = Uploadmode.New });
             }
         }
 
@@ -121,7 +121,7 @@ namespace JIF.CMS.Management.Controllers
                 file.SaveAs(filepath);
             }
 
-            return AjaxOk();
+            return JsonOk();
         }
 
         [HttpPost]
@@ -160,10 +160,10 @@ namespace JIF.CMS.Management.Controllers
             }
             else
             {
-                return AjaxFail("文件分片数不够");
+                return JsonFail("文件分片数不够");
             }
 
-            return AjaxOk();
+            return JsonOk();
         }
     }
 }

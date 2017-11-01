@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace JIF.CMS.Core.Loggers
 {
-    public class Log4netLoggers : ILog
+    class ExceptionslessLogger : ILog
     {
         public IVariablesContext GlobalVariablesContext
         {

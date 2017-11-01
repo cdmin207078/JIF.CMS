@@ -53,14 +53,7 @@ namespace JIF.CMS.Management.API.Controllers
         [HttpGet]
         public IHttpActionResult Now()
         {
-            var log = LogManager.GetLogger<WelcomeController>();
-
-            //log.Trace("trace");
-            //log.Debug("debug");
-            //log.Info("info");
-            //log.Warn("warn");
-            //log.Error("error");
-            //log.Fatal("fatal");
+            Logger.Info("进入 Welcome.Now 方法");
 
             var models = new List<LoginViewModel>
             {
@@ -81,87 +74,21 @@ namespace JIF.CMS.Management.API.Controllers
                     Account = "暗雲",
                     Password = "ANYUN",
                     Captcha = "12ac"
-                },
-
-                                new LoginViewModel
-                {
-                    Account = "admin",
-                    Password = "admin1234567890!123",
-                    Captcha = "PXQ4"
-                },
-                new LoginViewModel
-                {
-                    Account = "小风",
-                    Password = "xiaofeng!@@",
-                    Captcha = "QOCS"
-                },
-                new LoginViewModel
-                {
-                    Account = "暗雲",
-                    Password = "ANYUN",
-                    Captcha = "12ac"
-                },
-
-                                new LoginViewModel
-                {
-                    Account = "admin",
-                    Password = "admin1234567890!123",
-                    Captcha = "PXQ4"
-                },
-                new LoginViewModel
-                {
-                    Account = "小风",
-                    Password = "xiaofeng!@@",
-                    Captcha = "QOCS"
-                },
-                new LoginViewModel
-                {
-                    Account = "暗雲",
-                    Password = "ANYUN",
-                    Captcha = "12ac"
-                },
-
-                                new LoginViewModel
-                {
-                    Account = "admin",
-                    Password = "admin1234567890!123",
-                    Captcha = "PXQ4"
-                },
-                new LoginViewModel
-                {
-                    Account = "小风",
-                    Password = "xiaofeng!@@",
-                    Captcha = "QOCS"
-                },
-                new LoginViewModel
-                {
-                    Account = "暗雲",
-                    Password = "ANYUN",
-                    Captcha = "12ac"
-                },
-
-                                new LoginViewModel
-                {
-                    Account = "admin",
-                    Password = "admin1234567890!123",
-                    Captcha = "PXQ4"
-                },
-                new LoginViewModel
-                {
-                    Account = "小风",
-                    Password = "xiaofeng!@@",
-                    Captcha = "QOCS"
-                },
-                new LoginViewModel
-                {
-                    Account = "暗雲",
-                    Password = "ANYUN",
-                    Captcha = "12ac"
-                },
-
+                }
             };
 
-            log.Info(string.Format("传入数据: {0}", JsonConvert.SerializeObject(models)));
+            Logger.Info(string.Format("传入数据: {0}", JsonConvert.SerializeObject(models)));
+
+            try
+            {
+                var a = 1;
+                var b = 0;
+                var c = a / b;
+            }
+            catch (Exception ex)
+            {
+                Logger.Error("Welcome 异常", ex);
+            }
 
             return JsonOk(DateTime.Now.ToString());
         }
