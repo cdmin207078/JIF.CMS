@@ -26,7 +26,7 @@ namespace JIF.CMS.Management.API
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",
                 routeTemplate: "{controller}/{action}/{id}",
-                defaults: new { controller = "Home", action = "Index", id = RouteParameter.Optional }
+                defaults: new { id = RouteParameter.Optional }
             );
 
             //config.Routes.MapHttpRoute(

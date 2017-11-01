@@ -55,6 +55,7 @@
     <Compile Include="Attachments\IAttachmentService.cs" />
     <Compile Include="Authentication\FormsCookiesAuthenticationService.cs" />
     <Compile Include="Authentication\IAuthenticationService.cs" />
+    <Compile Include="Authentication\JsonTokenAuthenticationService.cs" />
     <Compile Include="Authentication\WebApiFormsCookiesAuthenticationService.cs" />
     <Compile Include="BaseService.cs" />
     <Compile Include="IBaseService.cs" />

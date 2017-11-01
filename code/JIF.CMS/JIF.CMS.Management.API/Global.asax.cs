@@ -20,12 +20,10 @@ namespace JIF.CMS.Management.API
         protected void Application_Start()
         {
             GlobalConfiguration.Configure(WebApiConfig.Register);
-
-            var config = GlobalConfiguration.Configuration;
+            GlobalConfiguration.Configuration.Filters.Add(new WebApiAppExceptionAttribute());
 
             EngineContext.Initialize(false);
-
-            config.DependencyResolver = new AutofacWebApiDependencyResolver(EngineContext.Current.ContainerManager.Container);
+            GlobalConfiguration.Configuration.DependencyResolver = new AutofacWebApiDependencyResolver(EngineContext.Current.ContainerManager.Container);
         }
     }
 }

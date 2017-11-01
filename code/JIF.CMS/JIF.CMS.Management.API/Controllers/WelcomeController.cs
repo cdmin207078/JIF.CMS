@@ -3,6 +3,7 @@ using JIF.CMS.Management.API.Models;
 using JIF.CMS.Services.Authentication;
 using JIF.CMS.Services.SysManager;
 using JIF.CMS.WebApi.Framework.Controllers;
+using JIF.CMS.WebApi.Framework.Filters;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -40,16 +41,6 @@ namespace JIF.CMS.Management.API.Controllers
             return JsonFail("登陆失败");
         }
 
-
-        [HttpPost]
-        public IHttpActionResult Hello(string name)
-        {
-            if (string.IsNullOrWhiteSpace(name))
-                return JsonFail("no name");
-
-            return JsonOk(string.Format("Hello, {0}", name));
-        }
-
         [HttpGet]
         public IHttpActionResult Now()
         {
@@ -79,30 +70,12 @@ namespace JIF.CMS.Management.API.Controllers
 
             Logger.Info(string.Format("传入数据: {0}", JsonConvert.SerializeObject(models)));
 
-            try
-            {
-                var a = 1;
-                var b = 0;
-                var c = a / b;
-            }
-            catch (Exception ex)
-            {
-                Logger.Error("Welcome 异常", ex);
-            }
+            //var a = 1;
+            //var b = 0;
+            //var c = a / b;  // throw exception
+
 
             return JsonOk(DateTime.Now.ToString());
-        }
-
-        [HttpPost]
-        public IHttpActionResult LoginTo(LoginViewModel model)
-        {
-            return Ok(string.Format("account: {0}, password: {1}, code: {2}", model.Account, model.Password, model.Captcha));
-        }
-
-        [HttpPost]
-        public IHttpActionResult GetStringArray(List<string> names)
-        {
-            return Ok(string.Join(",", names));
         }
     }
 }

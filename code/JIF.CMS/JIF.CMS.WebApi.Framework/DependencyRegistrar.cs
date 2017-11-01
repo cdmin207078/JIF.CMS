@@ -71,7 +71,7 @@ namespace JIF.CMS.WebApi.Framework
             builder.RegisterInstance<ILog>(LogManager.GetLogger("")).SingleInstance();
 
             // OPTIONAL: AuthenticationService
-            builder.RegisterType<FormsCookiesAuthenticationService>().As<IAuthenticationService>().InstancePerLifetimeScope();
+            builder.RegisterType<JsonTokenAuthenticationService>().As<IAuthenticationService>().InstancePerLifetimeScope();
 
 
 

@@ -1,0 +1,56 @@
+{
+	"id": "2df5b349-a68c-8b3e-fe64-17973efea1bc",
+	"name": "JIF.CMS.WebAPI 测试",
+	"description": "",
+	"order": [
+		"fd07c9c2-21f6-fae2-1bb9-a9a720e84573",
+		"a2b02ca0-ca76-41db-b319-4a8ad3fa34db"
+	],
+	"folders": [],
+	"timestamp": 1509440585850,
+	"owner": 0,
+	"remoteLink": "",
+	"public": false,
+	"requests": [
+		{
+			"id": "a2b02ca0-ca76-41db-b319-4a8ad3fa34db",
+			"headers": "",
+			"url": "http://localhost:60002/welcome/now",
+			"pathVariables": {},
+			"preRequestScript": null,
+			"method": "GET",
+			"collectionId": "2df5b349-a68c-8b3e-fe64-17973efea1bc",
+			"data": null,
+			"dataMode": "params",
+			"name": "welcome - now",
+			"description": "",
+			"descriptionFormat": "html",
+			"time": 1509533949927,
+			"version": 2,
+			"responses": [],
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {}
+		},
+		{
+			"id": "fd07c9c2-21f6-fae2-1bb9-a9a720e84573",
+			"headers": "",
+			"url": "http://localhost:60002/dashboard/goo?name=老大",
+			"pathVariables": {},
+			"preRequestScript": null,
+			"method": "GET",
+			"collectionId": "2df5b349-a68c-8b3e-fe64-17973efea1bc",
+			"data": null,
+			"dataMode": "params",
+			"name": "dashboard - goo",
+			"description": "dashboard -",
+			"descriptionFormat": "html",
+			"time": 1509533932120,
+			"version": 2,
+			"responses": [],
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {}
+		}
+	]
+}

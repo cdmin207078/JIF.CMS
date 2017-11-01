@@ -1,4 +1,6 @@
-﻿using JIF.CMS.Core;
+﻿using Common.Logging;
+using JIF.CMS.Core;
+using JIF.CMS.Core.Infrastructure;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -17,17 +19,29 @@ namespace JIF.CMS.WebApi.Framework.Filters
         {
             var response = new HttpResponseMessage();
 
-            response.StatusCode = HttpStatusCode.OK;
-            response.Content = new StringContent(JsonConvert.SerializeObject(new
+            if (context.Exception is JIFException)
             {
-                success = false,
-                message = context.Exception.Message
-            }), Encoding.UTF8, "application/json");
+                response.StatusCode = HttpStatusCode.OK;
+                response.Content = new StringContent(JsonConvert.SerializeObject(new
+                {
+                    success = false,
+                    message = context.Exception.Message
+                }), Encoding.UTF8, "application/json");
+            }
+            else
+            {
+                var code = Guid.NewGuid().ToString("N"); // 去掉短横线
 
-            // 系统异常, 记录日志
-            if (!(context.Exception is JIFException))
-            {
-                //..记录日志
+                response.StatusCode = HttpStatusCode.BadRequest;
+                response.Content = new StringContent(JsonConvert.SerializeObject(new
+                {
+                    code = code,
+                    success = false,
+                    message = "处理失败, 请联系系统管理员. 请将 code 发送给管理员, 谢谢"
+                }), Encoding.UTF8, "application/json");
+
+                // 记录日志
+                EngineContext.Current.Resolve<ILog>().Fatal(code, context.Exception);
             }
 
 
