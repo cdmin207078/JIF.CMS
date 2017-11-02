@@ -80,6 +80,7 @@
     <Compile Include="Tests\HttpClientTest.cs" />
     <Compile Include="Tests\StackExchangeRedisTest.cs" />
     <Compile Include="Tests\EnumExtensionsTest.cs" />
+    <Compile Include="Tests\AsyncCodeTest.cs" />
     <Compile Include="Tests\URLEncodeTest.cs" />
   </ItemGroup>
   <ItemGroup>

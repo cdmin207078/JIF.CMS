@@ -36,6 +36,16 @@ namespace JIF.CMS.Test.Core.Tests
             Console.WriteLine(EnumExtensionsType.BlackBerry.GetDescription());
         }
 
+        [TestMethod]
+        public void MyTestMethod()
+        {
+            Console.WriteLine(Convert.ToBoolean(-1));
+            Console.WriteLine(Convert.ToBoolean(0));
+            Console.WriteLine(Convert.ToBoolean(1));
+
+            Console.WriteLine(Convert.ToBoolean(1.2));
+
+        }
 
         enum EnumExtensionsType
         {

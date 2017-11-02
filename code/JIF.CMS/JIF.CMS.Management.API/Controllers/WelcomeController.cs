@@ -1,4 +1,5 @@
 ﻿using Common.Logging;
+using JIF.CMS.Core;
 using JIF.CMS.Management.API.Models;
 using JIF.CMS.Services.Authentication;
 using JIF.CMS.Services.SysManager;
@@ -27,6 +28,9 @@ namespace JIF.CMS.Management.API.Controllers
         [HttpPost]
         public IHttpActionResult Login(LoginViewModel model)
         {
+            if (model == null)
+                throw new JIFException("登陆信息为空");
+
             var userInfo = _sysManagerService.Login(model.Account, model.Password);
 
             if (userInfo != null)

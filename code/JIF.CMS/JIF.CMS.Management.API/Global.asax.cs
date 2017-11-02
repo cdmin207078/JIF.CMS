@@ -9,9 +9,11 @@ using JIF.CMS.Services.Authentication;
 using JIF.CMS.Services.SysManager;
 using JIF.CMS.WebApi.Framework;
 using JIF.CMS.WebApi.Framework.Filters;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Reflection;
 using System.Web.Http;
+using System.Web.Http.Filters;
 
 namespace JIF.CMS.Management.API
 {
@@ -20,7 +22,12 @@ namespace JIF.CMS.Management.API
         protected void Application_Start()
         {
             GlobalConfiguration.Configure(WebApiConfig.Register);
-            GlobalConfiguration.Configuration.Filters.Add(new WebApiAppExceptionAttribute());
+            GlobalConfiguration.Configuration.Filters.AddRange(new List<IFilter>
+            {
+                new WebApiAppExceptionAttribute(),
+                new ValidateModelAttribute()
+            });
+
 
             EngineContext.Initialize(false);
             GlobalConfiguration.Configuration.DependencyResolver = new AutofacWebApiDependencyResolver(EngineContext.Current.ContainerManager.Container);

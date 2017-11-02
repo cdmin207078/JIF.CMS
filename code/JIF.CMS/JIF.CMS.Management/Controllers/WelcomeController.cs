@@ -2,6 +2,7 @@
 using JIF.CMS.Services.Authentication;
 using JIF.CMS.Services.SysManager;
 using JIF.CMS.Web.Framework.Controllers;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,26 +29,12 @@ namespace JIF.CMS.Management.Controllers
             return View();
         }
 
-        [HttpPost]
-        public ActionResult Index(string account, string password, string returnUrl)
+        public class OrderResult
         {
-            AntiForgery.Validate();
+            public int Id { get; set; }
 
-            var userInfo = _sysManagerService.Login(account, password);
+            public bool PayResult { get; set; }
 
-            if (userInfo != null)
-            {
-                var sysAdmin = _sysManagerService.Get(userInfo.UserId);
-
-                _authenticationService.SignIn(sysAdmin);
-
-                if (!String.IsNullOrEmpty(returnUrl) && Url.IsLocalUrl(returnUrl))
-                    return Redirect(returnUrl);
-                else
-                    return Redirect("/");
-            }
-
-            return View();
         }
     }
 }

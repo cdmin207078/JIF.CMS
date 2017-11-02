@@ -41,7 +41,6 @@ namespace JIF.CMS.WebApi.Framework.Filters
                     message = err
                 }), Encoding.UTF8, "application/json");
 
-
                 response.StatusCode = HttpStatusCode.OK;
 
                 actionContext.Response = response;
