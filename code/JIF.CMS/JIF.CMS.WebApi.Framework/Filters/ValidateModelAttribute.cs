@@ -8,10 +8,11 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web.Http.Controllers;
 using System.Web.Http.Filters;
+using System.Threading;
 
 namespace JIF.CMS.WebApi.Framework.Filters
 {
-    public class ValidateModelAttribute : ActionFilterAttribute
+    public class ValidateViewModelAttribute : ActionFilterAttribute
     {
         public override void OnActionExecuting(HttpActionContext actionContext)
         {

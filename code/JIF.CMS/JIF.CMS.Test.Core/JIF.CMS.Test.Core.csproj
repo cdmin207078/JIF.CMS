@@ -77,7 +77,7 @@
     <Compile Include="Tests\ImageHelperTest.cs" />
     <Compile Include="Tests\GenericStudyTest.cs" />
     <Compile Include="Tests\Contravariant_Covariant_Test.cs" />
-    <Compile Include="Tests\HttpClientTest.cs" />
+    <Compile Include="Tests\RestSharpTest.cs" />
     <Compile Include="Tests\StackExchangeRedisTest.cs" />
     <Compile Include="Tests\EnumExtensionsTest.cs" />
     <Compile Include="Tests\AsyncCodeTest.cs" />

@@ -65,7 +65,7 @@ namespace JIF.CMS.Web.Framework
             // OPTIONAL: work context
             builder.RegisterType<WebWorkContext>().As<IWorkContext>().InstancePerLifetimeScope();
 
-            // OPTIONAL: setting Caches
+            // OPTIONAL: Caches
             if (config.RedisConfig != null && config.RedisConfig.Enabled)
             {
                 // 首先是 ConnectionMultiplexer 的封装，ConnectionMultiplexer对象是StackExchange.Redis最中枢的对象。

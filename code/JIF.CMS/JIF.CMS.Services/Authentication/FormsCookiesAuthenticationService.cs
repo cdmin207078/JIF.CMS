@@ -36,7 +36,9 @@ namespace JIF.CMS.Services.Authentication
                 return null;
             }
 
+            // TODO: 需要缓存一下. redis
             var user = EngineContext.Current.Resolve<ISysManagerService>().Get(int.Parse(uid));
+
             return user;
         }
 
@@ -67,10 +69,9 @@ namespace JIF.CMS.Services.Authentication
         }
 
         /// <summary>
-        /// 
+        /// 用户登入
         /// </summary>
         /// <param name="user"></param>
-        /// <param name="createPersistentCookie"></param>
         public void SignIn(IUser user)
         {
             // 根据IsPersistent是否为true, 以及webconfig中的timeout来确定cookies的到期时间
@@ -107,6 +108,9 @@ namespace JIF.CMS.Services.Authentication
             _cachedUser = user;
         }
 
+        /// <summary>
+        /// 用户登出
+        /// </summary>
         public void SignOut()
         {
             _cachedUser = null;

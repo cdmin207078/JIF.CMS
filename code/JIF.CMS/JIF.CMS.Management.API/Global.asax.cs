@@ -25,7 +25,6 @@ namespace JIF.CMS.Management.API
             GlobalConfiguration.Configuration.Filters.AddRange(new List<IFilter>
             {
                 new WebApiAppExceptionAttribute(),
-                new ValidateModelAttribute()
             });
 
 

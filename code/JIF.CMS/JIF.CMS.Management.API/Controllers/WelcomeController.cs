@@ -1,5 +1,8 @@
 ﻿using Common.Logging;
 using JIF.CMS.Core;
+using JIF.CMS.Core.Domain;
+using JIF.CMS.Core.Domain.Articles;
+using JIF.CMS.Core.Infrastructure;
 using JIF.CMS.Management.API.Models;
 using JIF.CMS.Services.Authentication;
 using JIF.CMS.Services.SysManager;
@@ -26,6 +29,7 @@ namespace JIF.CMS.Management.API.Controllers
         }
 
         [HttpPost]
+        [ValidateViewModel]
         public IHttpActionResult Login(LoginViewModel model)
         {
             if (model == null)
@@ -81,5 +85,62 @@ namespace JIF.CMS.Management.API.Controllers
 
             return JsonOk(DateTime.Now.ToString());
         }
+
+
+        #region RestSharpTest Methods
+
+        [HttpGet]
+        public IHttpActionResult SayHello(string name)
+        {
+            return JsonOk(string.Format("Hello {0}", name));
+        }
+
+        [HttpPost]
+        [ValidateViewModel]
+        public IHttpActionResult Register(LoginViewModel model)
+        {
+            if (model == null)
+                throw new JIFException("注册信息为空");
+
+            model.Account = string.Format("账号 - {0}", model.Account);
+            model.Password = string.Format("密码 - {0}", model.Password);
+
+            return JsonOk(model);
+        }
+
+        [HttpPost]
+        public IHttpActionResult LoginIn()
+        {
+            var user = new SysAdmin
+            {
+                Id = 1,
+                Account = "admin",
+                CellPhone = "15618147550"
+            };
+
+            _authenticationService.SignIn(user);
+
+            return JsonOk();
+        }
+
+        [AdminAuthorize]
+        [AcceptVerbs("GET", "POST")]
+        public IHttpActionResult GetArticles()
+        {
+            var articles = new List<Article>()
+            {
+                new Article { Id = 1, Title = "Something Just Like This"  },
+                new Article { Id = 2, Title = "My Songs Know What You Did In The Dark"  },
+                new Article { Id = 3, Title = "Immortals (End Credit Version)"  },
+            };
+
+            var workContext = EngineContext.Current.Resolve<IWorkContext>();
+            var user = workContext.CurrentUser;
+
+            return JsonOk(new { posts = articles, user = user });
+        }
+
+        #endregion
+
     }
 }

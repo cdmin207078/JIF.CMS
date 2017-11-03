@@ -19,6 +19,7 @@ using JIF.CMS.Services.Articles;
 using JIF.CMS.Services.SysManager;
 using System.Web;
 using Common.Logging;
+using JIF.CMS.Core.Cache;
 
 namespace JIF.CMS.WebApi.Framework
 {
@@ -52,7 +53,6 @@ namespace JIF.CMS.WebApi.Framework
             // Register your Web API controllers.
             builder.RegisterApiControllers(typeFinder.GetAssemblies().ToArray());
 
-
             // OPTIONAL: Register the Autofac filter provider.
             var configuration = GlobalConfiguration.Configuration;
             builder.RegisterWebApiFilterProvider(configuration);
@@ -67,8 +67,12 @@ namespace JIF.CMS.WebApi.Framework
             // OPTIONAL: work context
             builder.RegisterType<WebWorkContext>().As<IWorkContext>().InstancePerLifetimeScope();
 
+            // OPTIONAL: Caches
+            builder.RegisterType<MemoryCacheManager>().As<ICacheManager>().SingleInstance();
+
             // OPTIONAL: logging
             builder.RegisterInstance<ILog>(LogManager.GetLogger("")).SingleInstance();
+
 
             // OPTIONAL: AuthenticationService
             builder.RegisterType<JsonTokenAuthenticationService>().As<IAuthenticationService>().InstancePerLifetimeScope();

@@ -134,7 +134,6 @@
     <Compile Include="Domain\Articles\Tag.cs" />
     <Compile Include="Domain\Attachment.cs" />
     <Compile Include="Domain\BaseEntity.cs" />
-    <Compile Include="Domain\DomainEnums.cs" />
     <Compile Include="Domain\SysAdmin.cs" />
     <Compile Include="Domain\SysLog.cs" />
     <Compile Include="Domain\IUser.cs" />
@@ -146,6 +145,7 @@
     <Compile Include="Helpers\ImageHelper.cs" />
     <Compile Include="Helpers\NpoiExcelHelper.cs" />
     <Compile Include="Helpers\Utils.cs" />
+    <Compile Include="HttpApiResults\ApiResult.cs" />
     <Compile Include="Infrastructure\AppDomainTypeFinder.cs" />
     <Compile Include="Infrastructure\DependencyManagement\ContainerManager.cs" />
     <Compile Include="Infrastructure\DependencyManagement\IDependencyRegistrar.cs" />
