@@ -11,6 +11,8 @@ using JIF.CMS.WebApi.Framework.Filters;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Cors;
 
@@ -138,6 +140,62 @@ namespace JIF.CMS.Management.API.Controllers
             var user = workContext.CurrentUser;
 
             return JsonOk(new { posts = articles, user = user });
+        }
+
+        #endregion
+
+        #region Async Methods Test
+
+        [HttpPost]
+        public async Task<IHttpActionResult> HelloAsync(string name)
+        {
+            Logger.Info("主线程 - [线程ID] " + Thread.CurrentThread.ManagedThreadId);
+
+            // 需要等待结果
+            var state = getStatement(name);
+
+            // 直接记录, 不需要等待
+            HelloLog(name);
+
+            return JsonOk(await state);
+        }
+
+        private async Task<string> getStatement(string name)
+        {
+            Logger.Info("同步直接返回 - [线程ID] " + Thread.CurrentThread.ManagedThreadId);
+
+            return string.Format("同步直接返回: hello {0} - {1}", name, DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss:fff"));
+        }
+
+        private async Task HelloLog(string name)
+        {
+            // 这里还是主线程
+            Logger.Info("HelloLog - [线程ID] " + Thread.CurrentThread.ManagedThreadId);
+
+
+            haha("66", DateTime.Now);
+
+
+            Task.Factory.StartNew(data =>
+            {
+
+            }, new { account = name });
+
+            //await Task.Run(() =>
+            //{
+            //    Logger.Info("HelloLog.TaskRun - [线程ID] " + Thread.CurrentThread.ManagedThreadId);
+
+            //    Thread.Sleep(5000);
+
+            //    Logger.Info(string.Format("异步记录日志: {0} - [线程ID] {1}", name, Thread.CurrentThread.ManagedThreadId));
+
+            //});
+        }
+
+        private void haha(string name, DateTime time)
+        {
+            Thread.Sleep(5000);
+            Logger.Info(string.Format("异步记录日志: {0}, 时间: {1} - [线程ID] {2}", name, time.ToString("yyyy-MM-dd HH:mm:ss:fff"), Thread.CurrentThread.ManagedThreadId));
         }
 
         #endregion
