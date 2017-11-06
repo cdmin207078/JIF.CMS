@@ -11,10 +11,13 @@ using JIF.CMS.WebApi.Framework.Filters;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Cors;
+using System.Linq;
 
 namespace JIF.CMS.Management.API.Controllers
 {
@@ -146,56 +149,197 @@ namespace JIF.CMS.Management.API.Controllers
 
         #region Async Methods Test
 
-        [HttpPost]
-        public async Task<IHttpActionResult> HelloAsync(string name)
+        [HttpGet]
+        public IHttpActionResult GetVersion(int ver)
         {
-            Logger.Info("主线程 - [线程ID] " + Thread.CurrentThread.ManagedThreadId);
-
-            // 需要等待结果
-            var state = getStatement(name);
-
-            // 直接记录, 不需要等待
-            HelloLog(name);
-
-            return JsonOk(await state);
+            Thread.Sleep(2000);
+            var result = string.Format("ver:{0}", ver);
+            Logger.Info("getVersion return : " + result + ", TID - " + Thread.CurrentThread.ManagedThreadId);
+            return Ok(result);
         }
 
-        private async Task<string> getStatement(string name)
+        [HttpGet]
+        public async Task<IHttpActionResult> GetVersions()
         {
-            Logger.Info("同步直接返回 - [线程ID] " + Thread.CurrentThread.ManagedThreadId);
+            Stopwatch watch = new Stopwatch();
 
-            return string.Format("同步直接返回: hello {0} - {1}", name, DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss:fff"));
+            watch.Start();
+
+            // 同步获取version - 20s
+            //var versions = getVersions();
+
+            // 异步 await 获取 - 4s
+            var versions = await getVersionsAsync();
+
+            watch.Stop();
+
+            return JsonOk(string.Format("耗时: {0}s, 所有版本: {1}", watch.ElapsedMilliseconds / 1000, JsonConvert.SerializeObject(versions)));
         }
 
-        private async Task HelloLog(string name)
+        private List<string> getVersions()
         {
-            // 这里还是主线程
-            Logger.Info("HelloLog - [线程ID] " + Thread.CurrentThread.ManagedThreadId);
+            HttpClient httpClient = new HttpClient();
 
+            List<string> version = new List<string>();
 
-            haha("66", DateTime.Now);
-
-
-            Task.Factory.StartNew(data =>
+            // 同步获取version
+            for (int i = 1; i <= 10; i++)
             {
+                var ver = httpClient.GetStringAsync("http://localhost:60002/welcome/getversion?ver=" + i);
 
-            }, new { account = name });
+                version.Add(ver.Result);
+            }
 
-            //await Task.Run(() =>
-            //{
-            //    Logger.Info("HelloLog.TaskRun - [线程ID] " + Thread.CurrentThread.ManagedThreadId);
-
-            //    Thread.Sleep(5000);
-
-            //    Logger.Info(string.Format("异步记录日志: {0} - [线程ID] {1}", name, Thread.CurrentThread.ManagedThreadId));
-
-            //});
+            return version;
         }
 
-        private void haha(string name, DateTime time)
+        private async Task<List<string>> getVersionsAsync()
         {
-            Thread.Sleep(5000);
-            Logger.Info(string.Format("异步记录日志: {0}, 时间: {1} - [线程ID] {2}", name, time.ToString("yyyy-MM-dd HH:mm:ss:fff"), Thread.CurrentThread.ManagedThreadId));
+            HttpClient httpClient = new HttpClient();
+
+
+            //var ver1 = httpClient.GetStringAsync("http://localhost:60002/welcome/getversion?ver=1");
+            //Logger.Info("Start ver1");
+
+            //var ver2 = httpClient.GetStringAsync("http://localhost:60002/welcome/getversion?ver=2");
+            //Logger.Info("Start ver2");
+
+            //var ver3 = httpClient.GetStringAsync("http://localhost:60002/welcome/getversion?ver=3");
+            //Logger.Info("Start ver3");
+
+            //var ver4 = httpClient.GetStringAsync("http://localhost:60002/welcome/getversion?ver=4");
+            //var ver5 = httpClient.GetStringAsync("http://localhost:60002/welcome/getversion?ver=5");
+            //var ver6 = httpClient.GetStringAsync("http://localhost:60002/welcome/getversion?ver=6");
+            //var ver7 = httpClient.GetStringAsync("http://localhost:60002/welcome/getversion?ver=7");
+            //var ver8 = httpClient.GetStringAsync("http://localhost:60002/welcome/getversion?ver=8");
+
+            //var ver9 = httpClient.GetStringAsync("http://localhost:60002/welcome/getversion?ver=9");
+            //Logger.Info("Start ver9");
+
+            //var ver10 = httpClient.GetStringAsync("http://localhost:60002/welcome/getversion?ver=10");
+
+
+            // 逐个获取结果
+
+            //version.Add(await ver1);
+            //version.Add(await ver2);
+            //version.Add(await ver3);
+            //version.Add(await ver4);
+            //version.Add(await ver5);
+            //version.Add(await ver6);
+            //version.Add(await ver7);
+            //version.Add(await ver8);
+            //version.Add(await ver9);
+            //version.Add(await ver10);
+
+            // 手动判断异步状态
+            //while (true)
+            //{
+            //    if (ver1.IsCompleted
+            //    && ver2.IsCompleted
+            //    && ver3.IsCompleted
+            //    && ver4.IsCompleted
+            //    && ver5.IsCompleted
+            //    && ver6.IsCompleted
+            //    && ver7.IsCompleted
+            //    && ver8.IsCompleted
+            //    && ver9.IsCompleted
+            //    && ver10.IsCompleted)
+            //    {
+            //        version.Add(ver1.Result);
+            //        version.Add(ver2.Result);
+            //        version.Add(ver3.Result);
+            //        version.Add(ver4.Result);
+            //        version.Add(ver5.Result);
+            //        version.Add(ver6.Result);
+            //        version.Add(ver7.Result);
+            //        version.Add(ver8.Result);
+            //        version.Add(ver9.Result);
+            //        version.Add(ver10.Result);
+
+            //        break;
+            //    }
+            //}
+
+
+            // whenAll
+
+            var tasks = new List<Task<string>>();
+
+            for (int i = 1; i <= 10; i++)
+            {
+                tasks.Add(httpClient.GetStringAsync("http://localhost:60002/welcome/getversion?ver=" + i));
+            }
+
+            return (await Task.WhenAll(tasks)).ToList();
+        }
+
+
+
+        [HttpGet]
+        public async Task<IHttpActionResult> PayOrder()
+        {
+            Stopwatch watch = new Stopwatch();
+
+            watch.Start();
+
+            Logger.Info("处理逻辑开始 - TID - " + Thread.CurrentThread.ManagedThreadId);
+
+            // 第一步, 获取订单
+            var user = getUserInfo();
+
+            // 第二步, 获取用户信息
+            var order = getOrderInfo();
+
+            // 第三部, 处理订单
+            await DealOrder(await user, await order);
+
+            // 第四部, 记录日志
+            OrderLogging();
+
+            watch.Stop();
+
+            return JsonOk(string.Format("耗时: {0}s, user: {1}, order: {2}", watch.ElapsedMilliseconds / 1000, await user, await order));
+        }
+
+
+        private async Task<string> getUserInfo()
+        {
+            return await Task.Run(() =>
+            {
+                Thread.Sleep(2000);
+                Logger.Info("getUserInfo - TID - " + Thread.CurrentThread.ManagedThreadId);
+                return "久石让";
+            });
+        }
+
+        private async Task<string> getOrderInfo()
+        {
+            return await Task.Run(() =>
+            {
+                Thread.Sleep(3000);
+                Logger.Info("getOrderInfo - TID - " + Thread.CurrentThread.ManagedThreadId);
+
+                return "JW201711070001";
+            });
+        }
+
+        private async Task DealOrder(string name, string orderno)
+        {
+            await Task.Run(() =>
+            {
+                Thread.Sleep(4000);
+                Logger.Info(string.Format("DealOrder - TID - {0}, user: {1}, order: {2}", Thread.CurrentThread.ManagedThreadId, name, orderno));
+            });
+        }
+
+        private void OrderLogging()
+        {
+            Task.Run(() =>
+            {
+                Thread.Sleep(2000);
+                Logger.Info("OrderLogging - TID - " + Thread.CurrentThread.ManagedThreadId);
+            });
         }
 
         #endregion
