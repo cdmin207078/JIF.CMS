@@ -9,51 +9,36 @@ namespace JIF.CMS.Test.Core.Tests
     public class RandomHelperTest
     {
         [TestMethod]
-        public void Test_GuidHashCode()
+        public void Gen_Test()
         {
+            Console.WriteLine(RandomHelper.Gen(RandomHelper.Scheme.NumChar, 10));
+            Console.WriteLine(RandomHelper.Gen(RandomHelper.Scheme.NumChar, 1, 10));
+            Console.WriteLine(RandomHelper.Gen(RandomHelper.Scheme.NumChar, 1, 10));
+
+            //// 随机定长字符串
+            //var chars = RandomHelper.Gens(RandomHelper.Scheme.NumCharL, 4, 300);
+            //chars.ForEach(d => Console.WriteLine(d));
+        }
+
+        [TestMethod]
+        public void Gen_Repeat_Rate_Test()
+        {
+            // 检查生成重复重复率, 受生成字符串 类型, 长度影响
             for (int i = 0; i < 100; i++)
             {
-                var guid = Guid.NewGuid();
-                Console.WriteLine(string.Format("guid: {0}, hcode: {1}", guid, guid.GetHashCode()));
+                Console.WriteLine(string.Format("重复个数: {0}", 10000 - RandomHelper.Gen(RandomHelper.Scheme.NumChar, 4, 10000).Distinct().Count()));
             }
         }
 
         [TestMethod]
-        public void Test_Generate()
+        public void Gen_ChinesePersonName_Test()
         {
-            for (int i = 0; i < 100; i++)
-            {
-                Console.WriteLine(string.Format("重复个数: {0}", 10000 - RandomHelper.Gen(RandomHelper.Format.NumChar, 4, 10000).Distinct().Count()));
-            }
-        }
-
-        [TestMethod]
-        public void Test_Generate_NumChar()
-        {
-            var data = RandomHelper.Gen(RandomHelper.Format.NumCharL, 4, 10000);
+            var data = RandomHelper.GenChinesePersonName(100);
 
             foreach (var d in data)
             {
                 Console.WriteLine(d);
             }
-        }
-
-        [TestMethod]
-        public void Test_Generate_Chinese_Person_Name()
-        {
-            var data = RandomHelper.GenChineseName(100);
-
-            foreach (var d in data)
-            {
-                Console.WriteLine(d);
-            }
-        }
-
-
-        [TestMethod]
-        public void Test_Gen_Fixed_Length_Chinese_Word()
-        {
-            var names = RandomHelper.Gen(RandomHelper.Format.Chinese, 500, 1000);
         }
     }
 }

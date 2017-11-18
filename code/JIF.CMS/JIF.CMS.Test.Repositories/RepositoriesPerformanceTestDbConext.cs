@@ -8,16 +8,16 @@ using System.Threading.Tasks;
 
 namespace JIF.CMS.Test.Repositories
 {
-    public class TestDbConext : DbContext
+    public class RepositoriesPerformanceTestDbConext : DbContext
     {
-        public TestDbConext(string connectionstring)
-            : base(connectionstring)
-        { }
+        public RepositoriesPerformanceTestDbConext(string connectionstring)
+            : base(connectionstring) { }
 
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Entity<UserInfo>().ToTable("user_info").HasKey(d => d.Id);
+
             base.OnModelCreating(modelBuilder);
         }
     }

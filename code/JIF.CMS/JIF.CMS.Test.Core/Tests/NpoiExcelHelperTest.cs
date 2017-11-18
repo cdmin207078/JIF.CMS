@@ -156,7 +156,7 @@ namespace JIF.CMS.Test.Core.Tests
 
             excel.Write(new[] { "第一列", "第二列", "三", "肆" }, 0, 0, 0);
 
-            var names = RandomHelper.Gen(RandomHelper.Format.Chinese, 500, 1000);
+            var names = RandomHelper.Gen(RandomHelper.Scheme.Chinese, 500, 1000);
 
             var data = new List<dynamic>();
 
