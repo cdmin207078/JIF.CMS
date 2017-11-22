@@ -1,5 +1,7 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Diagnostics;
+using JIF.CMS.Core.Extensions;
 
 namespace JIF.CMS.Test.Core.Tests
 {

@@ -15,6 +15,8 @@ using System.Data.Entity.Core.Metadata.Edm;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using JIF.CMS.Core.Helpers;
+using JIF.CMS.Core.Extensions;
+using Common.Logging;
 
 namespace JIF.CMS.Test.Repositories
 {
@@ -137,6 +139,40 @@ namespace JIF.CMS.Test.Repositories
 
             var users3 = db.Query<UserInfo>("select * from user_info where id > 100").ToList();
             watch.Show("以Id为条件");
+        }
+
+
+
+        [TestMethod]
+        public void IDbConnection_New_Test()
+        {
+            Stopwatch watch = new Stopwatch();
+            watch.Start();
+
+            for (int i = 0; i < 1000; i++)
+            {
+                IDbConnection db = new SqlConnection(connectionstring);
+                db.ExecuteScalar<int>("select count(1) from user_info;");
+            }
+
+            watch.Show("每次new 新的connection");
+
+            IDbConnection shareConnection = new SqlConnection(connectionstring);
+            for (int i = 0; i < 1000; i++)
+            {
+                shareConnection.ExecuteScalar<int>("select count(1) from user_info;");
+            }
+            watch.Show("共用 connection");
+        }
+
+        [TestMethod]
+        public void IDbConnection_Async_Multi_Test()
+        {
+            Stopwatch watch = new Stopwatch();
+            watch.Start();
+
+            var logger = LogManager.GetLogger("");
+            logger.Info("IDbConnection_Async_Multi_Test");
         }
     }
 }

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace JIF.CMS.Test.Repositories
+namespace JIF.CMS.Core.Extensions
 {
     public static class StopwatchExtensions
     {

@@ -139,6 +139,7 @@
     <Compile Include="Domain\IUser.cs" />
     <Compile Include="Domain\TreeRelationObject.cs" />
     <Compile Include="Extensions\EnumExtensions.cs" />
+    <Compile Include="Extensions\StopwatchExtensions.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="Extensions\TreeRelationObjectExtensions.cs" />
     <Compile Include="Extensions\IEnumerableExtensions.cs" />
