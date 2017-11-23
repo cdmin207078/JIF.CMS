@@ -2,6 +2,9 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Linq;
 using JIF.CMS.Core.Helpers;
+using Newtonsoft.Json;
+using System.Diagnostics;
+using JIF.CMS.Core.Extensions;
 
 namespace JIF.CMS.Test.Core.Tests
 {
@@ -33,12 +36,26 @@ namespace JIF.CMS.Test.Core.Tests
         [TestMethod]
         public void Gen_ChinesePersonName_Test()
         {
-            var data = RandomHelper.GenChinesePersonName(100);
+            string[] a = { "A", "B" };
+            string[] b = { "C", "D" };
 
-            foreach (var d in data)
-            {
-                Console.WriteLine(d);
-            }
+            var c = a.Union(b);
+
+            Console.WriteLine(JsonConvert.SerializeObject(c));
+
+            Stopwatch watch = new Stopwatch();
+            watch.Start();
+
+            var names = RandomHelper.GenChinesePersonName(100000);
+            watch.Show("生成姓名");
+
+            Console.WriteLine(JsonConvert.SerializeObject(names));
+
+            //var data = RandomHelper.GenChinesePersonName(100);
+            //foreach (var d in data)
+            //{
+            //    Console.WriteLine(d);
+            //}
         }
     }
 }
