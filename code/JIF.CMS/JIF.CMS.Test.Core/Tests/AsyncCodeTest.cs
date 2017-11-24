@@ -10,6 +10,12 @@ namespace JIF.CMS.Test.Core.Tests
     {
 
         [TestMethod]
+        public void MyTestMethod()
+        {
+            Console.WriteLine($"Hello world");
+        }
+
+        [TestMethod]
         public async void AsyncGetName_Test()
         {
             var name = GetName();

@@ -17,6 +17,8 @@ using System.Threading.Tasks;
 using JIF.CMS.Core.Helpers;
 using JIF.CMS.Core.Extensions;
 using Common.Logging;
+using System.Transactions;
+using Newtonsoft.Json;
 
 namespace JIF.CMS.Test.Repositories
 {
@@ -133,19 +135,19 @@ namespace JIF.CMS.Test.Repositories
 
             for (int i = 0; i < 100; i++)
             {
-                IDbConnection db = new SqlConnection(connectionstring);
-                db.ExecuteScalar<int>("select count(1) from user_info;");
+                IDbConnection connection = new SqlConnection(connectionstring);
+                connection.ExecuteScalar<int>("select count(1) from user_info;");
             }
             watch.Show("每次new 新的connection");
 
             for (int i = 0; i < 100; i++)
             {
-                using (IDbConnection db = new SqlConnection(connectionstring))
+                using (IDbConnection connection = new SqlConnection(connectionstring))
                 {
-                    db.ExecuteScalar<int>("select count(1) from user_info;");
+                    connection.ExecuteScalar<int>("select count(1) from user_info;");
                 }
             }
-            watch.Show("使用using");
+            watch.Show("每次new 新的connection + using");
 
             IDbConnection shareConnection = new SqlConnection(connectionstring);
             for (int i = 0; i < 100; i++)
@@ -220,6 +222,91 @@ namespace JIF.CMS.Test.Repositories
             await (c3);
             await (c4);
         }
+
+        #region TransactionScope 事务测试
+
+        [TestMethod]
+        public void Dapper_TransactionScope_Test()
+        {
+            var watch = new Stopwatch();
+            watch.Start();
+
+            TransactionOptions option = new TransactionOptions();
+            option.Timeout = new TimeSpan(0, 0, 60); // 事务超时时间, 默认设置为 1min.
+            option.IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted;
+
+            using (TransactionScope scope = new TransactionScope())
+            {
+                Console.WriteLine("外层事务信息: " + JsonConvert.SerializeObject(Transaction.Current.TransactionInformation));
+
+                // 内部包含已经提交的事务
+                update_user_name_motto_with_transaction();
+
+                update_user_name();
+                update_user_motto();
+
+                update_user_name_diffent_database();
+
+                update_user_fail();
+
+                scope.Complete();
+            }
+            watch.Show("使用事务");
+
+            update_user_name();
+            update_user_motto();
+            watch.Show("未使用事务");
+        }
+
+        private void update_user_name()
+        {
+            IDbConnection dap = new SqlConnection(connectionstring);
+            var sql = "update user_info set Name = @Name where id = @Id";
+            dap.Execute(sql, new { Id = 1, Name = "望乡" });
+        }
+
+        private void update_user_motto()
+        {
+            IDbConnection dap = new SqlConnection(connectionstring);
+            var sql = "update user_info set Motto = @Motto where id = @Id";
+            dap.Execute(sql, new { Id = 1, Motto = "窗外明月光 映照我脸庞 月之故乡亲人是否安康" });
+        }
+
+        private void update_user_name_motto_with_transaction()
+        {
+            IDbConnection dap = new SqlConnection(connectionstring);
+
+            using (var scope = new TransactionScope(TransactionScopeOption.RequiresNew))
+            {
+                Console.WriteLine("内层事务信息: " + JsonConvert.SerializeObject(Transaction.Current.TransactionInformation));
+
+                var sql = "update user_info set Name = @Name where id = @Id";
+                dap.Execute(sql, new { Id = 1, Name = "相思" });
+
+                sql = "update user_info set Motto = @Motto where id = @Id";
+                dap.Execute(sql, new { Id = 1, Motto = "红豆生南国 春来发几枝 愿君多采撷 此物最相思" });
+
+                sql = "update user_info set Gender = @Gender where id = @Id";
+                dap.Execute(sql, new { Id = 1, Gender = 1 });
+
+                scope.Complete();
+            }
+        }
+
+        private void update_user_fail()
+        {
+            throw new Exception("发生错误");
+        }
+
+        private void update_user_name_diffent_database()
+        {
+            IDbConnection dap = new SqlConnection("Data Source=43.247.90.5;Initial Catalog=YPW;User ID=sa;Password=d4ihXjQLg3w6xn2IB5XM;MultipleActiveResultSets=true");
+
+            var sql = "update user_info set name = @Name where id = @Id";
+            dap.Execute(sql, new { Id = 338, Name = "相思" });
+        }
+
+        #endregion
     }
 }
 
