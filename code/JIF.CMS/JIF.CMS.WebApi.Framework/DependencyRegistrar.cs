@@ -57,7 +57,6 @@ namespace JIF.CMS.WebApi.Framework
             var configuration = GlobalConfiguration.Configuration;
             builder.RegisterWebApiFilterProvider(configuration);
 
-
             // OPTIONAL: register dbcontext 
             builder.Register<DbContext>(c => new JIFDbContext("name=JIF.CMS.DB")).InstancePerLifetimeScope();
 
@@ -71,13 +70,10 @@ namespace JIF.CMS.WebApi.Framework
             builder.RegisterType<MemoryCacheManager>().As<ICacheManager>().SingleInstance();
 
             // OPTIONAL: logging
-            builder.RegisterInstance<ILog>(LogManager.GetLogger("")).SingleInstance();
-
+            builder.RegisterInstance(LogManager.GetLogger("")).SingleInstance();
 
             // OPTIONAL: AuthenticationService
             builder.RegisterType<JsonTokenAuthenticationService>().As<IAuthenticationService>().InstancePerLifetimeScope();
-
-
 
             // Services
             builder.RegisterType<ArticleService>().As<IArticleService>().InstancePerLifetimeScope();

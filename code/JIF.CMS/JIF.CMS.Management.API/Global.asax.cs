@@ -27,7 +27,6 @@ namespace JIF.CMS.Management.API
                 new WebApiAppExceptionAttribute(),
             });
 
-
             EngineContext.Initialize(false);
             GlobalConfiguration.Configuration.DependencyResolver = new AutofacWebApiDependencyResolver(EngineContext.Current.ContainerManager.Container);
         }
