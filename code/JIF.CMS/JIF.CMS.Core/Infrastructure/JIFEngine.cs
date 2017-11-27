@@ -1,14 +1,9 @@
-﻿
-using Autofac;
-using Autofac.Integration.Mvc;
+﻿using Autofac;
 using JIF.CMS.Core.Configuration;
 using JIF.CMS.Core.Infrastructure.DependencyManagement;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Web.Mvc;
 
 namespace JIF.CMS.Core.Infrastructure
 {
@@ -75,9 +70,6 @@ namespace JIF.CMS.Core.Infrastructure
 
             var container = builder.Build();
             this._containerManager = new ContainerManager(container);
-
-            //set dependency resolver
-            DependencyResolver.SetResolver(new AutofacDependencyResolver(container));
         }
 
         /// <summary>

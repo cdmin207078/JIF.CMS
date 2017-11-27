@@ -29,12 +29,26 @@ namespace JIF.CMS.Management.Controllers
             return View();
         }
 
-        public class OrderResult
+        [HttpPost]
+        public ActionResult Index(string account, string password, string returnUrl)
         {
-            public int Id { get; set; }
+            AntiForgery.Validate();
 
-            public bool PayResult { get; set; }
+            var userInfo = _sysManagerService.Login(account, password);
 
+            if (userInfo != null)
+            {
+                var sysAdmin = _sysManagerService.Get(userInfo.UserId);
+
+                _authenticationService.SignIn(sysAdmin);
+
+                if (!String.IsNullOrEmpty(returnUrl) && Url.IsLocalUrl(returnUrl))
+                    return Redirect(returnUrl);
+                else
+                    return Redirect("/");
+            }
+
+            return View();
         }
     }
 }

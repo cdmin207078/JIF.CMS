@@ -1,4 +1,5 @@
-﻿using JIF.CMS.Core.Infrastructure;
+﻿using Autofac.Integration.Mvc;
+using JIF.CMS.Core.Infrastructure;
 using StackExchange.Profiling;
 using StackExchange.Profiling.EntityFramework6;
 using System;
@@ -23,6 +24,7 @@ namespace JIF.CMS.Management
 
             // initialize engine context
             EngineContext.Initialize(false);
+            DependencyResolver.SetResolver(new AutofacDependencyResolver(EngineContext.Current.ContainerManager.Container));
 
             //初始化EF6的性能监控
             MiniProfilerEF6.Initialize();

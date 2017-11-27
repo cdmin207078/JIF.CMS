@@ -1,5 +1,6 @@
 ﻿using Autofac;
 using Autofac.Integration.Mvc;
+using Common.Logging;
 using JIF.CMS.Core;
 using JIF.CMS.Core.Cache;
 using JIF.CMS.Core.Configuration;
@@ -56,8 +57,8 @@ namespace JIF.CMS.Web.Framework
             // OPTIONAL: repositores
             builder.RegisterGeneric(typeof(EfRepository<>)).As(typeof(IRepository<>)).InstancePerLifetimeScope();
 
-            // OPTIONAL: register log
-            //builder.RegisterInstance(new NLogLoggerFactoryAdapter(new NameValueCollection()).GetLogger("")).As<ILog>().SingleInstance();
+            // OPTIONAL: logging
+            builder.RegisterInstance(LogManager.GetLogger(string.Empty)).SingleInstance();
 
             // OPTIONAL: AuthenticationService
             builder.RegisterType<FormsCookiesAuthenticationService>().As<IAuthenticationService>().InstancePerLifetimeScope().PropertiesAutowired(PropertyWiringOptions.AllowCircularDependencies);
@@ -87,7 +88,6 @@ namespace JIF.CMS.Web.Framework
             builder.RegisterType<ArticleService>().As<IArticleService>().InstancePerLifetimeScope();
             builder.RegisterType<SysManagerService>().As<ISysManagerService>().InstancePerLifetimeScope();
             builder.RegisterType<AttachmentService>().As<IAttachmentService>().InstancePerLifetimeScope();
-
         }
     }
 }
