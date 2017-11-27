@@ -46,9 +46,7 @@ namespace JIF.CMS.Services.SysManager
         public void Add(SysAdminInertBasicInfoInput model)
         {
             if (model == null)
-            {
                 throw new JIFException("信息不能为空");
-            }
 
             if (string.IsNullOrWhiteSpace(model.Account)
                 || string.IsNullOrWhiteSpace(model.Password)
@@ -59,9 +57,7 @@ namespace JIF.CMS.Services.SysManager
 
             var exists = _sysAdminRepository.Table.Any(d => model.Account.ToLower().Trim() == d.Account.ToLower().Trim());
             if (exists)
-            {
                 throw new JIFException("帐号: " + model.Account + ", 已存在");
-            }
 
             var now = DateTime.Now;
 
@@ -87,15 +83,11 @@ namespace JIF.CMS.Services.SysManager
         public void UpdateBasicInfo(int id, SysAdminUpdateBasicInfoInput model)
         {
             if (model == null)
-            {
                 throw new JIFException("信息不能为空");
-            }
 
             var entity = _sysAdminRepository.Get(id);
             if (entity == null)
-            {
                 throw new JIFException("用户不存在");
-            }
 
             entity.Email = model.Email;
             entity.CellPhone = model.CellPhone;
@@ -108,15 +100,11 @@ namespace JIF.CMS.Services.SysManager
         public void UpdatePwd(int id, string newPwd)
         {
             if (string.IsNullOrWhiteSpace(newPwd))
-            {
                 throw new JIFException("密码不能为空");
-            }
 
             var entity = _sysAdminRepository.Get(id);
             if (entity == null)
-            {
                 throw new JIFException("用户不存在");
-            }
 
             entity.Password = EncyptPwd(newPwd, entity.CreateTime);
 
@@ -146,9 +134,7 @@ namespace JIF.CMS.Services.SysManager
         public LoginOutput Login(string account, string password)
         {
             if (string.IsNullOrWhiteSpace(account) || string.IsNullOrWhiteSpace(password))
-            {
                 throw new JIFException("账号 / 密码 不能为空");
-            }
 
             var entity = _sysAdminRepository.Table.FirstOrDefault(d => d.Account.ToLower().Trim() == account.ToLower().Trim());
 
@@ -156,16 +142,12 @@ namespace JIF.CMS.Services.SysManager
                 throw new JIFException("账号不存在");
 
             if (!entity.Enable)
-            {
                 throw new JIFException("账号已被停用");
-            }
 
             var cipherText = EncyptPwd(password, entity.CreateTime);
 
             if (cipherText != entity.Password)
-            {
                 throw new JIFException("密码不正确");
-            }
 
             //entity.LastLoginTime = DateTime.Now;
             //entity.LastLoginIP = _webHelper.GetCurrentIpAddress();

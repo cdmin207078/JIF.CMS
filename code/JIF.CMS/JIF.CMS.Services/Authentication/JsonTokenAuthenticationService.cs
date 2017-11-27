@@ -14,7 +14,7 @@ namespace JIF.CMS.Services.Authentication
 {
     public class JsonTokenAuthenticationService : IAuthenticationService
     {
-        private readonly ILog _logger;
+        private readonly ILog Logger;
         private readonly ICacheManager _cache;
 
         private readonly HttpContextBase _httpContext;
@@ -22,7 +22,7 @@ namespace JIF.CMS.Services.Authentication
         public JsonTokenAuthenticationService(HttpContextBase httpContext, ILog logger, ICacheManager cache)
         {
             _httpContext = httpContext;
-            _logger = logger;
+            Logger = logger;
             _cache = cache;
         }
 
@@ -35,7 +35,7 @@ namespace JIF.CMS.Services.Authentication
             var token = _httpContext.Request.Headers.Get("token");
             var uid = _httpContext.Request.Headers.Get("uid");
 
-            _logger.Info(string.Format("token: {0}, uid: {1}", token, uid));
+            Logger.Info(string.Format("token: {0}, uid: {1}", token, uid));
 
             if (string.IsNullOrWhiteSpace(token) || string.IsNullOrWhiteSpace(uid))
                 return null;

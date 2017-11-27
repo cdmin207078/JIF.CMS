@@ -1,4 +1,5 @@
-﻿using JIF.CMS.Core;
+﻿using Common.Logging;
+using JIF.CMS.Core;
 using JIF.CMS.Core.Data;
 using JIF.CMS.Core.Domain;
 using JIF.CMS.Core.Infrastructure;
@@ -14,6 +15,13 @@ namespace JIF.CMS.Services
 {
     public abstract class BaseService : IBaseService
     {
+        protected readonly ILog Logger;
+
+        public BaseService()
+        {
+            Logger = EngineContext.Current.Resolve<ILog>();
+        }
+
         //private IRepository<T> _repository;
 
         //public BaseService(IRepository<T> repository)

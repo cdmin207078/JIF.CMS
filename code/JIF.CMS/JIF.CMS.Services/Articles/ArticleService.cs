@@ -11,7 +11,7 @@ using System.Linq;
 
 namespace JIF.CMS.Services.Articles
 {
-    public class ArticleService : IArticleService
+    public class ArticleService : BaseService, IArticleService
     {
         private readonly IRepository<Article> _articleRepository;
         private readonly IRepository<ArticleCategory> _articleCategoryRepository;

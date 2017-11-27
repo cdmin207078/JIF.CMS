@@ -10,7 +10,7 @@ using JIF.CMS.Services.Attachments.Dtos;
 
 namespace JIF.CMS.Services.Attachments
 {
-    public class AttachmentService : IAttachmentService
+    public class AttachmentService : BaseService, IAttachmentService
     {
         private readonly IRepository<SysAdmin> _sysAdminRepository;
         private readonly IRepository<Attachment> _attachmentRepository;
