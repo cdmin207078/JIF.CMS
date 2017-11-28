@@ -7,7 +7,6 @@ namespace JIF.CMS.Test.Core.Tests
     [TestClass]
     public class EncyptHelperTest
     {
-
         [TestMethod]
         public void MyTestMethod()
         {
@@ -16,7 +15,5 @@ namespace JIF.CMS.Test.Core.Tests
             var ticket = FormsAuthentication.Decrypt(ss);
 
         }
-
-
     }
 }
