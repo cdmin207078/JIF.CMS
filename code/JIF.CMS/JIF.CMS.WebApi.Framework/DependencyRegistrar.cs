@@ -51,7 +51,7 @@ namespace JIF.CMS.WebApi.Framework
                 .InstancePerLifetimeScope();
 
             // Register all your Web API controllers.
-            builder.RegisterApiControllers(Assembly.GetExecutingAssembly());
+            builder.RegisterApiControllers(typeFinder.GetAssemblies().ToArray());
 
             // OPTIONAL: Register the Autofac filter provider.
             var configuration = GlobalConfiguration.Configuration;

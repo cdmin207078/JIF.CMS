@@ -10,15 +10,6 @@ namespace JIF.CMS.Management.API
     {
         public static void Register(HttpConfiguration config)
         {
-            var cors = new EnableCorsAttribute("*", "*", "*");
-            cors.SupportsCredentials = true;
-
-            config.EnableCors(cors);
-
-            // Web API configuration and services
-
-
-
             // Web API routes
             config.MapHttpAttributeRoutes();
 

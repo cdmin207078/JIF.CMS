@@ -13,6 +13,7 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Reflection;
 using System.Web.Http;
+using System.Web.Http.Cors;
 using System.Web.Http.Filters;
 
 namespace JIF.CMS.Management.API
@@ -26,6 +27,12 @@ namespace JIF.CMS.Management.API
             {
                 new WebApiAppExceptionAttribute(),
             });
+
+            // 开启跨域访问
+            var cors = new EnableCorsAttribute("*", "*", "*");
+            cors.SupportsCredentials = true;
+            GlobalConfiguration.Configuration.EnableCors(cors);
+
 
             EngineContext.Initialize(false);
             GlobalConfiguration.Configuration.DependencyResolver = new AutofacWebApiDependencyResolver(EngineContext.Current.ContainerManager.Container);

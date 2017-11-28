@@ -57,37 +57,7 @@ namespace JIF.CMS.Management.API.Controllers
         [HttpGet]
         public IHttpActionResult Now()
         {
-            Logger.Info("进入 Welcome.Now 方法");
-
-            var models = new List<LoginViewModel>
-            {
-                new LoginViewModel
-                {
-                    Account = "admin",
-                    Password = "admin1234567890!123",
-                    Captcha = "PXQ4"
-                },
-                new LoginViewModel
-                {
-                    Account = "小风",
-                    Password = "xiaofeng!@@",
-                    Captcha = "QOCS"
-                },
-                new LoginViewModel
-                {
-                    Account = "暗雲",
-                    Password = "ANYUN",
-                    Captcha = "12ac"
-                }
-            };
-
-            Logger.Info(string.Format("传入数据: {0}", JsonConvert.SerializeObject(models)));
-
-            //var a = 1;
-            //var b = 0;
-            //var c = a / b;  // throw exception
-
-
+            Logger.Info(DateTime.Now);
             return JsonOk(DateTime.Now.ToString());
         }
 
