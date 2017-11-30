@@ -18,6 +18,7 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Cors;
 using System.Linq;
+using JIF.CMS.Core.Helpers;
 
 namespace JIF.CMS.Management.API.Controllers
 {
@@ -34,7 +35,7 @@ namespace JIF.CMS.Management.API.Controllers
         }
 
         [HttpPost]
-        [ValidateViewModel]
+        [ValidateReqestParams]
         public IHttpActionResult Login(LoginViewModel model)
         {
             if (model == null)
@@ -65,13 +66,24 @@ namespace JIF.CMS.Management.API.Controllers
         #region RestSharpTest Methods
 
         [HttpGet]
-        public IHttpActionResult SayHello(string name)
+        public async Task<IHttpActionResult> SayHello(string name)
         {
+            await Task.Run(() =>
+            {
+                var a = Thread.CurrentThread.ManagedThreadId;
+
+                //Thread.Sleep(RandomHelper.Gen(100, 500));
+                Task.Delay(RandomHelper.Gen(1000, 2000));
+
+                var b = Thread.CurrentThread.ManagedThreadId;
+
+                Logger.Info(string.Format("{0},{1}-{2}", name, a, b));
+            });
             return JsonOk(string.Format("Hello {0}", name));
         }
 
         [HttpPost]
-        [ValidateViewModel]
+        [ValidateReqestParams]
         public IHttpActionResult Register(LoginViewModel model)
         {
             if (model == null)

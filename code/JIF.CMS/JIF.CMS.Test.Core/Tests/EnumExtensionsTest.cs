@@ -45,6 +45,19 @@ namespace JIF.CMS.Test.Core.Tests
 
             Console.WriteLine(Convert.ToBoolean(1.2));
 
+
+            var a = "1";
+            var b = EnumExtensionsType.Android;
+
+            var c = Enum.Parse(typeof(EnumExtensionsType), "1");
+
+            Console.WriteLine(c);
+
+
+            Console.WriteLine(a.GetType().IsEnum);
+            Console.WriteLine(b.GetType().IsEnum);
+
+
         }
 
         enum EnumExtensionsType

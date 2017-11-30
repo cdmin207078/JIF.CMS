@@ -14,9 +14,14 @@ namespace JIF.CMS.Test.Core.Tests
         [TestMethod]
         public void Gen_Test()
         {
-            Console.WriteLine(RandomHelper.Gen(RandomHelper.Scheme.NumChar, 10));
-            Console.WriteLine(RandomHelper.Gen(RandomHelper.Scheme.NumChar, 1, 10));
-            Console.WriteLine(RandomHelper.Gen(RandomHelper.Scheme.NumChar, 1, 10));
+            //Console.WriteLine(RandomHelper.Gen(RandomHelper.Scheme.NumChar, 10));
+            //Console.WriteLine(RandomHelper.Gen(RandomHelper.Scheme.NumChar, 1, 10));
+            //Console.WriteLine(RandomHelper.Gen(RandomHelper.Scheme.NumChar, 1, 10));
+
+            for (int i = 0; i < 100; i++)
+            {
+                Console.WriteLine(RandomHelper.Gen(RandomHelper.Scheme.NumChar, 12));
+            }
 
             //// 随机定长字符串
             //var chars = RandomHelper.Gens(RandomHelper.Scheme.NumCharL, 4, 300);

@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using JIF.CMS.Core.HttpApiResults;
 using JIF.CMS.Core.Domain.Articles;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace JIF.CMS.Test.Core.Tests
 {
@@ -81,7 +82,7 @@ namespace JIF.CMS.Test.Core.Tests
         }
 
         [TestMethod]
-        public void Post_ComplexType_Test()
+        public async Task Post_ComplexType_Test()
         {
             var client = new RestClient(_baseUrl);
             var request = new RestRequest("/welcome/register", Method.POST);
@@ -95,7 +96,9 @@ namespace JIF.CMS.Test.Core.Tests
 
             request.AddJsonBody(data);
 
-            var response = client.Execute<APIResult<LoginViewModel>>(request);
+            var response = await client.ExecuteTaskAsync<APIResult<LoginViewModel>>(request);
+
+
 
             Console.WriteLine(response.Content);
 
@@ -107,6 +110,25 @@ namespace JIF.CMS.Test.Core.Tests
             Console.WriteLine(response.Data.Data.Password);
             Console.WriteLine(response.Data.Data.Captcha);
 
+        }
+
+        [TestMethod]
+        public async Task Async_Method_Test()
+        {
+            var tasks = new List<Task<IRestResponse<string>>>();
+
+            for (int i = 0; i < 1000; i++)
+            {
+                var client = new RestClient(_baseUrl);
+                var request = new RestRequest("/welcome/sayHello", Method.GET);
+                request.AddParameter("name", i.ToString());
+
+                tasks.Add(client.ExecuteTaskAsync<string>(request));
+            }
+
+            await Task.WhenAll(tasks);
+
+            Console.WriteLine("over");
         }
 
 

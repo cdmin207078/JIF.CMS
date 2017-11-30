@@ -12,7 +12,7 @@ using System.Threading;
 
 namespace JIF.CMS.WebApi.Framework.Filters
 {
-    public class ValidateViewModelAttribute : ActionFilterAttribute
+    public class ValidateReqestParamsAttribute : ActionFilterAttribute
     {
         public override void OnActionExecuting(HttpActionContext actionContext)
         {
