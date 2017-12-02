@@ -24,16 +24,6 @@ namespace JIF.CMS.Management.API.Controllers
 {
     public class WelcomeController : BaseController
     {
-        private readonly ISysManagerService _sysManagerService;
-        private readonly IAuthenticationService _authenticationService;
-
-        public WelcomeController(ISysManagerService sysManagerService,
-            IAuthenticationService authenticationService)
-        {
-            _sysManagerService = sysManagerService;
-            _authenticationService = authenticationService;
-        }
-
         [HttpPost]
         [ValidateReqestParams]
         public IHttpActionResult Login(LoginViewModel model)
@@ -41,13 +31,16 @@ namespace JIF.CMS.Management.API.Controllers
             if (model == null)
                 throw new JIFException("登陆信息为空");
 
-            var userInfo = _sysManagerService.Login(model.Account, model.Password);
+            var sysManagerService = Resolve<ISysManagerService>();
+            var authenticationService = Resolve<IAuthenticationService>();
+
+            var userInfo = sysManagerService.Login(model.Account, model.Password);
 
             if (userInfo != null)
             {
-                var sysAdmin = _sysManagerService.Get(userInfo.UserId);
+                var sysAdmin = sysManagerService.Get(userInfo.UserId);
 
-                _authenticationService.SignIn(sysAdmin);
+                authenticationService.SignIn(sysAdmin);
 
                 return JsonOk("登陆成功");
             }
@@ -105,7 +98,9 @@ namespace JIF.CMS.Management.API.Controllers
                 CellPhone = "15618147550"
             };
 
-            _authenticationService.SignIn(user);
+            var authenticationService = Resolve<IAuthenticationService>();
+
+            authenticationService.SignIn(user);
 
             return JsonOk();
         }

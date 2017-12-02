@@ -20,7 +20,7 @@ namespace JIF.CMS.Test.Core.Tests
 
             for (int i = 0; i < 100; i++)
             {
-                Console.WriteLine(RandomHelper.Gen(RandomHelper.Scheme.NumChar, 12));
+                Console.WriteLine(RandomHelper.Gen(RandomHelper.Scheme.NumChar, 18));
             }
 
             //// 随机定长字符串

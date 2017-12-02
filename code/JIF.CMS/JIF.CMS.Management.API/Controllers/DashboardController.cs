@@ -12,16 +12,6 @@ namespace JIF.CMS.Management.API.Controllers
 {
     public class DashboardController : AdminBaseController
     {
-        private readonly ISysManagerService _sysManagerService;
-        private readonly IAuthenticationService _authenticationService;
-
-        public DashboardController(ISysManagerService sysManagerService,
-            IAuthenticationService authenticationService)
-        {
-            _sysManagerService = sysManagerService;
-            _authenticationService = authenticationService;
-        }
-
         [HttpGet]
         public IHttpActionResult GOO(string name)
         {

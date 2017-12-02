@@ -19,6 +19,18 @@ namespace JIF.CMS.WebApi.Framework.Controllers
             Logger = EngineContext.Current.Resolve<ILog>();
         }
 
+        /// <summary>
+        /// 解析服务
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        protected T Resolve<T>() where T : class
+        {
+            return EngineContext.Current.Resolve<T>();
+        }
+
+        #region Json Result
+
         [NonAction]
         /// <summary>
         /// Json请求成功
@@ -216,5 +228,7 @@ namespace JIF.CMS.WebApi.Framework.Controllers
                 data = data,
             });
         }
+
+        #endregion
     }
 }
