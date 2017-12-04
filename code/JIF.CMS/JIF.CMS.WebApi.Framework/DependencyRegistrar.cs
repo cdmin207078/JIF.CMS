@@ -67,6 +67,8 @@ namespace JIF.CMS.WebApi.Framework
             // OPTIONAL: logging
             builder.RegisterInstance(LogManager.GetLogger("")).SingleInstance();
 
+            builder.RegisterInstance(LogManager.GetLogger("")).Named<ILog>("exception-less").SingleInstance();
+
             // OPTIONAL: AuthenticationService
             builder.RegisterType<JsonTokenAuthenticationService>().As<IAuthenticationService>().InstancePerLifetimeScope();
 
