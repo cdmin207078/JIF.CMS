@@ -9,6 +9,7 @@ using JIF.CMS.Core.HttpApiResults;
 using JIF.CMS.Core.Domain.Articles;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Threading;
 
 namespace JIF.CMS.Test.Core.Tests
 {
@@ -131,6 +132,39 @@ namespace JIF.CMS.Test.Core.Tests
             Console.WriteLine("over");
         }
 
+        [TestMethod]
+        public async Task Request_Property_Test()
+        {
+            var client = new RestClient(_baseUrl + "/welcome/Register");
+
+            var request = new RestRequest(Method.POST);
+
+            //var model = new LoginViewModel
+            //{
+            //    Account = "root",
+            //    Password = "666",
+            //    Captcha = "验证码"
+            //};
+
+
+            //var strParams = JsonConvert.SerializeObject(model);
+            ////request.AddJsonBody(model);
+            //request.AddJsonBody(strParams);
+            //request.AddJsonBody(strParams);
+
+            SortedDictionary<string, string> sParaTemp = new SortedDictionary<string, string>();
+            sParaTemp.Add("Account", "777");
+            sParaTemp.Add("Password", "888");
+            sParaTemp.Add("Captcha", "999");
+
+            request.AddJsonBody(sParaTemp);
+
+            var ret = await client.ExecuteTaskAsync(request);
+            Console.WriteLine(ret.Content);
+
+            var ret2 = await client.ExecutePostTaskAsync(request);
+            Console.WriteLine(ret2.Content);
+        }
 
         public class LoginViewModel
         {

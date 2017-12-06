@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace JIF.CMS.Core.Helpers
 {
-    internal static class Utils
+    public class Utils
     {
         #region 进制转换
 
@@ -47,5 +47,6 @@ namespace JIF.CMS.Core.Helpers
         }
 
         #endregion
+
     }
 }
