@@ -11,10 +11,33 @@ namespace JIF.CMS.Core.Helpers
 {
     /// <summary>
     /// 加密算法类
+    /// </summary>
+    /// <remarks>
     /// 参考文献: 
     /// http://www.cnblogs.com/rush/archive/2011/07/24/2115613.html  -- 打造属于你的加密Helper类
     /// http://www.cnblogs.com/vamei/p/3480994.html                  -- RSA加密与破解
-    /// </summary>
+    /// 
+    /// Code Logic:
+    /// This helper includes Symmetric Algorithm and Asymmetric Algorithm
+    /// Symmetric Algorithm Method:
+    /// MD5, RC2, DES, TripleDES and Rijndael.
+    /// 
+    /// Symmetric Algorithm Method:
+    /// RSA and DSA, but we only provide RSA implemention.
+    /// 
+    /// Corresponding Source:
+    /// des key 64bit
+    /// http://msdn.microsoft.com/en-us/library/system.security.cryptography.des.key.aspx
+    /// 
+    /// rc2 key 40bits to 128bits in increments of 8bits
+    /// http://msdn.microsoft.com/en-us/library/system.security.cryptography.rc2.keysize(v=VS.85).aspx
+    /// 
+    /// Rijndael
+    /// http://msdn.microsoft.com/en-us/library/system.security.cryptography.symmetricalgorithm.keysize.aspx
+    /// 
+    /// TripleDES This algorithm supports key lengths from 128 bits to 192 bits in increments of 64 bits.
+    /// http://msdn.microsoft.com/en-us/library/system.security.cryptography.tripledes.key.aspx
+    /// </remarks>
     public static class EncyptHelper
     {
         #region 获取加密算法
@@ -29,10 +52,19 @@ namespace JIF.CMS.Core.Helpers
         }
 
         /// <summary>
+        /// Creates the hash algo SHA1.
+        /// </summary>
+        /// <returns></returns>
+        public static HashAlgorithm CreateHashAlgoSHA1()
+        {
+            return new SHA1CryptoServiceProvider();
+        }
+
+        /// <summary>
         /// Creates the symm algo triple DES.
         /// </summary>
         /// <returns></returns>
-        public static SymmetricAlgorithm CreateSymmAlgoTripleDes()
+        public static SymmetricAlgorithm CreateSymmAlgoTripleDES()
         {
             return new TripleDESCryptoServiceProvider();
         }
@@ -71,7 +103,6 @@ namespace JIF.CMS.Core.Helpers
         public static RSACryptoServiceProvider CreateAsymmAlgoRSA()
         {
             return new RSACryptoServiceProvider();
-
         }
 
         #endregion
@@ -83,17 +114,24 @@ namespace JIF.CMS.Core.Helpers
         /// </summary>
         /// <param name="algorithm">具体对称加密算法实现类</param>
         /// <param name="plainText">明文</param>
-        /// <param name="key">密钥</param>
+        /// <param name="key">密钥(加解密须保持一直)</param>
+        /// <param name="iv">算法初始化向量IV(加解密须保持一直)</param>
         /// <param name="cipherMode">加密模式</param>
         /// <param name="paddingMode">加密数据填充方式</param>
         /// <returns>base64加密字符串</returns>
-        public static string Encrypt(SymmetricAlgorithm algorithm, string plainText, byte[] key, CipherMode cipherMode, PaddingMode paddingMode)
+        public static string Encrypt(SymmetricAlgorithm algorithm, string plainText, byte[] key, byte[] iv, CipherMode? cipherMode = null, PaddingMode? paddingMode = null)
         {
             byte[] plainBytes;
             byte[] cipherBytes;
+
             algorithm.Key = key;
-            algorithm.Mode = cipherMode;
-            algorithm.Padding = paddingMode;
+            algorithm.IV = iv;
+
+            if (cipherMode.HasValue)
+                algorithm.Mode = cipherMode.Value;
+
+            if (paddingMode.HasValue)
+                algorithm.Padding = paddingMode.Value;
 
             BinaryFormatter bf = new BinaryFormatter();
 
@@ -128,19 +166,26 @@ namespace JIF.CMS.Core.Helpers
         /// </summary>
         /// <param name="algorithm">具体对称加密算法实现类.</param>
         /// <param name="base64Text">base64字符串密文</param>
-        /// <param name="key">密钥</param>
+        /// <param name="key">密钥(加解密须保持一直)</param>
+        /// <param name="iv">算法初始化向量IV(加解密须保持一直)</param>
         /// <param name="cipherMode">加密模式</param>
         /// <param name="paddingMode">加密数据填充方式</param>
         /// <returns>返回明文</returns>
-        public static string Decrypt(SymmetricAlgorithm algorithm, string base64Text, byte[] key, CipherMode cipherMode, PaddingMode paddingMode)
+        public static string Decrypt(SymmetricAlgorithm algorithm, string base64Text, byte[] key, byte[] iv, CipherMode? cipherMode = null, PaddingMode? paddingMode = null)
         {
             byte[] plainBytes;
 
             //// Convert the base64 string to byte array. 
             byte[] cipherBytes = Convert.FromBase64String(base64Text);
+
             algorithm.Key = key;
-            algorithm.Mode = cipherMode;
-            algorithm.Padding = paddingMode;
+            algorithm.IV = iv;
+
+            if (cipherMode.HasValue)
+                algorithm.Mode = cipherMode.Value;
+
+            if (paddingMode.HasValue)
+                algorithm.Padding = paddingMode.Value;
 
             using (MemoryStream memoryStream = new MemoryStream(cipherBytes))
             {
@@ -164,6 +209,8 @@ namespace JIF.CMS.Core.Helpers
         #endregion
 
         #region 非对称加密算法 
+
+
 
         #endregion
 
@@ -190,6 +237,18 @@ namespace JIF.CMS.Core.Helpers
             return hexResult.ToString();
         }
 
+        /// <summary>
+        /// 判断是否匹配指定 Hash(散列) 算法
+        /// </summary>
+        /// <param name="hashAlgorithm">指定 Hash(散列) 算法</param>
+        /// <param name="hashedText">密文</param>
+        /// <param name="unhashedText">原文</param>
+        /// <returns></returns>
+        public static bool IsHashMatch(HashAlgorithm hashAlgorithm, string hashedText, string unhashedText)
+        {
+            string hashedTextToCompare = Encrypt(hashAlgorithm, unhashedText);
+            return (string.CompareOrdinal(hashedText, hashedTextToCompare) == 0);
+        }
         #endregion
     }
 }
