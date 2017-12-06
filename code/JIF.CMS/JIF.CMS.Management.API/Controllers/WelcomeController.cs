@@ -251,6 +251,8 @@ namespace JIF.CMS.Management.API.Controllers
             return (await Task.WhenAll(tasks)).ToList();
         }
 
+
+
         [HttpGet]
         public async Task<IHttpActionResult> PayOrder()
         {
@@ -276,6 +278,7 @@ namespace JIF.CMS.Management.API.Controllers
 
             return JsonOk(string.Format("耗时: {0}s, user: {1}, order: {2}", watch.ElapsedMilliseconds / 1000, await user, await order));
         }
+
 
         private async Task<string> getUserInfo()
         {
