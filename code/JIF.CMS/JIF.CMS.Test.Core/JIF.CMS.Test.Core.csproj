@@ -105,7 +105,8 @@
     <Compile Include="Tests\AsyncCodeTest.cs" />
     <Compile Include="Tests\CommonTest.cs" />
     <Compile Include="Tests\GushiWenSiteContentTest.cs" />
-    <Compile Include="Tests\EncodingTest.cs" />
+    <Compile Include="Tests\EncodingHelperTest.cs" />
+    <Compile Include="Tests\HexConversionTest.cs" />
     <Compile Include="Tests\URLEncodeTest.cs" />
   </ItemGroup>
   <ItemGroup>

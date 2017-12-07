@@ -61,6 +61,15 @@ namespace JIF.CMS.Core.Helpers
         }
 
         /// <summary>
+        /// Creates the symm algo DES.
+        /// </summary>
+        /// <returns></returns>
+        public static SymmetricAlgorithm CreateSymmAlgoDES()
+        {
+            return new DESCryptoServiceProvider();
+        }
+
+        /// <summary>
         /// Creates the symm algo triple DES.
         /// </summary>
         /// <returns></returns>
@@ -88,12 +97,12 @@ namespace JIF.CMS.Core.Helpers
         }
 
         /// <summary>
-        /// Creates the symm algo DES.
+        /// Creates the symm algo AES.
         /// </summary>
-        /// <returns></returns>
-        public static SymmetricAlgorithm CreateSymmAlgoDES()
+        /// <returns></returns>s
+        public static SymmetricAlgorithm CreateSymmAlgoAES()
         {
-            return new DESCryptoServiceProvider();
+            return new AesCryptoServiceProvider();
         }
 
         /// <summary>
@@ -103,6 +112,15 @@ namespace JIF.CMS.Core.Helpers
         public static RSACryptoServiceProvider CreateAsymmAlgoRSA()
         {
             return new RSACryptoServiceProvider();
+        }
+
+        /// <summary>
+        /// Creates the asymm algo DSA.
+        /// </summary>
+        /// <returns></returns>
+        public static DSACryptoServiceProvider CreateAsymmAlgoDSA()
+        {
+            return new DSACryptoServiceProvider();
         }
 
         #endregion
@@ -156,8 +174,10 @@ namespace JIF.CMS.Core.Helpers
                 // Closes the memorystream object
                 ms.Close();
             }
-            string base64Text = Convert.ToBase64String(cipherBytes);
 
+            //return Encoding.Default.GetString(cipherBytes);  // 解密报错
+
+            string base64Text = Convert.ToBase64String(cipherBytes);
             return base64Text;
         }
 
@@ -177,6 +197,7 @@ namespace JIF.CMS.Core.Helpers
 
             //// Convert the base64 string to byte array. 
             byte[] cipherBytes = Convert.FromBase64String(base64Text);
+            //byte[] cipherBytes = Encoding.Default.GetBytes(base64Text); // 报错
 
             algorithm.Key = key;
             algorithm.IV = iv;
@@ -208,9 +229,140 @@ namespace JIF.CMS.Core.Helpers
 
         #endregion
 
-        #region 非对称加密算法 
+        #region 非对称加密算法
 
+        public static void GenerateRSAKey(out string xmlPublicKey, out string xmlPrivateKey)
+        {
+            var algo = CreateAsymmAlgoRSA();
 
+            xmlPublicKey = algo.ToXmlString(false);
+            xmlPrivateKey = algo.ToXmlString(true);
+        }
+
+        /// <summary>
+        /// 非对称加密算法 - RSA - 加密
+        /// </summary>
+        /// <param name="xmlPublickey">加密私钥</param>
+        /// <param name="plainText">原文</param>
+        /// <returns>base64加密字符串</returns>
+        public static string Encrypt(RSACryptoServiceProvider algorithm, string xmlPublickey, string plainText)
+        {
+            List<byte[]> cipherArray = new List<byte[]>();
+
+            algorithm.FromXmlString(xmlPublickey);
+
+            BinaryFormatter binaryFormatter = new BinaryFormatter();
+            byte[] plainBytes = null;
+
+            //// Use BinaryFormatter to serialize plain text.
+            using (MemoryStream memoryStream = new MemoryStream())
+            {
+                binaryFormatter.Serialize(memoryStream, plainText);
+                plainBytes = memoryStream.ToArray();
+            }
+
+            int totLength = 0;
+            int index = 0;
+
+            //// Encrypt plain text by public key.
+            if (plainBytes.Length > 80)
+            {
+                byte[] partPlainBytes;
+                byte[] cipherBytes;
+                while (plainBytes.Length - index > 0)
+                {
+                    partPlainBytes = plainBytes.Length - index > 80 ? new byte[80] : new byte[plainBytes.Length - index];
+
+                    for (int i = 0; i < 80 && (i + index) < plainBytes.Length; i++)
+                        partPlainBytes[i] = plainBytes[i + index];
+
+                    cipherBytes = algorithm.Encrypt(partPlainBytes, false);
+                    totLength += cipherBytes.Length;
+                    index += 80;
+
+                    cipherArray.Add(cipherBytes);
+                }
+            }
+            else
+            {
+                byte[] cipherBytes;
+                cipherBytes = algorithm.Encrypt(plainBytes, false);
+                totLength = cipherBytes.Length;
+                cipherArray.Add(cipherBytes);
+            }
+
+            //// Convert to byte array.
+            byte[] cipheredPlaintText = new byte[totLength];
+            index = 0;
+            foreach (byte[] item in cipherArray)
+            {
+                for (int i = 0; i < item.Length; i++)
+                {
+                    cipheredPlaintText[i + index] = item[i];
+                }
+
+                index += item.Length;
+            }
+            return Convert.ToBase64String(cipheredPlaintText);
+
+        }
+
+        /// <summary>
+        /// 非对称加密算法 - RSA - 解密
+        /// </summary>
+        /// <param name="xmlPrivatekey">解密私钥</param>
+        /// <param name="base64Text">base64字符串密文</param>
+        /// <returns></returns>
+        public static string Decrypt(RSACryptoServiceProvider algorithm, string xmlPrivatekey, string base64Text)
+        {
+            byte[] cipherBytes = Convert.FromBase64String(base64Text);
+            List<byte[]> plainArray = new List<byte[]>();
+
+            algorithm.FromXmlString(xmlPrivatekey);
+
+            int index = 0;
+            int totLength = 0;
+            byte[] partPlainText = null;
+            byte[] plainBytes;
+            int length = cipherBytes.Length / 2;
+            //int j = 0;
+            //// Decrypt the ciphered text through private key.
+            while (cipherBytes.Length - index > 0)
+            {
+                partPlainText = cipherBytes.Length - index > 128 ? new byte[128] : new byte[cipherBytes.Length - index];
+
+                for (int i = 0; i < 128 && (i + index) < cipherBytes.Length; i++)
+                    partPlainText[i] = cipherBytes[i + index];
+
+                plainBytes = algorithm.Decrypt(partPlainText, false);
+
+                totLength += plainBytes.Length;
+                index += 128;
+                plainArray.Add(plainBytes);
+
+            }
+
+            byte[] recoveredPlaintext = new byte[length];
+            index = 0;
+            for (int i = 0; i < plainArray.Count; i++)
+            {
+                for (int j = 0; j < plainArray[i].Length; j++)
+                {
+                    recoveredPlaintext[index + j] = plainArray[i][j];
+                }
+                index += plainArray[i].Length;
+            }
+
+            BinaryFormatter bf = new BinaryFormatter();
+            using (MemoryStream stream = new MemoryStream())
+            {
+                stream.Write(recoveredPlaintext, 0, recoveredPlaintext.Length);
+                stream.Position = 0;
+                string msgobj = (string)bf.Deserialize(stream);
+                return msgobj;
+            }
+
+        }
 
         #endregion
 
@@ -224,8 +376,7 @@ namespace JIF.CMS.Core.Helpers
         /// <returns></returns>
         public static string Encrypt(HashAlgorithm hashAlgorithm, string plainText)
         {
-            UTF8Encoding UTF8 = new System.Text.UTF8Encoding();
-            byte[] data = UTF8.GetBytes(plainText);
+            byte[] data = Encoding.UTF8.GetBytes(plainText);
             byte[] result = hashAlgorithm.ComputeHash(data);
             StringBuilder hexResult = new StringBuilder(result.Length);
 
