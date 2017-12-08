@@ -15,9 +15,9 @@ namespace JIF.CMS.Test.Core.Tests
         public void Hash_MD5_Test()
         {
             // 获得加密算法
-            var algo = EncyptHelper.CreateHashAlgoMd5();
+            var algo = EncryptHelper.CreateHashAlgoMd5();
             var plain = "洞庭春尽水如天，银盘托君山。巧雨润湿油纸伞，风卷莲动船";
-            var cipher = EncyptHelper.Encrypt(algo, plain);
+            var cipher = EncryptHelper.Encrypt(algo, plain);
 
             Console.WriteLine(cipher);
         }
@@ -26,9 +26,9 @@ namespace JIF.CMS.Test.Core.Tests
         public void Hash_SHA1_Test()
         {
             // 获得加密算法
-            var algo = EncyptHelper.CreateHashAlgoSHA1();
+            var algo = EncryptHelper.CreateHashAlgoSHA1();
             var plain = "洞庭春尽水如天，银盘托君山。巧雨润湿油纸伞，风卷莲动船";
-            var cipher = EncyptHelper.Encrypt(algo, plain);
+            var cipher = EncryptHelper.Encrypt(algo, plain);
 
             Console.WriteLine(cipher);
         }
@@ -36,19 +36,19 @@ namespace JIF.CMS.Test.Core.Tests
         [TestMethod]
         public void SymmetricAlgorithm_DES_Test()
         {
-            var algo = EncyptHelper.CreateSymmAlgoDES(); // key长度 8, iv 长度 8
+            var algo = EncryptHelper.CreateSymmAlgoDES(); // key长度 8, iv 长度 8
 
             var plain = "长恨此身非我有";
 
-            var key = "12345678";
-            var iv = "87654321";
-            var cipher = EncyptHelper.Encrypt(algo, plain, Encoding.UTF8.GetBytes(key), Encoding.UTF8.GetBytes(iv));
+            var key = "12345678";  // key 8位
+            var iv = "87654321";   // iv  8位
+            var cipher = EncryptHelper.Encrypt(algo, plain, Encoding.UTF8.GetBytes(key), Encoding.UTF8.GetBytes(iv));
 
 
             // 解密
-            algo = EncyptHelper.CreateSymmAlgoDES();
+            algo = EncryptHelper.CreateSymmAlgoDES();
 
-            var origin = EncyptHelper.Decrypt(algo, cipher, Encoding.UTF8.GetBytes(key), Encoding.UTF8.GetBytes(iv));
+            var origin = EncryptHelper.Decrypt(algo, cipher, Encoding.UTF8.GetBytes(key), Encoding.UTF8.GetBytes(iv));
 
             Console.WriteLine(cipher);
             Console.WriteLine(origin);
@@ -57,18 +57,18 @@ namespace JIF.CMS.Test.Core.Tests
         [TestMethod]
         public void SymmetricAlgorithm_TRIPLE_DES_Test()
         {
-            var algo = EncyptHelper.CreateSymmAlgoTripleDES(); // key长度 24, iv 长度 8
+            var algo = EncryptHelper.CreateSymmAlgoTripleDES(); // key长度 24, iv 长度 8
 
             var plain = "长恨此身非我有";
 
-            var key = "12345678ABCDEFGH!@#$%^&*";
-            var iv = "87654321";
-            var cipher = EncyptHelper.Encrypt(algo, plain, Encoding.UTF8.GetBytes(key), Encoding.UTF8.GetBytes(iv));
+            var key = "12345678ABCDEFGH!@#$%^&*";   // key 24位 
+            var iv = "87654321";                    // iv   8位
+            var cipher = EncryptHelper.Encrypt(algo, plain, Encoding.UTF8.GetBytes(key), Encoding.UTF8.GetBytes(iv));
 
             // 解密
-            algo = EncyptHelper.CreateSymmAlgoTripleDES();
+            algo = EncryptHelper.CreateSymmAlgoTripleDES();
 
-            var origin = EncyptHelper.Decrypt(algo, cipher, Encoding.UTF8.GetBytes(key), Encoding.UTF8.GetBytes(iv));
+            var origin = EncryptHelper.Decrypt(algo, cipher, Encoding.UTF8.GetBytes(key), Encoding.UTF8.GetBytes(iv));
 
             Console.WriteLine(cipher);
             Console.WriteLine(origin);
@@ -78,18 +78,18 @@ namespace JIF.CMS.Test.Core.Tests
         [TestMethod]
         public void SymmetricAlgorithm_RC2_Test()
         {
-            var algo = EncyptHelper.CreateSymmAlgoRC2(); // key长度 16, iv 长度 8
+            var algo = EncryptHelper.CreateSymmAlgoRC2(); // key长度 16, iv 长度 8
 
             var plain = "长恨此身非我有";
 
-            var key = "12345678ABCDEFGH";
-            var iv = "87654321";
-            var cipher = EncyptHelper.Encrypt(algo, plain, Encoding.UTF8.GetBytes(key), Encoding.UTF8.GetBytes(iv));
+            var key = "12345678ABCDEFGH";   // key 16位
+            var iv = "87654321";            // iv   8位 
+            var cipher = EncryptHelper.Encrypt(algo, plain, Encoding.UTF8.GetBytes(key), Encoding.UTF8.GetBytes(iv));
 
             // 解密
-            algo = EncyptHelper.CreateSymmAlgoRC2();
+            algo = EncryptHelper.CreateSymmAlgoRC2();
 
-            var origin = EncyptHelper.Decrypt(algo, cipher, Encoding.UTF8.GetBytes(key), Encoding.UTF8.GetBytes(iv));
+            var origin = EncryptHelper.Decrypt(algo, cipher, Encoding.UTF8.GetBytes(key), Encoding.UTF8.GetBytes(iv));
 
             Console.WriteLine(cipher);
             Console.WriteLine(origin);
@@ -99,18 +99,19 @@ namespace JIF.CMS.Test.Core.Tests
         [TestMethod]
         public void SymmetricAlgorithm_Rijndael_Test()
         {
-            var algo = EncyptHelper.CreateSymmAlgoRijndael(); // key长度 16, iv 长度 8
+            var algo = EncryptHelper.CreateSymmAlgoRijndael(); // key长度 32, iv 长度 8
 
             var plain = "长恨此身非我有";
 
-            var key = "12345678ABCDEFGH!@#$%^&*87654321";
-            var iv = "8765432112345678";
-            var cipher = EncyptHelper.Encrypt(algo, plain, Encoding.UTF8.GetBytes(key), Encoding.UTF8.GetBytes(iv));
+            var key = "12345678ABCDEFGH!@#$%^&*87654321";   // key 32位
+            var iv = "8765432112345678";                    // iv   8位
+            var cipher = EncryptHelper.Encrypt(algo, plain, Encoding.UTF8.GetBytes(key), Encoding.UTF8.GetBytes(iv));
+
 
             // 解密
-            algo = EncyptHelper.CreateSymmAlgoRijndael();
+            algo = EncryptHelper.CreateSymmAlgoRijndael();
 
-            var origin = EncyptHelper.Decrypt(algo, cipher, Encoding.UTF8.GetBytes(key), Encoding.UTF8.GetBytes(iv));
+            var origin = EncryptHelper.Decrypt(algo, cipher, Encoding.UTF8.GetBytes(key), Encoding.UTF8.GetBytes(iv));
 
             Console.WriteLine(cipher);
             Console.WriteLine(origin);
@@ -124,13 +125,13 @@ namespace JIF.CMS.Test.Core.Tests
             var xmlPrivateKey = string.Empty;
             var xmlPublicKey = string.Empty;
 
-            var algo = EncyptHelper.CreateAsymmAlgoRSA();
-            EncyptHelper.GenerateRSAKey(out xmlPublicKey, out xmlPrivateKey);
+            var algo = EncryptHelper.CreateAsymmAlgoRSA();
+            EncryptHelper.GenerateRSAKey(out xmlPublicKey, out xmlPrivateKey);
 
-            var cipher = EncyptHelper.Encrypt(algo, xmlPublicKey, plain);
+            var cipher = EncryptHelper.Encrypt(algo, xmlPublicKey, plain);
 
-            algo = EncyptHelper.CreateAsymmAlgoRSA();
-            var origin = EncyptHelper.Decrypt(algo, xmlPrivateKey, cipher);
+            algo = EncryptHelper.CreateAsymmAlgoRSA();
+            var origin = EncryptHelper.Decrypt(algo, xmlPrivateKey, cipher);
 
             Console.WriteLine(cipher);
             Console.WriteLine(origin);

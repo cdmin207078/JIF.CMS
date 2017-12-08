@@ -30,10 +30,10 @@ namespace JIF.CMS.Services.SysManager
         /// <returns></returns>
         private string EncyptPwd(string pwd, DateTime createtime)
         {
-            var algo = EncyptHelper.CreateHashAlgoMd5();
+            var algo = EncryptHelper.CreateHashAlgoMd5();
             var plain = string.Format("{0}-{1}", pwd, createtime.ToString(JIFConsts.DATETIME_NORMAL));
 
-            return EncyptHelper.Encrypt(algo, plain);
+            return EncryptHelper.Encrypt(algo, plain);
         }
 
         #endregion

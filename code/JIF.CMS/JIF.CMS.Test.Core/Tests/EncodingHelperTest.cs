@@ -86,14 +86,16 @@ namespace JIF.CMS.Test.Core.Tests
         [TestMethod]
         public void MyTestMethod()
         {
-            var plain = "Man";
+            var plain = "ZVpY1oAEBd4hcfU9ldd+d9y4dmMPNI8ZycNzr72pUdNfvbmncQcit/5rh9VCTNet";
 
-            //var bytes = Convert.FromBase64String(plain); // 错误, 不是base64 格式字符串
+
             var bytes = Encoding.UTF8.GetBytes(plain);
-            var base64Text = Convert.ToBase64String(bytes);
-            var base64bytes = Encoding.UTF8.GetBytes(base64Text);
-            var base64bytes_true = Convert.FromBase64String(base64Text);
+            var text = Encoding.UTF8.GetString(bytes);
 
+            var base64bytes = Convert.FromBase64String(plain);
+            var base64Text = Convert.ToBase64String(base64bytes);
+
+            Console.WriteLine(EncodeHelper.DecodeBase64(Encoding.UTF8, "5oKs5bSW"));
         }
 
         private void PrintBytes(string type, byte[] bytes)

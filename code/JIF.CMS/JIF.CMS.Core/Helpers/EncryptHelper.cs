@@ -38,7 +38,7 @@ namespace JIF.CMS.Core.Helpers
     /// TripleDES This algorithm supports key lengths from 128 bits to 192 bits in increments of 64 bits.
     /// http://msdn.microsoft.com/en-us/library/system.security.cryptography.tripledes.key.aspx
     /// </remarks>
-    public static class EncyptHelper
+    public static class EncryptHelper
     {
         #region 获取加密算法
 
@@ -125,6 +125,43 @@ namespace JIF.CMS.Core.Helpers
 
         #endregion
 
+        #region Hash加密算法 - 单向算法, 可以通过Hash算法对目标信息生成一段特定长度的唯一的Hash值, 却不能通过这个Hash值重新获得目标信息
+
+        /// <summary>
+        /// Hash加密算法 - 加密
+        /// </summary>
+        /// <param name="hashAlgorithm">Hash加密算法实现</param>
+        /// <param name="dataToHash">明文</param>
+        /// <returns></returns>
+        public static string Encrypt(HashAlgorithm hashAlgorithm, string plainText)
+        {
+            byte[] data = Encoding.UTF8.GetBytes(plainText);
+            byte[] result = hashAlgorithm.ComputeHash(data);
+            StringBuilder hexResult = new StringBuilder(result.Length);
+
+            for (int i = 0; i < result.Length; i++)
+            {
+                //Convert to hexadecimal
+                hexResult.Append(result[i].ToString("x2"));
+            }
+            return hexResult.ToString();
+        }
+
+        /// <summary>
+        /// 判断是否匹配指定 Hash(散列) 算法
+        /// </summary>
+        /// <param name="hashAlgorithm">指定 Hash(散列) 算法</param>
+        /// <param name="hashedText">密文</param>
+        /// <param name="unhashedText">原文</param>
+        /// <returns></returns>
+        public static bool IsHashMatch(HashAlgorithm hashAlgorithm, string hashedText, string unhashedText)
+        {
+            string hashedTextToCompare = Encrypt(hashAlgorithm, unhashedText);
+            return (string.CompareOrdinal(hashedText, hashedTextToCompare) == 0);
+        }
+
+        #endregion
+
         #region 对称加密算法 - 发送方和接收方协定一个密钥K. K可以是一个密钥对, 但是必须要求加密密钥和解密密钥之间能够互相推算出来. 在最简单也是最常用的对称算法中, 加密和解密共享一个密钥
 
         /// <summary>
@@ -175,10 +212,9 @@ namespace JIF.CMS.Core.Helpers
                 ms.Close();
             }
 
-            //return Encoding.Default.GetString(cipherBytes);  // 解密报错
-
             string base64Text = Convert.ToBase64String(cipherBytes);
             return base64Text;
+            //return Encoding.Default.GetString(cipherBytes);
         }
 
         /// <summary>
@@ -195,9 +231,8 @@ namespace JIF.CMS.Core.Helpers
         {
             byte[] plainBytes;
 
-            //// Convert the base64 string to byte array. 
+            // Convert the base64 string to byte array. 
             byte[] cipherBytes = Convert.FromBase64String(base64Text);
-            //byte[] cipherBytes = Encoding.Default.GetBytes(base64Text); // 报错
 
             algorithm.Key = key;
             algorithm.IV = iv;
@@ -364,42 +399,6 @@ namespace JIF.CMS.Core.Helpers
 
         }
 
-        #endregion
-
-        #region Hash加密算法 - 单向算法, 可以通过Hash算法对目标信息生成一段特定长度的唯一的Hash值, 却不能通过这个Hash值重新获得目标信息
-
-        /// <summary>
-        /// Hash加密算法 - 加密
-        /// </summary>
-        /// <param name="hashAlgorithm">Hash加密算法实现</param>
-        /// <param name="dataToHash">明文</param>
-        /// <returns></returns>
-        public static string Encrypt(HashAlgorithm hashAlgorithm, string plainText)
-        {
-            byte[] data = Encoding.UTF8.GetBytes(plainText);
-            byte[] result = hashAlgorithm.ComputeHash(data);
-            StringBuilder hexResult = new StringBuilder(result.Length);
-
-            for (int i = 0; i < result.Length; i++)
-            {
-                //Convert to hexadecimal
-                hexResult.Append(result[i].ToString("x2"));
-            }
-            return hexResult.ToString();
-        }
-
-        /// <summary>
-        /// 判断是否匹配指定 Hash(散列) 算法
-        /// </summary>
-        /// <param name="hashAlgorithm">指定 Hash(散列) 算法</param>
-        /// <param name="hashedText">密文</param>
-        /// <param name="unhashedText">原文</param>
-        /// <returns></returns>
-        public static bool IsHashMatch(HashAlgorithm hashAlgorithm, string hashedText, string unhashedText)
-        {
-            string hashedTextToCompare = Encrypt(hashAlgorithm, unhashedText);
-            return (string.CompareOrdinal(hashedText, hashedTextToCompare) == 0);
-        }
         #endregion
     }
 }

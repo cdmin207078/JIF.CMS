@@ -169,66 +169,6 @@ namespace JIF.CMS.Test.Core.Tests
         }
 
         [TestMethod]
-        public void Test_Type_Prop()
-        {
-            var a = new
-            {
-                name = 3
-            };
-
-            var b = new List<Product> { new Product { }, new Product { } };
-
-            Console.WriteLine("----------------- IsClass -----------------");
-            Console.WriteLine(typeof(string).IsClass);
-            Console.WriteLine(typeof(int).IsClass);
-            Console.WriteLine(typeof(long).IsClass);
-            Console.WriteLine(typeof(decimal).IsClass);
-            Console.WriteLine(typeof(double).IsClass);
-            Console.WriteLine(typeof(bool).IsClass);
-            Console.WriteLine(typeof(object).IsClass);
-            Console.WriteLine(a.GetType().IsClass);
-            Console.WriteLine(b.GetType().IsClass);
-
-
-            Console.WriteLine("----------------- IsPrimitive -----------------");
-            Console.WriteLine(typeof(string).IsPrimitive);
-            Console.WriteLine(typeof(int).IsPrimitive);
-            Console.WriteLine(typeof(long).IsPrimitive);
-            Console.WriteLine(typeof(decimal).IsPrimitive);
-            Console.WriteLine(typeof(double).IsPrimitive);
-            Console.WriteLine(typeof(bool).IsPrimitive);
-            Console.WriteLine(typeof(object).IsPrimitive);
-            Console.WriteLine(a.GetType().IsPrimitive);
-            Console.WriteLine(b.GetType().IsPrimitive);
-
-            Console.WriteLine("----------------- typeof equals -----------------");
-            Console.WriteLine(typeof(string) == typeof(string));
-
-
-            Console.WriteLine(b.GetType().IsArray);
-            Console.WriteLine(b.GetType().IsGenericType);
-            Console.WriteLine(b.GetType().IsGenericParameter);
-            Console.WriteLine(b.GetType().IsGenericTypeDefinition);
-
-
-            Console.WriteLine("----------------- enum -----------------");
-
-            Console.WriteLine(HE.A.GetType().IsClass);
-            Console.WriteLine(HE.A.GetType().IsPrimitive);
-            Console.WriteLine(HE.A.GetType().IsEnum);
-            Console.WriteLine(HE.A.GetType().IsEnumDefined("A"));
-
-            Console.WriteLine(HE.A.GetType().IsEnumDefined("a"));
-            Console.WriteLine(HE.A.GetType().IsEnumDefined("B"));
-
-            Console.WriteLine(HE.A.GetType().IsEnumDefined("C"));
-
-
-            var cc = (int)HE.A;
-
-        }
-
-        [TestMethod]
         public void MyTestMethodAAAAAAAAAAA()
         {
             var a = "A";

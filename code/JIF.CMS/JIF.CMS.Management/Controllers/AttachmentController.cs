@@ -44,10 +44,10 @@ namespace JIF.CMS.Management.Controllers
         /// <returns></returns>
         private string getBigFileChunkFolder(string fname, long fsize, long lastModifiedTimestamp)
         {
-            var algo = EncyptHelper.CreateHashAlgoMd5();
+            var algo = EncryptHelper.CreateHashAlgoMd5();
 
             var plain = string.Format("{0}-{1}-{2}-{3}", _workContext.CurrentUser.Account, fname, fsize, lastModifiedTimestamp);
-            var cipher = EncyptHelper.Encrypt(algo, plain);
+            var cipher = EncryptHelper.Encrypt(algo, plain);
 
             return Path.Combine(_attachmentRootPath, cipher);
         }
