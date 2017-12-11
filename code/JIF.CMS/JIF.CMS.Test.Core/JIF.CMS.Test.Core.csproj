@@ -108,6 +108,7 @@
     <Compile Include="Tests\EncodingHelperTest.cs" />
     <Compile Include="Tests\HexConversionTest.cs" />
     <Compile Include="Tests\DateTimeTest.cs" />
+    <Compile Include="Tests\MathHelperTest.cs" />
     <Compile Include="Tests\URLEncodeTest.cs" />
   </ItemGroup>
   <ItemGroup>

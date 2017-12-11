@@ -196,6 +196,26 @@ namespace JIF.CMS.Core.Helpers
         }
 
         /// <summary>
+        /// 随机生成时间尺度
+        /// </summary>
+        public enum DateTimeScale : byte
+        {
+            Year,
+
+            Month,
+
+            Day,
+
+            Hour,
+
+            Minute,
+
+            Second,
+
+            Millisecond
+        }
+
+        /// <summary>
         /// 根据格式类型组合字符集
         /// </summary>
         /// <param name="f"></param>
@@ -302,13 +322,8 @@ namespace JIF.CMS.Core.Helpers
         /// </summary>
         /// <param name="alpha">颜色 alpha, 默认(最大） 255. 不透明</param>
         /// <returns></returns>
-        public static Color GenColor(int alpha = 255)
+        public static Color GenColor(byte alpha = 255)
         {
-            if (alpha > 255 || alpha < 1)
-            {
-                throw new ArgumentException();
-            }
-
             var rnd = new Random(Guid.NewGuid().GetHashCode());
 
             var r = rnd.Next(0, 255);
@@ -324,7 +339,7 @@ namespace JIF.CMS.Core.Helpers
         /// <param name="min">最小时间</param>
         /// <param name="max">最大时间</param>
         /// <returns></returns>
-        public static DateTime GenDateTime(DateTime? min = null, DateTime? max = null)
+        public static DateTime GenDateTime(DateTimeScale scale, DateTime? min = null, DateTime? max = null)
         {
             throw new NotImplementedException();
         }
@@ -336,7 +351,7 @@ namespace JIF.CMS.Core.Helpers
         /// <param name="min">最小时间</param>
         /// <param name="max">最大时间</param>
         /// <returns></returns>
-        public static IEnumerable<DateTime> GenDateTime(int count, DateTime? min = null, DateTime? max = null)
+        public static IEnumerable<DateTime> GenDateTime(DateTimeScale scale, int count, DateTime? min = null, DateTime? max = null)
         {
             throw new NotImplementedException();
         }
