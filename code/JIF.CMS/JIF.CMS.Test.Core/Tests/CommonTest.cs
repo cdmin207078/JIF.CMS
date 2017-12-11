@@ -166,24 +166,5 @@ namespace JIF.CMS.Test.Core.Tests
             Console.WriteLine("type.IsValueType : {0}", type.IsValueType);
             Console.WriteLine("type.IsVisible : {0}", type.IsVisible);
         }
-
-        [TestMethod]
-        public void MyTestMethod()
-        {
-            var now = DateTime.Now;
-
-            var ts = DateTimeHelper.ConvertToTimestamp(now);
-
-            var time = DateTimeHelper.ConvertToDateTime(ts.ToString());
-            Console.WriteLine(now);
-            Console.WriteLine(ts);
-            Console.WriteLine(time);
-
-            StringBuilder sb = new StringBuilder();
-
-            sb.Append("name=555&");
-
-            Console.WriteLine(sb[sb.Length - 1] == '&');
-        }
     }
 }

@@ -273,7 +273,7 @@ namespace JIF.CMS.Core.Helpers
         /// <param name="len">生成字符串长度</param>
         /// <param name="count">生成个数</param>
         /// <returns></returns>
-        public static List<string> Gens(Scheme scheme, int len, int count)
+        public static IEnumerable<string> Gens(Scheme scheme, int len, int count)
         {
             var result = new List<string>();
 
@@ -285,7 +285,7 @@ namespace JIF.CMS.Core.Helpers
             return result;
         }
 
-        public static List<string> Gens(Scheme scheme, int minlen, int maxlen, int count)
+        public static IEnumerable<string> Gens(Scheme scheme, int minlen, int maxlen, int count)
         {
             var result = new List<string>();
 
@@ -319,11 +319,34 @@ namespace JIF.CMS.Core.Helpers
         }
 
         /// <summary>
+        /// 生成随机时间
+        /// </summary>
+        /// <param name="min">最小时间</param>
+        /// <param name="max">最大时间</param>
+        /// <returns></returns>
+        public static DateTime GenDateTime(DateTime? min = null, DateTime? max = null)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// 生成随机时间(多个)
+        /// </summary>
+        /// <param name="count">个数</param>
+        /// <param name="min">最小时间</param>
+        /// <param name="max">最大时间</param>
+        /// <returns></returns>
+        public static IEnumerable<DateTime> GenDateTime(int count, DateTime? min = null, DateTime? max = null)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
         /// 生成中文姓名
         /// </summary>
         /// <param name="count">生成个数</param>
         /// <returns></returns>
-        public static List<string> GenChinesePersonName(int count)
+        public static IEnumerable<string> GenChinesePersonName(int count)
         {
             var familyNames = _ChineseFamilySingleName.Union(_ChineseFamilyDoubleName);
             var givenNames = _ChineseGivenNamedMale.Union(_ChineseGivenNameFamale);
@@ -339,7 +362,6 @@ namespace JIF.CMS.Core.Helpers
             }
 
             return result;
-            throw new NotImplementedException();
         }
     }
 }
