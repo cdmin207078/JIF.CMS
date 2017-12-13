@@ -20,7 +20,7 @@ namespace JIF.CMS.Test.Core.Tests
 
             for (int i = 0; i < 100; i++)
             {
-                Console.WriteLine(RandomHelper.Gen(RandomHelper.Scheme.NumChar, 18));
+                Console.WriteLine(RandomHelper.Gen(RandomHelper.SchemeEnum.NumChar, 18));
             }
 
             //// 随机定长字符串
@@ -34,33 +34,34 @@ namespace JIF.CMS.Test.Core.Tests
             // 检查生成重复重复率, 受生成字符串 类型, 长度影响
             for (int i = 0; i < 100; i++)
             {
-                Console.WriteLine(string.Format("重复个数: {0}", 10000 - RandomHelper.Gen(RandomHelper.Scheme.NumChar, 4, 10000).Distinct().Count()));
+                Console.WriteLine(string.Format("重复个数: {0}", 10000 - RandomHelper.Gen(RandomHelper.SchemeEnum.NumChar, 4, 10000).Distinct().Count()));
             }
         }
 
         [TestMethod]
         public void Gen_ChinesePersonName_Test()
         {
-            string[] a = { "A", "B" };
-            string[] b = { "C", "D" };
-
-            var c = a.Union(b);
-
-            Console.WriteLine(JsonConvert.SerializeObject(c));
-
             Stopwatch watch = new Stopwatch();
             watch.Start();
 
-            var names = RandomHelper.GenChinesePersonName(100000);
+            var names = RandomHelper.GenChinesePersonName(1000);
             watch.Show("生成姓名");
 
             Console.WriteLine(JsonConvert.SerializeObject(names));
+        }
 
-            //var data = RandomHelper.GenChinesePersonName(100);
-            //foreach (var d in data)
-            //{
-            //    Console.WriteLine(d);
-            //}
+        [TestMethod]
+        public void Gen_DateTime()
+        {
+            Stopwatch watch = new Stopwatch();
+            watch.Start();
+
+            var times = RandomHelper.GenDateTime(RandomHelper.DateTimeScaleEnum.Millisecond, 10, DateTime.Now, DateTime.Now.AddDays(1));
+
+            foreach (var t in times)
+            {
+                Console.WriteLine(t.ToString("yyyy-MM-dd HH:mm:ss:fff"));
+            }
         }
     }
 }

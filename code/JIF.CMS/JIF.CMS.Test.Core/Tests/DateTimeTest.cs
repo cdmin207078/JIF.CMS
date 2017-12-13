@@ -46,8 +46,8 @@ namespace JIF.CMS.Test.Core.Tests
         {
             var zero = new DateTime();
 
-            var start = new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc);
-
+            //var start = new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc);
+            var start = new DateTime(1, 1, 1, 0, 0, 0, 1);
             var now = DateTime.Now;
 
             Console.WriteLine(zero);

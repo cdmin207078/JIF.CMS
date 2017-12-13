@@ -159,7 +159,7 @@ namespace JIF.CMS.Core.Helpers
         /// <summary>
         /// 格式类型
         /// </summary>
-        public enum Scheme : byte
+        public enum SchemeEnum : byte
         {
             /// <summary>
             /// 纯数字. eg: 123
@@ -198,7 +198,7 @@ namespace JIF.CMS.Core.Helpers
         /// <summary>
         /// 随机生成时间尺度
         /// </summary>
-        public enum DateTimeScale : byte
+        public enum DateTimeScaleEnum : byte
         {
             Year,
 
@@ -220,25 +220,25 @@ namespace JIF.CMS.Core.Helpers
         /// </summary>
         /// <param name="f"></param>
         /// <returns></returns>
-        private static string getSource(Scheme scheme)
+        private static string getSource(SchemeEnum scheme)
         {
             switch (scheme)
             {
-                case Scheme.Num:
+                case SchemeEnum.Num:
                     return _Nums;
-                case Scheme.Char:
+                case SchemeEnum.Char:
                     return _CharsL + _CharsU;
-                case Scheme.CharL:
+                case SchemeEnum.CharL:
                     return _CharsL;
-                case Scheme.CharU:
+                case SchemeEnum.CharU:
                     return _CharsU;
-                case Scheme.NumChar:
+                case SchemeEnum.NumChar:
                     return _Nums + _CharsL + _CharsU;
-                case Scheme.NumCharL:
+                case SchemeEnum.NumCharL:
                     return _Nums + _CharsL;
-                case Scheme.NumCharU:
+                case SchemeEnum.NumCharU:
                     return _Nums + _CharsU;
-                case Scheme.Chinese:
+                case SchemeEnum.Chinese:
                     return _ChinesePopular;
                 default:
                     throw new ArgumentException("RandomHelper : Format is not defined.");
@@ -256,13 +256,18 @@ namespace JIF.CMS.Core.Helpers
             return new Random(Guid.NewGuid().GetHashCode()).Next(min, max);
         }
 
+        public static long Gen(long min, long max)
+        {
+            throw new NotImplementedException();
+        }
+
         /// <summary>
         /// 生成定长随机字符串
         /// </summary>
         /// <param name="scheme">格式</param>
         /// <param name="len">结果长度</param>
         /// <returns></returns>
-        public static string Gen(Scheme scheme, int len)
+        public static string Gen(SchemeEnum scheme, int len)
         {
             var source = getSource(scheme);
             var rand = new Random(Guid.NewGuid().GetHashCode());
@@ -281,7 +286,7 @@ namespace JIF.CMS.Core.Helpers
         /// <param name="minlen">最小长度</param>
         /// <param name="maxlen">最大长度</param>
         /// <returns></returns>
-        public static string Gen(Scheme scheme, int minlen, int maxlen)
+        public static string Gen(SchemeEnum scheme, int minlen, int maxlen)
         {
             return Gen(scheme, Gen(minlen, maxlen));
         }
@@ -293,7 +298,7 @@ namespace JIF.CMS.Core.Helpers
         /// <param name="len">生成字符串长度</param>
         /// <param name="count">生成个数</param>
         /// <returns></returns>
-        public static IEnumerable<string> Gens(Scheme scheme, int len, int count)
+        public static IEnumerable<string> Gens(SchemeEnum scheme, int len, int count)
         {
             var result = new List<string>();
 
@@ -305,7 +310,7 @@ namespace JIF.CMS.Core.Helpers
             return result;
         }
 
-        public static IEnumerable<string> Gens(Scheme scheme, int minlen, int maxlen, int count)
+        public static IEnumerable<string> Gens(SchemeEnum scheme, int minlen, int maxlen, int count)
         {
             var result = new List<string>();
 
@@ -339,9 +344,19 @@ namespace JIF.CMS.Core.Helpers
         /// <param name="min">最小时间</param>
         /// <param name="max">最大时间</param>
         /// <returns></returns>
-        public static DateTime GenDateTime(DateTimeScale scale, DateTime? min = null, DateTime? max = null)
+        public static DateTime GenDateTime(DateTimeScaleEnum scale, DateTime? min = null, DateTime? max = null)
         {
-            throw new NotImplementedException();
+            long start = 0;
+            long end = 0;
+
+            if (min.HasValue)
+                start = min.Value.Ticks;
+
+            if (max.HasValue)
+                end = max.Value.Ticks;
+
+
+            return DateTime.Now;
         }
 
         /// <summary>
@@ -351,7 +366,7 @@ namespace JIF.CMS.Core.Helpers
         /// <param name="min">最小时间</param>
         /// <param name="max">最大时间</param>
         /// <returns></returns>
-        public static IEnumerable<DateTime> GenDateTime(DateTimeScale scale, int count, DateTime? min = null, DateTime? max = null)
+        public static IEnumerable<DateTime> GenDateTime(DateTimeScaleEnum scale, int count, DateTime? min = null, DateTime? max = null)
         {
             throw new NotImplementedException();
         }
@@ -377,6 +392,25 @@ namespace JIF.CMS.Core.Helpers
             }
 
             return result;
+        }
+
+
+        private static char[] constant =
+      {
+        '0','1','2','3','4','5','6','7','8','9',
+        'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z',
+        'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'
+      };
+
+        public static string GenerateRandomNumber(int Length)
+        {
+            System.Text.StringBuilder newRandom = new System.Text.StringBuilder(62);
+            Random rd = new Random();
+            for (int i = 0; i < Length; i++)
+            {
+                newRandom.Append(constant[rd.Next(62)]);
+            }
+            return newRandom.ToString();
         }
     }
 }
