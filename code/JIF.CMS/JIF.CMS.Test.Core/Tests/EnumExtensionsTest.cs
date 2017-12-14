@@ -1,6 +1,7 @@
 ﻿using System;
 using JIF.CMS.Core.Extensions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Newtonsoft.Json;
 
 namespace JIF.CMS.Test.Core.Tests
 {
@@ -56,8 +57,19 @@ namespace JIF.CMS.Test.Core.Tests
 
             Console.WriteLine(a.GetType().IsEnum);
             Console.WriteLine(b.GetType().IsEnum);
+        }
 
+        [TestMethod]
+        public void Enum_Prop_Serialize_Test()
+        {
+            var a = new
+            {
+                id = 1,
+                name = "Hello world",
+                EE = EnumExtensionsType.WP
+            };
 
+            Console.WriteLine(JsonConvert.SerializeObject(a));
         }
 
         enum EnumExtensionsType
