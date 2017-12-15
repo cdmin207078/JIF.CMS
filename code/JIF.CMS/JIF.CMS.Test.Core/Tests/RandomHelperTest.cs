@@ -20,7 +20,7 @@ namespace JIF.CMS.Test.Core.Tests
 
             for (int i = 0; i < 100; i++)
             {
-                Console.WriteLine(RandomHelper.Gen(RandomHelper.SchemeEnum.NumChar, 18));
+                Console.WriteLine(RandomHelper.GenString(RandomHelper.CharSchemeEnum.NumChar, 18));
             }
 
             //// 随机定长字符串
@@ -34,7 +34,7 @@ namespace JIF.CMS.Test.Core.Tests
             // 检查生成重复重复率, 受生成字符串 类型, 长度影响
             for (int i = 0; i < 100; i++)
             {
-                Console.WriteLine(string.Format("重复个数: {0}", 10000 - RandomHelper.Gen(RandomHelper.SchemeEnum.NumChar, 4, 10000).Distinct().Count()));
+                Console.WriteLine(string.Format("重复个数: {0}", 10000 - RandomHelper.GenString(RandomHelper.CharSchemeEnum.NumChar, 4, 10000).Distinct().Count()));
             }
         }
 

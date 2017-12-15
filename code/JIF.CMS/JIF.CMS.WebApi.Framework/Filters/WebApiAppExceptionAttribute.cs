@@ -10,6 +10,7 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web.Http.Filters;
+using System.Threading;
 
 namespace JIF.CMS.WebApi.Framework.Filters
 {
@@ -46,6 +47,13 @@ namespace JIF.CMS.WebApi.Framework.Filters
 
 
             context.Response = response;
+        }
+
+        public override Task OnExceptionAsync(HttpActionExecutedContext actionExecutedContext, CancellationToken cancellationToken)
+        {
+            EngineContext.Current.Resolve<ILog>().Fatal("OnExceptionAsync - ", actionExecutedContext.Exception);
+
+            return base.OnExceptionAsync(actionExecutedContext, cancellationToken);
         }
     }
 }

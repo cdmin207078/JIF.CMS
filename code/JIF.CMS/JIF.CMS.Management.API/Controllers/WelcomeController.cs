@@ -49,12 +49,15 @@ namespace JIF.CMS.Management.API.Controllers
         }
 
         [HttpGet]
-        public IHttpActionResult Now()
+        public async Task<IHttpActionResult> Now()
         {
-            Logger.Info(DateTime.Now);
+            await Task.Run(() =>
+            {
+                Logger.Info(DateTime.Now);
+            });
+
             return JsonOk(DateTime.Now.ToString());
         }
-
 
         #region RestSharpTest Methods
 
@@ -66,7 +69,7 @@ namespace JIF.CMS.Management.API.Controllers
                 var a = Thread.CurrentThread.ManagedThreadId;
 
                 //Thread.Sleep(RandomHelper.Gen(100, 500));
-                Task.Delay(RandomHelper.Gen(1000, 2000));
+                Task.Delay(RandomHelper.GenNumber(1000, 2000));
 
                 var b = Thread.CurrentThread.ManagedThreadId;
 
@@ -321,5 +324,13 @@ namespace JIF.CMS.Management.API.Controllers
 
         #endregion
 
+        #region CsvHelper Test
+
+        public async Task<IHttpActionResult> ShowInfo(string name, int age, bool sex)
+        {
+            return JsonOk();
+        }
+
+        #endregion
     }
 }

@@ -156,7 +156,7 @@ namespace JIF.CMS.Test.Core.Tests
 
             excel.Write(new[] { "第一列", "第二列", "三", "肆" }, 0, 0, 0);
 
-            var names = RandomHelper.Gen(RandomHelper.SchemeEnum.Chinese, 500, 1000);
+            var names = RandomHelper.GenString(RandomHelper.CharSchemeEnum.Chinese, 500, 1000);
 
             var data = new List<dynamic>();
 
@@ -346,16 +346,16 @@ namespace JIF.CMS.Test.Core.Tests
             {
                 dynamic o = new ExpandoObject();
 
-                o.A1 = RandomHelper.Gen(0, 10000);
-                o.A2 = RandomHelper.Gen(0, 10000);
-                o.A3 = RandomHelper.Gen(0, 10000);
-                o.A4 = RandomHelper.Gen(0, 10000);
-                o.A5 = RandomHelper.Gen(0, 10000);
-                o.A6 = RandomHelper.Gen(0, 10000);
-                o.A7 = RandomHelper.Gen(0, 10000);
-                o.A8 = RandomHelper.Gen(0, 10000);
-                o.A9 = RandomHelper.Gen(0, 10000);
-                o.A10 = RandomHelper.Gen(0, 10000);
+                o.A1 = RandomHelper.GenNumber(0, 10000);
+                o.A2 = RandomHelper.GenNumber(0, 10000);
+                o.A3 = RandomHelper.GenNumber(0, 10000);
+                o.A4 = RandomHelper.GenNumber(0, 10000);
+                o.A5 = RandomHelper.GenNumber(0, 10000);
+                o.A6 = RandomHelper.GenNumber(0, 10000);
+                o.A7 = RandomHelper.GenNumber(0, 10000);
+                o.A8 = RandomHelper.GenNumber(0, 10000);
+                o.A9 = RandomHelper.GenNumber(0, 10000);
+                o.A10 = RandomHelper.GenNumber(0, 10000);
 
                 data.Add(o);
             }
@@ -385,36 +385,36 @@ namespace JIF.CMS.Test.Core.Tests
             {
                 dynamic o = new ExpandoObject();
 
-                o.A1 = RandomHelper.Gen(0, 10000);
-                o.A2 = RandomHelper.Gen(0, 10000);
-                o.A3 = RandomHelper.Gen(0, 10000);
-                o.A4 = RandomHelper.Gen(0, 10000);
-                o.A5 = RandomHelper.Gen(0, 10000);
-                o.A6 = RandomHelper.Gen(0, 10000);
-                o.A7 = RandomHelper.Gen(0, 10000);
-                o.A8 = RandomHelper.Gen(0, 10000);
-                o.A9 = RandomHelper.Gen(0, 10000);
-                o.A10 = RandomHelper.Gen(0, 10000);
-                o.A11 = RandomHelper.Gen(0, 10000);
-                o.A12 = RandomHelper.Gen(0, 10000);
-                o.A13 = RandomHelper.Gen(0, 10000);
-                o.A14 = RandomHelper.Gen(0, 10000);
-                o.A15 = RandomHelper.Gen(0, 10000);
-                o.A16 = RandomHelper.Gen(0, 10000);
-                o.A17 = RandomHelper.Gen(0, 10000);
-                o.A18 = RandomHelper.Gen(0, 10000);
-                o.A19 = RandomHelper.Gen(0, 10000);
-                o.A20 = RandomHelper.Gen(0, 10000);
-                o.A21 = RandomHelper.Gen(0, 10000);
-                o.A22 = RandomHelper.Gen(0, 10000);
-                o.A23 = RandomHelper.Gen(0, 10000);
-                o.A24 = RandomHelper.Gen(0, 10000);
-                o.A25 = RandomHelper.Gen(0, 10000);
-                o.A26 = RandomHelper.Gen(0, 10000);
-                o.A27 = RandomHelper.Gen(0, 10000);
-                o.A28 = RandomHelper.Gen(0, 10000);
-                o.A29 = RandomHelper.Gen(0, 10000);
-                o.A30 = RandomHelper.Gen(0, 10000);
+                o.A1 = RandomHelper.GenNumber(0, 10000);
+                o.A2 = RandomHelper.GenNumber(0, 10000);
+                o.A3 = RandomHelper.GenNumber(0, 10000);
+                o.A4 = RandomHelper.GenNumber(0, 10000);
+                o.A5 = RandomHelper.GenNumber(0, 10000);
+                o.A6 = RandomHelper.GenNumber(0, 10000);
+                o.A7 = RandomHelper.GenNumber(0, 10000);
+                o.A8 = RandomHelper.GenNumber(0, 10000);
+                o.A9 = RandomHelper.GenNumber(0, 10000);
+                o.A10 = RandomHelper.GenNumber(0, 10000);
+                o.A11 = RandomHelper.GenNumber(0, 10000);
+                o.A12 = RandomHelper.GenNumber(0, 10000);
+                o.A13 = RandomHelper.GenNumber(0, 10000);
+                o.A14 = RandomHelper.GenNumber(0, 10000);
+                o.A15 = RandomHelper.GenNumber(0, 10000);
+                o.A16 = RandomHelper.GenNumber(0, 10000);
+                o.A17 = RandomHelper.GenNumber(0, 10000);
+                o.A18 = RandomHelper.GenNumber(0, 10000);
+                o.A19 = RandomHelper.GenNumber(0, 10000);
+                o.A20 = RandomHelper.GenNumber(0, 10000);
+                o.A21 = RandomHelper.GenNumber(0, 10000);
+                o.A22 = RandomHelper.GenNumber(0, 10000);
+                o.A23 = RandomHelper.GenNumber(0, 10000);
+                o.A24 = RandomHelper.GenNumber(0, 10000);
+                o.A25 = RandomHelper.GenNumber(0, 10000);
+                o.A26 = RandomHelper.GenNumber(0, 10000);
+                o.A27 = RandomHelper.GenNumber(0, 10000);
+                o.A28 = RandomHelper.GenNumber(0, 10000);
+                o.A29 = RandomHelper.GenNumber(0, 10000);
+                o.A30 = RandomHelper.GenNumber(0, 10000);
 
 
                 data.Add(o);
@@ -445,16 +445,16 @@ namespace JIF.CMS.Test.Core.Tests
             {
                 dynamic o = new ExpandoObject();
 
-                o.A1 = RandomHelper.Gen(0, 10000);
-                o.A2 = RandomHelper.Gen(0, 10000);
-                o.A3 = RandomHelper.Gen(0, 10000);
-                o.A4 = RandomHelper.Gen(0, 10000);
-                o.A5 = RandomHelper.Gen(0, 10000);
-                o.A6 = RandomHelper.Gen(0, 10000);
-                o.A7 = RandomHelper.Gen(0, 10000);
-                o.A8 = RandomHelper.Gen(0, 10000);
-                o.A9 = RandomHelper.Gen(0, 10000);
-                o.A10 = RandomHelper.Gen(0, 10000);
+                o.A1 = RandomHelper.GenNumber(0, 10000);
+                o.A2 = RandomHelper.GenNumber(0, 10000);
+                o.A3 = RandomHelper.GenNumber(0, 10000);
+                o.A4 = RandomHelper.GenNumber(0, 10000);
+                o.A5 = RandomHelper.GenNumber(0, 10000);
+                o.A6 = RandomHelper.GenNumber(0, 10000);
+                o.A7 = RandomHelper.GenNumber(0, 10000);
+                o.A8 = RandomHelper.GenNumber(0, 10000);
+                o.A9 = RandomHelper.GenNumber(0, 10000);
+                o.A10 = RandomHelper.GenNumber(0, 10000);
 
                 data.Add(o);
             }
@@ -476,25 +476,25 @@ namespace JIF.CMS.Test.Core.Tests
             {
                 dynamic o = new ExpandoObject();
 
-                o.A1 = RandomHelper.Gen(0, 10000);
-                o.A2 = RandomHelper.Gen(0, 10000);
-                o.A3 = RandomHelper.Gen(0, 10000);
-                o.A4 = RandomHelper.Gen(0, 10000);
-                o.A5 = RandomHelper.Gen(0, 10000);
-                o.A6 = RandomHelper.Gen(0, 10000);
-                o.A7 = RandomHelper.Gen(0, 10000);
-                o.A8 = RandomHelper.Gen(0, 10000);
-                o.A9 = RandomHelper.Gen(0, 10000);
-                o.A10 = RandomHelper.Gen(0, 10000);
-                o.A11 = RandomHelper.Gen(0, 10000);
-                o.A12 = RandomHelper.Gen(0, 10000);
-                o.A13 = RandomHelper.Gen(0, 10000);
-                o.A14 = RandomHelper.Gen(0, 10000);
-                o.A15 = RandomHelper.Gen(0, 10000);
-                o.A16 = RandomHelper.Gen(0, 10000);
-                o.A17 = RandomHelper.Gen(0, 10000);
-                o.A18 = RandomHelper.Gen(0, 10000);
-                o.A19 = RandomHelper.Gen(0, 10000);
+                o.A1 = RandomHelper.GenNumber(0, 10000);
+                o.A2 = RandomHelper.GenNumber(0, 10000);
+                o.A3 = RandomHelper.GenNumber(0, 10000);
+                o.A4 = RandomHelper.GenNumber(0, 10000);
+                o.A5 = RandomHelper.GenNumber(0, 10000);
+                o.A6 = RandomHelper.GenNumber(0, 10000);
+                o.A7 = RandomHelper.GenNumber(0, 10000);
+                o.A8 = RandomHelper.GenNumber(0, 10000);
+                o.A9 = RandomHelper.GenNumber(0, 10000);
+                o.A10 = RandomHelper.GenNumber(0, 10000);
+                o.A11 = RandomHelper.GenNumber(0, 10000);
+                o.A12 = RandomHelper.GenNumber(0, 10000);
+                o.A13 = RandomHelper.GenNumber(0, 10000);
+                o.A14 = RandomHelper.GenNumber(0, 10000);
+                o.A15 = RandomHelper.GenNumber(0, 10000);
+                o.A16 = RandomHelper.GenNumber(0, 10000);
+                o.A17 = RandomHelper.GenNumber(0, 10000);
+                o.A18 = RandomHelper.GenNumber(0, 10000);
+                o.A19 = RandomHelper.GenNumber(0, 10000);
 
                 data2.Add(o);
             }

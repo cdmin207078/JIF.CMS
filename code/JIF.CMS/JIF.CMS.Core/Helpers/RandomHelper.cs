@@ -159,7 +159,7 @@ namespace JIF.CMS.Core.Helpers
         /// <summary>
         /// 格式类型
         /// </summary>
-        public enum SchemeEnum : byte
+        public enum CharSchemeEnum : byte
         {
             /// <summary>
             /// 纯数字. eg: 123
@@ -220,25 +220,25 @@ namespace JIF.CMS.Core.Helpers
         /// </summary>
         /// <param name="f"></param>
         /// <returns></returns>
-        private static string getSource(SchemeEnum scheme)
+        private static string getSource(CharSchemeEnum scheme)
         {
             switch (scheme)
             {
-                case SchemeEnum.Num:
+                case CharSchemeEnum.Num:
                     return _Nums;
-                case SchemeEnum.Char:
+                case CharSchemeEnum.Char:
                     return _CharsL + _CharsU;
-                case SchemeEnum.CharL:
+                case CharSchemeEnum.CharL:
                     return _CharsL;
-                case SchemeEnum.CharU:
+                case CharSchemeEnum.CharU:
                     return _CharsU;
-                case SchemeEnum.NumChar:
+                case CharSchemeEnum.NumChar:
                     return _Nums + _CharsL + _CharsU;
-                case SchemeEnum.NumCharL:
+                case CharSchemeEnum.NumCharL:
                     return _Nums + _CharsL;
-                case SchemeEnum.NumCharU:
+                case CharSchemeEnum.NumCharU:
                     return _Nums + _CharsU;
-                case SchemeEnum.Chinese:
+                case CharSchemeEnum.Chinese:
                     return _ChinesePopular;
                 default:
                     throw new ArgumentException("RandomHelper : Format is not defined.");
@@ -251,12 +251,30 @@ namespace JIF.CMS.Core.Helpers
         /// <param name="min">最小值</param>
         /// <param name="max">最大值</param>
         /// <returns></returns>
-        public static int Gen(int min, int max)
+        public static int GenNumber(int min, int max)
         {
             return new Random(Guid.NewGuid().GetHashCode()).Next(min, max);
         }
 
-        public static long Gen(long min, long max)
+        /// <summary>
+        /// 生成指定范围内的一个随机整数
+        /// </summary>
+        /// <param name="min">最小值</param>
+        /// <param name="max">最大值</param>
+        /// <param name="count">生成数量</param>
+        /// <returns></returns>
+        public static List<int> GenNumberList(int min, int max, int count)
+        {
+            var result = new List<int>();
+            for (int i = 0; i < count; i++)
+            {
+                result.Add(new Random(Guid.NewGuid().GetHashCode()).Next(min, max));
+            }
+
+            return result;
+        }
+
+        public static long GenNumber(long min, long max)
         {
             throw new NotImplementedException();
         }
@@ -267,7 +285,7 @@ namespace JIF.CMS.Core.Helpers
         /// <param name="scheme">格式</param>
         /// <param name="len">结果长度</param>
         /// <returns></returns>
-        public static string Gen(SchemeEnum scheme, int len)
+        public static string GenString(CharSchemeEnum scheme, int len)
         {
             var source = getSource(scheme);
             var rand = new Random(Guid.NewGuid().GetHashCode());
@@ -286,9 +304,9 @@ namespace JIF.CMS.Core.Helpers
         /// <param name="minlen">最小长度</param>
         /// <param name="maxlen">最大长度</param>
         /// <returns></returns>
-        public static string Gen(SchemeEnum scheme, int minlen, int maxlen)
+        public static string GenString(CharSchemeEnum scheme, int minlen, int maxlen)
         {
-            return Gen(scheme, Gen(minlen, maxlen));
+            return GenString(scheme, GenNumber(minlen, maxlen));
         }
 
         /// <summary>
@@ -298,25 +316,33 @@ namespace JIF.CMS.Core.Helpers
         /// <param name="len">生成字符串长度</param>
         /// <param name="count">生成个数</param>
         /// <returns></returns>
-        public static IEnumerable<string> Gens(SchemeEnum scheme, int len, int count)
+        public static List<string> GenStringList(CharSchemeEnum scheme, int len, int count)
         {
             var result = new List<string>();
 
             for (int i = 0; i < count; i++)
             {
-                result.Add(Gen(scheme, len));
+                result.Add(GenString(scheme, len));
             }
 
             return result;
         }
 
-        public static IEnumerable<string> Gens(SchemeEnum scheme, int minlen, int maxlen, int count)
+        /// <summary>
+        /// 生成指定长度区间随机字符串列表
+        /// </summary>
+        /// <param name="scheme">生成格式</param>
+        /// <param name="minlen">字符串最小长度</param>
+        /// <param name="maxlen">字符串最大长度</param>
+        /// <param name="count">生成数量</param>
+        /// <returns></returns>
+        public static List<string> GenStringList(CharSchemeEnum scheme, int minlen, int maxlen, int count)
         {
             var result = new List<string>();
 
             for (int i = 0; i < count; i++)
             {
-                result.Add(Gen(scheme, minlen, maxlen));
+                result.Add(GenString(scheme, minlen, maxlen));
             }
 
             return result;
@@ -336,6 +362,27 @@ namespace JIF.CMS.Core.Helpers
             var b = rnd.Next(0, 255);
 
             return Color.FromArgb(alpha, r, g, b);
+        }
+
+        public static bool GenBoolean()
+        {
+            var num = GenNumber(0, 1);
+
+            return num == 1;
+        }
+
+        public static List<bool> GenBoolean(int count)
+        {
+            var result = new List<bool>();
+
+            var nums = GenNumberList(0, 2, count);
+
+            for (int i = 0; i < count; i++)
+            {
+                result.Add(nums[i] == 1);
+            }
+
+            return result;
         }
 
         /// <summary>
@@ -385,8 +432,8 @@ namespace JIF.CMS.Core.Helpers
 
             for (int i = 0; i < count; i++)
             {
-                var fn = familyNames.ElementAt(Gen(0, familyNames.Count()));
-                var gn = givenNames.ElementAt(Gen(0, givenNames.Count()));
+                var fn = familyNames.ElementAt(GenNumber(0, familyNames.Count()));
+                var gn = givenNames.ElementAt(GenNumber(0, givenNames.Count()));
 
                 result.Add(fn + gn);
             }

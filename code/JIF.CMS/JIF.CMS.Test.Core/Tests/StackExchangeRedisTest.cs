@@ -226,7 +226,7 @@ namespace JIF.CMS.Test.Core.Tests
 
             for (int i = 0; i < 100000; i++)
             {
-                Set("test:val:batch:" + i, RandomHelper.Gen(0, int.MaxValue));
+                Set("test:val:batch:" + i, RandomHelper.GenNumber(0, int.MaxValue));
             }
         }
 

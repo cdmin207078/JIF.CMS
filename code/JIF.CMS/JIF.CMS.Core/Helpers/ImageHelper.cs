@@ -196,17 +196,17 @@ namespace JIF.CMS.Core.Helpers
                 for (int i = 0; i < 100; i++)
                 {
                     Pen blackPen = new Pen(RandomHelper.GenColor(100), 0);
-                    int x1 = RandomHelper.Gen(0, width);
-                    int y1 = RandomHelper.Gen(0, height);
+                    int x1 = RandomHelper.GenNumber(0, width);
+                    int y1 = RandomHelper.GenNumber(0, height);
                     g.DrawRectangle(blackPen, x1, y1, 1, 1);
                 }
 
                 // 背景干扰线
                 for (int i = 0; i < 10; i++)
                 {
-                    Pen pen = new Pen(RandomHelper.GenColor(100), RandomHelper.Gen(0, 5));
-                    var p1 = new Point(RandomHelper.Gen(0, width), RandomHelper.Gen(0, height));
-                    var p2 = new Point(RandomHelper.Gen(0, width), RandomHelper.Gen(0, height));
+                    Pen pen = new Pen(RandomHelper.GenColor(100), RandomHelper.GenNumber(0, 5));
+                    var p1 = new Point(RandomHelper.GenNumber(0, width), RandomHelper.GenNumber(0, height));
+                    var p2 = new Point(RandomHelper.GenNumber(0, width), RandomHelper.GenNumber(0, height));
 
                     g.DrawLine(pen, p1, p2);
                 }
@@ -222,8 +222,8 @@ namespace JIF.CMS.Core.Helpers
                     format.LineAlignment = StringAlignment.Center;
 
                     var font = new Font(
-                        oFontNames[RandomHelper.Gen(0, oFontNames.Length - 1)],
-                        RandomHelper.Gen(18, 36),
+                        oFontNames[RandomHelper.GenNumber(0, oFontNames.Length - 1)],
+                        RandomHelper.GenNumber(18, 36),
                         FontStyle.Bold);
 
                     var brush = new SolidBrush(RandomHelper.GenColor());
@@ -243,8 +243,8 @@ namespace JIF.CMS.Core.Helpers
                     //g.TranslateTransform(dot.X, dot.Y);
                     //g.RotateTransform(angel);
 
-                    var x = i * lattice + RandomHelper.Gen(0, 5);
-                    var y = (height - font.Height) / 2 + RandomHelper.Gen(-5, 5);
+                    var x = i * lattice + RandomHelper.GenNumber(0, 5);
+                    var y = (height - font.Height) / 2 + RandomHelper.GenNumber(-5, 5);
                     g.DrawString(s, font, brush, x, y);
                     //g.DrawString(s, font, brush, 1, 1, format);
 
