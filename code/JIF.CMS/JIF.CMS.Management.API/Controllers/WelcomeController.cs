@@ -326,9 +326,10 @@ namespace JIF.CMS.Management.API.Controllers
 
         #region CsvHelper Test
 
-        public async Task<IHttpActionResult> ShowInfo(string name, int age, bool sex)
+        [AcceptVerbs("Get", "POST")]
+        public async Task<IHttpActionResult> ShowInfo(dynamic data)
         {
-            return JsonOk();
+            return JsonOk(new { name = data.name, age = data.age, gender = data.gender });
         }
 
         #endregion
