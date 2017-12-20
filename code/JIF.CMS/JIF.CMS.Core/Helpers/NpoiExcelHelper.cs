@@ -81,6 +81,50 @@ namespace JIF.CMS.Core.Helpers
             return true;
         }
 
+        /// <summary>
+        /// 读取Excel内容
+        /// </summary>
+        /// <param name="workbook">工作表对象</param>
+        /// <param name="sheetIndex">指定读取的sheet编号</param>
+        /// <param name="rowIndex">开始行</param>
+        /// <param name="cellIndex">开始列</param>
+        /// <returns></returns>
+        private static List<dynamic> Read(IWorkbook workbook, int sheetIndex, int rowIndex, int cellIndex)
+        {
+            if (workbook == null)
+                throw new Exception(" 没有读取到有效Excel数据 - NpoiExcelHelper.Read ");
+
+            var sheet = workbook.GetSheetAt(sheetIndex);
+
+            List<dynamic> result = new List<dynamic>();
+
+            //遍历数据行
+            for (int r = rowIndex; r <= sheet.LastRowNum; r++)
+            {
+                dynamic exo = new ExpandoObject();
+                var dicExo = exo as IDictionary<string, object>;
+
+                IRow row = sheet.GetRow(r);
+
+                //遍历一行的每一个单元格
+                for (int c = cellIndex; c < row.LastCellNum; c++)
+                {
+                    ICell cel = row.GetCell(c);
+                    if (cel == null)
+                    {
+                        dicExo[Utils.ToNumberSystem26(c + 1)] = null;
+                    }
+                    else
+                    {
+                        dicExo[Utils.ToNumberSystem26(c + 1)] = cel.ToString();
+                    }
+                }
+
+                result.Add(exo);
+            }
+
+            return result;
+        }
         #endregion
 
         public void CreateSheet()
@@ -271,52 +315,6 @@ namespace JIF.CMS.Core.Helpers
 
         #endregion
 
-        public static List<dynamic> Read(string file, int sheetIndex, int rowIndex, int cellIndex)
-        {
-            IWorkbook workbook = null;
-
-            using (var fs = new FileStream(file, FileMode.Open, FileAccess.Read))
-            {
-                workbook = WorkbookFactory.Create(fs);
-            }
-
-            if (workbook == null)
-            {
-                throw new Exception(" 没有读取到有效Excel数据 - NpoiExcelHelper.Read ");
-            }
-
-            var sheet = workbook.GetSheetAt(sheetIndex);
-
-            List<dynamic> result = new List<dynamic>();
-
-            //遍历数据行
-            for (int r = rowIndex; r <= sheet.LastRowNum; r++)
-            {
-                dynamic exo = new ExpandoObject();
-                var dicExo = exo as IDictionary<string, object>;
-
-                IRow row = sheet.GetRow(r);
-
-                //遍历一行的每一个单元格
-                for (int c = cellIndex; c < row.LastCellNum; c++)
-                {
-                    ICell cel = row.GetCell(c);
-                    if (cel == null)
-                    {
-                        dicExo[Utils.ToNumberSystem26(c + 1)] = null;
-                    }
-                    else
-                    {
-                        dicExo[Utils.ToNumberSystem26(c + 1)] = cel.ToString();
-                    }
-                }
-
-                result.Add(exo);
-            }
-
-            return result;
-        }
-
         public void Export(string filePath)
         {
             if (!string.IsNullOrWhiteSpace(filePath))
@@ -327,6 +325,42 @@ namespace JIF.CMS.Core.Helpers
                 }
             }
             _workbook = null;
+        }
+
+
+        /// <summary>
+        /// 读取Excel内容
+        /// </summary>
+        /// <param name="file">Excel 文件具体路径</param>
+        /// <param name="sheetIndex">指定读取的sheet编号</param>
+        /// <param name="rowIndex">开始行</param>
+        /// <param name="cellIndex">开始列</param>
+        /// <returns></returns>
+        public static List<dynamic> Read(string file, int sheetIndex, int rowIndex, int cellIndex)
+        {
+            IWorkbook workbook = null;
+
+            using (var fs = new FileStream(file, FileMode.Open, FileAccess.Read))
+            {
+                workbook = WorkbookFactory.Create(fs);
+            }
+
+            return Read(workbook, sheetIndex, rowIndex, cellIndex);
+        }
+
+        /// <summary>
+        /// 读取Excel内容
+        /// </summary>
+        /// <param name="stream">文件数据流</param>
+        /// <param name="sheetIndex">指定读取的sheet编号</param>
+        /// <param name="rowIndex">开始行</param>
+        /// <param name="cellIndex">开始列</param>
+        /// <returns></returns>
+        public static List<dynamic> Read(Stream stream, int sheetIndex, int rowIndex, int cellIndex)
+        {
+            IWorkbook workbook = WorkbookFactory.Create(stream);
+
+            return Read(workbook, sheetIndex, rowIndex, cellIndex);
         }
     }
 }

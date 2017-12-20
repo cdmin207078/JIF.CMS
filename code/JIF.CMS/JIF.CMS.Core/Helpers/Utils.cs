@@ -39,9 +39,9 @@ namespace JIF.CMS.Core.Helpers
             int n = 0;
             for (int i = s.Length - 1, j = 1; i >= 0; i--, j *= 26)
             {
-                char c = Char.ToUpper(s[i]);
+                char c = char.ToUpper(s[i]);
                 if (c < 'A' || c > 'Z') return 0;
-                n += ((int)c - 64) * j;
+                n += (c - 64) * j;
             }
             return n;
         }

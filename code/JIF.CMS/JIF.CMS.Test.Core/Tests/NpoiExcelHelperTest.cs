@@ -326,10 +326,8 @@ namespace JIF.CMS.Test.Core.Tests
             Console.WriteLine(rs);
         }
 
-
-
         [TestMethod]
-        public void Test_col_10_row_700()
+        public void Test_Write_col_10_row_700()
         {
             NpoiExcelHelper excel = new NpoiExcelHelper(true);
             excel.CreateSheet("镜子");
@@ -365,10 +363,8 @@ namespace JIF.CMS.Test.Core.Tests
             excel.Export(Path.Combine(_output_directory, MethodBase.GetCurrentMethod().Name + ".xlsx"));
         }
 
-
-
         [TestMethod]
-        public void Test_col_30_row_300000()
+        public void Test_Write_col_30_row_300000()
         {
             NpoiExcelHelper excel = new NpoiExcelHelper(true);
             excel.CreateSheet();
@@ -425,9 +421,8 @@ namespace JIF.CMS.Test.Core.Tests
             excel.Export(Path.Combine(_output_directory, MethodBase.GetCurrentMethod().Name + ".xlsx"));
         }
 
-
         [TestMethod]
-        public void Test_Multiple_Sheet()
+        public void Test_Write_Multiple_Sheet()
         {
 
             NpoiExcelHelper excel = new NpoiExcelHelper(true);
@@ -506,24 +501,12 @@ namespace JIF.CMS.Test.Core.Tests
 
 
         [TestMethod]
-        public void MyTestMethod111we123()
+        public void MyTestMethod()
         {
-            int? a = null;
-            int? b = 3;
+            var file = @"C:\Users\Administrator\Downloads\Documents\Mios开发\线下支付宝还款导入2007.xlsx";
+            var data = NpoiExcelHelper.Read(file, 0, 1, 0);
 
-            DateTime? c = null;
-            DateTime? d = DateTime.Now;
-
-            Console.WriteLine(a.GetValueOrDefault());
-            Console.WriteLine(b);
-            Console.WriteLine(c.ToString());
-            Console.WriteLine(c.GetValueOrDefault());
-            Console.WriteLine(d);
-
-
-            var s = "2017-07-31/5DDD04D7CDF7FF823E94D0A09AD953A6.csv";
-
-            Console.WriteLine(s.Substring(s.IndexOf("/") + 1));
+            Console.WriteLine(JsonConvert.SerializeObject(data));
         }
     }
 }
