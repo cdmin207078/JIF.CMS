@@ -72,6 +72,16 @@ namespace JIF.CMS.Test.Core.Tests
             Console.WriteLine(JsonConvert.SerializeObject(a));
         }
 
+        [TestMethod]
+        public void Chinese_Enum_Test()
+        {
+            var rel = ContactRelation.兄弟;
+
+            Console.WriteLine(rel);
+            Console.WriteLine(rel.GetDescription());
+            Console.WriteLine(Convert.ToInt32(rel));
+        }
+
         enum EnumExtensionsType
         {
             [System.ComponentModel.Description("谷歌")]
@@ -84,6 +94,28 @@ namespace JIF.CMS.Test.Core.Tests
             WP,
 
             BlackBerry
+        }
+
+
+        enum ContactRelation
+        {
+            [System.ComponentModel.Description("父亲")]
+            父亲 = 0,
+
+            [System.ComponentModel.Description("母亲")]
+            母亲 = 1,
+
+            [System.ComponentModel.Description("儿子")]
+            儿子 = 2,
+
+            [System.ComponentModel.Description("女儿")]
+            女儿 = 3,
+
+            [System.ComponentModel.Description("兄弟")]
+            兄弟 = 4,
+
+            [System.ComponentModel.Description("姐妹")]
+            姐妹 = 5
         }
     }
 }
