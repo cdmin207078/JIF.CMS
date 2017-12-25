@@ -1,16 +1,12 @@
-﻿using System;
+﻿using JIF.CMS.Core.Domain.Articles;
+using JIF.CMS.Core.HttpApiResult;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Net.Http;
-using Newtonsoft.Json;
-using System.Web;
 using RestSharp;
+using System;
 using System.Collections.Generic;
-using JIF.CMS.Core.HttpApiResults;
-using JIF.CMS.Core.Domain.Articles;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Threading;
-using System.Diagnostics;
 
 namespace JIF.CMS.Test.Core.Tests
 {
@@ -30,9 +26,9 @@ namespace JIF.CMS.Test.Core.Tests
             var response = client.Execute<APIResult>(request);
 
             Console.WriteLine(response.Content);
-            Console.WriteLine(response.Data.Success);
-            Console.WriteLine(response.Data.Code);
-            Console.WriteLine(response.Data.Message);
+            Console.WriteLine(response.Data.success);
+            Console.WriteLine(response.Data.code);
+            Console.WriteLine(response.Data.message);
         }
 
         [TestMethod]
@@ -53,9 +49,9 @@ namespace JIF.CMS.Test.Core.Tests
 
             Console.WriteLine(rep_get_articles.Content);
 
-            if (rep_get_articles.Data.Success)
+            if (rep_get_articles.Data.success)
             {
-                var articles = rep_get_articles.Data.Data;
+                var articles = rep_get_articles.Data.data;
 
                 foreach (var article in articles)
                 {
@@ -76,7 +72,7 @@ namespace JIF.CMS.Test.Core.Tests
             var request = new RestRequest("/welcome/LoginIn", Method.POST);
             var response = client.Execute<APIResult>(request);
 
-            if (response.Data.Success)
+            if (response.Data.success)
             {
                 Console.WriteLine(response.Headers.FirstOrDefault(d => d.Name.Equals("TOKEN", StringComparison.OrdinalIgnoreCase)).Value);
                 Console.WriteLine(response.Headers.FirstOrDefault(d => d.Name.Equals("UiD", StringComparison.OrdinalIgnoreCase)).Value);
@@ -104,13 +100,13 @@ namespace JIF.CMS.Test.Core.Tests
 
             Console.WriteLine(response.Content);
 
-            Console.WriteLine(response.Data.Code);
-            Console.WriteLine(response.Data.Success);
-            Console.WriteLine(response.Data.Message);
+            Console.WriteLine(response.Data.code);
+            Console.WriteLine(response.Data.success);
+            Console.WriteLine(response.Data.message);
 
-            Console.WriteLine(response.Data.Data.Account);
-            Console.WriteLine(response.Data.Data.Password);
-            Console.WriteLine(response.Data.Data.Captcha);
+            Console.WriteLine(response.Data.data.Account);
+            Console.WriteLine(response.Data.data.Password);
+            Console.WriteLine(response.Data.data.Captcha);
 
         }
 

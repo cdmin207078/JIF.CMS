@@ -115,7 +115,7 @@
     <Compile Include="Helpers\ImageHelper.cs" />
     <Compile Include="Helpers\NpoiExcelHelper.cs" />
     <Compile Include="Helpers\Utils.cs" />
-    <Compile Include="HttpApiResults\ApiResult.cs" />
+    <Compile Include="HttpApiResult\ApiResult.cs" />
     <Compile Include="Infrastructure\AppDomainTypeFinder.cs" />
     <Compile Include="Infrastructure\DependencyManagement\ContainerManager.cs" />
     <Compile Include="Infrastructure\DependencyManagement\IDependencyRegistrar.cs" />
