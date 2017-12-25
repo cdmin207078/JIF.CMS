@@ -11,6 +11,7 @@ using JIF.CMS.Data.EntityFramework;
 using JIF.CMS.Services.Articles;
 using JIF.CMS.Services.Authentication;
 using JIF.CMS.Services.SysManager;
+using Newtonsoft.Json.Converters;
 using System.Data.Entity;
 using System.Linq;
 using System.Web;
@@ -30,6 +31,16 @@ namespace JIF.CMS.WebApi.Framework
 
         public void Register(ContainerBuilder builder, ITypeFinder typeFinder, JIFConfig config)
         {
+            // OPTIONAL: Register the Autofac filter provider.
+            var configuration = GlobalConfiguration.Configuration;
+            builder.RegisterWebApiFilterProvider(configuration);
+
+            // OPTIONAL: format datetime json serializer
+            configuration.Formatters.JsonFormatter.SerializerSettings.Converters.Add(new IsoDateTimeConverter()
+            {
+                DateTimeFormat = "yyyy-MM-dd HH:mm:ss"
+            });
+
             // register HTTP context and other related stuff
             builder.Register(c => new HttpContextWrapper(HttpContext.Current) as HttpContextBase)
                 .As<HttpContextBase>()
@@ -47,10 +58,6 @@ namespace JIF.CMS.WebApi.Framework
 
             // Register all your Web API controllers.
             builder.RegisterApiControllers(typeFinder.GetAssemblies().ToArray());
-
-            // OPTIONAL: Register the Autofac filter provider.
-            var configuration = GlobalConfiguration.Configuration;
-            builder.RegisterWebApiFilterProvider(configuration);
 
             // OPTIONAL: register dbcontext 
             builder.Register<DbContext>(c => new JIFDbContext("name=JIF.CMS.DB")).InstancePerLifetimeScope();

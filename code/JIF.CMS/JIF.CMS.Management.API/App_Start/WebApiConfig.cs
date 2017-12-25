@@ -13,7 +13,6 @@ namespace JIF.CMS.Management.API
             // Web API routes
             config.MapHttpAttributeRoutes();
 
-
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",
                 routeTemplate: "{controller}/{action}/{id}",

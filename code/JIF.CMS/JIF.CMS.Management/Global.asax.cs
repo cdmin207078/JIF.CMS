@@ -21,7 +21,6 @@ namespace JIF.CMS.Management
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             GlobalFilters.Filters.Add(new JIFExceptionAttribute());
 
-
             // initialize engine context
             EngineContext.Initialize(false);
             DependencyResolver.SetResolver(new AutofacDependencyResolver(EngineContext.Current.ContainerManager.Container));
