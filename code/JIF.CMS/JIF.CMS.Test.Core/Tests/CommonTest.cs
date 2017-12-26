@@ -7,6 +7,7 @@ using JIF.CMS.Test.Core.Entities;
 using System.Collections;
 using JIF.CMS.Core.Helpers;
 using System.Text;
+using Newtonsoft.Json;
 
 namespace JIF.CMS.Test.Core.Tests
 {
@@ -165,6 +166,23 @@ namespace JIF.CMS.Test.Core.Tests
             Console.WriteLine("type.IsUnicodeClass : {0}", type.IsUnicodeClass);
             Console.WriteLine("type.IsValueType : {0}", type.IsValueType);
             Console.WriteLine("type.IsVisible : {0}", type.IsVisible);
+        }
+
+        [TestMethod]
+        public void MyTestMethod()
+        {
+
+            var stu = new Student
+            {
+                @class = "5666"
+            };
+
+            Console.WriteLine(JsonConvert.SerializeObject(stu));
+        }
+
+        class Student
+        {
+            public string @class { get; set; }
         }
     }
 }

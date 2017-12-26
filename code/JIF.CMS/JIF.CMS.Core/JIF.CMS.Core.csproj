@@ -114,6 +114,7 @@
     <Compile Include="Helpers\EncodeHelper.cs" />
     <Compile Include="Helpers\ImageHelper.cs" />
     <Compile Include="Helpers\NpoiExcelHelper.cs" />
+    <Compile Include="Helpers\RegexHelper.cs" />
     <Compile Include="Helpers\Utils.cs" />
     <Compile Include="HttpApiResult\ApiResult.cs" />
     <Compile Include="Infrastructure\AppDomainTypeFinder.cs" />

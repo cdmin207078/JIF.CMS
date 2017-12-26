@@ -47,6 +47,5 @@ namespace JIF.CMS.Core.Helpers
         }
 
         #endregion
-
     }
 }
