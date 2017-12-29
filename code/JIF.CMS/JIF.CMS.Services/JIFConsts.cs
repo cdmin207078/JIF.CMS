@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace JIF.CMS.Core
+namespace JIF.CMS.Services
 {
-    public static class JIFConsts
+    public static class JIFConstants
     {
         #region JIF System Setting
 
@@ -67,5 +67,21 @@ namespace JIF.CMS.Core
 
 
         #endregion
+    }
+
+    /// <summary>
+    /// 缓存 key 定义类
+    /// </summary>
+    public static class CacheKeyConstants
+    {
+        /// <summary>
+        /// 登陆用户基本信息
+        /// </summary>
+        public const string USER_INFO = "USER_INFO_{0}";
+
+        /// <summary>
+        /// 登陆用户权限列表
+        /// </summary>
+        public const string USER_PERMISSIONS = "USER_PERMISSIONS_{0}";
     }
 }

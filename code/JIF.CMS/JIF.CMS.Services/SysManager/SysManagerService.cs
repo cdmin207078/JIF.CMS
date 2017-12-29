@@ -31,7 +31,7 @@ namespace JIF.CMS.Services.SysManager
         private string EncyptPwd(string pwd, DateTime createtime)
         {
             var algo = EncryptHelper.CreateHashAlgoMd5();
-            var plain = string.Format("{0}-{1}", pwd, createtime.ToString(JIFConsts.DATETIME_NORMAL));
+            var plain = string.Format("{0}-{1}", pwd, createtime.ToString(JIFConstants.DATETIME_NORMAL));
 
             return EncryptHelper.Encrypt(algo, plain);
         }

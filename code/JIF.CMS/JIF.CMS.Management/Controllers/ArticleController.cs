@@ -2,6 +2,7 @@
 using JIF.CMS.Core.Configuration;
 using JIF.CMS.Core.Domain.Articles;
 using JIF.CMS.Management.Models;
+using JIF.CMS.Services;
 using JIF.CMS.Services.Articles;
 using JIF.CMS.Services.Articles.Dtos;
 using JIF.CMS.Web.Framework.Controllers;
@@ -30,7 +31,7 @@ namespace JIF.CMS.Management.Controllers
         #region Articles
 
         // 文章列表页面
-        public ActionResult Index(string Q = "", int pageIndex = JIFConsts.SYS_PAGE_INDEX, int pageSize = JIFConsts.SYS_PAGE_SIZE)
+        public ActionResult Index(string Q = "", int pageIndex = JIFConstants.SYS_PAGE_INDEX, int pageSize = JIFConstants.SYS_PAGE_SIZE)
         {
             Q = Q.Trim();
 

@@ -128,7 +128,6 @@
     <Compile Include="Infrastructure\WebAppTypeFinder.cs" />
     <Compile Include="IPagedList.cs" />
     <Compile Include="IWorkContext.cs" />
-    <Compile Include="JIFConsts.cs" />
     <Compile Include="JIFException.cs" />
     <Compile Include="Loggers\ExceptionslessLogger.cs" />
     <Compile Include="PagedData.cs" />

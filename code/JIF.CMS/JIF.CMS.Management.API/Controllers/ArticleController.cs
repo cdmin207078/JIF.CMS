@@ -1,6 +1,7 @@
 ﻿using JIF.CMS.Core;
 using JIF.CMS.Core.Domain;
 using JIF.CMS.Core.Domain.Articles;
+using JIF.CMS.Services;
 using JIF.CMS.Services.Articles;
 using JIF.CMS.Services.Articles.Dtos;
 using JIF.CMS.WebApi.Framework.Controllers;
@@ -20,7 +21,7 @@ namespace JIF.CMS.Management.API.Controllers
 
         [HttpGet]
         [WebApi.Framework.Filters.AdminAuthorize]
-        public IHttpActionResult GetArticles(string q = "", int pageIndex = JIFConsts.SYS_PAGE_INDEX, int pageSize = JIFConsts.SYS_PAGE_SIZE)
+        public IHttpActionResult GetArticles(string q = "", int pageIndex = JIFConstants.SYS_PAGE_INDEX, int pageSize = JIFConstants.SYS_PAGE_SIZE)
         {
             return JsonOk(_articleService.GetArticles(q, false, pageIndex, pageSize).ToPagedData());
         }

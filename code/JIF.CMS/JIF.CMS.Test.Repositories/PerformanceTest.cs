@@ -124,7 +124,6 @@ namespace JIF.CMS.Test.Repositories
 
             var u6 = dap.Query<UserInfo>("select * from user_info where id > 100").ToList();
             watch.Show("以Id为条件");
-
         }
 
         [TestMethod]
@@ -307,6 +306,17 @@ namespace JIF.CMS.Test.Repositories
         }
 
         #endregion
+
+
+        [TestMethod]
+        public void MyTestMethod()
+        {
+            IDbConnection dap = new SqlConnection(connectionstring);
+
+            var user = dap.QueryFirst<UserInfo>("select * from user_info");
+
+            Console.WriteLine(JsonConvert.SerializeObject(user));
+        }
     }
 }
 

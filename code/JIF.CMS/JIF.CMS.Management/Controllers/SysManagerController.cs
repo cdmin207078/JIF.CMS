@@ -1,5 +1,6 @@
 ﻿using JIF.CMS.Core;
 using JIF.CMS.Core.Domain;
+using JIF.CMS.Services;
 using JIF.CMS.Services.SysManager;
 using JIF.CMS.Services.SysManager.Dtos;
 using JIF.CMS.Web.Framework.Controllers;
@@ -22,7 +23,7 @@ namespace JIF.CMS.Management.Controllers
         }
 
         [HttpGet]
-        public ActionResult Index(string Q = "", int pageIndex = JIFConsts.SYS_PAGE_INDEX, int pageSize = JIFConsts.SYS_PAGE_SIZE)
+        public ActionResult Index(string Q = "", int pageIndex = JIFConstants.SYS_PAGE_INDEX, int pageSize = JIFConstants.SYS_PAGE_SIZE)
         {
             Q = Q.Trim();
 
