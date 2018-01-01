@@ -42,6 +42,10 @@ namespace JIF.CMS.Management.Controllers
             var cookie = new HttpCookie("verifyCode", vcc);
             Response.SetCookie(cookie);
 
+
+            ViewBag.SessionID = Session.SessionID;
+            Session["name"] = DateTime.Now;
+
             return View();
         }
 
