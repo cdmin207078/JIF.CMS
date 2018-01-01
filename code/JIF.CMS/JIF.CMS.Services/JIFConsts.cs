@@ -65,6 +65,14 @@ namespace JIF.CMS.Services
         /// </summary>
         public const string DATETIME_DATE = "yyyy-MM-dd";
 
+        #endregion
+
+        #region Security
+
+        /// <summary>
+        /// 系统MD5加密密盐
+        /// </summary>
+        public const string MD5_Salt = "AiAkEbwbNv8UP6BdcnqjF80CEzVfeLLN";
 
         #endregion
     }

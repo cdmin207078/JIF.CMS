@@ -11,7 +11,6 @@ namespace JIF.CMS.Core.Cache
     /// </summary>
     public interface ICacheManager
     {
-
         /// <summary>
         /// 获取指定 key 缓存数据
         /// </summary>

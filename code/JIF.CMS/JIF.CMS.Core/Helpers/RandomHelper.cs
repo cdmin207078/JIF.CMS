@@ -156,6 +156,10 @@ namespace JIF.CMS.Core.Helpers
         private static readonly string _CharsU = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
         #endregion
 
+        #region 英文字母(大写)
+        private static readonly string _Symbol = "~!@#$%^&*()_+-=[]{};'\\:\"|,./<>?";
+        #endregion
+
         /// <summary>
         /// 格式类型
         /// </summary>
@@ -193,6 +197,10 @@ namespace JIF.CMS.Core.Helpers
             /// 中文字符. eg: 也无风雨也无晴
             /// </summary>
             Chinese,
+            /// <summary>
+            /// 特殊字符. eg: ~!@#$%^&*()_+-=[]{};'\:"|,./<>?
+            /// </summary>
+            Symbol
         }
 
         /// <summary>

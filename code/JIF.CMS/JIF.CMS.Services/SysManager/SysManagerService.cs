@@ -149,6 +149,7 @@ namespace JIF.CMS.Services.SysManager
             if (cipherText != entity.Password)
                 throw new JIFException("密码不正确");
 
+            // 记录登陆日志
             //entity.LastLoginTime = DateTime.Now;
             //entity.LastLoginIP = _webHelper.GetCurrentIpAddress();
 

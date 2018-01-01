@@ -32,7 +32,7 @@ namespace JIF.CMS.Management
                 {
                     // http://www.cnblogs.com/lindaWei/archive/2013/01/15/2860028.html - MVC3中 ViewBag、ViewData和TempData的使用和区别
                     // http://www.cnblogs.com/tristanguo/archive/2009/04/06/1430062.html - Asp.Net Mvc: 浅析TempData机制
-                    //context.Controller.ViewBag._JIFExceptionMessage = context.Exception.Message;  -- Viewbag无效
+                    //context.Controller.ViewBag._JIFExceptionMessage = context.Exception.Message;  -- Viewbag, ViewData 无效
                     context.Controller.TempData["JIFExceptionMessage"] = context.Exception.Message;
                     context.Result = new RedirectResult(context.RequestContext.HttpContext.Request.UrlReferrer.OriginalString);
                 }

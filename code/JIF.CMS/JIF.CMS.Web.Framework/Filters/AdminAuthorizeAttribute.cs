@@ -36,14 +36,18 @@ namespace JIF.CMS.Web.Framework.Filters
                 return;
 
             if (filterContext == null)
+            {
                 throw new ArgumentNullException("filterContext");
+            }
 
             if (OutputCacheAttribute.IsChildActionCacheActive(filterContext))
+            {
                 throw new InvalidOperationException("You cannot use [AdminAuthorize] attribute when a child action cache is active");
+            }
 
             if (!this.HasAdminAccess(filterContext))
             {
-                this.HandleUnauthorizedRequest(filterContext);
+                HandleUnauthorizedRequest(filterContext);
             }
         }
 

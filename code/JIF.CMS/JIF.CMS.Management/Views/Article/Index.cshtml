@@ -72,8 +72,8 @@
                                             <span>@article.Category</span>
                                         }
                                     </td>
-                                    <td>@article.CreateTime.ToString(JIFConsts.DATETIME_DATE)</td>
-                                    <td>@article.PublishTime.ToString(JIFConsts.DATETIME_DATE)</td>
+                                    <td>@article.CreateTime.ToString(JIFConstants.DATETIME_DATE)</td>
+                                    <td>@article.PublishTime.ToString(JIFConstants.DATETIME_DATE)</td>
                                     <td>
                                         @if (article.IsPublished)
                                         {
@@ -84,7 +84,7 @@
                                             <span class="label label-warning">未发布</span>
                                         }
                                     </td>
-                                    <td>@article.LastUpdateTime.ToString(JIFConsts.DATETIME_DATE)</td>
+                                    <td>@article.LastUpdateTime.ToString(JIFConstants.DATETIME_DATE)</td>
                                     <td>@article.LastUpdateUser</td>
                                     <td>
                                         <a href="/article/detail/@article.Id" class="btn btn-xs btn-primary no-margin">详情</a>

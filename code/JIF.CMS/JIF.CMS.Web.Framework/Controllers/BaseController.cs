@@ -56,5 +56,17 @@ namespace JIF.CMS.Web.Framework.Controllers
         {
             return Json(new { success = false, message = message, data = data }, JsonRequestBehavior.AllowGet);
         }
+
+
+        /// <summary>
+        /// 禁用session 后, TempData无法使用, 须重写基类 CreateTempDataProvider方法, 自定义TempData 的提供程序
+        /// </summary>
+        /// <returns></returns>
+        protected override ITempDataProvider CreateTempDataProvider()
+        {
+            // http://afana.me/archive/2010/11/23/session-less-controllers-and-tempdata-aspnet-mvc.aspx/
+            return new CookieTempDataProvider(HttpContext);
+            //return base.CreateTempDataProvider();
+        }
     }
 }

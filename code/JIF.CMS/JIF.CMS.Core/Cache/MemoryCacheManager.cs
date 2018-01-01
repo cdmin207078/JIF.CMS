@@ -51,7 +51,7 @@ namespace JIF.CMS.Core.Cache
                 // 滑动过期 - 按访问频度决定超期
                 // 它表示当对象在规定时间内没有得到访问时, 就会过期. 相对的, 如果对象一直被访问, 则不会过期。
                 // 与 AbsoluteExpiration - 绝对时间过期 不能同时使用
-                SlidingExpiration = TimeSpan.FromDays(1),
+                SlidingExpiration = TimeSpan.FromMinutes(30),
 
                 // 绝对过期 - 表示的是一个绝对时间过期, 当超过规定时间后, Cache内容就会过期。
                 //AbsoluteExpiration = TimeSpan.FromDays(1),

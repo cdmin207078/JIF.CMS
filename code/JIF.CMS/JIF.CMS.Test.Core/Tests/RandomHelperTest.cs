@@ -18,10 +18,13 @@ namespace JIF.CMS.Test.Core.Tests
             //Console.WriteLine(RandomHelper.Gen(RandomHelper.Scheme.NumChar, 1, 10));
             //Console.WriteLine(RandomHelper.Gen(RandomHelper.Scheme.NumChar, 1, 10));
 
-            for (int i = 0; i < 100; i++)
+            for (int i = 0; i < 1; i++)
             {
-                Console.WriteLine(RandomHelper.GenString(RandomHelper.CharSchemeEnum.NumChar, 18));
+                Console.WriteLine(RandomHelper.GenString(RandomHelper.CharSchemeEnum.NumChar, 32));
             }
+
+            var s = "~!@#$%^&*()_+-=[]{};'\\:\"|,./<>?";
+            Console.WriteLine(s);
 
             //// 随机定长字符串
             //var chars = RandomHelper.Gens(RandomHelper.Scheme.NumCharL, 4, 300);
@@ -34,7 +37,7 @@ namespace JIF.CMS.Test.Core.Tests
             // 检查生成重复重复率, 受生成字符串 类型, 长度影响
             for (int i = 0; i < 100; i++)
             {
-                Console.WriteLine(string.Format("重复个数: {0}", 10000 - RandomHelper.GenString(RandomHelper.CharSchemeEnum.NumChar, 4, 10000).Distinct().Count()));
+                Console.WriteLine(string.Format("去重个数: {0}", 100000 - RandomHelper.GenString(RandomHelper.CharSchemeEnum.NumChar, 4, 100000).Distinct().Count()));
             }
         }
 

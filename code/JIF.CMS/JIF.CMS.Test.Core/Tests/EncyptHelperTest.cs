@@ -19,6 +19,10 @@ namespace JIF.CMS.Test.Core.Tests
             var plain = "洞庭春尽水如天，银盘托君山。巧雨润湿油纸伞，风卷莲动船";
             var cipher = EncryptHelper.Encrypt(algo, plain);
 
+
+            Console.WriteLine(EncryptHelper.Encrypt(algo, "hello world"));
+            Console.WriteLine(EncryptHelper.Encrypt(algo, "Hello World"));
+
             Console.WriteLine(cipher);
         }
 
