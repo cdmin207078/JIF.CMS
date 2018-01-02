@@ -1,16 +1,15 @@
-﻿@model HomePageViewModel
+﻿@model JIF.CMS.Web.Models.HomePageViewModel
 
-
-@foreach (var article in Model.Articles)
-{
-    <div class="col-md-3 col-sm-4">
-        <div class="article-item">
-            <h3 title="@article.Title">
-                <a href="javascript:;">@(article.Title.Length > 40 ? article.Title.Substring(0, 40) + "..." : article.Title)</a>
-            </h3>
-            <small style="display:none;">@(article.Content.Length > 70 ? article.Content.Substring(0, 100) + "..." : article.Content)</small>
+<div class="row">
+    @foreach (var article in Model.Articles)
+    {
+        <div class="col-md-3 col-sm-4">
+            <div class="article-item">
+                <h3 title="@article.Title">
+                    <a href="javascript:;">@(article.Title.Length > 40 ? article.Title.Substring(0, 40) + "..." : article.Title)</a>
+                </h3>
+                <small style="display:none;">@(article.Content.Length > 70 ? article.Content.Substring(0, 100) + "..." : article.Content)</small>
+            </div>
         </div>
-    </div>
-}
-
-
+    }
+</div>

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using JIF.CMS.Web.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -11,7 +12,16 @@ namespace JIF.CMS.Web.Controllers
         // GET: Home
         public ViewResult Index()
         {
-            return View();
+            var vm = new HomePageViewModel
+            {
+                Articles = new List<Article>
+                {
+                     new Article { Title = "visual studio", Content = "Microsoft Visual Studio", CreateTime = DateTime.Now },
+                     new Article { Title = "tencent", Content = "微信", CreateTime = DateTime.Now.AddMilliseconds(778930) }
+
+                }
+            };
+            return View(vm);
         }
 
         // 归档

@@ -19,7 +19,11 @@ namespace JIF.CMS.Web.Framework.Controllers
 
         public CookieTempDataProvider(HttpContextBase httpContext)
         {
-            _httpContext = httpContext ?? throw new ArgumentNullException("httpContext");
+            if (httpContext == null)
+            {
+                throw new ArgumentNullException("httpContext");
+            }
+            _httpContext = httpContext;
         }
 
         public HttpContextBase HttpContext
