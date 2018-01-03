@@ -327,7 +327,7 @@ namespace JIF.CMS.Management.API.Controllers
         #region CsvHelper Test
 
         [AcceptVerbs("Get", "POST")]
-        public async Task<IHttpActionResult> ShowInfo(dynamic data)
+        public IHttpActionResult ShowInfo(dynamic data)
         {
             return JsonOk(new { name = data.name, age = data.age, gender = data.gender });
         }

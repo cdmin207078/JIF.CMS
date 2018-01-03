@@ -114,6 +114,7 @@
     <Compile Include="Tests\DateTimeTest.cs" />
     <Compile Include="Tests\MathHelperTest.cs" />
     <Compile Include="Tests\CsvHelperTest.cs" />
+    <Compile Include="Tests\StringHelperTest.cs" />
     <Compile Include="Tests\URLEncodeTest.cs" />
   </ItemGroup>
   <ItemGroup>
