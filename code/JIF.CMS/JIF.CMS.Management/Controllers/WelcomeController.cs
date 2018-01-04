@@ -42,10 +42,6 @@ namespace JIF.CMS.Management.Controllers
             var cookie = new HttpCookie("verifyCode", vcc);
             Response.SetCookie(cookie);
 
-
-            ViewBag.SessionID = Session.SessionID;
-            Session["name"] = DateTime.Now;
-
             return View();
         }
 
@@ -62,7 +58,10 @@ namespace JIF.CMS.Management.Controllers
             var cookie = new HttpCookie("verifyCode", vcc);
             Response.SetCookie(cookie);
 
-            return null;
+            // 图片
+            var img = ImageHelper.GenValidateCode(verifyCode, 87, 34);
+
+            return File(img, "image/jpeg");
         }
 
         [HttpPost]

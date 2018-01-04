@@ -39,7 +39,7 @@ namespace JIF.CMS.Core.Helpers
         {
             try
             {
-                using (System.Drawing.Image originalImage = System.Drawing.Image.FromFile(originalImagePath))
+                using (Image originalImage = Image.FromFile(originalImagePath))
                 {
 
                     if (mode != ThumbnailType.Cut)
@@ -126,10 +126,10 @@ namespace JIF.CMS.Core.Helpers
                     }
 
                     //新建一个bmp图片
-                    System.Drawing.Image bitmap = new System.Drawing.Bitmap(towidth, toheight);
+                    Image bitmap = new Bitmap(towidth, toheight);
 
                     //新建一个画板
-                    System.Drawing.Graphics g = System.Drawing.Graphics.FromImage(bitmap);
+                    Graphics g = Graphics.FromImage(bitmap);
 
                     //设置高质量插值法
                     g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.High;
@@ -138,17 +138,15 @@ namespace JIF.CMS.Core.Helpers
                     g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
 
                     //清空画布并以透明背景色填充
-                    g.Clear(System.Drawing.Color.Transparent);
+                    g.Clear(Color.Transparent);
 
                     //在指定位置并且按指定大小绘制原图片的指定部分
-                    g.DrawImage(originalImage, new System.Drawing.Rectangle(0, 0, towidth, toheight),
-                        new System.Drawing.Rectangle(x, y, ow, oh),
-                        System.Drawing.GraphicsUnit.Pixel);
+                    g.DrawImage(originalImage, new Rectangle(0, 0, towidth, toheight), new Rectangle(x, y, ow, oh), GraphicsUnit.Pixel);
 
                     try
                     {
                         //以jpg格式保存缩略图
-                        bitmap.Save(thumbnailPath, System.Drawing.Imaging.ImageFormat.Jpeg);
+                        bitmap.Save(thumbnailPath, ImageFormat.Jpeg);
                     }
                     finally
                     {
@@ -167,29 +165,29 @@ namespace JIF.CMS.Core.Helpers
         /// <summary>
         /// 生成验证码图片
         /// </summary>
-        /// <param name="vcode">验证码文字</param>
+        /// <param name="code">验证码文字</param>
         /// <param name="imgWidth">图片宽度</param>
         /// <param name="imgHeight">图片高度</param>
         /// <returns></returns>
-        public static byte[] GenValidateCode(string vcode, int width = 120, int height = 40)
+        public static byte[] GenValidateCode(string code, int width = 120, int height = 40)
         {
-            if (string.IsNullOrWhiteSpace(vcode) || width < 1 || height < 1)
+            if (string.IsNullOrWhiteSpace(code) || width < 1 || height < 1)
             {
                 throw new ArgumentException("ImageHelper : GenerateValidateCode param err.");
             }
 
             // 可选字体
-            string[] oFontNames = { "华文彩云", "方正舒体", "华文琥珀", "华文行楷", "Calibri (西文正文)", "Arial Black" };
+            //string[] oFontNames = { "华文彩云", "方正舒体", "华文琥珀", "华文行楷", "Calibri (西文正文)", "Arial Black" };
+            string[] oFontNames = { "Calibri (西文正文)", "Arial Black" };
 
             // 字符栅格大小, 用于控制每个字符书写位置
-            var lattice = width / vcode.Length;
+            var lattice = width / code.Length;
 
             Bitmap bmp = new Bitmap(width, height);
             Graphics g = Graphics.FromImage(bmp);
 
             try
             {
-
                 g.Clear(Color.White);
 
                 //背景噪点生成
@@ -212,9 +210,9 @@ namespace JIF.CMS.Core.Helpers
                 }
 
 
-                for (int i = 0; i < vcode.Length; i++)
+                for (int i = 0; i < code.Length; i++)
                 {
-                    var s = vcode[i].ToString();
+                    var s = code[i].ToString();
 
                     //文字距中
                     var format = new StringFormat(StringFormatFlags.NoClip);
