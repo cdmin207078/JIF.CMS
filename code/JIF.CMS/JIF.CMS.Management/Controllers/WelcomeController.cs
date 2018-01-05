@@ -40,6 +40,7 @@ namespace JIF.CMS.Management.Controllers
             _cacheManager.Set("verify-code-" + vcc, string.Empty);
 
             var cookie = new HttpCookie("verifyCode", vcc);
+
             Response.SetCookie(cookie);
 
             return View();
