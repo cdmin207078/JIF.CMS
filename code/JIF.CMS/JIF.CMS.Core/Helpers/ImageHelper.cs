@@ -193,10 +193,10 @@ namespace JIF.CMS.Core.Helpers
                 //背景噪点生成
                 for (int i = 0; i < 100; i++)
                 {
-                    Pen blackPen = new Pen(RandomHelper.GenColor(100), 0);
+                    Pen bgnoise = new Pen(RandomHelper.GenColor(100), 0);
                     int x1 = RandomHelper.GenNumber(0, width);
                     int y1 = RandomHelper.GenNumber(0, height);
-                    g.DrawRectangle(blackPen, x1, y1, 1, 1);
+                    g.DrawRectangle(bgnoise, x1, y1, 1, 1);
                 }
 
                 // 背景干扰线
@@ -221,19 +221,10 @@ namespace JIF.CMS.Core.Helpers
 
                     var font = new Font(
                         oFontNames[RandomHelper.GenNumber(0, oFontNames.Length - 1)],
-                        RandomHelper.GenNumber(18, 36),
+                        RandomHelper.GenNumber(18, 24),
                         FontStyle.Bold);
 
                     var brush = new SolidBrush(RandomHelper.GenColor());
-
-                    //var x = i * lattice + RandomHelper.Gen(0, 5);
-                    //var y = (height - font.Height) / 2 + RandomHelper.Gen(-5, 5);
-
-                    //var x = 14;
-                    //var y = 14;
-
-                    //Point dot = new Point(x, y);
-
 
                     // 字符旋转角度
                     //var angel = RandomHelper.Gen(-45, 45);
@@ -241,10 +232,13 @@ namespace JIF.CMS.Core.Helpers
                     //g.TranslateTransform(dot.X, dot.Y);
                     //g.RotateTransform(angel);
 
-                    var x = i * lattice + RandomHelper.GenNumber(0, 5);
-                    var y = (height - font.Height) / 2 + RandomHelper.GenNumber(-5, 5);
+                    // 随机字符位置
+                    //var x = i * lattice + RandomHelper.GenNumber(0, 5);
+                    //var y = (height - font.Height) / 2 + RandomHelper.GenNumber(-5, 5);
+
+                    var x = i * lattice;
+                    var y = (height - font.Height) / 2;
                     g.DrawString(s, font, brush, x, y);
-                    //g.DrawString(s, font, brush, 1, 1, format);
 
                     //g.ResetTransform();
                     //g.RotateTransform(-angel);

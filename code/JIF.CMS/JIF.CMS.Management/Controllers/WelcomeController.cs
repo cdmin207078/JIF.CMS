@@ -32,31 +32,20 @@ namespace JIF.CMS.Management.Controllers
 
         public ActionResult Index()
         {
-            // 验证码
-            var algo = EncryptHelper.CreateHashAlgoMd5();
-            var verifyCode = RandomHelper.GenString(RandomHelper.CharSchemeEnum.NumChar, 4);
-            var vcc = EncryptHelper.Encrypt(algo, JIFConstants.MD5_Salt + verifyCode);
-
-            _cacheManager.Set("verify-code-" + vcc, string.Empty);
-
-            var cookie = new HttpCookie("verifyCode", vcc);
-
-            Response.SetCookie(cookie);
-
             return View();
         }
 
         [HttpGet]
         public ActionResult GetVerifyCode()
         {
-            // 验证码
-            var algo = EncryptHelper.CreateHashAlgoMd5();
             var verifyCode = RandomHelper.GenString(RandomHelper.CharSchemeEnum.NumChar, 4);
-            var vcc = EncryptHelper.Encrypt(algo, JIFConstants.MD5_Salt + verifyCode);
 
-            _cacheManager.Set("verify-code-" + verifyCode, string.Empty);
+            var algo = EncryptHelper.CreateHashAlgoMd5();
+            var codeKey = EncryptHelper.Encrypt(algo, Guid.NewGuid().ToString());
 
-            var cookie = new HttpCookie("verifyCode", vcc);
+            _cacheManager.Set(string.Format(CacheKeyConstants.LOGIN_VERIFY_CODE, codeKey), verifyCode, TimeSpan.FromMinutes(1));
+
+            var cookie = new HttpCookie("login-verify-code", codeKey);
             Response.SetCookie(cookie);
 
             // 图片
@@ -70,7 +59,9 @@ namespace JIF.CMS.Management.Controllers
         {
             AntiForgery.Validate();
 
-            if (!_cacheManager.IsSet("verify-code-" + verifyCode))
+            var codeKey = Request.Cookies["login-verify-code"].Value;
+            var cacheCode = _cacheManager.Get<string>(string.Format(CacheKeyConstants.LOGIN_VERIFY_CODE, codeKey));
+            if (!string.Equals(verifyCode, cacheCode, StringComparison.OrdinalIgnoreCase))
             {
                 throw new JIFException("验证码有误");
             }

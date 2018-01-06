@@ -25,7 +25,7 @@ namespace JIF.CMS.Core.Cache
         /// <param name="key">Key</param>
         /// <param name="data">数据</param>
         /// <param name="cacheTime">过期时间(时间戳)</param>
-        void Set<T>(string key, T data, int? cacheTimeStamp = null);
+        void Set<T>(string key, T data, TimeSpan? cacheTime = null);
 
         /// <summary>
         /// 判断 Key 是否存在

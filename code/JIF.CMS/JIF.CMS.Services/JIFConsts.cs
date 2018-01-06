@@ -83,6 +83,11 @@ namespace JIF.CMS.Services
     public static class CacheKeyConstants
     {
         /// <summary>
+        /// 用户登陆系统使用验证码
+        /// </summary>
+        public const string LOGIN_VERIFY_CODE = "LOGIN_VERIFY_CODE_{0}";
+
+        /// <summary>
         /// 登陆用户基本信息
         /// </summary>
         public const string USER_INFO = "USER_INFO_{0}";

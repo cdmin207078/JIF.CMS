@@ -108,7 +108,7 @@ namespace JIF.CMS.Redis
             throw new NotImplementedException();
         }
 
-        public void Set<T>(string key, T data, int? cacheTimeStamp)
+        public void Set<T>(string key, T data, TimeSpan? cacheTime)
         {
             var type = typeof(T);
 
