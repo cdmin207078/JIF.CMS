@@ -22,7 +22,7 @@ namespace JIF.CMS.WebApi.Framework
                 if (_cachedUser != null)
                     return _cachedUser;
 
-                _cachedUser = EngineContext.Current.Resolve<IAuthenticationService>().GetAuthenticatedUser();
+                //_cachedUser = EngineContext.Current.Resolve<IAuthenticationService>().GetAuthenticatedUser();
 
                 return _cachedUser;
             }

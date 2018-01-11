@@ -157,7 +157,7 @@ namespace JIF.CMS.Services.SysManager
 
             return new LoginOutput
             {
-                UserId = entity.Id
+                UserId = entity.Id,
             };
         }
     }

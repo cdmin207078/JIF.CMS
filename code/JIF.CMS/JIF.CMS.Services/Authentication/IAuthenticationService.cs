@@ -13,21 +13,15 @@ namespace JIF.CMS.Services.Authentication
     public partial interface IAuthenticationService
     {
         /// <summary>
-        /// Sign in
+        /// 用户登录系统
         /// </summary>
-        /// <param name="customer">Customer</param>
-        /// <param name="createPersistentCookie">A value indicating whether to create a persistent cookie</param>
-        void SignIn(IUser user);
+        /// <param name="account">账户</param>
+        /// <param name="password">密码</param>
+        void SignIn(string account, string password);
 
         /// <summary>
-        /// Sign out
+        /// 用户登出系统
         /// </summary>
         void SignOut();
-
-        /// <summary>
-        /// Get authenticated customer
-        /// </summary>
-        /// <returns>Customer</returns>
-        IUser GetAuthenticatedUser();
     }
 }

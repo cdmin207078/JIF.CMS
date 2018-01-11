@@ -36,7 +36,8 @@ namespace JIF.CMS.Web.Framework
                 // registered user
                 if (user == null)
                 {
-                    user = EngineContext.Current.Resolve<IAuthenticationService>().GetAuthenticatedUser();
+                    //user = EngineContext.Current.Resolve<IAuthenticationService>().GetAuthenticatedUser();
+
                 }
 
                 _cachedUser = user;

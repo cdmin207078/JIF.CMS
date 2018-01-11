@@ -116,5 +116,10 @@ namespace JIF.CMS.Services.Authentication
             _cachedUser = null;
             FormsAuthentication.SignOut();
         }
+
+        public void SignIn(string account, string password)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

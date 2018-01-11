@@ -40,7 +40,8 @@ namespace JIF.CMS.Management.API.Controllers
             {
                 var sysAdmin = sysManagerService.Get(userInfo.UserId);
 
-                authenticationService.SignIn(sysAdmin);
+                authenticationService.SignIn(model.Account, model.Password);
+                //authenticationService.SignIn(sysAdmin);
 
                 return JsonOk("登陆成功");
             }
@@ -103,7 +104,8 @@ namespace JIF.CMS.Management.API.Controllers
 
             var authenticationService = Resolve<IAuthenticationService>();
 
-            authenticationService.SignIn(user);
+            authenticationService.SignIn(user.Account, user.Password);
+            //authenticationService.SignIn(user);
 
             return JsonOk();
         }

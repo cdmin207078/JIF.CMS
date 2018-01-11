@@ -88,5 +88,10 @@ namespace JIF.CMS.Services.Authentication
         {
             throw new NotImplementedException("JsonTokenAuthentication.SignOut 未实现");
         }
+
+        public void SignIn(string account, string password)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
