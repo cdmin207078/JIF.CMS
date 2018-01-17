@@ -37,4 +37,6 @@
 - 2018-01-14 运动 & ThinkPHP5 开发手册学习
 - 2018-01-15 ThinkPHP5 学习
   - (支线)微信小程序开发学习 step1
+- 2018-01-17 working for company project.
+
   
