@@ -39,5 +39,5 @@
   - (支线)微信小程序开发学习 step1
 - 2018-01-17 working for company project.
 - 2018-01-18 working for company project.
-
-  
+- 2018-01-19 working for company project.
+  - php workman配置搞了一天, 没搞好. 浪费了时间, 以后应该避免无意义的研究
