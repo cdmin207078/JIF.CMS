@@ -41,3 +41,5 @@
 - 2018-01-18 working for company project.
 - 2018-01-19 working for company project.
   - php workman配置搞了一天, 没搞好. 浪费了时间, 以后应该避免无意义的研究
+- 2018-01-20 working for company project.
+  - 研究公司棋牌游戏业务逻辑, 书写文档.
