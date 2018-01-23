@@ -45,3 +45,4 @@
   - 研究公司棋牌游戏业务逻辑, 书写文档.
 - 2018-01-21 working for company project.
 - 2018-01-22 working for company project.
+- 2018-01-23 working for company project.
