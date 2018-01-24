@@ -47,3 +47,4 @@
 - 2018-01-22 working for company project.
 - 2018-01-23 working for company project.
   - 想买 ripple, 了解数字货币相关
+- 2018-01-24 working for company project.
