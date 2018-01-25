@@ -48,3 +48,5 @@
 - 2018-01-23 working for company project.
   - 想买 ripple, 了解数字货币相关
 - 2018-01-24 working for company project.
+- 2018-01-25 working for company project.
+  - 游戏微信多用户登陆bug未修复, 耽搁了一天
