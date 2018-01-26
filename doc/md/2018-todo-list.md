@@ -50,3 +50,6 @@
 - 2018-01-24 working for company project.
 - 2018-01-25 working for company project.
   - 游戏微信多用户登陆bug未修复, 耽搁了一天
+- 2018-01-26 working for company project.
+  - fix 前一天的bug.
+
