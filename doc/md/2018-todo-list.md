@@ -40,17 +40,18 @@
 - 2018-01-17 working for company project.
 - 2018-01-18 working for company project.
 - 2018-01-19 working for company project.
-  - php workman配置搞了一天, 没搞好. 浪费了时间, 以后应该避免无意义的研究
+  - php workman配置搞了一天, 没搞好. 浪费了时间, 以后应该避免无意义的研究
 - 2018-01-20 working for company project.
-  - 研究公司棋牌游戏业务逻辑, 书写文档.
+  - 研究公司棋牌游戏业务逻辑, 书写文档.
 - 2018-01-21 working for company project.
 - 2018-01-22 working for company project.
 - 2018-01-23 working for company project.
-  - 想买 ripple, 了解数字货币相关
+  - 想买 ripple, 了解数字货币相关
 - 2018-01-24 working for company project.
 - 2018-01-25 working for company project.
-  - 游戏微信多用户登陆bug未修复, 耽搁了一天
+  - 游戏微信多用户登陆bug未修复, 耽搁了一天
 - 2018-01-26 working for company project.
-  - fix 前一天的bug.
+  - fix 前一天的bug.
 - 2018-01-27 foo
-  - 晚上观看了电影 <神秘巨星>, 本以为是追梦励志片, 到最后发现是赞扬母爱, 深受感动. 期间发现, 旁边的阿美, 偷偷的哭了好几次.
+  - 晚上观看了电影 <神秘巨星>, 本以为是追梦励志片, 到最后发现是赞扬母爱, 深受感动. 期间发现, 旁边的阿美, 偷偷的哭了好几次.
+- 2018-01-28 working for company project.
