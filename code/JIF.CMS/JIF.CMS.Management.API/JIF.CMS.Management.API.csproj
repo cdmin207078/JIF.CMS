@@ -147,6 +147,7 @@
     <Content Include="appsettings.json" />
     <Content Include="Configs\log4net.config">
       <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
