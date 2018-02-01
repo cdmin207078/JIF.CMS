@@ -58,3 +58,12 @@
 - 2018-01-29 working for company project.
   - 学习了解, 微信个人订阅号的各项基本功能, 设置使用
 - 2018-01-30 working for company project.
+- 2018-01-31 learn asp.net core
+  - asp.net core mvc 创建项目, 初步了解
+- 2018-02-01 working for company project.
+  - todo
+    - asp.net core 创建 Web 应用 - `quit`
+    - JIF.CMS Login - `quit`
+
+
+
