@@ -7,6 +7,7 @@
     - .net core
     - redis
     - nginx
+    - MongoDB
     - linux
 - 学车
 - 读书
@@ -70,7 +71,8 @@
     - asp.net core 创建 Web 应用 - `quit`
     - JIF.CMS Login - `quit`
 - 2018-02-02 working for company project.
-- 2018-02-02 sporting & study - foo
+- 2018-02-03 sporting & study - foo
   - redis 配置文件汉化 - `quit`
   - JIF.CMS Login - `quit`
-
+- 2018-02-04 foo.
+- 2018-02-05 working for company project.
