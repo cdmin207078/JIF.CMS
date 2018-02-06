@@ -1,5 +1,7 @@
 # 2018 待办事项
 
+> ### 吾尝终日而思矣，不如须臾之所学也。
+
 ## 陈宁
 - 个人网站
   - .net core
@@ -11,9 +13,11 @@
     - linux
 - 学车
 - 读书
-  - 图解http
-  - 德川家康
-  - 人间失格
+  - <图解http> - 上野宣
+  - <德川家康> - 山冈庄八 
+  - <人间失格> - 太宰治
+  - <苏东坡传> - 林语堂
+  - <失控> - 凯文·凯利 
 - 注册公司
 - 办理护照
 - 学习游泳
@@ -68,7 +72,7 @@
   - asp.net core mvc 创建项目, 初步了解
 - 2018-02-01 working for company project.
   - todo
-    - asp.net core 创建 Web 应用 - `quit`
+    - asp.net core 创建 Web 应用 - `done`
     - JIF.CMS Login - `quit`
 - 2018-02-02 working for company project.
 - 2018-02-03 sporting & study - foo
