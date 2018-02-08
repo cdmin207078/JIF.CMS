@@ -81,4 +81,7 @@
 - 2018-02-04 foo.
 - 2018-02-05 working for company project.
 - 2018-02-06 翻译学习 redis 3.2 配置文件
+- 2018-02-07 foo
+- 2018-02-08 foo
+
 
