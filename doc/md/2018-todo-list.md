@@ -88,4 +88,6 @@
 - 2018-02-10 foo
 - 2018-02-11 foo
   - 规划春节旅游线路
+- 2018-02-10 study redis
+  - Replication, Sentinel
   
