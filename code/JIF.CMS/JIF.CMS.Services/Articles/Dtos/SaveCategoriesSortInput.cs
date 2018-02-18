@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace JIF.CMS.Services.Articles.Dtos
 {
-    public class SaveCagegoriesSortInput
+    public class SaveCategoriesSortInput
     {
         public int Id { get; set; }
 
-        public List<SaveCagegoriesSortInput> Children { get; set; }
+        public List<SaveCategoriesSortInput> Children { get; set; }
     }
 }

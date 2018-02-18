@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace JIF.CMS.Core.Domain
 {
-    public class SysAdmin : BaseEntity, IUser
+    public class SysAdmin : BaseEntity
     {
         /// <summary>
         /// 账户

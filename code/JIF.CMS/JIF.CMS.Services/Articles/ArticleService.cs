@@ -389,7 +389,7 @@ namespace JIF.CMS.Services.Articles
         /// 保存分类层级关系
         /// </summary>
         /// <param name="categories"></param>
-        public void SaveCategoriesSort(List<SaveCagegoriesSortInput> sorts)
+        public void SaveCategoriesSort(List<SaveCategoriesSortInput> sorts)
         {
             var categories = _articleCategoryRepository.Table.ToDictionary(d => d.Id);
             recursiveUpdateCategoryRelations(categories, sorts, 0);
@@ -402,7 +402,7 @@ namespace JIF.CMS.Services.Articles
         /// <param name="categories"></param>
         /// <param name="sorts"></param>
         /// <param name="parentId"></param>
-        private void recursiveUpdateCategoryRelations(Dictionary<int, ArticleCategory> categories, List<SaveCagegoriesSortInput> sorts, int parentId)
+        private void recursiveUpdateCategoryRelations(Dictionary<int, ArticleCategory> categories, List<SaveCategoriesSortInput> sorts, int parentId)
         {
             if (categories.IsNullOrEmpty() || sorts.IsNullOrEmpty())
                 return;

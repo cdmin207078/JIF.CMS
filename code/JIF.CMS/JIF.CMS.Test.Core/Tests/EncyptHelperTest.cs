@@ -21,7 +21,7 @@ namespace JIF.CMS.Test.Core.Tests
 
 
             Console.WriteLine(EncryptHelper.Encrypt(algo, "hello world"));
-            Console.WriteLine(EncryptHelper.Encrypt(algo, "Hello World"));
+            Console.WriteLine(EncryptHelper.Encrypt(algo, "HELLO WORLD"));
 
             Console.WriteLine(cipher);
         }

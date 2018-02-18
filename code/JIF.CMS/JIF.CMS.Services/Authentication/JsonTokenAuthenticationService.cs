@@ -65,7 +65,7 @@ namespace JIF.CMS.Services.Authentication
         /// 用户登入
         /// </summary>
         /// <param name="user"></param>
-        public void SignIn(IUser user)
+        public void LoginIn(IUser user)
         {
             var token = Guid.NewGuid().ToString("N");
 
@@ -84,12 +84,12 @@ namespace JIF.CMS.Services.Authentication
         /// <summary>
         /// 用户登出
         /// </summary>
-        public void SignOut()
+        public void LoginOut()
         {
             throw new NotImplementedException("JsonTokenAuthentication.SignOut 未实现");
         }
 
-        public void SignIn(string account, string password)
+        public void LoginIn(string account, string password)
         {
             throw new NotImplementedException();
         }

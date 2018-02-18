@@ -46,7 +46,7 @@ namespace JIF.CMS.Management.Controllers
 
         public ActionResult LogOut()
         {
-            _authenticationService.SignOut();
+            _authenticationService.LoginOut();
             return RedirectToAction("index", "welcome");
         }
     }

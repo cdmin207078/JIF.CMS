@@ -8,6 +8,7 @@ using JIF.CMS.Core.Cache;
 using JIF.CMS.Core;
 using JIF.CMS.Core.Data;
 using JIF.CMS.Core.Helpers;
+using JIF.CMS.Core.Extensions;
 
 namespace JIF.CMS.Services.Authentication
 {
@@ -38,7 +39,7 @@ namespace JIF.CMS.Services.Authentication
             return EncryptHelper.Encrypt(algo, plain);
         }
 
-        public void SignIn(string account, string password)
+        public void LoginIn(string account, string password)
         {
             if (string.IsNullOrWhiteSpace(account) || string.IsNullOrWhiteSpace(password))
                 throw new JIFException("账号 / 密码 不能为空");
@@ -54,18 +55,27 @@ namespace JIF.CMS.Services.Authentication
             var cipherText = EncyptPwd(password, entity.CreateTime);
 
             if (cipherText != entity.Password)
+            {
+                // TODO: 连续错误密码三次, 缓存记录. 限制 10min. 
+                //CacheKeyConstants.LOGIN_PASSWORD_ERROR_COUNT.ToString();
+
                 throw new JIFException("密码不正确");
-
-            // TODO: 连续错误密码三次, 缓存记录. 限制 10min. 
-            CacheKeyConstants.LOGIN_PASSWORD_ERROR_COUNT.ToString();
-
-            // TODO: 记录登陆日志
+            }
 
             // TODO: 登陆成功, 存入缓存, 写入cookies
+            var sessionID = Guid.NewGuid().ToString();
+            _cacheManager.Set(
+                CacheKeyConstants.LOGIN_USER_SESSION.Formats(sessionID),
+                new
+                {
 
+                },
+                TimeSpan.FromDays(1));
+
+            // TODO: 记录登陆日志
         }
 
-        public void SignOut()
+        public void LoginOut()
         {
             // TODO: 清除缓存, cookie;
 

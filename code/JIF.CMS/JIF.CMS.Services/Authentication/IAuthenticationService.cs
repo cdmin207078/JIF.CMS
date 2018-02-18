@@ -17,11 +17,11 @@ namespace JIF.CMS.Services.Authentication
         /// </summary>
         /// <param name="account">账户</param>
         /// <param name="password">密码</param>
-        void SignIn(string account, string password);
+        void LoginIn(string account, string password);
 
         /// <summary>
         /// 用户登出系统
         /// </summary>
-        void SignOut();
+        void LoginOut();
     }
 }

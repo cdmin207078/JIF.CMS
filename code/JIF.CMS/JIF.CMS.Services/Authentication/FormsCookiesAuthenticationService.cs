@@ -37,9 +37,10 @@ namespace JIF.CMS.Services.Authentication
             }
 
             // TODO: 需要缓存一下. redis
-            var user = EngineContext.Current.Resolve<ISysManagerService>().Get(int.Parse(uid));
+            //var user = EngineContext.Current.Resolve<ISysManagerService>().Get(int.Parse(uid));
 
-            return user;
+            //return user;
+            throw new NotImplementedException("未实现方法");
         }
 
 
@@ -118,6 +119,16 @@ namespace JIF.CMS.Services.Authentication
         }
 
         public void SignIn(string account, string password)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void LoginIn(string account, string password)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void LoginOut()
         {
             throw new NotImplementedException();
         }

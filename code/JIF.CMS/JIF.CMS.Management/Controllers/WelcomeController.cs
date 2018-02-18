@@ -35,25 +35,26 @@ namespace JIF.CMS.Management.Controllers
             return View();
         }
 
+        // 获取验证码
         [HttpGet]
         public ActionResult GetVerifyCode()
         {
+            // 生成验证码
             var verifyCode = RandomHelper.GenString(RandomHelper.CharSchemeEnum.NumChar, 4);
+            var verifyCodeImg = ImageHelper.GenValidateCode(verifyCode, 87, 34);
 
             var algo = EncryptHelper.CreateHashAlgoMd5();
             var codeKey = EncryptHelper.Encrypt(algo, Guid.NewGuid().ToString());
 
-            _cacheManager.Set(string.Format(CacheKeyConstants.LOGIN_VERIFY_CODE, codeKey), verifyCode, TimeSpan.FromMinutes(1));
+            _cacheManager.Set(string.Format(CacheKeyConstants.LOGIN_VERIFY_CODE, codeKey), verifyCode, TimeSpan.FromMinutes(3));
 
             var cookie = new HttpCookie("login-verify-code", codeKey);
             Response.SetCookie(cookie);
 
-            // 图片
-            var img = ImageHelper.GenValidateCode(verifyCode, 87, 34);
-
-            return File(img, "image/jpeg");
+            return File(verifyCodeImg, "image/jpeg");
         }
 
+        // 用户登陆处理
         [HttpPost]
         public ActionResult Index(string account, string password, string verifyCode, string returnUrl)
         {
@@ -72,7 +73,7 @@ namespace JIF.CMS.Management.Controllers
             {
                 var sysAdmin = _sysManagerService.Get(userInfo.UserId);
 
-                _authenticationService.SignIn(account, password);
+                _authenticationService.LoginIn(account, password);
 
                 if (!String.IsNullOrEmpty(returnUrl) && Url.IsLocalUrl(returnUrl))
                     return Redirect(returnUrl);

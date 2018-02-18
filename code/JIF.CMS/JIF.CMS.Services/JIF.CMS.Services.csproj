@@ -51,7 +51,7 @@
   <ItemGroup>
     <Compile Include="Articles\ArticleService.cs" />
     <Compile Include="Articles\Dtos\InsertArticleCategoryInput.cs" />
-    <Compile Include="Articles\Dtos\SaveCagegoriesSortInput.cs" />
+    <Compile Include="Articles\Dtos\SaveCategoriesSortInput.cs" />
     <Compile Include="Articles\Dtos\SearchArticleListOutput.cs" />
     <Compile Include="Articles\Dtos\InsertArticleInput.cs" />
     <Compile Include="Articles\Dtos\DeleteArticleCategoryInput.cs" />
@@ -85,6 +85,9 @@
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Authentication\Dtos\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -152,7 +152,7 @@ namespace JIF.CMS.Management.Controllers
         }
 
         // 保存分类排序
-        public ActionResult SaveCategoriesSort(List<SaveCagegoriesSortInput> sorts)
+        public ActionResult SaveCategoriesSort(List<SaveCategoriesSortInput> sorts)
         {
             _articleService.SaveCategoriesSort(sorts);
             return JsonOk();

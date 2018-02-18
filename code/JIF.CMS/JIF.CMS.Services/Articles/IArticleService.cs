@@ -109,7 +109,7 @@ namespace JIF.CMS.Services.Articles
         /// 保存分类层级关系
         /// </summary>
         /// <param name="categories"></param>
-        void SaveCategoriesSort(List<SaveCagegoriesSortInput> sorts);
+        void SaveCategoriesSort(List<SaveCategoriesSortInput> sorts);
 
         #endregion
     }

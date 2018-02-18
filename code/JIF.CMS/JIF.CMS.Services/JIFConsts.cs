@@ -92,16 +92,14 @@ namespace JIF.CMS.Services
         /// </summary>
         public const string LOGIN_PASSWORD_ERROR_COUNT = "LOGIN_PASSWORD_ERROR_COUNT_{0}";
 
-
-
         /// <summary>
-        /// 登陆用户基本信息
+        /// 登陆用户回话信息
         /// </summary>
-        public const string USER_INFO = "USER_INFO_{0}";
+        public const string LOGIN_USER_SESSION = "USER_INFO_{0}";
 
         /// <summary>
         /// 登陆用户权限列表
         /// </summary>
-        public const string USER_PERMISSIONS = "USER_PERMISSIONS_{0}";
+        public const string LOGIN_USER_PERMISSIONS = "USER_PERMISSIONS_{0}";
     }
 }
