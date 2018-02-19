@@ -75,10 +75,10 @@ namespace JIF.CMS.Core.Cache
 
             //};
 
-            var policy = new CacheItemPolicy();
-
-            if (cacheTime.HasValue)
-                policy.SlidingExpiration = cacheTime.Value;
+            var policy = new CacheItemPolicy
+            {
+                SlidingExpiration = cacheTime.HasValue ? cacheTime.Value : ObjectCache.NoSlidingExpiration,
+            };
 
             MemoryCache.Default.Add(key, data, policy);
         }

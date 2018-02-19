@@ -25,6 +25,20 @@ namespace JIF.CMS.Web.Framework.Filters
             this._dontValidate = dontValidate;
         }
 
+        private bool HasAdminAccess(AuthorizationContext filterContext)
+        {
+
+            if (WorkContext == null || WorkContext.CurrentUser == null)
+                return false;
+
+
+            //授权权限判断
+            //var permissionService = EngineContext.Current.Resolve<IPermissionService>();
+            //bool result = permissionService.Authorize(StandardPermissionProvider.AccessAdminPanel);
+            //return result;
+            return true;
+        }
+
         private void HandleUnauthorizedRequest(AuthorizationContext filterContext)
         {
             filterContext.Result = new HttpUnauthorizedResult();
@@ -45,23 +59,10 @@ namespace JIF.CMS.Web.Framework.Filters
                 throw new InvalidOperationException("You cannot use [AdminAuthorize] attribute when a child action cache is active");
             }
 
-            if (!this.HasAdminAccess(filterContext))
+            if (!HasAdminAccess(filterContext))
             {
                 HandleUnauthorizedRequest(filterContext);
             }
-        }
-
-        public virtual bool HasAdminAccess(AuthorizationContext filterContext)
-        {
-            //授权权限判断
-            //var permissionService = EngineContext.Current.Resolve<IPermissionService>();
-            //bool result = permissionService.Authorize(StandardPermissionProvider.AccessAdminPanel);
-            //return result;
-
-            if (WorkContext == null || WorkContext.CurrentUser == null)
-                return false;
-            else
-                return true;
         }
     }
 }

@@ -10,11 +10,30 @@ namespace JIF.CMS.Core
         /// <summary>
         /// 当前用户
         /// </summary>
-        IUser CurrentUser { get; }
+        AuthenticatedUser CurrentUser { get; }
+    }
+
+
+    /// <summary>
+    /// 认证用户信息
+    /// </summary>
+    public class AuthenticatedUser
+    {
+        public int Id { get; set; }
 
         /// <summary>
-        /// 是否是系统管理员
+        /// 账户
         /// </summary>
-        bool IsAdmin { get; set; }
+        public string Account { get; set; }
+
+        /// <summary>
+        /// 电子邮箱
+        /// </summary>
+        public string Email { get; set; }
+
+        /// <summary>
+        /// 联系电话
+        /// </summary>
+        public string CellPhone { get; set; }
     }
 }

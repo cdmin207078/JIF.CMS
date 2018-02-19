@@ -9,6 +9,7 @@ using JIF.CMS.Core;
 using JIF.CMS.Core.Data;
 using JIF.CMS.Core.Helpers;
 using JIF.CMS.Core.Extensions;
+using JIF.CMS.Services.SysManager;
 
 namespace JIF.CMS.Services.Authentication
 {
@@ -39,7 +40,7 @@ namespace JIF.CMS.Services.Authentication
             return EncryptHelper.Encrypt(algo, plain);
         }
 
-        public void LoginIn(string account, string password)
+        public string LoginIn(string account, string password)
         {
             if (string.IsNullOrWhiteSpace(account) || string.IsNullOrWhiteSpace(password))
                 throw new JIFException("账号 / 密码 不能为空");
@@ -56,32 +57,54 @@ namespace JIF.CMS.Services.Authentication
 
             if (cipherText != entity.Password)
             {
-                // TODO: 连续错误密码三次, 缓存记录. 限制 10min. 
-                //CacheKeyConstants.LOGIN_PASSWORD_ERROR_COUNT.ToString();
+                // TODO: 连续错误密码三次, 缓存记录. 限制 10min.
+                //if (CacheKeyConstants.LOGIN_ERROR_LIMIT)
+                //{
+                //    // todo
+                //    // 限制 ip
+                //    _cacheManager.Set(CacheKeyConstants.LOGIN_ERROR_LIMIT.Formats(), "", TimeSpan.FromMinutes(30));
+                //    throw new JIFException($"连续错误{CacheKeyConstants.LOGIN_ERROR_LIMIT}次, 请30min后再试.");
+                //}
 
                 throw new JIFException("密码不正确");
             }
 
-            // TODO: 登陆成功, 存入缓存, 写入cookies
+            // 登陆成功, 存入缓存
             var sessionID = Guid.NewGuid().ToString();
-            _cacheManager.Set(
-                CacheKeyConstants.LOGIN_USER_SESSION.Formats(sessionID),
-                new
-                {
+            var ck = CacheKeyConstants.LOGIN_USER_SESSION.Formats(sessionID);
+            var au = new AuthenticatedUser
+            {
+                Id = entity.Id,
+                Account = entity.Account,
+                CellPhone = entity.CellPhone,
+                Email = entity.Email
+            };
 
-                },
-                TimeSpan.FromDays(1));
+            _cacheManager.Set(ck, au, TimeSpan.FromDays(1));
 
             // TODO: 记录登陆日志
+
+            return sessionID;
         }
 
-        public void LoginOut()
+        public void LoginOut(string sessionID)
         {
-            // TODO: 清除缓存, cookie;
+            // 清除缓存
+            var ck = CacheKeyConstants.LOGIN_USER_SESSION.Formats(sessionID);
+            _cacheManager.Remove(ck);
 
             // TODO: 记录登出日志
 
-            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// 获取已通过授权登陆的用户信息
+        /// </summary>
+        public AuthenticatedUser GetAuthenticatedUser(string sessionID)
+        {
+            // 从 cookies 获取
+            var ck = CacheKeyConstants.LOGIN_USER_SESSION.Formats(sessionID);
+            return _cacheManager.Get<AuthenticatedUser>(ck);
         }
     }
 }

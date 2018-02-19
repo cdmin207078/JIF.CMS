@@ -28,7 +28,7 @@ namespace JIF.CMS.Core.Extensions
         //
         //   T:System.FormatException:
         //     format 无效。- 或 - 格式项的索引小于零，或者大于或等于 args 数组的长度。
-        public static String Formats(this string format, params object[] args)
+        public static string Formats(this string format, params object[] args)
         {
             return string.Format(format, args);
         }
@@ -58,7 +58,7 @@ namespace JIF.CMS.Core.Extensions
         //
         //   T:System.FormatException:
         //     format 无效。- 或 - 格式项的索引小于零，或者大于二。
-        public static String Formats(this string format, object arg0, object arg1, object arg2)
+        public static string Formats(this string format, object arg0, object arg1, object arg2)
         {
             return string.Format(format, arg0, arg1, arg2);
         }
@@ -82,7 +82,7 @@ namespace JIF.CMS.Core.Extensions
         //
         //   T:System.FormatException:
         //     format 中的格式项无效。- 或 - 格式项的索引不为零。
-        public static String Formats(this string format, object arg0)
+        public static string Formats(this string format, object arg0)
         {
             return string.Format(format, arg0);
         }
@@ -109,7 +109,7 @@ namespace JIF.CMS.Core.Extensions
         //
         //   T:System.FormatException:
         //     format 无效。- 或 - 格式项的索引不为零或一。
-        public static String Formats(this string format, object arg0, object arg1)
+        public static string Formats(this string format, object arg0, object arg1)
         {
             return string.Format(format, arg0, arg1);
         }

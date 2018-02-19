@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Security;
+using JIF.CMS.Core;
 
 namespace JIF.CMS.Services.Authentication
 {
@@ -123,12 +124,17 @@ namespace JIF.CMS.Services.Authentication
             throw new NotImplementedException();
         }
 
-        public void LoginIn(string account, string password)
+        public string LoginIn(string account, string password)
         {
             throw new NotImplementedException();
         }
 
-        public void LoginOut()
+        public void LoginOut(string sessionID)
+        {
+            throw new NotImplementedException();
+        }
+
+        AuthenticatedUser IAuthenticationService.GetAuthenticatedUser(string sessionID)
         {
             throw new NotImplementedException();
         }

@@ -48,13 +48,5 @@ namespace JIF.CMS.Services.SysManager
         /// <param name="pageSize">页大小</param>
         /// <returns></returns>
         IPagedList<SysAdminSearchListOutput> Get(string q, int pageIndex = 1, int pageSize = int.MaxValue);
-
-        /// <summary>
-        /// 管理员登陆
-        /// </summary>
-        /// <param name="account"></param>
-        /// <param name="password"></param>
-        /// <returns></returns>
-        LoginOutput Login(string account, string password);
     }
 }

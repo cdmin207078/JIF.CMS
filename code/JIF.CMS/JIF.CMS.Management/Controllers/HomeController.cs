@@ -1,6 +1,7 @@
 ﻿using JIF.CMS.Core;
 using JIF.CMS.Core.Cache;
 using JIF.CMS.Core.Configuration;
+using JIF.CMS.Services;
 using JIF.CMS.Services.Articles;
 using JIF.CMS.Services.Authentication;
 using JIF.CMS.Web.Framework.Controllers;
@@ -46,7 +47,12 @@ namespace JIF.CMS.Management.Controllers
 
         public ActionResult LogOut()
         {
-            _authenticationService.LoginOut();
+            var sessionID = Request.Cookies[JIFConstants.COOKIES_LOGIN_USER].Value;
+
+            _authenticationService.LoginOut(sessionID);
+
+            Request.Cookies.Remove(sessionID);
+
             return RedirectToAction("index", "welcome");
         }
     }

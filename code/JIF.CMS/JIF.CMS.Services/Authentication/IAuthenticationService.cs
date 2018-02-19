@@ -1,9 +1,4 @@
-﻿using JIF.CMS.Core.Domain;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using JIF.CMS.Core;
 
 namespace JIF.CMS.Services.Authentication
 {
@@ -13,15 +8,21 @@ namespace JIF.CMS.Services.Authentication
     public partial interface IAuthenticationService
     {
         /// <summary>
-        /// 用户登录系统
+        /// 获取已通过授权登陆的用户信息
+        /// </summary>
+        AuthenticatedUser GetAuthenticatedUser(string sessionID);
+
+        /// <summary>
+        /// 用户登录系统, 返回 sessionID
         /// </summary>
         /// <param name="account">账户</param>
         /// <param name="password">密码</param>
-        void LoginIn(string account, string password);
+        /// <returns>sessionID</returns>
+        string LoginIn(string account, string password);
 
         /// <summary>
         /// 用户登出系统
         /// </summary>
-        void LoginOut();
+        void LoginOut(string sessionID);
     }
 }

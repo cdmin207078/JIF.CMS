@@ -17,15 +17,12 @@ namespace JIF.CMS.Management.Controllers
 {
     public class WelcomeController : BaseController
     {
-        private readonly ISysManagerService _sysManagerService;
         private readonly IAuthenticationService _authenticationService;
         private readonly ICacheManager _cacheManager;
 
-        public WelcomeController(ISysManagerService sysManagerService,
-            IAuthenticationService authenticationService,
+        public WelcomeController(IAuthenticationService authenticationService,
             ICacheManager cacheManager)
         {
-            _sysManagerService = sysManagerService;
             _authenticationService = authenticationService;
             _cacheManager = cacheManager;
         }
@@ -60,6 +57,7 @@ namespace JIF.CMS.Management.Controllers
         {
             AntiForgery.Validate();
 
+            // 校验验证码
             var codeKey = Request.Cookies["login-verify-code"].Value;
             var cacheCode = _cacheManager.Get<string>(string.Format(CacheKeyConstants.LOGIN_VERIFY_CODE, codeKey));
             if (!string.Equals(verifyCode, cacheCode, StringComparison.OrdinalIgnoreCase))
@@ -67,21 +65,18 @@ namespace JIF.CMS.Management.Controllers
                 throw new JIFException("验证码有误");
             }
 
-            var userInfo = _sysManagerService.Login(account, password);
+            // 用户登陆
+            var sessionID = _authenticationService.LoginIn(account, password);
 
-            if (userInfo != null)
-            {
-                var sysAdmin = _sysManagerService.Get(userInfo.UserId);
+            // 记录 cookies
+            var cookie = new HttpCookie(JIFConstants.COOKIES_LOGIN_USER, sessionID);
+            cookie.Expires = DateTime.Now + TimeSpan.FromDays(1);
+            Response.Cookies.Add(cookie);
 
-                _authenticationService.LoginIn(account, password);
-
-                if (!String.IsNullOrEmpty(returnUrl) && Url.IsLocalUrl(returnUrl))
-                    return Redirect(returnUrl);
-                else
-                    return Redirect("/");
-            }
-
-            return View();
+            if (!string.IsNullOrEmpty(returnUrl) && Url.IsLocalUrl(returnUrl))
+                return Redirect(returnUrl);
+            else
+                return Redirect("/");
         }
     }
 }

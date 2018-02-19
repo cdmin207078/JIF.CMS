@@ -116,7 +116,7 @@ namespace JIF.CMS.Redis
 
             if (type.IsPrimitive || type == typeof(string))
             {
-                _db.StringSet(key, JsonConvert.SerializeObject(data));
+                _db.StringSet(key, JsonConvert.SerializeObject(data), cacheTime);
                 return;
             }
 

@@ -372,8 +372,6 @@ namespace JIF.CMS.Services.Articles
         /// <returns>只返回已排序的顶层节点, 分支使用各个节点依次访问</returns>
         public List<ArticleCategory> GetCategoriesTreeRelation()
         {
-
-
             return GetCategories().AsTreeRelation().ToList();
         }
 

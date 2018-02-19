@@ -25,15 +25,19 @@ namespace JIF.CMS.WebApi.Framework.Filters
             this._dontValidate = dontValidate;
         }
 
-        public override void OnAuthorization(HttpActionContext context)
+        private bool HasAdminAccess(HttpActionContext context)
         {
-            if (_dontValidate)
-                return;
+            //授权权限判断
+            //var permissionService = EngineContext.Current.Resolve<IPermissionService>();
+            //bool result = permissionService.Authorize(StandardPermissionProvider.AccessAdminPanel);
+            //return result;
 
-            if (!this.HasAdminAccess(context))
-            {
-                this.HandleUnauthorizedRequest(context);
-            }
+            var workContext = EngineContext.Current.Resolve<IWorkContext>();
+
+            if (workContext == null || workContext.CurrentUser == null)
+                return false;
+            else
+                return true;
         }
 
         protected override void HandleUnauthorizedRequest(HttpActionContext context)
@@ -51,19 +55,15 @@ namespace JIF.CMS.WebApi.Framework.Filters
             context.Response = response;
         }
 
-        public virtual bool HasAdminAccess(HttpActionContext context)
+        public override void OnAuthorization(HttpActionContext context)
         {
-            //授权权限判断
-            //var permissionService = EngineContext.Current.Resolve<IPermissionService>();
-            //bool result = permissionService.Authorize(StandardPermissionProvider.AccessAdminPanel);
-            //return result;
+            if (_dontValidate)
+                return;
 
-            var workContext = EngineContext.Current.Resolve<IWorkContext>();
-
-            if (workContext == null || workContext.CurrentUser == null)
-                return false;
-            else
-                return true;
+            if (!this.HasAdminAccess(context))
+            {
+                this.HandleUnauthorizedRequest(context);
+            }
         }
     }
 }

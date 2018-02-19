@@ -130,35 +130,5 @@ namespace JIF.CMS.Services.SysManager
 
             return new PagedList<SysAdminSearchListOutput>(query, pageIndex, pageSize);
         }
-
-        public LoginOutput Login(string account, string password)
-        {
-            if (string.IsNullOrWhiteSpace(account) || string.IsNullOrWhiteSpace(password))
-                throw new JIFException("账号 / 密码 不能为空");
-
-            var entity = _sysAdminRepository.Table.FirstOrDefault(d => d.Account.ToLower().Trim() == account.ToLower().Trim());
-
-            if (entity == null)
-                throw new JIFException("账号不存在");
-
-            if (!entity.Enable)
-                throw new JIFException("账号已被停用");
-
-            var cipherText = EncyptPwd(password, entity.CreateTime);
-
-            if (cipherText != entity.Password)
-                throw new JIFException("密码不正确");
-
-            // 记录登陆日志
-            //entity.LastLoginTime = DateTime.Now;
-            //entity.LastLoginIP = _webHelper.GetCurrentIpAddress();
-
-            //_userRepository.Update(entity);
-
-            return new LoginOutput
-            {
-                UserId = entity.Id,
-            };
-        }
     }
 }
