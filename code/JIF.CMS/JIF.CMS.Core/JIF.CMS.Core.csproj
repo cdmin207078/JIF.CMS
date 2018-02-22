@@ -85,6 +85,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Cache\CacheValue.cs" />
     <Compile Include="Cache\ICacheManager.cs" />
     <Compile Include="Cache\MemoryCacheManager.cs" />
     <Compile Include="Configuration\JIFConfig.cs" />

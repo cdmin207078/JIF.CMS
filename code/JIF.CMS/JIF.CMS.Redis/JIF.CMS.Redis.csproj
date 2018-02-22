@@ -80,7 +80,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\JIF.CMS.Core\JIF.CMS.Core.csproj">
-      <Project>{C3EF00B2-7752-48EF-AAB3-B7BC11E08FA6}</Project>
+      <Project>{c3ef00b2-7752-48ef-aab3-b7bc11e08fa6}</Project>
       <Name>JIF.CMS.Core</Name>
     </ProjectReference>
   </ItemGroup>

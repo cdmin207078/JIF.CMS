@@ -102,6 +102,9 @@
   - Quarrel
 - 2018-02-20 foo
 - 2018-02-21 foo
+- 2018-02-22 fix RedisCacheManager bug
+  - Get<T> 方法需要重构, 目前若无 key, 则会报错. 需要封装以后结果对象, 目前需要手动在调用时设置返回值为可空类型: `Get<EnumType?>("key")` - **`待开发`**
+
 
 
   

@@ -116,12 +116,19 @@
     <Compile Include="Tests\MathHelperTest.cs" />
     <Compile Include="Tests\CsvHelperTest.cs" />
     <Compile Include="Tests\StringHelperTest.cs" />
+    <Compile Include="Tests\RedisCacheManagerTest.cs" />
+    <Compile Include="Tests\JsonConvertTest.cs" />
+    <Compile Include="Tests\TypeTest.cs" />
     <Compile Include="Tests\URLEncodeTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\JIF.CMS.Core\JIF.CMS.Core.csproj">
       <Project>{c3ef00b2-7752-48ef-aab3-b7bc11e08fa6}</Project>
       <Name>JIF.CMS.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\JIF.CMS.Redis\JIF.CMS.Redis.csproj">
+      <Project>{829814f2-4f75-4388-9da9-577486d332e9}</Project>
+      <Name>JIF.CMS.Redis</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

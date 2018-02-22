@@ -7,23 +7,49 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static JIF.CMS.Core.Configuration.JIFConfig;
 
 namespace JIF.CMS.Redis
 {
     public class RedisCacheManager : ICacheManager
     {
-        private readonly RedisConnectionWrapper _connectionWarpper;
+        private static object _lock = new object();
 
+        private static RedisConnectionWrapper _connectionWarpper;
         private readonly IDatabase _db;
 
-        public RedisCacheManager(RedisConnectionWrapper connectionWarpper, JIFConfig config)
+        public RedisCacheManager(RedisConfiguration config)
         {
-            if (string.IsNullOrWhiteSpace(config.RedisConfig.Server))
+            if (string.IsNullOrWhiteSpace(config.Server))
                 throw new Exception("Redis connection string is empty");
 
-            _connectionWarpper = connectionWarpper;
+            initWrapper(config);
 
             _db = _connectionWarpper.GetDatabase();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        private void initWrapper(RedisConfiguration config)
+        {
+            // 首先是 ConnectionMultiplexer 的封装，ConnectionMultiplexer对象是StackExchange.Redis最中枢的对象。
+            // 这个类的实例需要被整个应用程序域共享和重用的，所以不需要在每个操作中不停的创建该对象的实例，一般都是使用单例来创建和存放这个对象，这个在官网上也有说明。
+            // http://www.cnblogs.com/qtqq/p/5951201.html
+            // https://stackexchange.github.io/StackExchange.Redis/Basics
+            //builder.RegisterType<RedisConnectionWrapper>().As<RedisConnectionWrapper>().SingleInstance();
+
+            if (_connectionWarpper != null)
+                return;
+
+            lock (_lock)
+            {
+                if (_connectionWarpper != null)
+                    return;
+
+                _connectionWarpper = new RedisConnectionWrapper(config);
+            }
         }
 
         public void Clear()
@@ -35,11 +61,16 @@ namespace JIF.CMS.Redis
         {
             var type = typeof(T);
 
-            #region Primitive Type. string, int, long, decimal, double, bool, enum
+            #region Primitive Type. string, int, long, decimal, double, bool
 
-            if (type.IsPrimitive || type == typeof(string))
+            if (type.IsPrimitive
+                || type == typeof(string)
+                || type == typeof(decimal)
+                || type == typeof(DateTime)
+                )
             {
-                return JsonConvert.DeserializeObject<T>(_db.StringGet(key));
+                var data = _db.StringGet(key);
+                return (T)Convert.ChangeType(data.ToString(), typeof(T));
             }
 
             #endregion
@@ -48,7 +79,7 @@ namespace JIF.CMS.Redis
 
             if (type.IsEnum)
             {
-                return JsonConvert.DeserializeObject<T>(_db.StringGet(key));
+                return (T)Enum.Parse(typeof(T), _db.StringGet(key));
             }
 
             #endregion
@@ -57,7 +88,8 @@ namespace JIF.CMS.Redis
 
             if (type.IsGenericType)
             {
-                return default(T);
+                var data = _db.StringGet(key);
+                return data.IsNull ? default(T) : JsonConvert.DeserializeObject<T>(data);
             }
 
             #endregion
@@ -66,9 +98,7 @@ namespace JIF.CMS.Redis
 
             if (type.IsClass && type != typeof(string))
             {
-
                 var data = _db.StringGet(key);
-
                 return data.IsNull ? default(T) : JsonConvert.DeserializeObject<T>(data);
 
                 //var data = _db.HashGetAll(key).ToDictionary(k => k.Name, v => v.Value);
@@ -113,15 +143,20 @@ namespace JIF.CMS.Redis
             throw new NotImplementedException();
         }
 
-        public void Set<T>(string key, T data, TimeSpan? cacheTime)
+        public void Set<T>(string key, T data, TimeSpan? cacheTime = null)
         {
             var type = typeof(T);
 
-            #region Primitive Type. string, int, long, decimal, double, bool, enum
+            #region Primitive Type. string, int, long, decimal, double, bool
 
-            if (type.IsPrimitive || type == typeof(string))
+            if (type.IsPrimitive
+                || type == typeof(string)
+                || type == typeof(decimal)
+                || type == typeof(DateTime)
+                )
             {
-                _db.StringSet(key, JsonConvert.SerializeObject(data), cacheTime);
+                //_db.StringSet(key, JsonConvert.SerializeObject(data), cacheTime);
+                _db.StringSet(key, data.ToString(), cacheTime);
                 return;
             }
 
@@ -131,7 +166,8 @@ namespace JIF.CMS.Redis
 
             if (type.IsEnum)
             {
-                _db.StringSet(key, data.ToString());
+                _db.StringSet(key, Convert.ToInt32(data), cacheTime); // 存入数值
+                //_db.StringSet(key, data.ToString(), cacheTime); // 存入名称
                 return;
             }
 
@@ -141,6 +177,7 @@ namespace JIF.CMS.Redis
 
             if (type.IsGenericType)
             {
+                _db.StringSet(key, JsonConvert.SerializeObject(data), cacheTime);
                 return;
             }
 
@@ -151,8 +188,8 @@ namespace JIF.CMS.Redis
             if (type.IsClass && type != typeof(string))
             {
                 _db.StringSet(key, JsonConvert.SerializeObject(data), cacheTime);
-
                 return;
+
                 //var hes = new List<HashEntry>();
 
                 ////PropertyInfo[] properties;
@@ -181,6 +218,8 @@ namespace JIF.CMS.Redis
             }
 
             #endregion
+
+            throw new ArgumentException("Redis Set type Unknow");
         }
     }
 }

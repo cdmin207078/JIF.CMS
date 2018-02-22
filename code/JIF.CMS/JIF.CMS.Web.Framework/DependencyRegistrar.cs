@@ -58,7 +58,7 @@ namespace JIF.CMS.Web.Framework
             builder.RegisterGeneric(typeof(EfRepository<>)).As(typeof(IRepository<>)).InstancePerLifetimeScope();
 
             // OPTIONAL: logging
-            builder.RegisterInstance(LogManager.GetLogger(string.Empty)).SingleInstance();
+            builder.RegisterInstance(LogManager.GetLogger(string.Empty)).As<ILog>().SingleInstance();
 
             // OPTIONAL: AuthenticationService
             builder.RegisterType<CustomizeCookiesAuthenticationService>().As<IAuthenticationService>().InstancePerLifetimeScope();
@@ -74,9 +74,12 @@ namespace JIF.CMS.Web.Framework
                 // http://www.cnblogs.com/qtqq/p/5951201.html
                 // https://stackexchange.github.io/StackExchange.Redis/Basics
                 //builder.RegisterType<RedisConnectionWrapper>().As<RedisConnectionWrapper>().SingleInstance();
-                builder.RegisterType<RedisConnectionWrapper>().SingleInstance();
 
-                builder.RegisterType<RedisCacheManager>().As<ICacheManager>().InstancePerLifetimeScope();
+                //// TODO: 应该在这里设置配置链接信息, Wrapper 不需要暴漏出来.
+                //builder.RegisterType<RedisConnectionWrapper>().SingleInstance();
+
+                var rcm = new RedisCacheManager(config.RedisConfig);
+                builder.RegisterInstance(rcm).As<ICacheManager>().SingleInstance();
             }
             else
             {

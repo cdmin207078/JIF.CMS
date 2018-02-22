@@ -6,21 +6,20 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using static JIF.CMS.Core.Configuration.JIFConfig;
 
 namespace JIF.CMS.Redis
 {
-    public class RedisConnectionWrapper : IDisposable
+    internal class RedisConnectionWrapper : IDisposable
     {
-        private readonly JIFConfig _config;
         private readonly string _connectionString;
         private readonly object _lock = new object();
 
         private ConnectionMultiplexer _connection;
 
-        public RedisConnectionWrapper(JIFConfig config)
+        public RedisConnectionWrapper(RedisConfiguration config)
         {
-            this._config = config;
-            this._connectionString = config.RedisConfig.Server;
+            _connectionString = config.Server;
         }
 
         public ConnectionMultiplexer GetConnection()
