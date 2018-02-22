@@ -76,7 +76,12 @@ namespace JIF.CMS.Services
 
         #endregion
 
-        #region Cookies Names
+        #region Cookies
+
+        /// <summary>
+        /// 登陆过期时间
+        /// </summary>
+        public static readonly TimeSpan COOKIES_LOGIN_EXPIRE_TIME = TimeSpan.FromDays(1);
 
         /// <summary>
         /// 系统MD5加密密盐

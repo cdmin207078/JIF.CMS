@@ -43,6 +43,7 @@ namespace JIF.CMS.Management.Controllers
             var algo = EncryptHelper.CreateHashAlgoMd5();
             var codeKey = EncryptHelper.Encrypt(algo, Guid.NewGuid().ToString());
 
+            // 验证码三分钟有效期
             _cacheManager.Set(string.Format(CacheKeyConstants.LOGIN_VERIFY_CODE, codeKey), verifyCode, TimeSpan.FromMinutes(3));
 
             var cookie = new HttpCookie("login-verify-code", codeKey);
@@ -70,8 +71,11 @@ namespace JIF.CMS.Management.Controllers
 
             // 记录 cookies
             var cookie = new HttpCookie(JIFConstants.COOKIES_LOGIN_USER, sessionID);
-            cookie.Expires = DateTime.Now + TimeSpan.FromDays(1);
+            cookie.Expires = DateTime.Now + JIFConstants.COOKIES_LOGIN_EXPIRE_TIME;
             Response.Cookies.Add(cookie);
+
+            // 删除验证码cookies
+            Response.Cookies.Remove("login-verify-code");
 
             if (!string.IsNullOrEmpty(returnUrl) && Url.IsLocalUrl(returnUrl))
                 return Redirect(returnUrl);

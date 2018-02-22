@@ -27,10 +27,8 @@ namespace JIF.CMS.Web.Framework.Filters
 
         private bool HasAdminAccess(AuthorizationContext filterContext)
         {
-
             if (WorkContext == null || WorkContext.CurrentUser == null)
                 return false;
-
 
             //授权权限判断
             //var permissionService = EngineContext.Current.Resolve<IPermissionService>();
@@ -41,7 +39,13 @@ namespace JIF.CMS.Web.Framework.Filters
 
         private void HandleUnauthorizedRequest(AuthorizationContext filterContext)
         {
-            filterContext.Result = new HttpUnauthorizedResult();
+            // 返回认证失败
+            //filterContext.Result = new HttpUnauthorizedResult();
+
+            // 跳转登陆地址
+            var returnUrl = filterContext.RequestContext.HttpContext.Request.Url.PathAndQuery;
+
+            filterContext.Result = new RedirectResult("/welcome?returnUrl=" + returnUrl);
         }
 
         public void OnAuthorization(AuthorizationContext filterContext)

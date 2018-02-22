@@ -66,26 +66,31 @@ namespace JIF.CMS.Redis
 
             if (type.IsClass && type != typeof(string))
             {
-                var data = _db.HashGetAll(key).ToDictionary(k => k.Name, v => v.Value);
-                if (data == null || data.Count == 0)
-                    return default(T);
 
-                var obj = Activator.CreateInstance<T>();
-                //var obj = Activator.CreateInstance(typeof(T));
+                var data = _db.StringGet(key);
 
-                foreach (var p in type.GetProperties())
-                {
-                    if (p.PropertyType.IsClass && p.PropertyType != typeof(string))
-                    {
-                        p.SetValue(obj, Convert.ChangeType(JsonConvert.DeserializeObject(data[p.Name]), p.PropertyType, null));
-                    }
-                    else
-                    {
-                        p.SetValue(obj, Convert.ChangeType(data[p.Name], p.PropertyType));
-                    }
-                }
+                return data.IsNull ? default(T) : JsonConvert.DeserializeObject<T>(data);
 
-                return obj;
+                //var data = _db.HashGetAll(key).ToDictionary(k => k.Name, v => v.Value);
+                //if (data == null || data.Count == 0)
+                //    return default(T);
+
+                //var obj = Activator.CreateInstance<T>();
+                ////var obj = Activator.CreateInstance(typeof(T));
+
+                //foreach (var p in type.GetProperties())
+                //{
+                //    if (p.PropertyType.IsClass && p.PropertyType != typeof(string))
+                //    {
+                //        p.SetValue(obj, Convert.ChangeType(JsonConvert.DeserializeObject(data[p.Name]), p.PropertyType, null));
+                //    }
+                //    else
+                //    {
+                //        p.SetValue(obj, Convert.ChangeType(data[p.Name], p.PropertyType));
+                //    }
+                //}
+
+                //return obj;
             }
 
             #endregion
@@ -145,31 +150,34 @@ namespace JIF.CMS.Redis
 
             if (type.IsClass && type != typeof(string))
             {
-                var hes = new List<HashEntry>();
-
-                //PropertyInfo[] properties;
-
-                //if (typePropertyCache.ContainsKey(typeof(T)))
-                //{
-                //    properties = typePropertyCache[typeof(T)];
-                //}
-                //else
-                //{
-                //    properties = ;
-                //    typePropertyCache.Add(typeof(T), properties);
-                //}
-
-                foreach (var p in typeof(T).GetProperties())
-                {
-                    if (p.PropertyType.IsClass && p.PropertyType != typeof(string))
-                        hes.Add(new HashEntry(p.Name, JsonConvert.SerializeObject(p.GetValue(data))));
-                    else
-                        hes.Add(new HashEntry(p.Name, p.GetValue(data).ToString()));
-                }
-
-                _db.HashSet(key, hes.ToArray());
+                _db.StringSet(key, JsonConvert.SerializeObject(data), cacheTime);
 
                 return;
+                //var hes = new List<HashEntry>();
+
+                ////PropertyInfo[] properties;
+
+                ////if (typePropertyCache.ContainsKey(typeof(T)))
+                ////{
+                ////    properties = typePropertyCache[typeof(T)];
+                ////}
+                ////else
+                ////{
+                ////    properties = ;
+                ////    typePropertyCache.Add(typeof(T), properties);
+                ////}
+
+                //foreach (var p in typeof(T).GetProperties())
+                //{
+                //    if (p.PropertyType.IsClass && p.PropertyType != typeof(string))
+                //        hes.Add(new HashEntry(p.Name, JsonConvert.SerializeObject(p.GetValue(data))));
+                //    else
+                //        hes.Add(new HashEntry(p.Name, p.GetValue(data).ToString()));
+                //}
+
+                //_db.HashSet(key, hes.ToArray());
+
+                //return;
             }
 
             #endregion

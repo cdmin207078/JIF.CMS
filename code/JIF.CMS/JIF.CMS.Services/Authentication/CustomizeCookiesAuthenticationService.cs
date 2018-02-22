@@ -18,6 +18,9 @@ namespace JIF.CMS.Services.Authentication
         private readonly ICacheManager _cacheManager;
         private readonly IRepository<SysAdmin> _sysAdminRepository;
 
+        // 用户登陆成功时,缓存方便使用用户信息
+        private AuthenticatedUser _login_cache_user;
+
         public CustomizeCookiesAuthenticationService(
             ICacheManager cacheManager,
             IRepository<SysAdmin> sysAdminRepository)
@@ -74,13 +77,14 @@ namespace JIF.CMS.Services.Authentication
             var ck = CacheKeyConstants.LOGIN_USER_SESSION.Formats(sessionID);
             var au = new AuthenticatedUser
             {
+                SessionId = sessionID,
                 Id = entity.Id,
                 Account = entity.Account,
                 CellPhone = entity.CellPhone,
                 Email = entity.Email
             };
 
-            _cacheManager.Set(ck, au, TimeSpan.FromDays(1));
+            _cacheManager.Set(ck, au, JIFConstants.COOKIES_LOGIN_EXPIRE_TIME);
 
             // TODO: 记录登陆日志
 

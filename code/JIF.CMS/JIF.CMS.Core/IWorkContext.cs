@@ -19,6 +19,14 @@ namespace JIF.CMS.Core
     /// </summary>
     public class AuthenticatedUser
     {
+        /// <summary>
+        /// 会话编号
+        /// </summary>
+        public string SessionId { get; set; }
+
+        /// <summary>
+        /// 用户系统编号
+        /// </summary>
         public int Id { get; set; }
 
         /// <summary>

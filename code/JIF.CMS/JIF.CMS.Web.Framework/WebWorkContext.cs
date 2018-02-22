@@ -17,12 +17,12 @@ namespace JIF.CMS.Web.Framework
                 if (_cachedUser != null)
                     return _cachedUser;
 
-                var sessionID = HttpContext.Current.Request.Cookies[JIFConstants.COOKIES_LOGIN_USER].Value;
+                var cu = HttpContext.Current.Request.Cookies[JIFConstants.COOKIES_LOGIN_USER];
 
-                if (string.IsNullOrWhiteSpace(sessionID))
-                    return null;
-
-                _cachedUser = EngineContext.Current.Resolve<IAuthenticationService>().GetAuthenticatedUser(sessionID);
+                if (cu != null && !string.IsNullOrWhiteSpace(cu.Value))
+                {
+                    _cachedUser = EngineContext.Current.Resolve<IAuthenticationService>().GetAuthenticatedUser(cu.Value);
+                }
 
                 return _cachedUser;
             }

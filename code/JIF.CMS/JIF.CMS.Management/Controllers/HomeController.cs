@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.Caching;
+using System.Threading;
 using System.Web;
 using System.Web.Caching;
 using System.Web.Mvc;
@@ -47,13 +48,34 @@ namespace JIF.CMS.Management.Controllers
 
         public ActionResult LogOut()
         {
-            var sessionID = Request.Cookies[JIFConstants.COOKIES_LOGIN_USER].Value;
+            var cu = Request.Cookies[JIFConstants.COOKIES_LOGIN_USER];
 
-            _authenticationService.LoginOut(sessionID);
-
-            Request.Cookies.Remove(sessionID);
+            if (cu != null && string.IsNullOrWhiteSpace(cu.Value))
+            {
+                _authenticationService.LoginOut(cu.Value);
+                Request.Cookies.Remove(cu.Value);
+            }
 
             return RedirectToAction("index", "welcome");
+        }
+
+
+        public ContentResult A()
+        {
+            return Content("A - 无延时");
+        }
+
+        public ContentResult B(string message)
+        {
+            Thread.Sleep(1000);
+            return Content("[+1s] " + message);
+        }
+
+        public ContentResult C(string message)
+        {
+            Thread.Sleep(2000);
+            //throw new NotImplementedException();
+            return Content("[+2s]" + message);
         }
     }
 }

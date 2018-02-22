@@ -315,5 +315,27 @@ namespace JIF.CMS.Test.Core.Tests
 
             public string Name { get; set; }
         }
+
+
+        [TestMethod]
+        public void MyTestMethodxxx()
+        {
+            var o = new
+            {
+                a = 1,
+                b = "2",
+                c = DateTime.Now,
+                d = new string[] { "A", "B", "C" }
+            };
+
+            Console.WriteLine(JsonConvert.SerializeObject(o));
+
+            var p = "hello world";
+            var sp = JsonConvert.SerializeObject(p);
+            Console.WriteLine(sp);
+
+            Console.WriteLine(JsonConvert.DeserializeObject<string>(sp));
+
+        }
     }
 }

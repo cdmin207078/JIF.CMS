@@ -13,7 +13,8 @@
 
                 @foreach (var cate in Model.Categories)
                 {
-                    <option value="@cate.Current.Id" @((Model.Category != null && cate.Current.Id == Model.Category.ParentId) ? "selected=\"selected\"" : "")>@Html.Raw("&nbsp".Repeat(cate.Level * 2))@cate.Current.Name</option>
+                    @*<option value="@cate.Current.Id" @((Model.Category != null && cate.Current.Id == Model.Category.ParentId) ? "selected=\"selected\"" : "")>@Html.Raw("&nbsp".Repeat(cate.Level * 2))@cate.Current.Name</option>*@
+                    <option value="@cate.Current.Id" @((Model.Category != null && cate.Current.Id == Model.Category.ParentId) ? "selected=\"selected\"" : "")>@cate.Current.Name</option>
                 }
             </select>
         </div>

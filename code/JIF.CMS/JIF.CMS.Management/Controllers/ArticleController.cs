@@ -224,23 +224,5 @@ namespace JIF.CMS.Management.Controllers
         }
 
         #endregion
-
-        public ContentResult A()
-        {
-            return Content("A - 无延时");
-        }
-
-        public ContentResult B(string message)
-        {
-            Thread.Sleep(1000);
-            return Content("[+1s] " + message);
-        }
-
-        public ContentResult C(string message)
-        {
-            Thread.Sleep(2000);
-            //throw new NotImplementedException();
-            return Content("[+2s]" + message);
-        }
     }
 }

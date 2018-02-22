@@ -33,7 +33,8 @@
                         <option value="0">- 无 -</option>
                         @foreach (var cate in Model.Categories)
                         {
-                            <option value="@cate.Current.Id" @(article.CategoryId == cate.Current.Id ? "selected=\"selected\"" : "")>@Html.Raw("&nbsp".Repeat(cate.Level * 2))@cate.Current.Name</option>
+                            @*<option value="@cate.Current.Id" @(article.CategoryId == cate.Current.Id ? "selected=\"selected\"" : "")>@Html.Raw("&nbsp".Repeat(cate.Level * 2))@cate.Current.Name</option>*@
+                            <option value="@cate.Current.Id" @(article.CategoryId == cate.Current.Id ? "selected=\"selected\"" : "")>@cate.Current.Name</option>
                         }
                     </select>
                 </div>

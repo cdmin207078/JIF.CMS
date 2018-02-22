@@ -15,7 +15,9 @@ namespace JIF.CMS.Test.Core.Tests
     [TestClass]
     public class StackExchangeRedisTest
     {
-        private readonly string _connectionString = "192.168.0.118,password=foobared";
+        //private readonly string _connectionString = "192.168.0.118,password=foobared";
+        private readonly string _connectionString = "127.0.0.1:10082";
+
         private readonly object _lock = new object();
 
         private ConnectionMultiplexer _connection;
