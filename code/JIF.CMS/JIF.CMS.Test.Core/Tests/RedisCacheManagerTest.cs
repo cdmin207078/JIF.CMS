@@ -190,6 +190,26 @@ namespace JIF.CMS.Test.Core.Tests
             Console.WriteLine(JsonConvert.SerializeObject(retBooks));
         }
 
+        [TestMethod]
+        public void Huge_Data_Test()
+        {
+            var count = 100 * 100 * 100 * 2; // 200w
+            count = 100;
+
+            var redis = GetCacheManager();
+
+            for (int i = 0; i < count; i++)
+            {
+                redis.Set(Guid.NewGuid().ToString(), Guid.NewGuid().ToString());
+            }
+        }
+
+        [TestMethod]
+        public void Redis_Cluster_Test()
+        {
+
+        }
+
         enum RCMTEnum
         {
             A,
