@@ -11,6 +11,7 @@
     - nginx
     - MongoDB
     - linux
+- www.qinmei.red
 - 学车
 - 读书
   - <图解http> - 上野宣
@@ -107,4 +108,9 @@
 - 2018-02-23 study redis-cluster
 - 2018-02-24 study redis-cluster
 - 2018-02-25 foo
+- 2018-02-25 
+  - update Redis-Cluster 集群初体验.md
+  - update redis主从复制 & sentinel监控.md
+
+
 
