@@ -1,10 +1,12 @@
-# Redis-Cluster 集群初体验
+# Redis - Cluster(集群)
 
-> 参考连接
+> 参考:
 
 - http://redisdoc.com/topic/cluster-tutorial.html - 集群教程
 - http://redisdoc.com/topic/cluster-spec.html - Redis 集群规范
 - https://www.cnblogs.com/PatrickLiu/p/8473135.html - Redis进阶实践之十二 Redis的Cluster集群动态扩容
+
+***
 
 ## 集群简介
 
@@ -116,6 +118,16 @@ ip:127.0.0.1 port:10086
 
 在外层目录, 执行批处理程序, 启动所有redis服务, 代码如下:
 
+各自文件夹中的 start-server.bat
+
+```Batch
+@echo off
+redis-server.exe redis.conf
+@pause
+
+```
+
+外层文件夹, 统一调用
 ```Batch
 @echo off
 
@@ -275,7 +287,8 @@ M: 36cfcb38dee01fb1a4e018fde4079f473547c085 127.0.0.1:10082
 `redis-cli` 对集群的支持是非常基本的, 所以它总是依靠 Redis 集群节点来将它转向(redirect)至正确的节点.
 
 > 一个真正的（serious）集群客户端应该做得比这更好： 它应该用缓存记录起哈希槽与节点地址之间的映射（map）， 从而直接将命令发送到正确的节点上面。
-这种映射只会在集群的配置出现某些修改时变化， 比如说， 在一次故障转移（failover）之后， 或者系统管理员通过添加节点或移除节点来修改了集群的布局（layout）之后， 诸如此类。
+
+> 这种映射只会在集群的配置出现某些修改时变化, 比如说, 在一次故障转移(failover)之后, 或者系统管理员通过添加节点或移除节点来修改了集群的布局(layout)之后, 诸如此类.
 
 
 ## Cluster 动态扩容

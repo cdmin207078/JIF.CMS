@@ -108,9 +108,9 @@
 - 2018-02-23 study redis-cluster
 - 2018-02-24 study redis-cluster
 - 2018-02-25 foo
-- 2018-02-25 
-  - update Redis-Cluster 集群初体验.md
-  - update redis主从复制 & sentinel监控.md
-
-
-
+- 2018-02-26 
+  - update Redis-Cluster.md
+  - update Redis-Replication.md
+- 2018-02-27
+  - update Redis-Replication.md
+  - update Redis-Sentinel.md
