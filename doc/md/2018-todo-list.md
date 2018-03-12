@@ -126,6 +126,9 @@
 - 2018-03-09 foo
 - 2018-03-10 foo
 - 2018-03-11 foo
+- 2018-03-11 working for company project.
+  - 熟悉 java 开发环境
+  - 用户注册, 登陆功能开发
 
 
 
