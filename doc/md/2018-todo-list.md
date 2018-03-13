@@ -126,9 +126,14 @@
 - 2018-03-09 foo
 - 2018-03-10 foo
 - 2018-03-11 foo
-- 2018-03-11 working for company project.
+- 2018-03-12 working for company project.
   - 熟悉 java 开发环境
   - 用户注册, 登陆功能开发
+- 2018-03-13 working for company project.
+  - 今日工作毫无进展, IDEA 启动spring mvc 网站项目, 但无法访问到 mybatis 的 sql 文件. 导致一直报错 `Invalid bound statement (not found)`, 终了还未解决.
+  - 目前了解, 应该是因为 *Mapper.xml 文件, 未能打包导致.
+  - 参考: http://blog.csdn.net/u013360850/article/details/71075076 - **留待日后解决, 写文记录**
+
 
 
 
