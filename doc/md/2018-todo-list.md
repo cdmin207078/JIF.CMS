@@ -136,5 +136,9 @@
 - 2018-03-14 working for company project.
 - 2018-03-15 working for company project.
 - 2018-03-16 working for company project.
+- 2018-03-17 working for company project.
+  - 加班工作未见成效, 忙于老家看房子, 浪费一天时间, 以后工作时间, 尽量不做别的事情
+- 2018-03-18
+  - 今日整天, 忙于换租新房子. 
 
 
