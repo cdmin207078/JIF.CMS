@@ -156,6 +156,8 @@
 - 2018-03-31 working for company project.
 - 2018-04-01 foo.
 - 2018-04-02 working for company project.
+- 2018-04-03 working for company project.
+
 
 
 
