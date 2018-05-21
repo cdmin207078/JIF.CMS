@@ -119,6 +119,7 @@
     <Compile Include="Tests\RedisCacheManagerTest.cs" />
     <Compile Include="Tests\JsonConvertTest.cs" />
     <Compile Include="Tests\TypeTest.cs" />
+    <Compile Include="Tests\RegexHelperTest.cs" />
     <Compile Include="Tests\URLEncodeTest.cs" />
   </ItemGroup>
   <ItemGroup>

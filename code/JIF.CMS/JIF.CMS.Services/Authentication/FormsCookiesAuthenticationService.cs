@@ -94,6 +94,9 @@ namespace JIF.CMS.Services.Authentication
             var encryptedTicket = FormsAuthentication.Encrypt(ticket);
 
             var cookie = new HttpCookie(FormsAuthentication.FormsCookieName, encryptedTicket);
+
+            // 注意，在这里必须使用HttpOnly属性来防止Cookie被JavaScript读取，从而避免跨站脚本攻击（XSS攻击）
+            // http://www.cnblogs.com/bangerlee/archive/2013/04/06/3002142.html - xss攻击入门
             cookie.HttpOnly = true;
             if (ticket.IsPersistent)
             {
