@@ -20,7 +20,7 @@ namespace JIF.CMS.Core.Helpers
          * <p>global star: 1349</p>
          * <p>virtual operator: 170</p>
          */
-        private static readonly string REGEX_MOBILE = "^((13[0-9])|(14[5,7])|(15[0-3,5-9])|(16[6])|(17[0,1,3,5-8])|(18[0-9])|(19[8,9]))\\d{8}$";
+        private static readonly string REGEX_MOBILE = "^((13[0-9])|(14[5,7,9])|(15[0-3,5-9])|(16[6])|(17[0,1,3,5-8])|(18[0-9])|(19[8,9]))\\d{8}$";
         /**
          * Regex of telephone number.
          */
@@ -60,7 +60,7 @@ namespace JIF.CMS.Core.Helpers
         /**
          * Regex of ip address.
          */
-        private static readonly string REGEX_IP = "((2[0-4]\\d|25[0-5]|[01]?\\d\\d?)\\.){3}(2[0-4]\\d|25[0-5]|[01]?\\d\\d?)";
+        private static readonly string REGEX_IPV4 = "((2[0-4]\\d|25[0-5]|[01]?\\d\\d?)\\.){3}(2[0-4]\\d|25[0-5]|[01]?\\d\\d?)";
 
         private static bool isMatch(string input, string regex)
         {
@@ -107,7 +107,7 @@ namespace JIF.CMS.Core.Helpers
         /// </summary>
         /// <param name="input"></param>
         /// <returns></returns>
-        public static bool IsIP(string input) { return isMatch(input, REGEX_IP); }
+        public static bool IsIPV4(string input) { return isMatch(input, REGEX_IPV4); }
 
         /// <summary>
         /// 校验十八位身份证号
