@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using JIF.CMS.Core.Helpers;
+using System.Text.RegularExpressions;
 
 namespace JIF.CMS.Test.Core.Tests
 {
@@ -20,6 +21,12 @@ namespace JIF.CMS.Test.Core.Tests
             {
                 Console.WriteLine(input + "\t->\t" + this._regex(input));
             }
+        }
+
+        [TestMethod]
+        public void Is_Tel_Test()
+        {
+
         }
 
         [TestMethod]
@@ -81,6 +88,25 @@ namespace JIF.CMS.Test.Core.Tests
         }
 
         [TestMethod]
+        public void Is_URL_Test()
+        {
+            RegexWarpper rw = new RegexWarpper(RegexHelper.IsURL);
+
+            rw.Test("");
+            rw.Test("a");
+            rw.Test("1");
+            rw.Test("http:");
+            rw.Test("http:/");
+
+            Console.WriteLine("----------- 正确格式 -----------");
+
+            rw.Test("http://");
+            rw.Test("http://xs");
+            rw.Test("a://b");
+            rw.Test("hh://sdf.com");
+        }
+
+        [TestMethod]
         public void Is_Email_Test()
         {
             RegexWarpper rw = new RegexWarpper(RegexHelper.IsEmail);
@@ -135,48 +161,92 @@ namespace JIF.CMS.Test.Core.Tests
         }
 
         [TestMethod]
-        public void Is_Tel_Test()
-        {
-
-        }
-
-        [TestMethod]
-        public void Is_IP_Test()
+        public void Is_IPV4_Test()
         {
             RegexWarpper rw = new RegexWarpper(RegexHelper.IsIPV4);
+
+            Console.WriteLine("----------- 格式错误 -----------");
             rw.Test("1.1.1");
             rw.Test("1.1.1");
             rw.Test(".1.1.");
             rw.Test("1.1");
             rw.Test("1");
             rw.Test("''");
-            rw.Test("0.0.0.0");
-            rw.Test("1.1.1.1");
+            rw.Test("1...1");
+            rw.Test("a.b.c.d");
+
             rw.Test("-1.1.1.1");
-            rw.Test("255.1.1.1");
-            rw.Test("1.255.1.1");
-            rw.Test("1.1.255.1");
-            rw.Test("1.1.1.255");
-            rw.Test("256.1.1.1");
-            rw.Test("1.256.1.1");
-            rw.Test("1.1.256.1");
-            rw.Test("1.1.1.256");
-            rw.Test("127.0.0.1");
-            rw.Test("192.168.0.1");
-            rw.Test("255.255.255.255");
-            rw.Test("255.255.255.256");
+            rw.Test("- 1.1.1.1");
+            rw.Test("--1.1.1.1");
+            rw.Test("-- 1.1.1.1");
+            rw.Test("-- '1.1.1.1");
+
+            rw.Test("+1.1.1.1");
+            rw.Test("@1.1.1.1");
+            rw.Test("a1.1.1.1");
+
+            rw.Test("-1.-1.1.1");
+            rw.Test("1.-1.1.1");
+            rw.Test("1.1.1.-1");
+
+            Console.WriteLine("----------- 超过 max -----------");
             rw.Test("255.255.255.256");
             rw.Test("255.255.256.256");
             rw.Test("255.256.256.256");
-            rw.Test("259.256.256.256");
+            rw.Test("256.256.256.256");
+            rw.Test("256.255.255.255");
+
+
+            Console.WriteLine("----------- 真实 IP -----------");
+            rw.Test("0.0.0.0");
+            rw.Test("1.1.1.1");
+            rw.Test("127.0.0.1");
+            rw.Test("192.168.0.1");
+            rw.Test("0.254.255.0");
+            rw.Test("255.255.255.255");
+        }
+
+        [TestMethod]
+        public void Is_IPV6_Test()
+        {
 
         }
 
         [TestMethod]
-        public void Is_URL_Test()
+        public void Is_IDCard_15_Test()
         {
 
         }
-    }
 
+        [TestMethod]
+        public void Is_IDCard_18_Test()
+        {
+
+        }
+
+        [TestMethod]
+        public void Is_Chinese_Test()
+        {
+            RegexWarpper rw = new RegexWarpper(RegexHelper.IsChinese);
+
+            rw.Test("");
+            rw.Test(" ");
+            rw.Test(null);
+            rw.Test("1");
+            rw.Test("11");
+            rw.Test("a");
+            rw.Test("aa");
+            rw.Test("A");
+            rw.Test("AA");
+            rw.Test("@");
+            rw.Test("@@");
+            rw.Test("你好 ");
+            rw.Test("你 好");
+
+            Console.WriteLine("----------- 正确格式 -----------");
+
+            rw.Test("你好");
+
+        }
+    }
 }
