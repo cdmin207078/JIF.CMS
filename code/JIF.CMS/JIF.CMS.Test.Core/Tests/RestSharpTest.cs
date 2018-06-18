@@ -96,8 +96,6 @@ namespace JIF.CMS.Test.Core.Tests
 
             var response = await client.ExecuteTaskAsync<APIResult<LoginViewModel>>(request);
 
-
-
             Console.WriteLine(response.Content);
 
             Console.WriteLine(response.Data.code);
@@ -107,7 +105,6 @@ namespace JIF.CMS.Test.Core.Tests
             Console.WriteLine(response.Data.data.Account);
             Console.WriteLine(response.Data.data.Password);
             Console.WriteLine(response.Data.data.Captcha);
-
         }
 
         [TestMethod]
@@ -283,7 +280,6 @@ namespace JIF.CMS.Test.Core.Tests
                 Console.WriteLine();
             }
         }
-
 
         [TestMethod]
         public async Task Request_Property_Test()

@@ -23,7 +23,7 @@ namespace JIF.CMS.Redis
             if (string.IsNullOrWhiteSpace(config.Server))
                 throw new Exception("Redis connection string is empty");
 
-            initWrapper(config);
+            _initWrapper(config);
 
             _db = _connectionWarpper.GetDatabase();
         }
@@ -32,7 +32,7 @@ namespace JIF.CMS.Redis
         /// 
         /// </summary>
         /// <returns></returns>
-        private void initWrapper(RedisConfiguration config)
+        private void _initWrapper(RedisConfiguration config)
         {
             // 首先是 ConnectionMultiplexer 的封装，ConnectionMultiplexer对象是StackExchange.Redis最中枢的对象。
             // 这个类的实例需要被整个应用程序域共享和重用的，所以不需要在每个操作中不停的创建该对象的实例，一般都是使用单例来创建和存放这个对象，这个在官网上也有说明。

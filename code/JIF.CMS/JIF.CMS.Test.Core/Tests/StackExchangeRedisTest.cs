@@ -16,7 +16,7 @@ namespace JIF.CMS.Test.Core.Tests
     public class StackExchangeRedisTest
     {
         //private readonly string _connectionString = "192.168.0.118,password=foobared";
-        private readonly string _connectionString = "127.0.0.1:10082";
+        private readonly string _connectionString = "192.168.0.130:6379";
 
         private readonly object _lock = new object();
 
@@ -67,9 +67,9 @@ namespace JIF.CMS.Test.Core.Tests
         }
 
         [TestMethod]
-        public async void Server_Test()
+        public void Server_Test()
         {
-
+            throw new NotImplementedException();
         }
 
         [TestMethod]
@@ -168,32 +168,6 @@ namespace JIF.CMS.Test.Core.Tests
         {
             A,
             B,
-        }
-
-        [TestMethod]
-        public void MyTestMethodAAAAAAAAAAA()
-        {
-            var a = "A";
-            var sa = JsonConvert.SerializeObject(a);
-            Console.WriteLine(sa);
-            Console.WriteLine(JsonConvert.DeserializeObject<string>(sa));
-
-            Console.WriteLine(JsonConvert.DeserializeObject<string>("\"A\""));
-
-            Console.WriteLine(JsonConvert.SerializeObject(12334.ToString()));
-
-            Console.WriteLine(JsonConvert.DeserializeObject<int>(12334.ToString()));
-
-            var he = HE.A;
-            var she = JsonConvert.SerializeObject(he.ToString());
-
-            Console.WriteLine(she);
-
-            var dshe = JsonConvert.DeserializeObject<HE>(she);
-
-            Console.WriteLine(JsonConvert.DeserializeObject<HE>(she));
-
-            Console.WriteLine(Convert.ToInt32(dshe));
         }
 
         [TestMethod]
@@ -400,6 +374,20 @@ namespace JIF.CMS.Test.Core.Tests
             #endregion
 
             throw new ArgumentException("Redis Get type Unknow");
+        }
+
+
+        [TestMethod]
+        public void Pattern_Test()
+        {
+            var _db = GetDatabase();
+
+            for (int i = 0; i < 10000; i++)
+            {
+                _db.StringSet($"stu:{i}:info", i);
+
+                _db.StringSet($"person:{RandomHelper.GenString(RandomHelper.CharSchemeEnum.NumChar, 30, 50)}:info", i);
+            }
         }
     }
 

@@ -29,24 +29,17 @@ namespace JIF.CMS.Management.API.Controllers
         public IHttpActionResult Login(LoginViewModel model)
         {
             if (model == null)
-                throw new JIFException("登陆信息为空");
+                return JsonFail("登陆信息不能为空");
 
-            var sysManagerService = Resolve<ISysManagerService>();
             var authenticationService = Resolve<IAuthenticationService>();
 
-            var userInfo = sysManagerService.Login(model.Account, model.Password);
+            var sessionID = authenticationService.LoginIn(model.Account, model.Password);
 
-            if (userInfo != null)
-            {
-                var sysAdmin = sysManagerService.Get(userInfo.UserId);
+            if (string.IsNullOrWhiteSpace(sessionID))
+                return JsonFail("登陆失败");
 
-                authenticationService.LoginIn(model.Account, model.Password);
-                //authenticationService.SignIn(sysAdmin);
+            return JsonOk("登陆成功");
 
-                return JsonOk("登陆成功");
-            }
-
-            return JsonFail("登陆失败");
         }
 
         [HttpGet]
