@@ -158,5 +158,20 @@
 - 2018-04-01 foo.
 - 2018-04-02 working for company project.
 - 2018-04-03 working for company project.
+- 2018-04-04 working for company project.
+- 2018-04-05 working for company project.
+- 2018-04-06 working for company project.
+- 2018-04-07 working for company project.
+- 2018-04-08 working for company project.
+- 2018-04-09 working for company project.
+- 2018-04-10 working for company project.
+- 2018-04-11 working for company project.
+- 2018-04-12 working for company project.
+- 2018-04-13 working for company project.
+- 2018-04-14 working for company project.
+- 2018-04-15 working for company project.
+- 2018-04-16 working for company project.
+- 2018-04-17 working for company project.
+- 2018-04-18 working for company project.
 - 2018-05-27 再一次离别
   - 失败，彻底的失败。送走了阿美跟小宇，余留我一人在上海。列车还未启动时，隔着列车窗户相互道别，互相听不见声音。阿美强忍泪水，抱着小宇向我招手比着再见。眼泪已经在眼眶里转了好几个圈了，但是脖子里面哽的厉害，我连一句再见也无法说出。小宇毕竟还不懂事，不知道此刻的再见，是与平日不一样的，顾自的高兴着。列车开动了，跟着跑了几步，直到看不见他们停下来。近一个月的努力，换来的却是满盘皆输，妈妈患了眼疾，安排回西安手术。小宇无人照料，只得让阿美停下来照顾。这边为此租的房子就亟待转租，以减少支出。一直计划的买房，更加变得困难了。全家人人都有怒气，争吵一直不断。事到如今，我依然推理不出，问题到底出在哪里，或许真的不该让妈妈带小宇过来，如果这样，这一切都不会发生。算了，时间是无法回退的，只能挺面战斗。这一阵子自己遇事举棋不定，优柔寡断的毛病，恰如其时的又暴露出来了，从此一定要改掉。夜深了，明天还要继续工作，就写到这里吧，算作这段时间，发生的事情的一个小结吧。希望妈妈的眼睛一切顺利，阿美小宇一切顺利。
