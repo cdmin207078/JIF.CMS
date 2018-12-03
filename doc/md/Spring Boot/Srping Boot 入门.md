@@ -1,5 +1,3 @@
-
-
 # Spring Boot 入门
 
 ##  1. Spring Boot 简介
@@ -192,7 +190,7 @@ pom.xml 文件中配置了 项目的父项目 **spring-boot-starter-parent**
 
 
 
-### 2. 程序主入口
+### 2. 程序主入口 (未完待续)
 
 [Spring Boot 场景启动器 & 自动配置 讲解视频](https://www.bilibili.com/video/av36291265/?p=7)
 
@@ -215,6 +213,84 @@ public class HelloWorldMainApplication {
 **@SpringBootApplication** - Spring Boot 应用标识在某个类上, 则说明这个类是SpringBoot 的主配置类, Spring Boot 就会执行这个类的 `main` 方法来启动应用程序
 
 
+
+
+
+
+
+## 6.  使用 Spring Initializer 快速创建 Spring Boot 项目
+
+IDEA 支持使用Spring 的项目创建向导，快速的创建一个 Spring Boot 项目。
+
+
+
+第一步，设置 SDK 版本
+
+![设置SDK](Srping Boot 入门.assets/1543850330092.png)
+
+第二步， 设置项目元数据信息，项目类型，使用语言，打包方式，java 版本
+
+![设置项目元数据信息](Srping Boot 入门.assets/1543850487407.png)
+
+第三步，选择依赖模块
+
+![选择](Srping Boot 入门.assets/1543850584383.png)
+
+第四步，设置项目名称，完成
+
+![设置项目名称](Srping Boot 入门.assets/1543850982788.png)
+
+点击 `Finish` 按钮之后，会联网创建 Spring Boot  项目
+
+创建好项目之后 项目结构如下：
+
+![项目结构 & 主要文件内容](Srping Boot 入门.assets/1543851963570.png)
+
+默认生成的 Spring Boot 项目：
+
+* 主程序已经生成好了，我们只需要填写业务逻辑代码
+
+* resource 目录结构：
+
+  * static：保存所有静态资源，如： js，css，images
+
+  * templates：保存模板页面 ，Spring Boot 默认 打包成 jar 包使用嵌入式的 tomcat， 默认情况下不支持 jsp 页面。可以使用模板引擎，如：freemarker，thymeleaf
+
+  * application.properties：Spring Boot 应用配置文件， 如：修改默认端口号
+
+    ```properties
+    server.port=9090  -- 修改默认端口号
+    ```
+
+
+
+第五步，创建一个 Controller，添加业务代码
+
+```java
+package com.dahanis.hellospringbootquick.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
+
+
+//@ResponseBody // - 这个类所有方法返回的数据直接写给浏览器 (如果是对象转为 Json 数据)
+//@Controller
+@RestController // - 等于上面两个注解之和
+public class HelloContoller {
+
+    // @ResponseBody
+    @RequestMapping("/hello")
+    public String hello() {
+        return "hello spring boot quick";
+    }
+}
+```
+
+之后，启动主程序类，访问 `/hello` 地址
+
+![/hello 结果页面](Srping Boot 入门.assets/1543852543115.png)
 
 
 
