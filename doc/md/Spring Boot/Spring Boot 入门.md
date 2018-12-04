@@ -166,7 +166,7 @@ pom.xml 文件中配置了 项目的父项目 **spring-boot-starter-parent**
 
 以后导入依赖默认则不需要声明版本号 (*`没有在 dependencies 里面管理的依赖, 还是需要声明版本号`*)
 
-![1543824308954](Srping Boot 入门.assets/1543824308954.png)
+![1543824308954](Spring Boot 入门.assets/1543824308954.png)
 
 
 
@@ -226,25 +226,25 @@ IDEA 支持使用Spring 的项目创建向导，快速的创建一个 Spring Boo
 
 第一步，设置 SDK 版本
 
-![设置SDK](Srping Boot 入门.assets/1543850330092.png)
+![设置SDK](Spring Boot 入门.assets/1543850330092.png)
 
 第二步， 设置项目元数据信息，项目类型，使用语言，打包方式，java 版本
 
-![设置项目元数据信息](Srping Boot 入门.assets/1543850487407.png)
+![设置项目元数据信息](Spring Boot 入门.assets/1543850487407.png)
 
 第三步，选择依赖模块
 
-![选择](Srping Boot 入门.assets/1543850584383.png)
+![选择](Spring Boot 入门.assets/1543850584383.png)
 
 第四步，设置项目名称，完成
 
-![设置项目名称](Srping Boot 入门.assets/1543850982788.png)
+![设置项目名称](Spring Boot 入门.assets/1543850982788.png)
 
 点击 `Finish` 按钮之后，会联网创建 Spring Boot  项目
 
 创建好项目之后 项目结构如下：
 
-![项目结构 & 主要文件内容](Srping Boot 入门.assets/1543851963570.png)
+![项目结构 & 主要文件内容](Spring Boot 入门.assets/1543851963570.png)
 
 默认生成的 Spring Boot 项目：
 
@@ -290,7 +290,7 @@ public class HelloContoller {
 
 之后，启动主程序类，访问 `/hello` 地址
 
-![/hello 结果页面](Srping Boot 入门.assets/1543852543115.png)
+![/hello 结果页面](Spring Boot 入门.assets/1543852543115.png)
 
 
 
