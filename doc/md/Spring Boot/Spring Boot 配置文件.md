@@ -131,11 +131,8 @@ public class Person {
     private Integer age;
     private Boolean boss;
     private Date birth;
-
     private Map<String, Object> maps;
-
     private List<Object> lists;
-
     private Dog dog;
 
     public String getLastName() {
@@ -214,7 +211,6 @@ public class Person {
 /* Dog.java */
 public class Dog {
     private String name;
-
     private String age;
 
     public String getName() {
@@ -407,9 +403,7 @@ public class Person {
 
 ![1543918504391](Spring Boot 配置文件.assets/1543918504391.png)
 
-
-
-## 6. @Value 取值与 @ConfigurationProperties 取值比较
+**@Value 取值与 @ConfigurationProperties 取值比较**
 
 | Feature            | @ConfigurationProperties | @Value     |
 | ------------------ | ------------------------ | :--------- |
@@ -452,11 +446,11 @@ public class Person {
 
 ---
 
-## 7 . @PropertySource 与 @ImportResource
+## 7 . @PropertySource
 
 **@PropertySource** : 加载指定位置配置文件
 
-```
+```java
 @PropertySource(value = {"classpath:person.properties"})
 @Component
 @ConfigurationProperties(prefix = "person")
@@ -467,8 +461,113 @@ public class Person {
 
 **注意** 使用指定配置文件时，须确保 `application.properties` 与 `application.yaml` 里面同样配置移出，否则则不会使用指定配置文件配置值
 
-**@ImportResource**：导入Spring 的配置文件，
+
+
+## 8. 配置文件占位符
+
+### 1.随机数
+
+```properties
+${random.int}				=> (int)847758849
+${random.long}				=> (long)6787244848983059766
+${random.int[1024,65536]}	=> (37769)
+${random.value}				=> '52fb500b1b7931c48c97d3ff997b70c7'
+${random.int[1024,65536]}	=> '732f0531-3310-4878-bad6-221539ba984b'
+```
+
+### 2. 占位符获取之前配置的值
+
+```properties
+person.last-name=张三
+person.age=18
+person.dog.name=${person.last-name} => 张三
+person.dog.age={person.age}			=> 18
+person.dog.sex=${person.sex:female}	=> female # 冒号(:)表示若之前配置取空, 则用来使用的默认值
+```
+
+
+
+## 9. Profile
+
+profile 是 Spring 对不同的环境提供不同配置功能的支持，可以通过激活、指定参数 等方式快速切换环境
+
+### 1. properties 多 Profile 文件模式
+
+在编写配置文件时，文件名使用 **application-{profile}.properties/yml** 格式来，区分不同环境情况下的配置文件。如：
+
+```properties
+/* application.dev.properties - 开发环境配置文件 */
+server.port=9090
+```
+
+```properties
+/* application.prod.properties - 生产环境配置文件 */
+server.port=9091
+```
+
+主配置文件确定激活使用哪个配置
+
+```properties
+/* application.properties - 主配置文件 */
+spring.profiles.active=prod
+```
+
+如上，则表示激活使用 **application.prod.properties** 配置文件
+
+### 2. yml 多文档块模式
+
+**yaml** 文件中 使用 `---` 来表示 多文档块，可以将多环境不同配置，放置在同一配置文件，不同文档块中，以减少配置文件数量。
+
+下面实例，最终将会使用 **run** 环境的 **9092** 端口
+
+```yacas
+server:
+  port: 9090
+spring:
+  profiles:
+    active: run	// 指定使用哪个环境
+---
+
+server:
+  port:9091
+spring:
+  profiles: dev
+
+---
+
+server:
+  port: 9092
+spring:
+  profiles: run
+```
+
+### 3. 激活方式
+
+- 命令行激活： 
+
+  ```shell
+  > java -jar xxx.jar --spring.profiles.active=dev
+  ```
+
+- 配置文件激活：
+
+  ```properties
+  /* application.properties - 主配置文件 */
+  spring.profiles.active=dev
+  ```
+
+- jvm 参数激活：
+
+  ```powershell
+  -Dspring.profiles.active=dev
+  ```
+
+
+
+## 10 . <未完待续>
+
+...
 
 ## 参考
 
-[尚硅谷_SpringBoot_配置-yaml简介-视频 - P9-P13](https://www.bilibili.com/video/av36291265/?p=9)
+[尚硅谷_SpringBoot_配置-yaml简介-视频 - P9-P20](https://www.bilibili.com/video/av36291265/?p=9)
