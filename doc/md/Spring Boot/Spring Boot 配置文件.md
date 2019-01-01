@@ -446,7 +446,7 @@ public class Person {
 
 ---
 
-## 7 . @PropertySource
+## 6 . @PropertySource
 
 **@PropertySource** : 加载指定位置配置文件
 
@@ -463,7 +463,7 @@ public class Person {
 
 
 
-## 8. 配置文件占位符
+## 7. 配置文件占位符
 
 ### 1.随机数
 
@@ -487,7 +487,7 @@ person.dog.sex=${person.sex:female}	=> female # 冒号(:)表示若之前配置�
 
 
 
-## 9. Profile
+## 8. Profile
 
 profile 是 Spring 对不同的环境提供不同配置功能的支持，可以通过激活、指定参数 等方式快速切换环境
 
@@ -564,10 +564,100 @@ spring:
 
 
 
-## 10 . <未完待续>
+## 9. 配置文件加载位置
 
-...
+Spring boot 启动时会扫描以下位置的 `application.properties` 或 `application.yml` 文件作为 Spring boot 默认的配置文件
+
+- **file:./config/**
+- **file:./**
+- **classpath:/config/**
+- **classpath:/**
+
+上述四个位置的配置文件**都会被加载**，加载使用**顺序由高到低**，**高优先级配置内容会覆盖低优先级配置内容**，最终形成**互补配置**，具体如下：
+
+![1544929150258](Spring Boot 配置文件.assets/1544929150258.png)
+
+
+
+### 1. spring.config.location 配置
+
+项目打包好以后，我们也可以使用命令行参数的形式，在启动项目的时候来指定配置文件的新位置
+
+运行参数指定的配置文件和默认文件功能形成互补配置
+
+**命令行运行时指定的配置文件配置，优先级最高**
+
+```shell
+java -jar com.yourapp.jar --spring.config.location=/usr/local/yourApp-config.properties
+```
+
+
+
+### 2. 外部配置加载顺序
+
+Spring Boot 也可以从以下位置加载配置，**优先级从高到低，同样高优先级的配置覆盖低优先级的配置，所有配置文件的配置形成互补配置**
+
+ 1. 命令行参数
+
+    > `java -jar com.yourapp.jar --server.port=9527` `# 运行时通过命令行参数指定端口号`
+
+ 2. 来自 java:comp/env 的 `JNDI` 属性
+
+ 3. Java 系统属性 （System.getProperties()）
+
+ 4. 操作系统环境变量
+
+ 5. RandomValuePropertySource 配置的 random.* 属性值
+
+ 6. jar 包**外部**的 `application-{profile}.properties(.yml)`  (**带spring.profile**) 配置文件
+
+ 7. jar 包**内部**的 `application-{profile}.properties(.yml)`  (**带spring.profile**) 配置文件
+
+8. jar 包**外部**的 `application-{profile}.properties(.yml)`  (**不带spring.profile**) 配置文件
+
+9. jar 包**内部**的 `application-{profile}.properties(.yml)`  (**不带spring.profile**) 配置文件
+
+10. `@Configuration`注解类上的 `@PropertySource`
+
+11. 通过 `SpringApplication.setDefaultProperties` 指定的默认属性
+
+> 所有支持的配置加载来源，参考：https://docs.spring.io/spring-boot/docs/2.1.1.RELEASE/reference/htmlsingle/#boot-features-external-config
+>
+
+
+
+## 10. Spring boot 自动配置原理
+
+
+
+
+
+****
+
+
 
 ## 参考
 
-[尚硅谷_SpringBoot_配置-yaml简介-视频 - P9-P20](https://www.bilibili.com/video/av36291265/?p=9)
+[P9、尚硅谷_SpringBoot_配置-yaml简介](https://www.bilibili.com/video/av36291265/?p=9)
+
+[P10、尚硅谷_SpringBoot_配置-yaml语法](https://www.bilibili.com/video/av36291265/?p=10)
+
+[P11、尚硅谷_SpringBoot_配置-yaml配置文件值获取](https://www.bilibili.com/video/av36291265/?p=11)
+
+[P12、尚硅谷_SpringBoot_配置-properties配置文件编码问题](https://www.bilibili.com/video/av36291265/?p=12)
+
+[P13、尚硅谷_SpringBoot_配置-@ConfigurationProperties与@Value区别](https://www.bilibili.com/video/av36291265/?p=13)
+
+[P14、尚硅谷_SpringBoot_配置-@PropertySource、@ImportResource、@Bean](https://www.bilibili.com/video/av36291265/?p=14)
+
+[P15、尚硅谷_SpringBoot_配置-配置文件占位符](https://www.bilibili.com/video/av36291265/?p=15)
+
+[P16、尚硅谷_SpringBoot_配置-Profile多环境支持](https://www.bilibili.com/video/av36291265/?p=16)
+
+[P17、尚硅谷_SpringBoot_配置-配置文件的加载位置](https://www.bilibili.com/video/av36291265/?p=17)
+
+[P18、尚硅谷_SpringBoot_配置-外部配置加载顺序](https://www.bilibili.com/video/av36291265/?p=18)
+
+[P19、尚硅谷_SpringBoot_配置-自动配置原理](https://www.bilibili.com/video/av36291265/?p=19)
+
+[P20、尚硅谷_SpringBoot_配置-@Conditional&自动配置报告](https://www.bilibili.com/video/av36291265/?p=20)
