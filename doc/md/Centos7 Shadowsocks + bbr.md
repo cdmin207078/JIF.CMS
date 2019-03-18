@@ -1,10 +1,6 @@
 # Centos7 安装 Shadowsocks + BBR
 
-
-
 ## Shadowsocks 安装
-
-
 
 第一行
 
@@ -29,8 +25,6 @@
 > ./bbr.sh
 
 重启机器
-
-
 
 
 
