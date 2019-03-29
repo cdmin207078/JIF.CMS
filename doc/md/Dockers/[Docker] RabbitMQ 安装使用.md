@@ -1,4 +1,4 @@
-# [Docker] Rabbit 安装使用
+# [Docker] RabbitMQ 安装使用
 
 
 

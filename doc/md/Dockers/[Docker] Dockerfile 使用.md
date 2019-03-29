@@ -61,7 +61,7 @@ LABEL description="This text illustrates \
 that label-values can span multiple lines."
 ```
 
-定义好的元数据，可以使用 `docker inspect` 命令查看 image 设置的元数据信息，如下：
+可以使用 `docker inspect` 命令查看 image 设置的元数据信息，如下：
 
 ```json
 "Labels": {
@@ -82,7 +82,7 @@ that label-values can span multiple lines."
 > 解释：运行任何被基础image支持的命令
 > 用法：`RUN <command>` 或 `RUN ["executable","command-1","command-2"]`
 
-常用于接受命令作为参数并用于创建镜像。
+常用于接受命令作为参数并用于安装软件包，创建镜像。
 **不像CMD命令，RUN命令用于创建镜像** , 每条 RUN 指令将在当前镜像基础上执行指定命令，并提交为新的镜像。
 当命令较长时可以使用 \ 来换行。
 
@@ -92,7 +92,8 @@ RUN echo 'hello RUN.'
 # 换种方式
 RUN ["/bin/bash","-c","echo hello RUN."]
 ..
-# 
+# 安装软件包，多行
+RUN 
 ```
 
 
@@ -115,7 +116,31 @@ CMD "echo" "Hello docker!"
 
 
 
-### COPY
+### ENTRYPOINT
+
+> 解释：容器启动后执行的命令 
+> 用法：`ENTRYPOINT ["executable", "param1", "param2"]` - exec 形式, (**推荐**)
+> 	     `ENTRYPOINT command param1 param2` - shell 形式
+
+容器启动后执行的命令，并且不可被 docker run 提供的参数覆盖。
+**每个 Dockerfile 中只能有一个 ENTRYPOINT ，当指定多个时，只有最后一个起效。**
+
+该指令的使用分为两种情况， 一种是独自使用。当独自使用时，如果你还使用了CMD命令且CMD是一个完整的可执行的命令，那么CMD指令和ENTRYPOINT会互相覆盖只有最后一个CMD或者ENTRYPOINT有效，例如：
+
+```dockerfile
+# CMD指令将不会被执行，只有ENTRYPOINT指令被执行  
+CMD echo “Hello, World!”  
+ENTRYPOINT ls -l  
+```
+
+
+另一种用法和CMD指令配合使用来指定ENTRYPOINT的默认参数，这时CMD指令不是一个完整的可执行命令，仅仅是参数部分；ENTRYPOINT指令只能使用JSON方式指定执行命令，而不能指定参数。
+
+```dockerfile
+FROM ubuntu  
+CMD ["-l"]  
+ENTRYPOINT ["/usr/bin/ls"]  
+```
 
 
 
@@ -145,17 +170,35 @@ EXPOSE 80/TCP
 
 ### VOLUME
 
+> 解释：创建一个镜像默认挂载点 
+> 用法：`VOLUME /data`
+>
+> ​	    `VOLUME ["/data"]`
 
+将容器有需要的目录，挂载到默认宿主机的默认卷位置。例如：数据库容器的数据位置，应用程序的日志保存位置
 
+通过dockerfile的 VOLUME 指令可以在镜像中创建挂载点，这样只要通过该镜像创建的容器都有了挂载点。
+通过 VOLUME 指令创建的挂载点，无法指定主机上对应的目录，是自动生成的。
+**要想自定义挂载位置，可在容器运行时 使用 `-v <source>:<destination>` 指定** 
 
+```dockerfile
+FROM ubuntu
+MAINTAINER hello1
+VOLUME ["/data1","/data2"]
+```
 
-> 延伸阅读：[Docker Volume入门介绍 - 掘金](http://www.dockerinfo.net/1857.html)
+上面的dockfile文件通过VOLUME指令指定了两个挂载点 /data1 和 /data2.
+我们通过docker inspect 查看通过该dockerfile创建的镜像生成的容器，可以看到如下信息
 
+![1553849583050]([Docker] Dockerfile 使用.assets/1553849583050.png)
 
-
-### ADD
-
-
+> 延伸阅读：
+>
+> [Docker Volume入门介绍 - 掘金](http://www.dockerinfo.net/1857.html)
+>
+> [Volume 使用 - 官网](https://docs.docker.com/storage/volumes/)
+>
+> [Dockerfile 指令 VOLUME 介绍 - 博客园](http://www.cnblogs.com/51kata/p/5266626.html)
 
 
 
@@ -177,20 +220,69 @@ RUN pwd
 
 
 
-### ENTRYPOINT
+### COPY
 
-> 解释：容器启动后执行的命令 
-> 用法：`WORKDIR </path>`
+> 解释：复制本地主机的目录到目标容器系统中
+> 用法：`COPY <src> <dest>`
 
-容器启动后执行的命令，并且不可被 docker run 提供的参数覆盖。
-**每个 Dockerfile 中只能有一个 ENTRYPOINT ，当指定多个时，只有最后一个起效。**
+**当使用本地目录为源目录时，推荐使用 COPY。**
 
 ```dockerfile
-#
-ENTRYPOINT 
+# 复制 "test" 到 `WORKDIR`/relativeDir/
+COPY test relativeDir/
+# 复制 "test" 到 /absoluteDir/
+COPY test /absoluteDir/
+# 正则匹配复制文件
+COPY check* /testdir/           
+COPY check?.log /testdir/
 ```
 
+**COPY 命令区别于 ADD 命令的一个用法是在 multistage 场景下。**
+关于 multistage 的介绍和用法请参考笔者的《[Dockerfile 中的 multi-stage](https://www.cnblogs.com/sparkdev/p/8508435.html)》一文。在 multistage 的用法中，可以使用 COPY 命令把前一阶段构建的产物拷贝到另一个镜像中，比如：
 
+```dockerfile
+FROM golang:1.7.3
+WORKDIR /go/src/github.com/sparkdevo/href-counter/
+RUN go get -d -v golang.org/x/net/html
+COPY app.go    .
+RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o app .
+
+FROM alpine:latest
+RUN apk --no-cache add ca-certificates
+WORKDIR /root/
+COPY --from=0 /go/src/github.com/sparkdevo/href-counter/app .
+CMD ["./app"]
+```
+
+这段代码引用自《[Dockerfile 中的 multi-stage](https://www.cnblogs.com/sparkdev/p/8508435.html)》一文，其中的 COPY 命令通过指定 --from=0 参数，把前一阶段构建的产物拷贝到了当前的镜像中。
+
+> 延伸阅读：[Dockerfile 中的 COPY 与 ADD 命令](https://www.cnblogs.com/sparkdev/p/9573248.html)
+
+
+
+### ADD
+
+> 解释：从源系统的文件系统上复制文件到目标容器的文件系统
+> 用法：`ADD <src directory or URL> <destination directory>`
+
+与 **COPY** 指令相比具有有以下两个特点：
+
+**如果源是一个URL，那该URL的内容将被下载并复制到容器中。**
+**如果源是一个tar文件，则会自动解压为目录。**
+
+```dockerfile
+# 复制 "test" 到 `WORKDIR`/relativeDir/
+ADD test relativeDir/
+# 复制 "test" 到 /absoluteDir/
+ADD test /absoluteDir/
+# 正则匹配复制文件
+ADD hom* /mydir/
+ADD hom?.txt /mydir/
+```
+
+**COPY** 命令是为最基本的用法设计的，概念清晰，操作简单。而 **ADD** 命令基本上是 COPY 命令的超集(除了 multistage 场景)，可以实现一些方便、酷炫的拷贝操作。
+
+> 延伸阅读：[Dockerfile 中的 COPY 与 ADD 命令](https://www.cnblogs.com/sparkdev/p/9573248.html)
 
 
 
@@ -213,7 +305,19 @@ ENV myName="John Doe" myDog=Rex\ The\ Dog \
 
 ### USER
 
+> 解释：设置运行容器的UID
+> 用法：`USER <user>[:<group>]`
+> 	     `USER <UID>[:<GID>]`
 
+设置启动容器的用户，默认是root用户。指定 memcached 的运行用户daemon
+
+```dockerfile
+# 指定memcached的运行用户  
+ENTRYPOINT ["memcached"]  
+USER daemon  
+或  
+ENTRYPOINT ["memcached", "-u", "daemon"]  
+```
 
 
 
@@ -223,7 +327,7 @@ ENV myName="John Doe" myDog=Rex\ The\ Dog \
 
 
 
-## 创建镜像
+## 构建镜像
 
 
 
