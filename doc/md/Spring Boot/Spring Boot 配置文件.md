@@ -1,5 +1,7 @@
 # Spring Boot 配置文件
 
+[TOC]
+
 ## 1. 配置文件
 
 Spring Boot 使用一个全局配置文件，用来修改 Spring Boot 底层自动配置的默认值，**配置文件名称是固定的**。

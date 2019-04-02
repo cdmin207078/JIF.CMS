@@ -15,19 +15,27 @@
 
 
 
-## 通过dockerfile创建挂载点
+## dockerfile创建挂载点
 
 
 
-## 通过docker run命令
+## docker run 命令 -v 参数
 
 
 
-## 容器共享卷
+## 数据卷容器
+
+
+
+
+
+
 
 
 
 ## 参考
+
+[尚硅谷 docker 容器数据卷 P18~P21 - bilibii 视频教程](https://www.bilibili.com/video/av27122140/?p=18)
 
 [Dockerfile 指令 VOLUME 介绍 - 博客园](http://www.cnblogs.com/51kata/p/5266626.html)
 
