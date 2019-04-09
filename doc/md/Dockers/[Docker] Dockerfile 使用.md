@@ -133,11 +133,7 @@ RUN buildDeps='gcc libc6-dev make' \
 && apt-get purge -y --auto-remove $buildDeps
 ```
 
-首先，之前所有的命令只有一个目的，就是编译、安装 redis 可执行文件。因此没有必要建立
-很多层，这只是一层的事情。因此，这里没有使用很多个 RUN 对一一对应不同的命令，而是
-仅仅使用一个 RUN 指令，并使用 && 将各个所需命令串联起来。将之前的 7 层，简化为了
-1 层。在撰写 Dockerfile 的时候，要经常提醒自己，这并不是在写 Shell 脚本，而是在定义每
-一层该如何构建。
+首先，之前所有的命令只有一个目的，就是编译、安装 redis 可执行文件。因此没有必要建立很多层，这只是一层的事情。因此，这里没有使用很多个 RUN 对一一对应不同的命令，而是仅仅使用一个 RUN 指令，并使用 && 将各个所需命令串联起来。将之前的 7 层，简化为了1 层。在撰写 Dockerfile 的时候，要经常提醒自己，这并不是在写 Shell 脚本，而是在定义每一层该如何构建。
 并且，这里为了格式化还进行了换行。Dockerfile 支持 Shell 类的行尾添加 \ 的命令换行方
 式，以及行首 # 进行注释的格式。良好的格式，比如换行、缩进、注释等，会让维护、排障
 更为容易，这是一个比较好的习惯。
@@ -155,31 +151,62 @@ RUN buildDeps='gcc libc6-dev make' \
 
 > 解释：容器启动命令
 > 用法：shell 格式   `CMD command` 
->
-> ​	     exec 格式    `CMD [“executable”,”param1″,”param2″]`
->
->    	  参数列表格式： CMD ["参数1", "参数2"...] 。在指定了 ENTRYPOINT 指令后，用 CMD 指
-> 	     定具体的参数。        
+> 	     exec 格式    `CMD [“executable”,”param1″,”param2″]`
 
-之前介绍容器的时候曾经说过，**Docker 不是虚拟机，容器就是进程**。既然是进程，那么在启
-动容器的时候，需要指定所运行的程序及参数。 **CMD 指令就是用于指定默认的容器主进程的**
-**启动命令的**。
+**Docker 不是虚拟机，容器就是进程**。既然是进程，那么在启动容器的时候，需要指定所运行的程序及参数。 **CMD 指令就是用于指定默认的容器主进程的启动命令的**。
 
 在指令格式上，一般推荐使用 exec 格式，这类格式在解析时会被解析为 JSON 数组，因此
 一定要使用双引号 " ，而不要使用单引号。
 
-**每个 Dockerfile 只能有一条 CMD 命令。如果指定了多条命令，只有最后一条会被执行。如果用户启动容器时候指定了运行的命令，则会覆盖掉 CMD 指定的命令。**
-
 如果使用 shell 格式的话，实际的命令会被包装为 sh -c 的参数的形式进行执行。比如：
 
-```
+```dockerfile
 # shell格式
 CMD echo $HOME
 # 实际执行 exec格式
 CMD ["sh", "-c", "echo $HOME"]
 ```
 
+**每个 Dockerfile 只能有一条 CMD 命令。如果指定了多条命令，只有最后一条会被执行。如果用户启动容器时候指定了运行的命令，则会覆盖掉 CMD 指定的命令。**
 
+> 而 **ENTRYPOINT** 会把容器后面的所有内容都当成参数传递给其指定的命令(**不会对命令覆盖**)
+
+下面以例子说明：
+
+```dockerfile
+FROM ubuntu
+CMD ["echo", "Hello Ubuntu from container"]
+```
+
+构建镜像，并运行
+
+```shell
+# 生成镜像
+[root@vultr docker-lesson-command-CMD]# docker build -t cn/lesson-cmd .
+Sending build context to Docker daemon  2.048kB
+Step 1/2 : FROM ubuntu
+ ---> 94e814e2efa8
+Step 2/2 : CMD ["echo", "Hello Ubuntu from container"]
+ ---> Running in 1eafc639eb8c
+Removing intermediate container 1eafc639eb8c
+ ---> 52c3f964da90
+Successfully built 52c3f964da90
+Successfully tagged cn/lesson-cmd:latest
+# 
+[root@vultr docker-lesson-command-CMD]# docker run cn/lesson-cmd
+Hello Ubuntu from container
+# 
+[root@vultr docker-lesson-command-CMD]# docker run cn/lesson-cmd echo "Hello Ubuntu from host"
+Hello Ubuntu from host
+```
+
+
+
+
+
+
+
+**其它注意 <待续>**
 
 提到 CMD 就不得不提容器中应用在前台执行和后台执行的问题。这是初学者常出现的一个混
 淆。
@@ -257,7 +284,8 @@ ENTRYPOINT ["/usr/bin/ls"]
 
 
 
-
+> 参考:
+> [RUN vs CMD vs ENTRYPOINT - 每天5分钟玩转 Docker 容器技术（17）- 博客园](https://www.cnblogs.com/CloudMan6/p/6875834.html)
 
 
 
@@ -432,6 +460,8 @@ ADD hom?.txt /mydir/
 
 
 ### COPY、ADD 二者区别
+
+<待续>
 
 
 

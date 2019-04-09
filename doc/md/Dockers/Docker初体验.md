@@ -121,6 +121,26 @@ sudo systemctl restart docker
 
 
 
+**Nginx 外网访问可能遇到， 添加了转发映射，但是还是 404， 是因为需要映射两个**
+
+https://github.com/portainer/portainer/issues/754#issuecomment-471368760
+
+```nginx
+location /docker {
+    rewrite ^/portainer(/.*)$ /$1 break;
+    proxy_pass http://127.0.0.1:9000/;
+    proxy_http_version 1.1;
+    proxy_set_header Connection "";
+}
+
+location /docker/api {
+    proxy_set_header Upgrade $http_upgrade;
+    proxy_pass http://127.0.0.1:9000/api;
+    proxy_set_header Connection 'upgrade';
+    proxy_http_version 1.1;
+}
+```
+
 
 
 ## 参考

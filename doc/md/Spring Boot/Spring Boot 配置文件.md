@@ -599,29 +599,7 @@ java -jar com.yourapp.jar --spring.config.location=/usr/local/yourApp-config.pro
 
 Spring Boot 也可以从以下位置加载配置，**优先级从高到低，同样高优先级的配置覆盖低优先级的配置，所有配置文件的配置形成互补配置**
 
- 1. 命令行参数
-
-    > `java -jar com.yourapp.jar --server.port=9527` `# 运行时通过命令行参数指定端口号`
-
- 2. 来自 java:comp/env 的 `JNDI` 属性
-
- 3. Java 系统属性 （System.getProperties()）
-
- 4. 操作系统环境变量
-
- 5. RandomValuePropertySource 配置的 random.* 属性值
-
- 6. jar 包**外部**的 `application-{profile}.properties(.yml)`  (**带spring.profile**) 配置文件
-
- 7. jar 包**内部**的 `application-{profile}.properties(.yml)`  (**带spring.profile**) 配置文件
-
-8. jar 包**外部**的 `application-{profile}.properties(.yml)`  (**不带spring.profile**) 配置文件
-
-9. jar 包**内部**的 `application-{profile}.properties(.yml)`  (**不带spring.profile**) 配置文件
-
-10. `@Configuration`注解类上的 `@PropertySource`
-
-11. 通过 `SpringApplication.setDefaultProperties` 指定的默认属性
+![spring boot 配置文件加载顺序](Spring Boot 配置文件.assets/1423233-20180731130619755-46487212.png)
 
 > 所有支持的配置加载来源，参考：https://docs.spring.io/spring-boot/docs/2.1.1.RELEASE/reference/htmlsingle/#boot-features-external-config
 >
