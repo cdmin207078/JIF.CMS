@@ -4,9 +4,61 @@
 
 [TOC]
 
+## 安装 Docker
+
+>Docker 划分为 CE 和 EE。CE 即社区版（免费，支持周期三个月），EE 即企业版，强
+>调安全，付费使用。
+
+**卸载旧版本**
+
+旧版本的 Docker 称为 docker 或者 docker-engine ，使用以下命令卸载旧版本：
+
+```shell
+[root@vultr ~]# yum remove docker \
+                docker-client \
+                docker-client-latest \
+                docker-common \
+                docker-latest \
+                docker-latest-logrotate \
+                docker-logrotate \
+                docker-selinux \
+                docker-engine-selinux \
+                docker-engine
+```
+
+**使用 yum 安装**
+
+```shell
+[root@vultr ~]# yum install -y yum-utils \
+device-mapper-persistent-data \
+lvm2
+```
+
+**启动 Docker CE**
+
+```shell
+[root@vultr ~]# systemctl start docker
+```
+
+![docker 启动成功](Docker初体验.assets/1554989463490.png)
 
 
-## 概述
+
+## hello docker
+
+<待续>
+
+
+
+## 基本概念
+
+Docker 包括三个基本概念
+
+- 镜像（ Image ）
+- 容器（ Container ）
+- 仓库（ Repository ）
+
+理解了这三个概念，就理解了 Docker 的整个生命周期。
 
 
 
