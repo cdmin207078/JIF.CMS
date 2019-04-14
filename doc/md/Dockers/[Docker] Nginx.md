@@ -1,6 +1,79 @@
 # docker nginx
 
+[TOC]
 
+## Nginx
+
+Nginx是一款轻量级的Web服务器、反向代理服务器，由于它的内存占用少，启动极快，高并发能力强，在互联网项目中广泛应用。
+
+![一般应用架构图]([Docker] Nginx.assets/v2-e1826bab1d07df8e97d61aa809b94a10_r.jpg)
+
+
+
+> 上图基本上说明了当下流行的技术架构，其中Nginx有点入口网关的味道。
+
+
+
+### 反向代理服务器
+
+经常听人说到一些术语，如反向代理，那么什么是反向代理，什么又是正向代理呢？
+
+**正向代理**
+
+![正向代理示意图]([Docker] Nginx.assets/v2-c8ac111c267ae0745f984e326ef0c47f_hd.jpg)
+
+
+
+> 由于防火墙的原因，我们并不能直接访问谷歌，那么我们可以借助VPN来实现，这就是一个简单的正向代理的例子。这里你能够发现，**正向代理“代理”的是客户端**，而且客户端是知道目标的，而目标是不知道客户端是通过VPN访问的。
+
+
+
+**反向代理**
+
+![反向代理示意图]([Docker] Nginx.assets/v2-4787a512240b238ebf928cd0651e1d99_hd.jpg)
+
+
+
+> 当我们在外网访问百度的时候，其实会进行一个转发，代理到内网去，这就是所谓的反向代理，即**反向代理“代理”的是服务器端**，而且这一个过程对于客户端而言是透明的。
+
+
+
+### Nginx的Master-Worker模式
+
+![nginx 进程]([Docker] Nginx.assets/v2-0951372e22a6314b1e9b520b3cd6b3b6_hd.jpg)
+
+启动Nginx后，其实就是在80端口启动了Socket服务进行监听，如图所示，Nginx涉及Master进程和Worker进程。
+
+![Master-Worker模式]([Docker] Nginx.assets/v2-b24eb2b29b48f59883232a58392ddae3_r.jpg)
+
+
+
+
+
+Master进程的作用是？
+
+**读取并验证配置文件nginx.conf；管理worker进程；**
+
+Worker进程的作用是？
+
+**每一个Worker进程都维护一个线程（避免线程切换），处理连接和请求；注意Worker进程的个数由配置文件决定，一般和CPU个数相关（有利于进程切换），配置几个就有几个Worker进程。**
+
+
+
+### 思考：Nginx如何做到热部署
+
+所谓热部署，就是配置文件nginx.conf修改后，不需要stop Nginx，不需要中断请求，就能让配置文件生效！（`nginx -s reload` 重新加载 `/nginx -t`检查配置 `/nginx -s` stop）
+
+通过上文我们已经知道worker进程负责处理具体的请求，那么如果想达到热部署的效果，可以想象：
+
+- 方案一：修改配置文件nginx.conf后，主进程master负责推送给woker进程更新配置信息，woker进程收到信息后，更新进程内部的线程信息。（有点valatile的味道）
+- 方案二：修改配置文件nginx.conf后，重新生成新的worker进程，当然会以新的配置进行处理请求，而且新的请求必须都交给新的worker进程，至于老的worker进程，等把那些以前的请求处理完毕后，kill掉即可。
+
+**Nginx是采用方案二来达到热部署的**
+
+
+
+## docker 下 nginx 安装使用
 
 下载镜像
 
@@ -50,6 +123,8 @@ d2aa2b15810e925447905e265e67717de997381cd25bcf4ddbde92f16e004e15
 
 
 ## 参考
+
+[深入浅出Nginx](https://www.jianshu.com/p/5eab0f83e3b4)
 
 [nginx in docker - docker 官方文档](https://docs.docker.com/samples/library/nginx/)
 
