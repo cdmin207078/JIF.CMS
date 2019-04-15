@@ -58,9 +58,11 @@ Worker进程的作用是？
 
 **每一个Worker进程都维护一个线程（避免线程切换），处理连接和请求；注意Worker进程的个数由配置文件决定，一般和CPU个数相关（有利于进程切换），配置几个就有几个Worker进程。**
 
+![nginx work进程配置]([Docker] Nginx.assets/4943997-73030ccc353065fb.webp)
 
 
-### 思考：Nginx如何做到热部署
+
+### 思考一：Nginx如何做到热部署
 
 所谓热部署，就是配置文件nginx.conf修改后，不需要stop Nginx，不需要中断请求，就能让配置文件生效！（`nginx -s reload` 重新加载 `/nginx -t`检查配置 `/nginx -s` stop）
 
@@ -70,6 +72,45 @@ Worker进程的作用是？
 - 方案二：修改配置文件nginx.conf后，重新生成新的worker进程，当然会以新的配置进行处理请求，而且新的请求必须都交给新的worker进程，至于老的worker进程，等把那些以前的请求处理完毕后，kill掉即可。
 
 **Nginx是采用方案二来达到热部署的**
+
+
+
+### 思考二：Nginx如何做到高并发下的高效处理？
+
+上文已经提及Nginx的worker进程个数与CPU绑定、worker进程内部包含一个线程高效回环处理请求，这的确有助于效率，但这是不够的。
+
+**作为专业的程序员，我们可以开一下脑洞：BIO/NIO/AIO、异步/同步、阻塞/非阻塞...**
+
+要同时处理那么多的请求，要知道，有的请求需要发生IO，可能需要很长时间，如果等着它，就会拖慢worker的处理速度。
+
+**Nginx采用了Linux的epoll模型，epoll模型基于事件驱动机制，它可以监控多个事件是否准备完毕，如果OK，那么放入epoll队列中，这个过程是异步的。worker只需要从epoll队列循环处理即可。**
+
+
+
+### 思考三：Nginx挂了怎么办？
+
+Nginx既然作为入口网关，很重要，如果出现单点问题，显然是不可接受的。
+
+答案是：**Keepalived+Nginx实现高可用**。
+
+Keepalived是一个高可用解决方案，主要是用来防止服务器单点发生故障，可以通过和Nginx配合来实现Web服务的高可用。（其实，Keepalived不仅仅可以和Nginx配合，还可以和很多其他服务配合）
+
+Keepalived+Nginx实现高可用的思路：
+
+1. 请求不要直接打到Nginx上，应该先通过Keepalived（这就是所谓虚拟IP，VIP）
+2. Keepalived应该能监控Nginx的生命状态（提供一个用户自定义的脚本，定期检查Nginx进程状态，进行权重变化,，从而实现Nginx故障切换）
+
+![Keepalived + Nginx 实现高可用]([Docker] Nginx.assets/4943997-6d029e6799d8765a.png)
+
+
+
+
+
+### nginx.conf
+
+
+
+
 
 
 
