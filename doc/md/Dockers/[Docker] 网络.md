@@ -40,7 +40,7 @@ Docker 允许通过外部访问容器或容器互联的方式来提供网络服�
    ```shell
      [root@vultr docker-nginx]# docker run -d -p 127.0.0.1::5000 training/webapp python app.py
      713dd8cb11b2c35936632c49a80875f491a9a3080b037378fd04613038e889b2
-     ```
+   ```
   
    ![1555946085018]([Docker] 网络.assets/1555946085018.png)
   
@@ -53,7 +53,7 @@ Docker 允许通过外部访问容器或容器互联的方式来提供网络服�
    ```shell
      [root@vultr docker-nginx]# docker run -d -p 5000:5000 training/webapp python app.py
      2231c9fd9458910ce85f70058b8f28557004576fea899b70454fea5abca0df2e
-     ```
+   ```
   
    ![1555946270194]([Docker] 网络.assets/1555946270194.png)
 
@@ -183,7 +183,7 @@ b4e5001b9bb97c730144245760778d9ba1870af68d41cd72c5f1f1fff9631172
 
 
 
-运行容器连接到 **test-bridge-net** 网络， 使用方法：**docker run -it --name <容器名> ---network <bridge> --network-alias <网络别名> <镜像名>**
+运行容器连接到 **test-bridge-net** 网络， 使用方法：**docker run --name <容器名> ---network <bridge> --network-alias <网络别名> <镜像名>**
 
 ```shell
 # centos-1 容器
