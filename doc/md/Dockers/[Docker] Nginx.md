@@ -148,14 +148,6 @@ http      #http块
 
 
 
-
-
-
-
-
-
-
-
 ## docker 下 nginx 安装使用
 
 下载镜像
@@ -203,16 +195,25 @@ d2aa2b15810e925447905e265e67717de997381cd25bcf4ddbde92f16e004e15
 # .. 启动成功
 ```
 
-**start-nginx.sh**
+**start-nginx.sh 完善版本**
 
-```sh
-docker run \
--p 80:80 \
---name nginx \
--v $PWD/www:/www \
+```shell
+#! /bin/sh
+echo "begin"
+# 停止容器
+docker stop $(docker ps -a |  grep "docker-nginx"  | awk '{print $1}')
+echo "stop docker docker-nginx"
+# 删除容器
+docker rm $(docker ps -a |  grep "docker-nginx"  | awk '{print $1}')
+echo "rm docker docker-nginx"
+# 启动容器
+docker run -p 80:80 --name docker-nginx \
+-v $PWD/www:/data/www \
 -v $PWD/conf/nginx.conf:/etc/nginx/nginx.conf \
+-v $PWD/conf/conf.d:/etc/nginx/conf.d \
 -v $PWD/logs:/wwwlogs \
 -d nginx
+echo "start docker docker-nginx"
 ```
 
 

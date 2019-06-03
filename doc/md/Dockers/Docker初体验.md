@@ -26,7 +26,7 @@
                 docker-engine
 ```
 
-**使用 yum 安装**
+**安装一些必要的系统工具**
 
 ```shell
 [root@vultr ~]# yum install -y yum-utils \
@@ -34,7 +34,25 @@ device-mapper-persistent-data \
 lvm2
 ```
 
-**启动 Docker CE**
+ **添加软件源信息**
+
+```shell
+[root@vultr ~]# sudo yum-config-manager --add-repo http://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo
+```
+
+**更新 yum 缓存**
+
+```shell
+[root@vultr ~]# sudo yum makecache fast
+```
+
+**安装 Docker-ce**
+
+```shell
+[root@vultr ~]# sudo yum -y install docker-ce
+```
+
+**启动 Docker 后台服务**
 
 ```shell
 [root@vultr ~]# systemctl start docker
@@ -196,6 +214,8 @@ location /docker/api {
 
 
 ## 参考
+
+[Docker 教程 - 菜鸟教程](https://www.runoob.com/docker/docker-tutorial.html)
 
 [Docker 从入门到实践 - 帮助文档](https://docker_practice.gitee.io/introduction/)
 
