@@ -1,6 +1,6 @@
 # [Docker] 实训 Nginx + Wordpress + portainer
 
-
+[TOC]
 
 ## 创建网桥
 
@@ -8,8 +8,6 @@
 [root@vultr ~]# docker network create docker-nginx-bridge
 9e4557030eee4c628473e929d17b63c5941ac8d04e2eab96c1b30ad826dd3207
 ```
-
-
 
 ## Nginx
 
@@ -54,16 +52,26 @@ server {
 server {
     listen 80;
     server_name docker.chen-ning.com;
+    # location / {
+    #     proxy_redirect off;
+    #     proxy_set_header Host $host;
+    #     proxy_set_header X-Real-IP $remote_addr;
+    #     proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    #     proxy_pass http://docker-portainer/;
+    # }
     location / {
-        proxy_redirect off;
-        proxy_set_header Host $host;
-        proxy_set_header X-Real-IP $remote_addr;
-        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        rewrite ^/portainer(/.*)$ /$1 break;
         proxy_pass http://docker-portainer/;
+        proxy_http_version 1.1;
+        proxy_set_header Connection "";
     }
-    access_log logs/portainer_access.log;
+    location /api {
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection 'upgrade';
+        proxy_pass http://docker-portainer/api;
+        proxy_http_version 1.1;
+    }
 }
-
 server {
     listen 80;
     server_name wordpress.chen-ning.com;
@@ -74,7 +82,6 @@ server {
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
         proxy_pass http://wordpress-web/;
     }
-    access_log logs/wordpress_access.log;
 }
 
 ```
