@@ -1,4 +1,4 @@
-# Nginx 初体验
+# <u>Nginx</u> 初体验
 
 [TOC]
 
@@ -13,6 +13,14 @@
 
 
 ### yum安装
+
+
+
+
+
+## 启动 \ 关闭
+
+
 
 
 
@@ -65,6 +73,6 @@ http      #http块
 
 ## 参考
 
-[nginx服务器安装及配置文件详解](http://seanlook.com/2015/05/17/nginx-install-and-config/)
+[nginx服务器安装及配置文件详解](https://seanlook.com/2015/05/17/nginx-install-and-config/)
 
 [Nginx配置详解](https://www.cnblogs.com/knowledgesea/p/5175711.html)
