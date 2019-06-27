@@ -69,7 +69,148 @@ http      #http块
 ### 语法规范
 
 1. 每个指令必须有分号结束
-2. 
+
+
+
+
+
+### nginx.conf 实例
+
+```nginx
+user  nginx;
+worker_processes  1;
+
+error_log  /var/log/nginx/error.log warn;
+pid        /var/run/nginx.pid;
+
+
+events {
+    worker_connections  1024;
+}
+
+
+http {
+    include       /etc/nginx/mime.types;
+    default_type  application/octet-stream;
+
+    log_format main escape=json '{ "@timestamp": "$time_iso8601", '
+                         '"time": "$time_iso8601", '
+                         '"requestIp": "$remote_addr", '
+                         '"remote_user": "$remote_user", '
+                         '"body_bytes_sent": "$body_bytes_sent", '
+                         '"request_time": "$request_time", '
+                         '"status": "$status", '
+                         '"host": "$host", '
+                         '"request": "$request", '
+                         '"request_method": "$request_method", '
+                         '"uri": "$uri", '
+                         '"http_referrer": "$http_referer", '
+                         '"body_bytes_sent":"$body_bytes_sent", '
+                         '"http_x_forwarded_for": "$http_x_forwarded_for", '
+                         '"service": "nginx", '
+                         '"http_user_agent": "$http_user_agent", '
+                         '"pramdata": "$request_body", '
+                         '"requestHead": "$http_HEADER " '
+                    '}';
+
+    access_log  /var/log/nginx/access.log  main;
+
+    sendfile        on;
+    # tcp_nopush     on;
+    keepalive_timeout  65;
+    # gzip  on;
+
+    # include /etc/nginx/conf.d/*.conf;
+    
+    server {
+        listen 80;
+        server_name localhost;
+        
+        # nginx welcome page
+        location / {
+            index index.html;
+            root /data/www/nginx;
+        }
+
+        # portainer
+        location /docker/ {
+            rewrite ^/portainer(/.*)$ /$1 break;
+            # proxy_pass http://127.0.0.1:9000/;
+            # 使用docker网桥中网络别名
+            proxy_pass http://portainer:9000/;
+            proxy_http_version 1.1;
+            proxy_set_header Connection "";
+        }
+
+        location /docker/api {
+            proxy_set_header Upgrade $http_upgrade;
+            proxy_set_header Connection 'upgrade';
+            # proxy_pass http://127.0.0.1:9000/api;
+            # 使用docker网桥中网络别名
+            proxy_pass http://portainer:9000/api;
+            proxy_http_version 1.1;
+        }
+
+        # robot
+        location /robot.manager {
+            proxy_redirect off;
+            proxy_set_header Host $host;
+            proxy_set_header X-Real-IP $remote_addr;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+            proxy_pass http://172.19.159.1:8001;
+        }
+        location /robot.web {
+            proxy_redirect off;
+            proxy_set_header Host $host;
+            proxy_set_header X-Real-IP $remote_addr;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+            proxy_set_header Upgrade $http_upgrade;
+            proxy_set_header Connection "upgrade";
+            proxy_read_timeout 3600s;
+            proxy_pass http://172.19.159.1:8002;
+        }
+        location /robot-customer {
+            proxy_redirect off;
+            proxy_set_header Host $host;
+            proxy_set_header X-Real-IP $remote_addr;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+            proxy_pass http://172.19.159.1:8006;
+        }
+        location /robot.api {
+            proxy_redirect off;
+            proxy_set_header Host $host;
+            proxy_set_header X-Real-IP $remote_addr;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+            proxy_pass http://172.19.159.1:8004;
+        }
+        location ^~ /robot.crm.api {
+            proxy_redirect off;
+            proxy_set_header Host $host;
+            proxy_set_header X-Real-IP $remote_addr;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+            proxy_pass http://172.19.159.1:8085;
+        }
+        error_page 500 502 503 504  /50x.html;
+    }
+
+    # nexus
+    server {
+        client_max_body_size 200M;
+        listen 80;
+        server_name nexus.zihuitong.com.cn;
+        location / {
+            proxy_redirect off;
+            proxy_set_header Host $host;
+            proxy_set_header X-Real-IP $remote_addr;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+            proxy_pass http://172.19.159.1:8801;
+        }
+    }
+}
+
+```
+
+
 
 ## 参考
 

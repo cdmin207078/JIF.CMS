@@ -213,6 +213,34 @@ location /docker/api {
 
 
 
+
+
+## 常用一体化脚本
+
+```sh
+#! /bin/sh
+echo "begin"
+# 停止容器
+docker stop $(docker ps -a |  grep "robot.crm.api"  | awk '{print $1}')
+echo "stop docker robot.crm.api"
+# 删除容器
+docker rm $(docker ps -a |  grep "robot.crm.api"  | awk '{print $1}')
+echo "rm docker robot.crm.api"
+
+# 生成镜像
+docker build -t dahanis/robot.crm.api .
+
+# 启动容器
+docker run \
+--name robot.crm.api \
+-v $PWD/data/logs:/app/logs \
+-p 8085:8080 \
+-d dahanis/robot.crm.api
+
+```
+
+
+
 ## 参考
 
 [Docker 教程 - 菜鸟教程](https://www.runoob.com/docker/docker-tutorial.html)
