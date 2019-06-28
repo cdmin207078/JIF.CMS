@@ -99,6 +99,23 @@ db.orders.aggregate([
 
 
 
+#### having
+
+```js
+db.crm_batch_call.aggregate([
+    { $match: { 'wordstemplate_id':10886 } },
+    { $group: {_id: '$phone', count: {$sum: 1} }  },
+    { $match: { 'count': {$gt: 1 } } }
+])
+
+// SQL:
+// select count(1) from crm_batch_call
+// group by phone
+// having count(1) > 1
+```
+
+
+
 ## 数据库状态查看
 
 

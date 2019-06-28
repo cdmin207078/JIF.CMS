@@ -18,7 +18,21 @@
 
 
 
-## 启动 \ 关闭
+## 常用命令
+
+```sh
+# 启动
+./nginx 
+
+# 检查 nginx.conf配置文件
+./nginx -t
+
+# 重启
+./nginx -s reload
+
+# 停止
+./nginx -s stop
+```
 
 
 
