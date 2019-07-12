@@ -226,9 +226,11 @@ echo "stop docker robot.crm.api"
 # 删除容器
 docker rm $(docker ps -a |  grep "robot.crm.api"  | awk '{print $1}')
 echo "rm docker robot.crm.api"
-
-# 生成镜像
+# 删除镜像
+echo "rmi docker robot.crm.api"
+# 构建镜像
 docker build -t dahanis/robot.crm.api .
+echo "bulid docker robot.crm.api" 
 
 # 启动容器
 docker run \

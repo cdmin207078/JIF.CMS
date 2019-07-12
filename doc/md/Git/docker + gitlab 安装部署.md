@@ -1,7 +1,5 @@
 # docker + gitlab 安装部署
 
-
-
 **获取镜像**
 
 ```shell
@@ -11,15 +9,16 @@
 **启动**
 
 ```sh
-sudo docker run --detach \
-  --publish 9443:443 --publish 9080:80 --publish 9022:22 \
-  --name gitlab \
-  --restart always \
-  --volume $PWD/config:/etc/gitlab \
-  --volume $PWD/logs:/var/log/gitlab \
-  --volume $PWD/data:/var/opt/gitlab \
-  gitlab/gitlab-ce:
-  latest
+docker run -d \
+-p 9443:443 \
+-p 9080:80 \
+-p 9022:22 \
+--name gitlab \
+--restart always \
+-v /usr/local/dockerProject/gitlab/config:/etc/gitlab \
+-v /usr/local/dockerProject/gitlab/logs:/var/log/gitlab \
+-v /usr/local/dockerProject/gitlab/data:/var/opt/gitlab \
+gitlab/gitlab-ce
 ```
 
 
@@ -30,9 +29,16 @@ sudo docker run --detach \
 
 >**参考：[docker下gitlab安装配置使用(完整版)](https://www.jianshu.com/p/080a962c35b6)**
 
-按上面的方式，gitlab容器运行没问题，但在gitlab上创建项目的时候，生成项目的URL访问地址是按容器的hostname来生成的，也就是容器的id。作为gitlab服务器，我们需要一个固定的URL访问地址，于是需要配置 **gitlab.rb**
+按上面的方式，gitlab容器运行没问题，但在gitlab上创建项目的时候，生成项目的**URL访问地址是按容器的hostname来生成的，也就是容器的id**。作为gitlab服务器，我们需要一个固定的URL访问地址，于是需要配置 **gitlab.rb**
 
+```ruby
+# 配置http协议所使用的访问地址,不加端口号默认为80
+external_url 'http://192.168.199.231:9080'
 
+# 配置ssh协议所使用的访问地址和端口
+gitlab_rails['gitlab_ssh_host'] = '192.168.199.231'
+gitlab_rails['gitlab_shell_ssh_port'] = 9022 # 此端口是run时22端口映射的222端口
+```
 
 
 
