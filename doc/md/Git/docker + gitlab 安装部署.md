@@ -44,7 +44,12 @@ gitlab_rails['gitlab_shell_ssh_port'] = 9022 # 此端口是run时22端口映射�
 
 ### 不适用gitlab 自带nginx , 使用外部独立 nginx
 
-> 
+> 参考:
+>
+> https://www.jianshu.com/p/5d22b25afd5f
+>
+> https://blog.csdn.net/qq_34894188/article/details/80468889
+> [https://www.daxiblog.com/%e4%ba%b2%e6%b5%8b%e6%9c%89%e6%95%88gitlab%e7%a6%81%e7%94%a8%e8%87%aa%e5%8a%a8nginx%e9%81%bf%e5%85%8d%e7%ab%af%e5%8f%a3%e5%86%b2%e7%aa%81%ef%bc%8c%e4%bd%bf%e7%94%a8%e5%a4%96%e9%83%a8nginx%e4%bb%a3/](https://www.daxiblog.com/亲测有效gitlab禁用自动nginx避免端口冲突，使用外部nginx代/)
 
 
 
