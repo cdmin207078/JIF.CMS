@@ -15,9 +15,9 @@ docker run -d \
 -p 9022:22 \
 --name gitlab \
 --restart always \
--v /usr/local/dockerProject/gitlab/config:/etc/gitlab \
--v /usr/local/dockerProject/gitlab/logs:/var/log/gitlab \
--v /usr/local/dockerProject/gitlab/data:/var/opt/gitlab \
+-v $PWD/config:/etc/gitlab \
+-v $PWD/logs:/var/log/gitlab \
+-v $PWD/data:/var/opt/gitlab \
 gitlab/gitlab-ce
 ```
 
@@ -33,11 +33,12 @@ gitlab/gitlab-ce
 
 ```ruby
 # 配置http协议所使用的访问地址,不加端口号默认为80
-external_url 'http://192.168.199.231:9080'
+external_url 'http://192.168.0.106:9080'
 
 # 配置ssh协议所使用的访问地址和端口
-gitlab_rails['gitlab_ssh_host'] = '192.168.199.231'
-gitlab_rails['gitlab_shell_ssh_port'] = 9022 # 此端口是run时22端口映射的222端口
+gitlab_rails['gitlab_ssh_host'] = '192.168.0.106:9022'
+# 此端口是run时 22端口 映射的 9022端口
+gitlab_rails['gitlab_shell_ssh_port'] = 9022 
 ```
 
 
@@ -50,6 +51,8 @@ gitlab_rails['gitlab_shell_ssh_port'] = 9022 # 此端口是run时22端口映射�
 >
 > https://blog.csdn.net/qq_34894188/article/details/80468889
 > [https://www.daxiblog.com/%e4%ba%b2%e6%b5%8b%e6%9c%89%e6%95%88gitlab%e7%a6%81%e7%94%a8%e8%87%aa%e5%8a%a8nginx%e9%81%bf%e5%85%8d%e7%ab%af%e5%8f%a3%e5%86%b2%e7%aa%81%ef%bc%8c%e4%bd%bf%e7%94%a8%e5%a4%96%e9%83%a8nginx%e4%bb%a3/](https://www.daxiblog.com/亲测有效gitlab禁用自动nginx避免端口冲突，使用外部nginx代/)
+> [gitlab修改默认端口](https://cloud.tencent.com/developer/article/1139779)
+
 
 
 
