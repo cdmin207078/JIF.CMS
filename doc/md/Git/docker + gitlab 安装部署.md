@@ -57,7 +57,6 @@ gitlab_rails['gitlab_shell_ssh_port'] = 9022
 
 
 
-
 ## 参考
 
 [使用 Docker 搭建 GitLab](https://zhuanlan.zhihu.com/p/63786567)
@@ -65,3 +64,6 @@ gitlab_rails['gitlab_shell_ssh_port'] = 9022
 [GitLab Docker images - office doc](https://docs.gitlab.com/omnibus/docker/)
 
 [docker下gitlab安装配置使用(完整版)](https://www.jianshu.com/p/080a962c35b6)
+
+[docker - Gitlab部署和基本使用](https://istone.dev/2019/07/20/gitlab-install/?tdsourcetag=s_pctim_aiomsg)
+
