@@ -38,6 +38,8 @@
 
 #### elasticsearch
 
+> 参考： https://www.elastic.co/guide/en/elasticsearch/reference/current/docker.html
+
 拉取镜像, 启动容器
 
 ```sh
@@ -90,6 +92,8 @@ docker run \
 -d docker.elastic.co/kibana/kibana:7.2.0
 
 ```
+
+#### docker-compose 编排
 
 
 
