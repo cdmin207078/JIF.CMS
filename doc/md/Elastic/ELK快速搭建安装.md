@@ -88,7 +88,6 @@ docker run \
 --link elasticsearch:elasticsearch \
 -p 5601:5601 \
 -d docker.elastic.co/kibana/kibana:7.2.0
-
 ```
 
 #### docker-compose 编排

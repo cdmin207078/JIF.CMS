@@ -1,4 +1,4 @@
-# ElasticSearch - Index索引的使用
+# ElasticSearch - Index 索引
 
 [TOC]
 
@@ -38,7 +38,6 @@ PUT weibo
   "shards_acknowledged" : true,
   "index" : "weibo"
 }
-
 ```
 
 上面这样，就创建了一个具有默认配置的名为 **weibo** 的索引。
@@ -48,6 +47,8 @@ PUT weibo
 ## 索引配置
 
 创建索引时，可以制定相关设置，比如设置索引的 分片数 **number_of_shards** 和 副本数**number_of_replicas**
+
+**默认情况下 分片数(number_of_shards) 与 副本数 (number_of_replicas) 都是 1**
 
 例子：创建一个名为 weibo 的索引，它具有 三个 分片，与 两个 副本
 
