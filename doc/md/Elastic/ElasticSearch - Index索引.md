@@ -511,5 +511,7 @@ POST _bulk
 
 ## 参考
 
+[Elasticsearch Index模块 - 博客园](https://www.cnblogs.com/cjsblog/p/10328367.html)
+
 [Elasticsearch 7.x：2、索引管理 -csdn](https://blog.csdn.net/chengyuqiang/article/details/86000472)
 
