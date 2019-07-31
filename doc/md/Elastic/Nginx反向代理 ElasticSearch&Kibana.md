@@ -9,6 +9,7 @@
 **Nginx 配置**
 
 ```nginx
+...
 location /elasticsearch/ {
     proxy_redirect off;
     proxy_set_header Host $host;
@@ -17,6 +18,7 @@ location /elasticsearch/ {
     proxy_pass http://127.0.0.1:9200;
     rewrite ^/elasticsearch/(.*)$ /$1 break;
 }
+...
 ```
 
 重启 Nginx
