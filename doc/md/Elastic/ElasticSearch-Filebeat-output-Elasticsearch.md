@@ -143,6 +143,24 @@ output.elasticsearch:
         message: "ERR"
 ```
 
+#### ilm
+
+配置索引的生命周期, 参考: [*Configure index lifecycle management*](https://www.elastic.co/guide/en/beats/filebeat/current/ilm.html) 
+
+#### pipeline
+
+> TODO: https://www.elastic.co/guide/en/beats/filebeat/current/elasticsearch-output.html#pipeline-option-es
+
+#### pipelines
+
+> TODO: https://www.elastic.co/guide/en/beats/filebeat/current/elasticsearch-output.html#pipelines-option-es
+
+#### max_retries
+
+> *Filebeat 忽略此设置, 并无限重试*
+
+#### bulk_max_size
+
 
 
 
@@ -169,4 +187,8 @@ output.elasticsearch:
 ## 参考
 
 [Configure the Elasticsearch output - 官网文档](https://www.elastic.co/guide/en/beats/filebeat/current/elasticsearch-output.html)
+
+[Filebeat 模块与配置(续 <开始使用Filebeat>) - 博客园](https://www.cnblogs.com/cjsblog/p/9495024.html)
+
+[Filebeat安装部署及配置详解](https://cloud.tencent.com/developer/article/1006051)
 

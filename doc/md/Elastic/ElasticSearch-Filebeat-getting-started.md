@@ -181,3 +181,4 @@ Filebeat附带了Kibana仪表盘、可视化示例。在你用dashboards之前�
 
 [Filebeat 模块与配置(续 <开始使用Filebeat>) - 博客园](https://www.cnblogs.com/cjsblog/p/9495024.html)
 
+[Filebeat安装部署及配置详解](https://cloud.tencent.com/developer/article/1006051)
