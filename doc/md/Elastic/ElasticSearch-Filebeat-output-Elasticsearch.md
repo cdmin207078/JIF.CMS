@@ -6,6 +6,149 @@
 
 ### paths
 
+数据源路径列表, 可以设置多个
+
+```yaml
+filebeat.inputs:
+- type: log 
+  paths:
+    - /var/log/system.log
+    - /var/log/wifi.log
+    - /var/log/*/*.log
+```
+
+其中 **/var/log/\*/*.log** 将会抓取**/var/log**目录中子目录中的所有.log文件。
+**注意：它不会抓取 /var/log 本身目录下的日志文件。**
+如果你想要的是获取 **/var/log/** 目录中递归所有下层.log 文件, 则需要设置 **recursive_glob**
+
+### recursive_glob.enabled
+
+> 默认值 - `true`
+
+允许将**扩展为递归glob模式。**
+启用这个特性后，每个路径中最右边的 \*\* 被扩展为固定数量的glob模式。
+例如：/foo/\*\*   扩展到/foo， /foo/\*， /foo/\*\*，等等。
+如果启用，它将单个\*\*扩展为8级深度*模式。
+这个特性默认是启用的，设置**recursive_glob.enabled**为 **false** 可以禁用它
+
+### encoding
+
+读取的文件的编码
+
+下面是一些W3C推荐的简单的编码：
+
+- plain, latin1, utf-8, utf-16be-bom, utf-16be, utf-16le, big5, gb18030, gbk, hz-gb-2312
+- euc-kr, euc-jp, iso-2022-jp, shift-jis, 等等
+
+plain编码是特殊的，因为它不校验或者转换任何输入。
+
+> 完整编码列表：https://www.elastic.co/guide/en/beats/filebeat/current/filebeat-input-log.html#_literal_encoding_literal
+
+### exclude_lines
+
+一个正则表达式列表，用于匹配您希望Filebeat **排除**的行。Filebeat **排除**列表中匹配正则表达式匹配到的行。
+默认情况下，不会删除任何行。空行将会被忽略。
+
+如果指定了multiline，那么在用exclude_lines过滤之前会将每个多行消息合并成一个单行。**（PS：也就是说，多行合并成单行后再支持排除行的过滤）**
+
+下面的示例配置Filebeat以删除任何以DBG开头的行
+
+```yaml
+filebeat.inputs:
+- type: log
+  ...
+  exclude_lines: ['^DBG']
+```
+
+有关受支持的regexp模式列表，请参阅正则表达式支持  [*Regular expression support*](https://www.elastic.co/guide/en/beats/filebeat/current/regexp-support.html) 
+
+### include_lines
+
+一个正则表达式列表，用于匹配您希望Filebeat **包含**的行。Filebeat只导出与列表中的正则表达式匹配的行。默认情况下，导出所有行。空行被忽略。
+
+如果指定了multipline设置，每个多行消息先被合并成单行以后再执行include_lines过滤。
+
+下面是一个例子，配置Filebeat导出以ERR或者WARN开头的行
+
+```/yaml
+filebeat.inputs:
+- type: log
+  ...
+  include_lines: ['^ERR', '^WARN']
+```
+
+> 如果同时定义了 **include_lines** 和 **exclude_lines**，则Filebeat首先执行include_lines，然后执行exclude_lines。 定义两个选项的顺序无关紧要。 include_lines选项将始终在exclude_lines选项之前执行，即使exclude_lines出现在配置文件中的include_lines之前也是如此。
+
+下面的示例导出包含sometext的行，但以DBG开头的行将被排除
+
+```yaml
+filebeat.inputs:
+- type: log
+  ...
+  include_lines: ['sometext']
+  exclude_lines: ['^DBG']
+```
+
+有关受支持的regexp模式列表，请参阅正则表达式支持  [*Regular expression support*](https://www.elastic.co/guide/en/beats/filebeat/current/regexp-support.html) 
+
+### harvester_buffer_size
+
+> 默认值 - `16384`
+
+每个 harvester 在读取文件时使用的缓冲区的字节大小。
+
+### max_bytes
+
+> 默认值 - `10M(10485760)`
+
+**单个日志消息可以拥有的最大字节数**
+**最大字节之后的所有字节将被丢弃，并且不发送。**
+这个设置对于多行日志消息特别有用，因为多行日志消息可能会变大。
+
+### json
+
+使 Filebeat将日志作为JSON消息来解析。例如：
+
+```yaml
+json.keys_under_root: true
+json.add_error_key: true
+json.message_key: log
+```
+
+为了启用JSON解析模式，你必须至少指定下列设置项中的一个：
+
+#### keys_under_root
+
+> 默认值 - `false`
+
+默认情况下，解码后的JSON被放置在一个以"json"为key的输出文档中。如果你启用这个设置，那么这个key在文档中被复制为顶级。
+
+#### overwrite_keys
+
+如果启用了 **keys_under_root** 和此设置，则解码的JSON对象中的值将覆盖Filebeat通常添加的字段（类型，来源，偏移等），以防发生冲突。
+
+#### add_error_key
+
+如果启用此设置，Filebeat会在JSON解组错误或在配置中定义message_key但无法使用时添加 **error.message** 和 **error.type:json** 键。
+
+#### message_key
+
+**[可选]** 用于在应用行过滤和多行设置的时候指定一个JSON key。指定的这个key必须在JSON对象中是顶级的，而且其关联的值必须是一个字符串，否则没有过滤或者多行聚集发送
+
+#### ignore_decoding_error
+
+**[可选]** 用于指定是否JSON解码错误应该被记录到日志中。如果设为true，错误将被记录。默认是false。
+
+### multiline
+
+控制Filebeat如何处理跨越多行的日志消息的选项。 请参阅  [*Manage multiline messages*](https://www.elastic.co/guide/en/beats/filebeat/current/multiline-examples.html)
+
+
+
+
+
+
+
 
 
 
@@ -219,7 +362,11 @@ output.elasticsearch:
 
 ## 参考
 
-[Configure the Elasticsearch output - 官网文档](https://www.elastic.co/guide/en/beats/filebeat/current/elasticsearch-output.html)
+
+
+[Configure the Elasticsearch Input - 官网文档](https://www.elastic.co/guide/en/beats/filebeat/current/filebeat-input-log.html)
+
+[Configure the Elasticsearch Output - 官网文档](https://www.elastic.co/guide/en/beats/filebeat/current/elasticsearch-output.html)
 
 [Filebeat 模块与配置(续 <开始使用Filebeat>) - 博客园](https://www.cnblogs.com/cjsblog/p/9495024.html)
 
