@@ -2,7 +2,15 @@
 
 [TOC]
 
-## 配置项
+## Input 配置项
+
+### paths
+
+
+
+
+
+## Output 配置项
 
 ### enable
 
@@ -143,29 +151,54 @@ output.elasticsearch:
         message: "ERR"
 ```
 
-#### ilm
+### ilm
 
 配置索引的生命周期, 参考: [*Configure index lifecycle management*](https://www.elastic.co/guide/en/beats/filebeat/current/ilm.html) 
 
-#### pipeline
+### pipeline
 
 > TODO: https://www.elastic.co/guide/en/beats/filebeat/current/elasticsearch-output.html#pipeline-option-es
 
-#### pipelines
+### pipelines
 
 > TODO: https://www.elastic.co/guide/en/beats/filebeat/current/elasticsearch-output.html#pipelines-option-es
 
-#### max_retries
+### max_retries
 
 > *Filebeat 忽略此设置, 并无限重试*
 
-#### bulk_max_size
+### bulk_max_size
 
+> 默认值: 50
 
+单个Elasticsearch批量API索引请求中要批量处理的最大事件数。
+事件可以分批收集。 Filebeat会将大于bulk_max_size的批次拆分为多个批次。
+指定更大的批处理大小可以通过降低发送事件的开销来提高性能。 但是，大批量大小也会增加处理时间，这可能会导致API错误，连接中断，超时发布请求，以及最终导致吞吐量降低。
+将**bulk_max_size**设置为小于或等于 **0** 的值将禁用批处理的拆分。 禁用拆分时，队列将决定批处理中包含的事件数。
 
+### backoff.init
 
+> 默认值: 1 秒
 
+在网络错误后尝试重新连接到Elasticsearch的间隔秒数
+等待backoff.init秒后，Filebeat尝试重新连接。 
+**如果尝试失败，则退避定时器以指数方式增加到backoff.max。 连接成功后，将重置退避定时器**
 
+### backoff.max
+
+> 默认值: 60 秒
+
+在网络错误后尝试连接到Elasticsearch之前等待的最大秒数。 默认值为60秒。
+
+### timeout
+
+> 默认值: 90 秒
+
+Elasticsearch请求的http请求超时(以秒为单位)。默认值是90。
+
+### ssl
+
+> TODO: https://www.elastic.co/guide/en/beats/filebeat/current/elasticsearch-output.html#_literal_ssl_literal
 
 
 
