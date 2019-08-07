@@ -143,13 +143,88 @@ json.message_key: log
 
 控制Filebeat如何处理跨越多行的日志消息的选项。 请参阅  [*Manage multiline messages*](https://www.elastic.co/guide/en/beats/filebeat/current/multiline-examples.html)
 
+### exclude_files
+
+正则表达式列表，用于匹配您希望Filebeat忽略的文件。 默认情况下不会排除任何文件
+以下示例将Filebeat配置为忽略具有gz扩展名的所有文件：
+
+```yaml
+filebeat.inputs:
+- type: log
+  ...
+  exclude_files: ['\.gz$']
+```
+
+有关受支持的regexp模式列表，请参阅正则表达式支持  [*Regular expression support*](https://www.elastic.co/guide/en/beats/filebeat/current/regexp-support.html) 
+
+### ignore_older
+
+> 默认值 - `0` 禁用
+
+如果启用，那么Filebeat会忽略在指定的时间跨度之前被修改的文件。
+例如，如果你想要开始Filebeat，但是你只想发送最近一周最新的文件，这个情况下你可以配置这个选项。
+你可以用时间字符串，比如2h（2小时），5m（5分钟）。**默认是0，意思是禁用这个设置**
+
+**注意：必须将ignore older设置为大于close inactive**
+
+### close_*
+
+配置项用于在一个确定的条件或者时间点之后关闭 harvester。关闭 harvester 意味着关闭文件处理器。如果在 harvester 关闭以后文件被更新，那么在 **scan_frequency** 结束后改文件将再次被拾起。然而，当  harvester 关闭的时候如果文件被删除或者被移动，那么Filebeat将不会被再次拾起，并且这个 harvester 还没有读取的数据将会丢失
+
+#### close_inactive
+
+> 默认值 - `5m` (5分钟)
+
+当启用此选项时，如果文件在指定的持续时间内未被获取，则Filebeat将关闭文件句柄。当harvester读取最后一行日志时，指定周期的计数器就开始工作了。它不基于文件的修改时间。如果关闭的文件再次更改，则会启动一个新的harvester，并且在scan_frequency结束后，将获得最新的更改。
+
+建议 **close_inactive** 设置 **scan_frequency** 大一点儿。
+例如，如果你的日志文件每隔几秒就会更新，你可以设置 **close_inactive** 为 **1m**。如果日志文件的更新速率不固定，那么可以用多个配置。
+
+将close_inactive设置为更低的值意味着文件句柄可以更早关闭。然而，这样做的副作用是，如果harvester关闭了，新的日志行不会实时发送。
+
+关闭文件的时间戳不依赖于文件的修改时间。代替的，Filebeat用一个内部时间戳来反映最后一次读取文件的时间。例如，如果close_inactive被设置为5分钟，那么在harvester读取文件的最后一行以后，这个5分钟的倒计时就开始了
+你可以用时间字符串，比如**2h**（2小时），**5m**（5分钟）
+
+#### close_renamed
+
+启用此选项后，Filebeat将在**重命名文件时关闭文件处理程序**。默认情况下，harvester保持打开状态并继续读取文件，因为**文件处理器不依赖于文件名**
+
+如果启用了close_rename选项，并且重命名或者移动的文件不再匹配文件模式的话，那么文件将不会再次被选中。Filebeat将无法完成文件的读取。
+
+#### close_removed
+
+> 默认值 - `true`
+
+当启用此选项时，Filebeat会在删除文件时关闭harvester。通常，一个文件只有在它在由 **close_inactive** 指定的期间内不活跃的情况下才会被删除。但是，如果一个文件被提前删除，并且你不启用**close_removed**，则Filebeat将保持文件打开，以确保 harvester 已经完成。如果由于文件过早地从磁盘中删除而导致文件不能完全读取，请禁用此选项。
+
+默认情况下启用此选项。如果禁用此选项，还必须禁用 **clean_removed**
+
+#### close_eof
+
+> 默认值 - `false`
+
+启用此选项后，Filebeat将在到**达文件末尾时关闭文件**
+
+当您的文件只写了一次而不是不时地更新时，这是非常有用的。例如，当您将每个日志事件写入一个新文件时，就会发生这种情况
+
+**默认情况下禁用此选项**
+
+#### close_timeout
+
+> 默认值 - `0`
+
+当启用此选项是，Filebeat会给每个harvester一个预定义的生命时间。无论读到文件的什么位置，只要close_timeout周期到了以后就会停止读取。当你想要在文件上只花费预定义的时间时，这个选项对旧的日志文件很有用。尽管在close_timeout时间以后文件就关闭了，但如果文件仍然在更新，则Filebeat将根据已定义的scan_frequency再次启动一个新的harvester。这个harvester的close_timeout将再次启动，为超时倒计时。
+
+这个选项默认设置为 **0**，这意味着它是**禁用**的。
 
 
 
+### scan_frequency
 
+> 默认值 - `10s`
 
-
-
+Filebeat 检查指定路径中的 **新文件的频率, 不建议设置小于1s**
+如果你需要近实时的发送日志行的话，不要设置 **scan_frequency** 为一个很低的值，而应该调整close_inactive以至于文件处理器保持打开状态，并不断地轮询你的文件。
 
 
 
