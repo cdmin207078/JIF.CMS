@@ -6,7 +6,10 @@
 
 ## 安装 Filebeat
 
-
+```sh
+[root@vultr elastic] curl -L -O https://artifacts.elastic.co/downloads/beats/filebeat/filebeat-7.2.1-linux-x86_64.tar.gz
+[root@vultr gitlab elastic] tar xzvf filebeat-7.2.1-linux-x86_64.tar.gz
+```
 
 
 

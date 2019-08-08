@@ -319,7 +319,7 @@ output.elasticsearch.headers:
 
 如果你用内置的 Kibana dashboards，你也需要设置 **setup.dashboards.index** 选项。
 
-启用索引生命周期管理时，将忽略索引设置。 如果要将事件发送到支持索引生命周期管理的集群，何更改索引名称, 请参阅 [*Configure index lifecycle management*](https://www.elastic.co/guide/en/beats/filebeat/current/ilm.html)
+启用索引生命周期管理时，将忽略索引设置。如果要将事件发送到支持索引生命周期管理的集群, 请参阅 [*Configure index lifecycle management*](https://www.elastic.co/guide/en/beats/filebeat/current/ilm.html)
 
 你也可以使用索引文档中的指定字段来动态设置索引名称， 例如：
 
