@@ -345,7 +345,7 @@ output.elasticsearch:
 
 #### mapping
 
-
+获取index返回的值并将其映射到新名称的字典
 
 #### default
 
