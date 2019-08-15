@@ -18,5 +18,7 @@ https://discuss.elastic.co/t/filebeat-7-0-0-rename-index/177435
 
 **参考博文**
 
+[filebeat修改index的一个坑 - 正确答案](https://iminto.github.io/post/filebeat修改index的一个坑/)
+
 [ELK之filebeat收集多日志并自定义索引 - 51cto](https://blog.51cto.com/10950710/2331400)
 
