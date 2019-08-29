@@ -1,4 +1,8 @@
 ﻿using System;
+using System.Web.Script.Serialization;
+using AutoBogus;
+using Bogus;
+using JIF.CMS.Test.Core.Entities;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json;
 
@@ -27,6 +31,26 @@ namespace JIF.CMS.Test.Core.Tests
             Console.WriteLine(c);
             Console.WriteLine(JsonConvert.SerializeObject(c));
             Console.WriteLine(JsonConvert.DeserializeObject(c.ToString()));
+
+        }
+
+
+
+        [TestMethod]
+        public void asdfa()
+        {
+            //Product product = new Product();
+            //Console.WriteLine(JsonConvert.SerializeObject(product));
+
+            //var fakerProduct = new Faker<Product>().Generate();
+            //Console.WriteLine(JsonConvert.SerializeObject(fakerProduct, Formatting.Indented));
+
+
+            //var p = new Bogus.Person();
+            //Console.WriteLine(JsonConvert.SerializeObject(p, Formatting.Indented));
+
+            var a = AutoFaker.Generate<Product>();
+            Console.WriteLine(JsonConvert.SerializeObject(a, Formatting.Indented));
 
         }
     }
