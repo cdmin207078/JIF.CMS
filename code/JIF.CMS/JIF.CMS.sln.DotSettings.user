@@ -1,0 +1,11 @@
+﻿<wpf:ResourceDictionary xml:space="preserve" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:ss="urn:shemas-jetbrains-com:settings-storage-xaml" xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+	<s:String x:Key="/Default/Environment/AssemblyExplorer/XmlDocument/@EntryValue">&lt;AssemblyExplorer&gt;&#xD;
+  &lt;Assembly Path="D:\WorkDocument\JIF.CMS\code\JIF.CMS\packages\RabbitMQ.Client.6.0.0-pre3\lib\net451\RabbitMQ.Client.dll" /&gt;&#xD;
+&lt;/AssemblyExplorer&gt;</s:String>
+	<s:Boolean x:Key="/Default/Environment/Hierarchy/EntityFrameworkOptions/IsAlreadyNotifiedAboutEntityFramework/@EntryValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UnloadedProject/UnloadedProjects/=a0ff9812_002Da9cf_002D466d_002Dbd27_002D8192c64b0576_0023JIF_002ECMS_002EWeb/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UnloadedProject/UnloadedProjects/=a5fa03db_002D2194_002D4296_002D8b5d_002Ddad5a990901f_0023JIF_002ECMS_002EManagement/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UnloadedProject/UnloadedProjects/=c89bac5f_002Df3db_002D4e7e_002Dbe71_002Dffd3e3a34cf0_0023JIF_002ECMS_002EManagement_002EAPI/@EntryIndexedValue">True</s:Boolean>
+	
+	<s:Boolean x:Key="/Default/UnloadedProject/UnloadedProjects/=e27ada47_002Dcdbd_002D4278_002Db4b3_002D2a0a61ecef3a_0023AutofacSample_002EWinform/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UnloadedProject/UnloadedProjects/=f1e5fd1b_002D6926_002D4ef0_002D804d_002D70745f9c0c86_0023AutofacSample_002EWinService/@EntryIndexedValue">True</s:Boolean></wpf:ResourceDictionary>

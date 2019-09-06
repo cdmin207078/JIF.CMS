@@ -31,7 +31,8 @@ namespace JIF.CMS.Management.Controllers
         #region Articles
 
         // 文章列表页面
-        public ActionResult Index(string Q = "", int pageIndex = JIFConstants.SYS_PAGE_INDEX, int pageSize = JIFConstants.SYS_PAGE_SIZE)
+        public ActionResult Index(string Q = "", int pageIndex = JIFConstants.SYS_PAGE_INDEX,
+            int pageSize = JIFConstants.SYS_PAGE_SIZE)
         {
             Q = Q.Trim();
 
@@ -47,7 +48,7 @@ namespace JIF.CMS.Management.Controllers
         {
             ArticleEditViewModel vm = new ArticleEditViewModel
             {
-                Article = new Article() { PublishTime = DateTime.Now },
+                Article = new Article() {PublishTime = DateTime.Now},
                 Categories = _articleService.GetCategoriesSortArray(),
                 ArticleTags = new List<string>(),
                 Tags = _articleService.GetTagsDict().Keys.ToList()
@@ -85,7 +86,7 @@ namespace JIF.CMS.Management.Controllers
         [HttpGet]
         public ActionResult Recycled()
         {
-            return View();
+            return null;
         }
 
         // 保存文章
@@ -167,7 +168,8 @@ namespace JIF.CMS.Management.Controllers
 
             var filename = Guid.NewGuid().ToString();
 
-            var filepath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, _base_attachment, _cover_img_folder, filename + filext);
+            var filepath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, _base_attachment, _cover_img_folder,
+                filename + filext);
             file.SaveAs(filepath);
 
             var relativePath = Path.Combine(@"\", _base_attachment, _cover_img_folder, filename + filext);
