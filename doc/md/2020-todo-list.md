@@ -96,3 +96,5 @@
 - 2020-01-16
   - 完成 TODO LIST 制定
   - 启动 Lightboat基础架构开发
+- 2020-01-17
+  - Job Working
