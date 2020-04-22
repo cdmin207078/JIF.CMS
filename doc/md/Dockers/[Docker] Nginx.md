@@ -208,7 +208,7 @@ docker rm $(docker ps -a |  grep "docker-nginx"  | awk '{print $1}')
 echo "rm docker docker-nginx"
 # 启动容器
 docker run -p 80:80 --name docker-nginx \
--v $PWD/www:/data/www \
+-v $PWD/www:/www \
 -v $PWD/conf/nginx.conf:/etc/nginx/nginx.conf \
 -v $PWD/conf/conf.d:/etc/nginx/conf.d \
 -v $PWD/logs:/wwwlogs \
